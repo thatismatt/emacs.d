@@ -41,13 +41,13 @@
        (*keywords*           "#ba1")
        (*constant*           "#c0a")
        (*type-face*          "#349")
-       (*method-declaration* "#09f")
+       (*method-declaration* "#26f")
        (*number*             "#00f")
        (*operators*          "#83e")
        (*warning*            *red*)
        (*regexp*             "#a36")
        (*string*             *green*)
-       (*variable*           "#06c"))
+       (*variable*           "#0a8"))
 
   (custom-theme-set-faces
    'witness
