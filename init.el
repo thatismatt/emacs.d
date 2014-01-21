@@ -14,6 +14,7 @@
 
 (setq prelude-guru nil)
 (setq prelude-whitespace nil)
+(setq prelude-flyspell nil)
 
 ;; font
 (set-face-attribute 'default nil :height 110)
