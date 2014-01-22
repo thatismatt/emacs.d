@@ -165,7 +165,12 @@
   (interactive)
   (just-one-space -1))
 
-
+(defun matt-speedbar-and-arrange-windows ()
+  (let ((top 29) (height 63))
+    (set-frame-position nil 299 top)
+    (set-frame-size nil 125 height)
+    (speedbar)
+    (set-frame-position nil 0 top)))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -173,4 +178,5 @@
 
 ;; kill buffer - without confirmation
 (global-set-key (kbd "C-x k") 'kill-this-buffer)
+
 (global-set-key (kbd "M-SPC") 'matt-just-one-space-multiline)
