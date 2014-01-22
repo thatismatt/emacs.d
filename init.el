@@ -166,6 +166,7 @@
   (just-one-space -1))
 
 (defun matt-speedbar-and-arrange-windows ()
+  (interactive)
   (let ((top 29) (height 63))
     (set-frame-position nil 299 top)
     (set-frame-size nil 125 height)
