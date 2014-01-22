@@ -168,11 +168,11 @@
 
 (defun matt-speedbar-and-arrange-windows ()
   (interactive)
-  (let ((top 29) (height 63))
-    (set-frame-position nil 299 top)
-    (set-frame-size nil 125 height)
+  (let ((top 29) (height 55))
+    (set-frame-position (selected-frame) 299 top)
+    (set-frame-size (selected-frame) 125 height)
     (speedbar)
-    (set-frame-position nil 0 top)))
+    (set-frame-position (car (frame-list)) 0 top)))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
