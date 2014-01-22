@@ -87,6 +87,7 @@
 (add-hook 'prog-mode-hook 'linum-mode)
 
 ;; yas
+(require 'yasnippet)
 (add-hook 'prog-mode-hook
           '(lambda () (yas-minor-mode)))
 (setq yas-snippet-dirs '("~/.emacs.d/personal/snippets" "~/.emacs.d/elpa/yasnippet-20140106.1009/snippets"))
@@ -95,7 +96,7 @@
 ;; HACK - relies on the second element of yas-snippets-dir being the snippets from melpa
 ;; NOTE - yas fails to load if a dir that doesn't exist is in yas-snippets-dir
 ;;        ~/.emacs.d/snippets is in there by default, and doesn't exist
-;; (yas-reload-all)
+(yas-reload-all)
 
 ;; speedbar
 (require 'speedbar)
