@@ -25,6 +25,7 @@
        (*visual-selection*   "#135")
        (*visual-selection-1* "#012")
        (*visual-selection-2* "#123")
+       (*visual-selection-3* "#328")
 
        (*line-number*        "#333")
        (*line-fg*            "#888")
@@ -97,6 +98,9 @@
    ;; show-paren
    `(show-paren-mismatch ((t (:background ,*warning* :foreground ,*normal* :weight bold))))
    `(show-paren-match ((t (:background ,*keywords* :foreground ,*normal* :weight bold))))
+
+   ;; smart-parens
+   `(sp-show-pair-match-face ((t (:background ,*visual-selection-3*))))
 
    ;; search
    `(isearch ((t (:background ,*regexp* :foreground ,*visual-selection*))))
