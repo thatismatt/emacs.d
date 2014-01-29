@@ -46,6 +46,9 @@
 ;; kill whole line
 (setq kill-whole-line t)
 
+;; middle click paste at point (not mouse cursor)
+(setq mouse-yank-at-point t)
+
 ;; turn off newline on save
 ;(setq require-final-newline nil)
 
