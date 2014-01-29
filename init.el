@@ -187,6 +187,10 @@
     (speedbar)
     (set-frame-position (car (frame-list)) 0 top)))
 
+(defun matt-journal ()
+  (interactive)
+  (find-file-other-frame "~/work/journal.org"))
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; KEYS
