@@ -133,6 +133,8 @@
         ("POSTPONED" :foreground "#aa9" :weight bold)))
 (setq org-startup-folded nil)
 (setq org-log-done nil)
+(setq org-export-html-preamble nil)
+(setq org-export-html-postamble nil)
 
 ;; hl line
 ;(set-face-background 'hl-line "#323")
