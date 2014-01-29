@@ -1,3 +1,10 @@
+;;; init --- Matt Lee's init file
+
+;;; Commentary:
+;; Lots of tweaks to my Emacs.
+
+;;; Code:
+
 (prelude-require-packages
  '(auto-complete
    yasnippet
