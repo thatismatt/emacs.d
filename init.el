@@ -127,9 +127,9 @@
 ;; org
 (setq org-todo-keywords '((type "TODO" "DOING" "DONE" "|" "POSTPONED")))
 (setq org-todo-keyword-faces
-      '(("TODO" :foreground "#d77" :weight bold)
-        ("DONE" :foreground "#7d7" :weight bold)
-        ("DOING" :foreground "#ed7" :weight bold)
+      '(("TODO" :foreground "#d55" :weight bold)
+        ("DONE" :foreground "#5d5" :weight bold)
+        ("DOING" :foreground "#ed5" :weight bold)
         ("POSTPONED" :foreground "#aa9" :weight bold)))
 (setq org-startup-folded nil)
 (setq org-log-done nil)
