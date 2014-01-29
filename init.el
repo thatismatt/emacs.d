@@ -71,6 +71,7 @@
 
 ;; rainbow delimiters
 ;; colors
+(require 'rainbow-delimiters)
 (setq rainbow-delimiters-max-face-count 7)
 (set-face-foreground 'rainbow-delimiters-depth-1-face "#800")
 (set-face-foreground 'rainbow-delimiters-depth-2-face "#070")
