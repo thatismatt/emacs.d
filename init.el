@@ -143,7 +143,8 @@
 ;; whitespace mode
 (setq  whitespace-style '(face tabs empty trailing))
 
-;; js2-mode
+;; js2
+(require 'js2-mode)
 (set-face-foreground 'js2-function-param "#0c0")
 (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
 (setq js2-global-externs '("$" "angular" "_" "Highcharts" "google" "d3"))
