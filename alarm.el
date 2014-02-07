@@ -15,14 +15,15 @@
 
 (defvar alarm-buffer "*alarm*")
 
-(defun alarm-action (message)
+(defun alarm-action (message time)
   "The actual alarm action.
-Displays MESSAGE in `alarm-buffer'."
+Displays MESSAGE (and TIME) in `alarm-buffer'."
   (progn
     (switch-to-buffer-other-frame alarm-buffer)
     (goto-char (point-max))
-    (insert "\n\n\n### ALARM ###\n\n")
-    (insert message)))
+    (insert (format "\n### ALARM (%s) ###\n\n" time))
+    (insert message)
+    (insert "\n\n")))
 
 (defun alarm (time message)
   "Set an alarm.
@@ -30,7 +31,7 @@ An alarm will occur at TIME with the MESSAGE.
 The time format is the same accepted by `run-at-time'.
 For example \"11:30am\"."
   (interactive "sTime: \nsMessage: ")
-  (let ((alarm-timer (run-at-time time nil 'alarm-action message)))
+  (let ((alarm-timer (run-at-time time nil 'alarm-action message time)))
     (add-to-list 'alarm-alist `(,time ,message ,alarm-timer))))
 
 (defun alarm-cancel (time)
