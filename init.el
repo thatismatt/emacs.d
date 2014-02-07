@@ -43,6 +43,9 @@
                    (abbreviate-file-name (buffer-file-name))
                  "%b"))))
 
+;; delete trailing whitespace on save
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
+
 ;; kill whole line
 (setq kill-whole-line t)
 
