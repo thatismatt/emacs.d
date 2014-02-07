@@ -69,6 +69,10 @@
 ;(put 'narrow-to-region 'disabled nil)
 ;(put 'narrow-to-page 'disabled nil)
 
+;; smartparens
+(require 'smartparens)
+(setq sp-highlight-pair-overlay nil)
+
 ;; rainbow delimiters
 ;; colors
 (require 'rainbow-delimiters)
