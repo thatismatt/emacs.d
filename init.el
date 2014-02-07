@@ -50,7 +50,7 @@
 (setq mouse-yank-at-point t)
 
 ;; turn off newline on save
-;(setq require-final-newline nil)
+(setq require-final-newline nil)
 
 ;; window dedication
 (defun toggle-window-dedicated ()
