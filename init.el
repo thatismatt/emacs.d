@@ -192,9 +192,9 @@
 
 (defun matt-speedbar-and-arrange-windows ()
   (interactive)
-  (let ((top 29) (height 55))
+  (let ((top 29) (height 56) (width 160))
     (set-frame-position (selected-frame) 299 top)
-    (set-frame-size (selected-frame) 125 height)
+    (set-frame-size (selected-frame) width height)
     (speedbar)
     (set-frame-position (car (frame-list)) 0 top)))
 
