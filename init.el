@@ -151,9 +151,6 @@
 (require 'js2-refactor)
 (js2r-add-keybindings-with-prefix "C-c C-m")
 
-;; css
-(setq css-indent-offset 4)
-
 ;; skewer mode
 (add-hook 'js2-mode-hook 'skewer-mode)
 (setq httpd-port 8081) ; default is 8080
@@ -161,6 +158,9 @@
 ;; auto complete for js2
 (add-hook 'js2-mode-hook 'ac-js2-mode)
 (setq ac-js2-evaluate-calls t)
+
+;; css
+(setq css-indent-offset 4)
 
 ;; auto mode
 (add-to-list 'auto-mode-alist '("\\.\\(jspf?\\|tag\\)$" . html-mode))
