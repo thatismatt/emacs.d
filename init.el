@@ -34,7 +34,7 @@
 ;(set-face-attribute 'org-done nil :height 110)
 
 ;; cursor - bar instead of a block
-(setq default-cursor-type '(bar . 2))
+(set-default 'cursor-type '(bar . 2))
 
 ;; window title - include file's full path
 (setq frame-title-format
