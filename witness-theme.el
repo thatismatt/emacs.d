@@ -118,6 +118,13 @@
    `(diff-file-header ((t (:bold t))))
    `(diff-added ((t (:foreground ,*green*))))
    `(diff-removed ((t (:foreground ,*red*))))
+
+   ;; speedbar
+   `(speedbar-file-face ((t (:foreground ,*grey-8*))))
+   `(speedbar-directory-face ((t (:foreground ,*grey-9*))))
+   `(speedbar-selected-face ((t (:foreground ,*grey-a*))))
+   `(speedbar-highlight-face ((t (:foreground ,*red*))))
+   `(speedbar-button-face ((t (:foreground ,*green*))))
    ))
 
 (provide-theme 'witness)
