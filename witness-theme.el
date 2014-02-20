@@ -18,26 +18,25 @@
   'witness
   '(linum-format "%4i "))
 
-(let* ((*background*         "#011")
-       (*normal*             "#AAA")
-       (*current-line*       "#111")
-       (*cursor-underscore*  "#999")
+(let* ((*grey-1*             "#111")
+       (*grey-2*             "#222")
+       (*grey-3*             "#333")
+       (*grey-4*             "#444")
+       (*grey-8*             "#888")
+       (*grey-9*             "#999")
+       (*grey-a*             "#AAA")
+       (*red*                "#810")
+       (*red-1*              "#600")
+       (*green*              "#080")
+
+       (*background*         "#011")
+       (*normal*             *grey-a*)
+       (*current-line*       *grey-1*)
+       (*cursor-underscore*  *grey-9*)
        (*visual-selection*   "#135")
        (*visual-selection-1* "#012")
        (*visual-selection-2* "#123")
        (*visual-selection-3* "#328")
-
-       (*line-number*        "#333")
-       (*line-fg*            "#888")
-
-       (*mode-line-bg*       "#888")
-       (*mode-line-fg*       "#111")
-       (*mode-inactive-bg*   "#444")
-       (*mode-inactive-fg*   "#222")
-
-       (*red*                "#810")
-       (*red-1*              "#600")
-       (*green*              "#080")
 
        (*comments*           "#555")
        (*shadow*             "#609")
@@ -92,13 +91,15 @@
 
    ;; GUI
    `(fringe ((t (:background ,*background*))))
-   `(linum ((t (:background ,*line-number* :foreground ,*line-fg* :height 90 :bold t))))
+   `(linum ((t (:background ,*grey-3* :foreground ,*grey-8* :height 90 :bold t))))
    `(minibuffer-prompt ((t (:foreground ,*variable*))))
-   `(mode-line ((t (:background ,*mode-line-bg* :foreground ,*mode-line-fg*))))
-   `(mode-line-inactive ((t (:background ,*mode-inactive-bg* :foreground ,*mode-inactive-fg*))))
    `(cursor ((t (:background ,*cursor-underscore*))))
    `(text-cursor ((t (:background ,*cursor-underscore*))))
    `(vertical-border ((t (:foreground ,*background*))))
+
+   ;; mode line
+   `(mode-line ((t (:background ,*grey-8* :foreground ,*grey-1*))))
+   `(mode-line-inactive ((t (:background ,*grey-4* :foreground ,*grey-2*))))
 
    ;; show-paren
    `(show-paren-mismatch ((t (:background ,*warning* :foreground ,*normal* :weight bold))))
