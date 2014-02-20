@@ -46,9 +46,11 @@
        (*type-face*          "#54a")
        (*method-declaration* "#18e")
        (*number*             "#00f")
-       (*operators*          "#c0a")
+       (*builtins*           "#c0a")
        (*warning*            *red-1*)
        (*regexp*             "#a36")
+       (*search-1*           "#f90")
+       (*search-2*           "#a30")
        (*string*             *green*)
        (*variable*           "#0a8"))
 
@@ -69,7 +71,7 @@
    `(underline ((nil (:underline t))))
 
    ;; font-lock
-   `(font-lock-builtin-face ((t (:foreground ,*operators*))))
+   `(font-lock-builtin-face ((t (:foreground ,*builtins*))))
    `(font-lock-comment-delimiter-face ((t (:foreground ,*comments*))))
    `(font-lock-comment-face ((t (:foreground ,*comments*))))
    `(font-lock-constant-face ((t (:foreground ,*constant*))))
@@ -106,9 +108,9 @@
    `(sp-show-pair-match-face ((t (:background ,*visual-selection-3*))))
 
    ;; search
-   `(isearch ((t (:background ,*regexp* :foreground ,*visual-selection*))))
+   `(isearch ((t (:background ,*search-1* :foreground ,*background*))))
    `(isearch-fail ((t (:background ,*warning*))))
-   `(lazy-highlight ((t (:background ,*operators* :foreground ,*visual-selection*))))
+   `(lazy-highlight ((t (:background ,*search-2* :foreground ,*background*))))
 
    ;; diff
    `(diff-header ((t (:background ,*visual-selection-1*))))
