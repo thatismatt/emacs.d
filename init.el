@@ -16,7 +16,7 @@
 (disable-theme 'zenburn)
 
 (setq custom-theme-load-path
-      (cons "~/.emacs.d/personal" custom-theme-load-path))
+      (cons "~/.emacs.d/personal/themes/" custom-theme-load-path))
 (load-theme 'witness t)
 
 (setq prelude-guru nil)
