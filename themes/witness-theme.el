@@ -116,9 +116,9 @@
 
    ;; diff
    `(diff-header ((t (:background ,*visual-selection-1*))))
-   `(diff-file-header ((t (:bold t))))
-   `(diff-added ((t (:foreground ,*green*))))
-   `(diff-removed ((t (:foreground ,*red*))))
+   `(diff-file-header ((t (:background ,*visual-selection-1*))))
+   `(diff-added ((t (:foreground ,*green* :background nil))))
+   `(diff-removed ((t (:foreground ,*red* :background nil))))
 
    ;; speedbar
    `(speedbar-file-face ((t (:foreground ,*shadow*))))
