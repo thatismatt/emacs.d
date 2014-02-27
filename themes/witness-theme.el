@@ -92,7 +92,7 @@
 
    ;; GUI
    `(fringe ((t (:background ,*background*))))
-   `(linum ((t (:background ,*grey-3* :foreground ,*grey-8* :height 90))))
+   `(linum ((t (:background ,*grey-3* :foreground ,*grey-8*))))
    `(minibuffer-prompt ((t (:foreground ,*variable*))))
    `(cursor ((t (:background ,*cursor-underscore*))))
    `(text-cursor ((t (:background ,*cursor-underscore*))))
