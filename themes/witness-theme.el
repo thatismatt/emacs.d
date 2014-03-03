@@ -29,6 +29,8 @@
        (*red-1*              "#600")
        (*green*              "#080")
        (*pink*               "#c0a")
+       (*purple*             "#93e")
+       (*purple-1*           "#609")
 
        (*background*         "#011")
        (*normal*             *grey-a*)
@@ -40,8 +42,8 @@
        (*visual-selection-3* "#328")
 
        (*comments*           "#555")
-       (*shadow*             "#609")
-       (*keywords*           "#93e")
+       (*shadow*             *purple-1*)
+       (*keywords*           *purple*)
        (*constant*           *pink*)
        (*type-face*          "#54a")
        (*method-declaration* "#18e")
@@ -58,13 +60,13 @@
    'witness
 
    `(bold ((t (:bold t))))
-   `(button ((t (:foreground ,*keywords* :underline t))))
+   `(button ((t (:foreground ,*purple* :underline t))))
    `(default ((t (:background ,*background* :foreground ,*normal*))))
    `(header-line ((t (:foreground ,*constant*))))
    `(highlight ((t (:background ,*current-line*))))
    `(highlight-face ((t (:background ,*current-line*))))
    `(hl-line ((t (:weight bold))))
-   `(info-xref ((t (:foreground ,*keywords* :underline t))))
+   `(info-xref ((t (:foreground ,*purple* :underline t))))
    `(region ((t (:background ,*visual-selection*))))
    `(secondary-selection ((t (:background ,*visual-selection-2*))))
    `(shadow ((t (:foreground ,*shadow*))))
@@ -104,7 +106,7 @@
 
    ;; show-paren
    `(show-paren-mismatch ((t (:background ,*warning* :foreground ,*normal* :weight bold))))
-   `(show-paren-match ((t (:background ,*keywords* :foreground ,*normal* :weight bold))))
+   `(show-paren-match ((t (:background ,*visual-selection-3* :foreground ,*normal* :weight bold))))
 
    ;; smart-parens
    `(sp-show-pair-match-face ((t (:background ,*visual-selection-3*))))
@@ -121,8 +123,8 @@
    `(diff-removed ((t (:foreground ,*red* :background nil))))
 
    ;; speedbar
-   `(speedbar-file-face ((t (:foreground ,*shadow*))))
-   `(speedbar-directory-face ((t (:foreground ,*shadow*))))
+   `(speedbar-file-face ((t (:foreground ,*purple*))))
+   `(speedbar-directory-face ((t (:foreground ,*purple*))))
    `(speedbar-selected-face ((t (:foreground ,*pink*))))
    `(speedbar-highlight-face ((t (:foreground ,*grey-a*))))
    `(speedbar-button-face ((t (:foreground ,*green*))))
