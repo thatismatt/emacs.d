@@ -31,6 +31,7 @@
        (*pink*               "#c0a")
        (*purple*             "#93e")
        (*purple-1*           "#609")
+       (*blue*               "#18e")
 
        (*background*         "#011")
        (*normal*             *grey-a*)
@@ -45,8 +46,8 @@
        (*shadow*             *purple-1*)
        (*keywords*           *purple*)
        (*constant*           *pink*)
-       (*type-face*          "#54a")
-       (*method-declaration* "#18e")
+       (*type-face*          *blue*)
+       (*method-declaration* *blue*)
        (*number*             "#00f")
        (*builtins*           *pink*)
        (*warning*            *red-1*)
