@@ -129,6 +129,9 @@
    `(speedbar-selected-face ((t (:foreground ,*pink*))))
    `(speedbar-highlight-face ((t (:foreground ,*grey-a*))))
    `(speedbar-button-face ((t (:foreground ,*green*))))
+
+   ;; org
+   `(org-code ((t (:foreground ,*purple*))))
    ))
 
 (provide-theme 'witness)
