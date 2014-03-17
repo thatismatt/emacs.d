@@ -28,10 +28,6 @@
 (set-face-attribute 'default nil :family "Liberation Mono")
 ;; (set-face-attribute 'default nil :family "DejaVu Sans Mono")
 
-;(set-face-attribute 'org-level-1 nil :height 110)
-;(set-face-attribute 'org-level-2 nil :height 110)
-;(set-face-attribute 'org-todo nil :height 110)
-;(set-face-attribute 'org-done nil :height 110)
 
 ;; cursor - bar instead of a block
 (set-default 'cursor-type '(bar . 2))
