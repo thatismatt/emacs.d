@@ -198,6 +198,10 @@
   (interactive)
   (find-file-other-frame "~/work/journal.org"))
 
+(defun matt-journal-title ()
+  (interactive)
+  (insert "* --------------------------------------------------------------------------------\n")
+  (shell-command "date +\"%a %b %d %Y\"" t))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; KEYS
