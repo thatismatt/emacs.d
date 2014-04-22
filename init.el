@@ -28,7 +28,6 @@
 (set-face-attribute 'default nil :family "Liberation Mono")
 ;; (set-face-attribute 'default nil :family "DejaVu Sans Mono")
 
-
 ;; cursor - bar instead of a block
 (set-default 'cursor-type '(bar . 2))
 
@@ -194,6 +193,7 @@
     (speedbar)
     (set-frame-position (car (frame-list)) 0 top)))
 
+;; journal
 (defun matt-journal ()
   (interactive)
   (find-file-other-frame "~/work/journal.org"))
