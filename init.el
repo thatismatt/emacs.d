@@ -210,3 +210,9 @@
 (global-set-key (kbd "C-x k") 'kill-this-buffer)
 
 (global-set-key (kbd "M-SPC") 'matt-just-one-space-multiline)
+
+(global-set-key (kbd "<M-backspace>") 'backward-kill-word)
+(global-set-key (kbd "<C-backspace>") 'backward-kill-word)
+
+(global-set-key (kbd "M-DEL") 'kill-word)
+(global-set-key (kbd "<M-delete>") 'kill-word)
