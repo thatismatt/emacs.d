@@ -203,6 +203,10 @@
   (insert "* --------------------------------------------------------------------------------\n")
   (shell-command "date +\"%a %b %d %Y\"" t))
 
+(defun matt-font-size (sz)
+  (interactive "nSize: ")
+  (set-face-attribute 'default nil :height (* sz 10)))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; KEYS
 
