@@ -3,9 +3,6 @@
 ;;; Commentary:
 ;; Use Emacs as an alarm.
 
-;;; Todo:
-;; Allow the setting of multiple alarms.
-
 ;;; Code:
 
 (eval-when-compile (require 'cl))
@@ -47,6 +44,36 @@ For example \"11:30am\"."
 (defun alarm-get (time)
   "Get the alarm set for TIME."
   (assoc time alarm-alist))
+
+(define-derived-mode alarm-mode tabulated-list-mode "Alarm Menu"
+  "A major mode for viewing a list of alarms."
+  (add-hook 'tabulated-list-revert-hook 'alarm-refresh nil t))
+
+(defun alarm-refresh ()
+  "Refresh the table of alarms."
+  (setq tabulated-list-format
+        (vector '("Alarm" 8 t)
+                '("Time" 20 t)))
+  (setq tabulated-list-use-header-line t)
+  (let ((table-contents (mapcar
+                         (lambda (x) `("" [,(cadr x) ,(car x)]))
+                         alarm-alist)))
+    (setq tabulated-list-entries table-contents))
+  (tabulated-list-init-header))
+
+(defun alarm-get-buffer ()
+  "TODO."
+  (let ((buffer (get-buffer-create "*Alarm List*")))
+    (with-current-buffer buffer
+      (alarm-mode)
+      (alarm-refresh)
+      (tabulated-list-print))
+    buffer))
+
+(defun alarm-list ()
+  "View the list of alarms."
+  (interactive)
+  (view-buffer (alarm-get-buffer)))
 
 (provide 'alarm)
 
