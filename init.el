@@ -11,7 +11,9 @@
    js2-mode
    js2-refactor
    skewer-mode
-   ac-js2))
+   ac-js2
+   sbt-mode
+   ))
 
 (disable-theme 'zenburn)
 
@@ -163,6 +165,17 @@
 
 ;; css
 (setq css-indent-offset 4)
+
+;; scala
+(setq sbt:program-name "~/opt/sbt/sbt")
+(add-hook 'sbt-mode-hook '(lambda ()
+  (setq compilation-skip-threshold 1)
+  (local-set-key (kbd "C-a") 'comint-bol)
+  (local-set-key (kbd "M-RET") 'comint-accumulate)))
+(add-hook 'scala-mode-hook '(lambda ()
+   (local-set-key (kbd "M-.") 'sbt-find-definitions)
+   (local-set-key (kbd "C-x '") 'sbt-run-previous-command)
+   (local-set-key (kbd "C-M-x") 'sbt-send-region)))
 
 ;; auto mode
 (add-to-list 'auto-mode-alist '("\\.\\(jspf?\\|tag\\)$" . html-mode))
