@@ -6,12 +6,13 @@
 ;;; Code:
 
 (prelude-require-packages
- '(auto-complete
-   yasnippet
-   js2-mode
-   js2-refactor
-   skewer-mode
-   ac-js2
+ '(
+   ;; auto-complete
+   ;; yasnippet
+   ;; js2-mode
+   ;; js2-refactor
+   ;; skewer-mode
+   ;; ac-js2
    sbt-mode
    ))
 
@@ -95,23 +96,23 @@
 ;; default: (setq nrepl-popup-stacktraces-in-repl nil)
 
 ;; auto complete
-(require 'auto-complete-config)
-(ac-config-default)
+;;(require 'auto-complete-config)
+;;(ac-config-default)
 
 ;; linum
 (add-hook 'prog-mode-hook 'linum-mode)
 
 ;; yas
-(require 'yasnippet)
-(add-hook 'prog-mode-hook
-          '(lambda () (yas-minor-mode)))
-(setq yas-snippet-dirs '("~/.emacs.d/personal/snippets" "~/.emacs.d/elpa/yasnippet-20140106.1009/snippets"))
+;;(require 'yasnippet)
+;;(add-hook 'prog-mode-hook
+;;          '(lambda () (yas-minor-mode)))
+;;(setq yas-snippet-dirs '("~/.emacs.d/personal/snippets" "~/.emacs.d/elpa/yasnippet-20140106.1009/snippets"))
 ;(setq yas-snippet-dirs '("~/.emacs.d/personal/snippets"))
-(setq yas-snippet-dirs (cons "~/.emacs.d/personal/snippets" (cdr yas-snippet-dirs)))
+;;(setq yas-snippet-dirs (cons "~/.emacs.d/personal/snippets" (cdr yas-snippet-dirs)))
 ;; HACK - relies on the second element of yas-snippets-dir being the snippets from melpa
 ;; NOTE - yas fails to load if a dir that doesn't exist is in yas-snippets-dir
 ;;        ~/.emacs.d/snippets is in there by default, and doesn't exist
-(yas-reload-all)
+;;(yas-reload-all)
 
 ;; speedbar
 (require 'speedbar)
@@ -145,23 +146,23 @@
 ;(set-face-attribute 'hl-line nil :underline nil)
 
 ;; whitespace mode
-(setq  whitespace-style '(face tabs empty trailing))
+(setq whitespace-style '(face tabs empty trailing))
 
 ;; js2
-(require 'js2-mode)
-(set-face-foreground 'js2-function-param "#0c0")
-(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
-(setq js2-global-externs '("$" "angular" "_" "Highcharts" "google" "d3"))
-(require 'js2-refactor)
-(js2r-add-keybindings-with-prefix "C-c C-m")
-
-;; skewer mode
-(add-hook 'js2-mode-hook 'skewer-mode)
-(setq httpd-port 8081) ; default is 8080
-
-;; auto complete for js2
-(add-hook 'js2-mode-hook 'ac-js2-mode)
-(setq ac-js2-evaluate-calls t)
+;; (require 'js2-mode)
+;; (set-face-foreground 'js2-function-param "#0c0")
+;; (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
+;; (setq js2-global-externs '("$" "angular" "_" "Highcharts" "google" "d3"))
+;; (require 'js2-refactor)
+;; (js2r-add-keybindings-with-prefix "C-c C-m")
+;;
+;; ;; skewer mode
+;; (add-hook 'js2-mode-hook 'skewer-mode)
+;; (setq httpd-port 8081) ; default is 8080
+;;
+;; ;; auto complete for js2
+;; (add-hook 'js2-mode-hook 'ac-js2-mode)
+;; (setq ac-js2-evaluate-calls t)
 
 ;; css
 (setq css-indent-offset 4)
