@@ -79,7 +79,7 @@
    ;; font-lock
    `(font-lock-builtin-face ((t (:foreground ,*builtins*))))
    `(font-lock-comment-delimiter-face ((t (:foreground ,*comments*))))
-   `(font-lock-comment-face ((t (:foreground ,*comments*))))
+   `(font-lock-comment-face ((t (:foreground ,*comments* :slant italic))))
    `(font-lock-constant-face ((t (:foreground ,*constant*))))
    `(font-lock-doc-face ((t (:foreground ,*string*))))
    `(font-lock-doc-string-face ((t (:foreground ,*string*))))
