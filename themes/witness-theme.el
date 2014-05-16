@@ -137,7 +137,7 @@
    ;; org
    `(org-level-1 ((t (:foreground ,*blue*))))
    `(org-code ((t (:foreground ,*green*))))
-   `(org-table ((t (:foreground ,*blue-1*)))))
+   `(org-table ((t (:foreground ,*blue-1*))))
    `(org-document-title ((t (:foreground ,*yellow*))))
    `(org-document-info-keyword ((t (:foreground ,*purple*))))
 
