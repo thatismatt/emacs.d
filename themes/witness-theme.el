@@ -58,7 +58,8 @@
        (*search-1*           *yellow*)
        (*search-2*           "#a30")
        (*string*             *green*)
-       (*variable*           "#0a8"))
+       (*variable*           "#0a8")
+       (*variable-2*         "#585"))
 
   (custom-theme-set-faces
    'witness
@@ -80,9 +81,9 @@
    `(font-lock-builtin-face ((t (:foreground ,*builtins*))))
    `(font-lock-comment-delimiter-face ((t (:foreground ,*comments*))))
    `(font-lock-comment-face ((t (:foreground ,*comments* :slant italic))))
+   `(font-lock-doc-face ((t (:foreground ,*comments* :slant italic))))
+   `(font-lock-doc-string-face ((t (:foreground ,*comments* :slant italic))))
    `(font-lock-constant-face ((t (:foreground ,*constant*))))
-   `(font-lock-doc-face ((t (:foreground ,*string*))))
-   `(font-lock-doc-string-face ((t (:foreground ,*string*))))
    `(font-lock-function-name-face ((t (:foreground ,*method-declaration*))))
    `(font-lock-keyword-face ((t (:foreground ,*keywords*))))
    `(font-lock-negation-char-face ((t (:foreground ,*constant*))))
@@ -94,7 +95,7 @@
    `(font-lock-string-face ((t (:foreground ,*string*))))
    `(font-lock-type-face ((t (:foreground ,*type-face*))))
    `(font-lock-variable-name-face ((t (:foreground ,*variable*))))
-   `(font-lock-warning-face ((t (:foreground ,*warning*))))
+   `(font-lock-warning-face ((t (:foreground ,*warning* :slant italic))))
 
    ;; GUI
    `(fringe ((t (:background ,*background*))))
@@ -146,6 +147,9 @@
 
    ;; shell
    `(sh-heredoc ((t (:foreground ,*green*))))
+
+   ;; scala
+   `(scala-font-lock:var-face ((t (:foreground ,*variable-2*))))
    ))
 
 (provide-theme 'witness)
