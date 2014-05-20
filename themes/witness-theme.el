@@ -149,7 +149,7 @@
    `(sh-heredoc ((t (:foreground ,*green*))))
 
    ;; scala
-   `(scala-font-lock:var-face ((t (:foreground ,*variable-2*))))
+   `(scala-font-lock:var-face ((t (:foreground ,*variable-2* :inherit nil))))
    ))
 
 (provide-theme 'witness)
