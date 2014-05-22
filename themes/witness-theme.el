@@ -147,6 +147,7 @@
 
    ;; shell
    `(sh-heredoc ((t (:foreground ,*green*))))
+   `(sh-quoted-exec ((t (:foreground ,*pink*))))
 
    ;; scala
    `(scala-font-lock:var-face ((t (:foreground ,*variable-2* :inherit nil))))
