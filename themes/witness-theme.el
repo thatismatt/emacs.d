@@ -127,6 +127,12 @@
    `(diff-added ((t (:foreground ,*green* :background nil))))
    `(diff-removed ((t (:foreground ,*red* :background nil))))
 
+   ;; ediff
+   `(ediff-even-diff-A ((t (:foreground ,*grey-8* :background ,*visual-selection-2*))))
+   `(ediff-odd-diff-A ((t (:foreground ,*grey-a* :background ,*visual-selection-2*))))
+   `(ediff-even-diff-B ((t (:foreground ,*grey-8* :background ,*visual-selection-2*))))
+   `(ediff-odd-diff-B ((t (:foreground ,*grey-a* :background ,*visual-selection-2*))))
+
    ;; speedbar
    `(speedbar-file-face ((t (:foreground ,*purple*))))
    `(speedbar-directory-face ((t (:foreground ,*purple*))))
