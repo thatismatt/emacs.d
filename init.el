@@ -28,8 +28,10 @@
 
 ;; font
 (set-face-attribute 'default nil :height 110)
-(set-face-attribute 'default nil :family "Liberation Mono")
+;; (set-face-attribute 'default nil :family "Nimbus Mono L")
+;; (set-face-attribute 'default nil :family "Liberation Mono")
 ;; (set-face-attribute 'default nil :family "DejaVu Sans Mono")
+(set-face-attribute 'default nil :family "Droid Sans Mono")
 
 ;; cursor - bar instead of a block
 (set-default 'cursor-type '(bar . 2))
