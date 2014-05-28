@@ -53,18 +53,6 @@
 ;; turn off newline on save
 (setq require-final-newline nil)
 
-;; window dedication
-(defun toggle-window-dedicated ()
-  "Toggle whether the current active window is dedicated or not"
-  (interactive)
-  (message
-   (if (let (window (get-buffer-window (current-buffer)))
-         (set-window-dedicated-p window
-                                 (not (window-dedicated-p window))))
-       "Window '%s' is dedicated"
-     "Window '%s' is normal")
-   (current-buffer)))
-
 ;; enable stuff
 ;(put 'upcase-region 'disabled nil)
 ;(put 'narrow-to-region 'disabled nil)
@@ -193,6 +181,18 @@
 (define-key global-map (kbd "<menu>")
   (lambda () (interactive) (matt-normal-buffer-switch 'next-buffer)))
 (define-key global-map (kbd "C-<menu>") 'other-window)
+
+;; window dedication
+(defun matt-toggle-window-dedicated ()
+  "Toggle whether the current active window is dedicated or not"
+  (interactive)
+  (message
+   (if (let (window (get-buffer-window (current-buffer)))
+         (set-window-dedicated-p window
+                                 (not (window-dedicated-p window))))
+       "Window '%s' is dedicated"
+     "Window '%s' is normal")
+   (current-buffer)))
 
 (defun matt-just-one-space-multiline ()
   (interactive)
