@@ -131,6 +131,11 @@
    `(ediff-even-diff-B ((t (:foreground ,*grey-8* :background ,*visual-selection-2*))))
    `(ediff-odd-diff-B ((t (:foreground ,*grey-a* :background ,*visual-selection-2*))))
 
+   ;; magit
+   `(magit-branch ((t (:foreground ,*blue*))))
+   `(magit-log-sha1 ((t (:foreground ,*pink*))))
+   `(magit-tag ((t (:foreground ,*yellow*))))
+
    ;; speedbar
    `(speedbar-file-face ((t (:foreground ,*purple*))))
    `(speedbar-directory-face ((t (:foreground ,*purple*))))
