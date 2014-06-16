@@ -233,9 +233,9 @@
   (set-face-attribute 'default nil :height (* sz 10)))
 
 (defun matt-insert-date ()
-  "Insert a timestamp according to locale's date and time format."
+  "Insert a timestamp. e.g 16-Jun-2014"
   (interactive)
-  (insert (format-time-string "%Y-%b-%d" (current-time))))
+  (insert (format-time-string "%d-%b-%Y" (current-time))))
 
 (defun matt-open-init ()
   (interactive)
@@ -244,6 +244,12 @@
 (defun matt-open-theme ()
   (interactive)
   (find-file "~/.emacs.d/personal/themes/witness-theme.el"))
+
+(defun matt-open-temp-file ()
+  (interactive)
+  (let* ((timestamp (format-time-string "%Y-%m-%d_%H-%M-%S" (current-time)))
+         (filename  (format "~/tmp/emacs-temp-%s" timestamp)))
+    (find-file filename)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; KEYS
