@@ -249,6 +249,10 @@
   (interactive)
   (find-file "~/.emacs.d/personal/themes/witness-theme.el"))
 
+(defun matt-open-todo ()
+  (interactive)
+  (find-file "~/notes/todo.org"))
+
 (defun matt-open-temp-file ()
   (interactive)
   (let* ((timestamp (format-time-string "%Y-%m-%d_%H-%M-%S" (current-time)))
