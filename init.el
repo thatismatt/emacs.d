@@ -268,3 +268,6 @@
 
 (global-set-key (kbd "M-DEL") 'kill-word)
 (global-set-key (kbd "<M-delete>") 'kill-word)
+
+;; key chords
+(key-chord-define-global "xx" nil)
