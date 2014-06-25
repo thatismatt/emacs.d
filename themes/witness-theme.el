@@ -134,7 +134,7 @@
    ;; magit
    `(magit-branch ((t (:foreground ,*blue*))))
    `(magit-log-sha1 ((t (:foreground ,*pink*))))
-   `(magit-tag ((t (:foreground ,*yellow*))))
+   `(magit-tag ((t (:foreground ,*yellow* :background nil))))
 
    ;; speedbar
    `(speedbar-file-face ((t (:foreground ,*purple*))))
