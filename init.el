@@ -144,6 +144,10 @@
 (setq org-log-done nil)
 (setq org-export-html-preamble nil)
 (setq org-export-html-postamble nil)
+(define-key org-mode-map (kbd "S-<up>") nil)
+(define-key org-mode-map (kbd "S-<down>") nil)
+(define-key org-mode-map (kbd "S-<left>") nil)
+(define-key org-mode-map (kbd "S-<right>") nil)
 
 ;; hl line
 ;(set-face-background 'hl-line "#323")
@@ -272,6 +276,9 @@
 
 (global-set-key (kbd "M-DEL") 'kill-word)
 (global-set-key (kbd "<M-delete>") 'kill-word)
+
+(global-set-key (kbd "S-<right>") 'previous-buffer)
+(global-set-key (kbd "S-<left>") 'next-buffer)
 
 ;; key chords
 (key-chord-define-global "xx" nil)
