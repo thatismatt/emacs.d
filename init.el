@@ -225,7 +225,7 @@
 ;; journal
 (defun matt-journal ()
   (interactive)
-  (find-file-other-frame "~/work/journal.org"))
+  (find-file "~/work/journal.org"))
 
 (defun matt-journal-title ()
   (interactive)
