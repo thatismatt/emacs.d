@@ -263,6 +263,15 @@
          (filename  (format "~/tmp/emacs-temp-%s" timestamp)))
     (find-file filename)))
 
+(defun matt-window-adjust ()
+  "Interactively adjust window size."
+  (interactive)
+  (message "Adjust window size.")
+  (let ((map (make-sparse-keymap)))
+    (define-key map '[?-] 'shrink-window)
+    (define-key map '[?=] 'enlarge-window)
+    (set-temporary-overlay-map map t)))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; KEYS
 
