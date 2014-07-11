@@ -251,7 +251,8 @@
 
 (defun matt-open-theme ()
   (interactive)
-  (find-file "~/.emacs.d/personal/themes/witness-theme.el"))
+  (let ((theme (car custom-enabled-themes)))
+    (find-file (format "~/.emacs.d/personal/themes/%s-theme.el" theme))))
 
 (defun matt-open-todo ()
   (interactive)
@@ -271,6 +272,12 @@
     (define-key map '[?-] 'shrink-window)
     (define-key map '[?=] 'enlarge-window)
     (set-temporary-overlay-map map t)))
+
+(defun matt-theme-toggle-light-dark ()
+  (interactive)
+  (cond ((custom-theme-enabled-p 'footlamp) (disable-theme 'footlamp) (load-theme 'witness t))
+        ((custom-theme-enabled-p 'witness) (disable-theme 'witness) (load-theme 'footlamp t))
+        (t (message "Current theme unknown."))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; KEYS
