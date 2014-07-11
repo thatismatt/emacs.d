@@ -221,8 +221,8 @@
 
 (defun matt-journal-title ()
   (interactive)
-  (insert "* --------------------------------------------------------------------------------\n")
-  (shell-command "date +\"%a %b %d %Y\"" t))
+  (let* ((date (format-time-string "%a, %b %d %Y" (current-time))))
+    (insert "* " date " ----------------------------------------------------------------\n")))
 
 (defun matt-font-size (sz)
   (interactive "nSize: ")
