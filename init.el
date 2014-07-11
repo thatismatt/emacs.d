@@ -165,6 +165,12 @@
 ;; (add-hook 'js2-mode-hook 'ac-js2-mode)
 ;; (setq ac-js2-evaluate-calls t)
 
+;; web
+(require 'web-mode)
+(setq web-mode-indent-style 2)
+(setq web-mode-markup-indent-offset 2)
+(setq web-mode-code-indent-offset 2)
+
 ;; css
 (require 'css-mode)
 (setq css-indent-offset 4)
