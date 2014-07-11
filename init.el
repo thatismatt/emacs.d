@@ -137,6 +137,10 @@
 (define-key org-mode-map (kbd "S-<down>") nil)
 (define-key org-mode-map (kbd "S-<left>") nil)
 (define-key org-mode-map (kbd "S-<right>") nil)
+(define-key org-mode-map (kbd "M-<left>") nil)
+(define-key org-mode-map (kbd "M-<right>") nil)
+(define-key org-mode-map (kbd "C-<left>") nil)
+(define-key org-mode-map (kbd "C-<right>") nil)
 
 ;; hl line
 ;(set-face-background 'hl-line "#323")
