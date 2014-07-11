@@ -45,7 +45,6 @@
        (*visual-selection-3* "#328")
 
        (*comments*           *grey-7*)
-       (*shadow*             *purple-1*)
        (*keywords*           *purple*)
        (*constant*           *pink*)
        (*type-face*          *blue-1*)
@@ -72,7 +71,7 @@
    `(info-xref ((t (:foreground ,*purple* :underline t))))
    `(region ((t (:background ,*visual-selection*))))
    `(secondary-selection ((t (:background ,*visual-selection-2*))))
-   `(shadow ((t (:foreground ,*shadow*))))
+   `(shadow ((t (:foreground ,*purple-1*))))
    `(underline ((nil (:underline t))))
 
    ;; font-lock
