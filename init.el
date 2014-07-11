@@ -7,12 +7,9 @@
 
 (prelude-require-packages
  '(
-   ;; auto-complete
-   ;; js2-mode
-   ;; js2-refactor
-   ;; skewer-mode
-   ;; ac-js2
    yasnippet
+   js2-mode
+   js2-refactor
    sbt-mode
    ))
 
@@ -157,18 +154,18 @@
 (setq whitespace-style '(face tabs empty trailing))
 
 ;; js2
-;; (require 'js2-mode)
+(require 'js2-mode)
 ;; (set-face-foreground 'js2-function-param "#0c0")
-;; (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
-;; (setq js2-global-externs '("$" "angular" "_" "Highcharts" "google" "d3"))
-;; (require 'js2-refactor)
-;; (js2r-add-keybindings-with-prefix "C-c C-m")
-;;
-;; ;; skewer mode
+(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
+(setq js2-global-externs '("$" "angular" "_" "Highcharts" "google" "d3" "chai" "it" "describe"))
+(require 'js2-refactor)
+(js2r-add-keybindings-with-prefix "C-c C-m")
+
+;; skewer mode
 ;; (add-hook 'js2-mode-hook 'skewer-mode)
 ;; (setq httpd-port 8081) ; default is 8080
-;;
-;; ;; auto complete for js2
+
+;; auto complete for js2
 ;; (add-hook 'js2-mode-hook 'ac-js2-mode)
 ;; (setq ac-js2-evaluate-calls t)
 
