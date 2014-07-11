@@ -174,7 +174,7 @@
    (local-set-key (kbd "C-M-x") 'sbt-send-region)))
 
 ;; auto mode
-(add-to-list 'auto-mode-alist '("\\.\\(jspf?\\|tag\\)$" . html-mode))
+(add-to-list 'auto-mode-alist '("\\.\\(jspf?\\|tag\\)$" . web-mode))
 
 ;; window & buffer switching
 (defun matt-normal-buffer-switch (f)
