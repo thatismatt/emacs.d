@@ -122,6 +122,7 @@
 ;(setq magit-server-window-for-commit nil)
 
 ;; org
+(require 'org)
 (setq org-todo-keywords '((type "TODO" "DOING" "DONE" "|" "POSTPONED")))
 (setq org-todo-keyword-faces
       '(("TODO" :foreground "#d55" :weight bold)
@@ -161,6 +162,7 @@
 ;; (setq ac-js2-evaluate-calls t)
 
 ;; css
+(require 'css-mode)
 (setq css-indent-offset 4)
 
 ;; scala
