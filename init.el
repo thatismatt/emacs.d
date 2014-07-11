@@ -75,18 +75,6 @@
 (require 'smartparens)
 (setq sp-highlight-pair-overlay nil)
 
-;; rainbow delimiters
-;; colors
-(require 'rainbow-delimiters)
-(setq rainbow-delimiters-max-face-count 7)
-(set-face-foreground 'rainbow-delimiters-depth-1-face "#800")
-(set-face-foreground 'rainbow-delimiters-depth-2-face "#070")
-(set-face-foreground 'rainbow-delimiters-depth-3-face "#23b")
-(set-face-foreground 'rainbow-delimiters-depth-4-face "#870")
-(set-face-foreground 'rainbow-delimiters-depth-5-face "#808")
-(set-face-foreground 'rainbow-delimiters-depth-6-face "#068")
-(set-face-foreground 'rainbow-delimiters-depth-7-face "#840")
-
 ;; vcs - disable on windows as too slow
 ;(when (eq system-type 'windows-nt)
 ;  (setq vc-handled-backends ())
@@ -101,7 +89,10 @@
 ;;(ac-config-default)
 
 ;; linum
+(require 'linum)
+(setq linum-format "%4i ")
 (add-hook 'prog-mode-hook 'linum-mode)
+(add-hook 'css-mode-hook 'linum-mode)
 
 ;; yas
 (require 'yasnippet)

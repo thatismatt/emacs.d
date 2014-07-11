@@ -16,7 +16,7 @@
 
 (custom-theme-set-variables
   'witness
-  '(linum-format "%4i "))
+  '(rainbow-delimiters-max-face-count 5))
 
 (let* ((*grey-1*             "#111")
        (*grey-2*             "#222")
@@ -112,6 +112,13 @@
 
    ;; smart-parens
    `(sp-show-pair-match-face ((t (:background ,*visual-selection-3*))))
+
+   ;; rainbow delimiters
+   `(rainbow-delimiters-depth-1-face ((t (:foreground "#800"))))
+   `(rainbow-delimiters-depth-2-face ((t (:foreground "#23b"))))
+   `(rainbow-delimiters-depth-3-face ((t (:foreground "#070"))))
+   `(rainbow-delimiters-depth-4-face ((t (:foreground "#808"))))
+   `(rainbow-delimiters-depth-5-face ((t (:foreground "#870"))))
 
    ;; search
    `(isearch ((t (:background ,*search-1* :foreground ,*background*))))
