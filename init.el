@@ -293,8 +293,8 @@
 (global-set-key (kbd "M-DEL") 'kill-word)
 (global-set-key (kbd "<M-delete>") 'kill-word)
 
-(global-set-key (kbd "S-<right>") 'previous-buffer)
-(global-set-key (kbd "S-<left>") 'next-buffer)
+(global-set-key (kbd "S-<right>") 'next-buffer)
+(global-set-key (kbd "S-<left>") 'previous-buffer)
 
 ;; key chords
 (key-chord-define-global "xx" nil)
