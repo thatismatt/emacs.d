@@ -153,7 +153,7 @@
 (require 'js2-mode)
 ;; (set-face-foreground 'js2-function-param "#0c0")
 (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
-(setq js2-global-externs '("$" "angular" "_" "Highcharts" "google" "d3" "chai" "it" "describe"))
+(setq js2-global-externs '("setTimeout" "setInterval" "require" "exports" "$" "angular" "_" "Highcharts" "google" "d3" "chai" "it" "describe" "suite" "test"))
 (require 'js2-refactor)
 (js2r-add-keybindings-with-prefix "C-c C-m")
 
