@@ -71,13 +71,15 @@
    `(bold ((t (:bold t))))
    `(button ((t (:foreground ,*purple* :underline t))))
    `(default ((t (:background ,*background* :foreground ,*normal*))))
-   `(header-line ((t (:foreground ,*constant*))))
-   `(highlight ((t (:background ,*background*))))
+   `(header-line ((t (:foreground ,*highlight-1*))))
+   `(highlight ((t (:foreground ,*background* :background ,*highlight-1*))))
    `(hl-line ((t (:weight bold))))
    `(info-xref ((t (:foreground ,*purple* :underline t))))
    `(region ((t (:background ,*visual-selection*))))
    `(secondary-selection ((t (:background ,*visual-selection-2*))))
    `(underline ((t (:underline t))))
+   `(success ((t (:foreground ,*green*))))
+   `(match ((t (:foreground ,*background* :background ,*highlight-1*))))
 
    ;; font-lock
    `(font-lock-builtin-face ((t (:foreground ,*builtins*))))
