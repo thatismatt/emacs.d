@@ -77,7 +77,7 @@
    `(info-xref ((t (:foreground ,*purple* :underline t))))
    `(region ((t (:background ,*visual-selection*))))
    `(secondary-selection ((t (:background ,*visual-selection-2*))))
-   `(underline ((nil (:underline t))))
+   `(underline ((t (:underline t))))
 
    ;; font-lock
    `(font-lock-builtin-face ((t (:foreground ,*builtins*))))
