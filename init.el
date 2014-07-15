@@ -202,6 +202,10 @@
   (lambda () (interactive) (matt-normal-buffer-switch 'next-buffer)))
 (define-key global-map (kbd "C-<menu>") 'other-window)
 
+;; window splitting - always horizontal
+(setq split-height-threshold 0)
+(setq split-width-threshold nil)
+
 ;; window dedication
 (defun matt-toggle-window-dedicated ()
   "Toggle whether the current active window is dedicated or not"
