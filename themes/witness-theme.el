@@ -73,7 +73,7 @@
    `(default ((t (:background ,*background* :foreground ,*normal*))))
    `(header-line ((t (:foreground ,*highlight-1*))))
    `(highlight ((t (:foreground ,*background* :background ,*highlight-1*))))
-   `(hl-line ((t (:weight bold))))
+   `(hl-line ((t (:weight bold :inherit nil))))
    `(info-xref ((t (:foreground ,*purple* :underline t))))
    `(region ((t (:background ,*visual-selection*))))
    `(secondary-selection ((t (:background ,*visual-selection-2*))))
