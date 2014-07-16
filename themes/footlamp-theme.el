@@ -30,7 +30,7 @@
        (*grey-d*             "#ddd")
        (*grey-e*             "#eee")
        (*red*                "#b10")
-       (*purple*             "#60c")
+       (*purple*             "#64a")
        (*blue*               "#009")
        (*blue-1*             "#26d")
        (*blue-2*             "#28b")
