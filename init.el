@@ -50,7 +50,7 @@
 ;; kill whole line
 (setq kill-whole-line t)
 
-;; middle click paste at point (not mouse cursor)
+;; middle click paste at point (not mouse pointer)
 (setq mouse-yank-at-point t)
 
 ;; turn off newline on save
@@ -74,19 +74,6 @@
 ;; smartparens
 (require 'smartparens)
 (setq sp-highlight-pair-overlay nil)
-
-;; vcs - disable on windows as too slow
-;(when (eq system-type 'windows-nt)
-;  (setq vc-handled-backends ())
-;  (global-git-gutter-mode 0))
-
-;; nrepl tweaks
-;; (setq nrepl-popup-stacktraces-in-repl t)
-;; default: (setq nrepl-popup-stacktraces-in-repl nil)
-
-;; auto complete
-;;(require 'auto-complete-config)
-;;(ac-config-default)
 
 ;; linum
 (require 'linum)
