@@ -12,7 +12,7 @@
 (unless (>= 24 emacs-major-version)
   (error "Requires Emacs 24 or later"))
 
-(deftheme witness "A dark color theme for Emacs by Matt Lee")
+(deftheme witness "The Witness color theme.")
 
 (custom-theme-set-variables
   'witness

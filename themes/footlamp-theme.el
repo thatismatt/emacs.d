@@ -12,7 +12,7 @@
 (unless (>= 24 emacs-major-version)
   (error "Requires Emacs 24 or later"))
 
-(deftheme footlamp "A light color theme for Emacs by Matt Lee")
+(deftheme footlamp "The Footlamp color theme.")
 
 (custom-theme-set-variables
   'footlamp
