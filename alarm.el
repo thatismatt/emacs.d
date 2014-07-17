@@ -22,6 +22,7 @@ Displays MESSAGE (and TIME) in `alarm-buffer'."
     (insert message)
     (insert "\n\n")))
 
+;;;###autoload
 (defun alarm (time message)
   "Set an alarm.
 An alarm will occur at TIME with the MESSAGE.
