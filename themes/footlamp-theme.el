@@ -79,7 +79,7 @@
    `(button ((t (:foreground ,*purple* :underline t))))
    `(default ((t (:background ,*background* :foreground ,*normal*))))
    `(header-line ((t (:foreground ,*highlight-1*))))
-   `(highlight ((t (:background ,*highlight-1*))))
+   `(highlight ((t (:background ,*highlight-1* :foreground ,*background*))))
    `(hl-line ((t (:weight bold :inherit nil))))
    `(info-xref ((t (:foreground ,*purple* :underline t))))
    `(region ((t (:background ,*visual-selection* :foreground nil))))
