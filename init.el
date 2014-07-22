@@ -61,7 +61,6 @@
 ;(put 'narrow-to-region 'disabled nil)
 ;(put 'narrow-to-page 'disabled nil)
 
-;; ibuffer
 (require 'ibuffer)
 (setq ibuffer-default-sorting-mode 'alphabetic)
 (setq ibuffer-formats
@@ -71,17 +70,14 @@
               (mode 16 16 :left :elide) " " filename-and-process)
         (mark " " (name 16 -1) " " filename)))
 
-;; smartparens
 (require 'smartparens)
 (setq sp-highlight-pair-overlay nil)
 
-;; linum
 (require 'linum)
 (setq linum-format "%4i ")
 (add-hook 'prog-mode-hook 'linum-mode)
 (add-hook 'css-mode-hook 'linum-mode)
 
-;; yas
 (require 'yasnippet)
 (add-hook 'prog-mode-hook
           '(lambda () (yas-minor-mode)))
@@ -93,7 +89,6 @@
 ;;        ~/.emacs.d/snippets is in there by default, and doesn't exist
 (yas-reload-all)
 
-;; speedbar
 (require 'speedbar)
 (setq speedbar-show-unknown-files t)
 (setq speedbar-use-images nil)
@@ -103,12 +98,10 @@
   (if (get-buffer " SPEEDBAR")
       (kill-buffer " SPEEDBAR")))
 
-;; magit
-;(setq magit-diff-options '("--ignore-space-change"))
+(require 'magit)
 (setq magit-status-buffer-switch-function 'switch-to-buffer)
-;(setq magit-server-window-for-commit nil)
+;;(setq magit-server-window-for-commit nil)
 
-;; org
 (require 'org)
 (setq org-todo-keywords '((type "TODO" "DOING" "DONE" "|" "POSTPONED")))
 (setq org-todo-keyword-faces
@@ -129,40 +122,25 @@
 (define-key org-mode-map (kbd "C-<left>") nil)
 (define-key org-mode-map (kbd "C-<right>") nil)
 
-;; hl line
 ;(set-face-background 'hl-line "#323")
 ;(set-face-attribute 'hl-line nil :underline nil)
 
-;; whitespace mode
 (setq whitespace-style '(face tabs empty trailing))
 
-;; js2
 (require 'js2-mode)
-;; (set-face-foreground 'js2-function-param "#0c0")
 (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
 (setq js2-global-externs '("setTimeout" "setInterval" "require" "exports" "$" "angular" "_" "Highcharts" "google" "d3" "chai" "it" "describe" "suite" "test"))
 (require 'js2-refactor)
 (js2r-add-keybindings-with-prefix "C-c C-m")
 
-;; skewer mode
-;; (add-hook 'js2-mode-hook 'skewer-mode)
-;; (setq httpd-port 8081) ; default is 8080
-
-;; auto complete for js2
-;; (add-hook 'js2-mode-hook 'ac-js2-mode)
-;; (setq ac-js2-evaluate-calls t)
-
-;; web
 (require 'web-mode)
 (setq web-mode-indent-style 2)
 (setq web-mode-markup-indent-offset 2)
 (setq web-mode-code-indent-offset 2)
 
-;; css
 (require 'css-mode)
 (setq css-indent-offset 4)
 
-;; scala
 (setq sbt:program-name "~/opt/sbt/sbt")
 (add-hook 'sbt-mode-hook '(lambda ()
   (setq compilation-skip-threshold 1)
@@ -193,7 +171,6 @@
 (setq split-height-threshold 0)
 (setq split-width-threshold nil)
 
-;; window dedication
 (defun matt-toggle-window-dedicated ()
   "Toggle whether the current active window is dedicated or not"
   (interactive)
@@ -217,7 +194,6 @@
     (speedbar)
     (set-frame-position (car (frame-list)) 0 top)))
 
-;; journal
 (defun matt-journal ()
   (interactive)
   (find-file "~/work/journal.org"))
@@ -232,7 +208,7 @@
   (set-face-attribute 'default nil :height (* sz 10)))
 
 (defun matt-insert-date ()
-  "Insert a timestamp. e.g 16-Jun-2014"
+  "Insert the current date. e.g 16-Jun-2014"
   (interactive)
   (insert (format-time-string "%d-%b-%Y" (current-time))))
 
