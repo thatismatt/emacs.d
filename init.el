@@ -186,6 +186,8 @@
      (list (ido-read-file-name "Find file: " default-directory) t)))
   (find-file file wildcards))
 (define-key ibuffer-mode-map "\C-x\C-f" 'ibuffer-ido-find-file)
+(define-key ibuffer-name-map [(mouse-1)] 'ibuffer-mouse-visit-buffer)
+(define-key ibuffer-name-map [(mouse-2)] 'ibuffer-mouse-toggle-mark)
 
 (require 'recentf)
 (require 'dash)
