@@ -7,7 +7,6 @@
 
 (require 'cl)
 (require 'package)
-(require 'dash)
 
 (add-to-list 'load-path (expand-file-name "." user-emacs-directory))
 
@@ -22,6 +21,7 @@
     ;;anzu
     browse-kill-ring
     company
+    dash
     diff-hl
     elisp-slime-nav
     gitconfig-mode
@@ -188,6 +188,7 @@
 (define-key ibuffer-mode-map "\C-x\C-f" 'ibuffer-ido-find-file)
 
 (require 'recentf)
+(require 'dash)
 (recentf-mode 1)
 (setq recentf-save-file (expand-file-name "recentf" user-emacs-directory)
       recentf-max-saved-items 500
