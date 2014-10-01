@@ -183,6 +183,9 @@
    `(web-mode-html-tag-face ((t (:foreground ,*function*))))
    `(web-mode-html-attr-name-face ((t (:foreground ,*variable*))))
    `(web-mode-block-attr-name-face ((t (:foreground ,*variable*))))
+
+   ;; js2
+   `(js2-external-variable ((t (:foreground ,*warning*))))
    ))
 
 ;;;###autoload
