@@ -191,11 +191,11 @@
 
 (require 'recentf)
 (require 'dash)
-(recentf-mode 1)
 (setq recentf-save-file (expand-file-name "recentf" user-emacs-directory)
       recentf-max-saved-items 500
       recentf-max-menu-items 15
       recentf-auto-cleanup 'never) ;; disable - can cause problems with remote files
+(recentf-mode 1)
 (defun matt-recentf-ido-find-file ()
   "Find a recent file using ido."
   (interactive)
