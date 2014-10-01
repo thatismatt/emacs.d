@@ -63,7 +63,7 @@ For example \"11:30am\"."
   (tabulated-list-init-header))
 
 (defun alarm-get-buffer ()
-  "TODO."
+  "Return the alarm list buffer, creating it if necessary."
   (let ((buffer (get-buffer-create "*Alarm List*")))
     (with-current-buffer buffer
       (alarm-mode)
