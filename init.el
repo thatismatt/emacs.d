@@ -327,7 +327,7 @@
 ;;   (local-set-key (kbd "C-x '") 'sbt-run-previous-command)
 ;;   (local-set-key (kbd "C-M-x") 'sbt-send-region)))
 
-;; auto mode
+(require 'sgml-mode)
 (add-to-list 'auto-mode-alist '("\\.\\(jspf?\\|tag\\)$" . html-mode))
 
 (require 'alarm)
