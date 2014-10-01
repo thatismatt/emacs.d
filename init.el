@@ -299,6 +299,7 @@
           1 font-lock-warning-face t))))
 (add-hook 'prog-mode-hook 'matt-font-lock-comment-annotations)
 
+(add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
 (add-hook 'emacs-lisp-mode-hook 'elisp-slime-nav-mode)
 (add-hook 'emacs-lisp-mode-hook 'rainbow-delimiters-mode)
 (add-hook 'emacs-lisp-mode-hook 'rainbow-mode)
