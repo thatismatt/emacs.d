@@ -330,6 +330,8 @@
 ;; auto mode
 (add-to-list 'auto-mode-alist '("\\.\\(jspf?\\|tag\\)$" . html-mode))
 
+(require 'alarm)
+
 ;; window & buffer switching
 (defun matt-normal-buffer-switch (f)
   "Switch buffers with `f` until the `buffer-name` doesn't start with a \"*\"."
