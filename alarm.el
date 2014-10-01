@@ -53,11 +53,15 @@ For example \"11:30am\"."
 (defun alarm-refresh ()
   "Refresh the table of alarms."
   (setq tabulated-list-format
-        (vector '("Alarm" 50 t)
-                '("Time"  20 t)))
+        (vector '("Triggered" 20 t)
+                '("Alarm"     50 t)
+                '("Time"      20 t)))
   (setq tabulated-list-use-header-line t)
   (let ((table-contents (mapcar
-                         (lambda (x) `("" [,(cadr x) ,(car x)]))
+                         (lambda (x) `("" [,(if (timer--triggered (caddr x)) "✔" "✗") ;; triggered
+                                           ,(cadr x) ;; name
+                                           ,(car x) ;; time
+                                           ]))
                          alarm-alist)))
     (setq tabulated-list-entries table-contents))
   (tabulated-list-init-header))
