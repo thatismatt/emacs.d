@@ -37,7 +37,7 @@
        (*cyan*               "#067")
        (*green*              "#071")
        (*green-1*            "#8a0")
-       (*yellow*             "#e90")
+       (*yellow*             "#c70")
 
        (*background*         *grey-e*)
        (*normal*             *grey-1*)
