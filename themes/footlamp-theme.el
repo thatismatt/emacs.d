@@ -64,6 +64,7 @@
        (*highlight-1*        *blue*)
        (*highlight-2*        *red*)
        (*highlight-3*        *yellow*)
+       (*highlight-4*        *green*)
        (*mode-line-bg*       *grey-c*)
        (*mode-line-fg*       *grey-4*)
        (*mode-line-bg-2*     *grey-d*)
@@ -156,6 +157,7 @@
    `(magit-log-head-label-head ((t (:foreground ,*highlight-1* :background nil :box 1))))
    `(magit-log-head-label-local ((t (:foreground ,*highlight-2* :background nil :box 1))))
    `(magit-log-head-label-remote ((t (:foreground ,*highlight-3* :background nil :box 1))))
+   `(magit-log-head-label-default ((t (:foreground ,*highlight-4* :background nil :box 1))))
 
    ;; speedbar
    `(speedbar-file-face ((t (:foreground ,*purple*))))
