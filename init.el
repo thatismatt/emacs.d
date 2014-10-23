@@ -39,12 +39,11 @@
     js2-mode
     js2-refactor
     sbt-mode
+    scala-mode2
     ido-ubiquitous
     flx-ido
     markdown-mode
     ;;web-mode
-    ;;gitgutter?
-    ;;scala
     )
   "A list of packages to ensure are installed at launch.")
 
