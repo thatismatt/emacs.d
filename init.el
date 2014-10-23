@@ -340,10 +340,14 @@
   (kill-buffer (current-buffer)))
 
 ;; window & buffer switching
+(defun matt-buffer-swith-ignore-p (bn)
+  "Ignore special buffers except *scratch*."
+  (and (not (equal "*scratch*" bn))
+       (equal "*" (substring bn 0 1))))
 (defun matt-normal-buffer-switch (f)
-  "Switch buffers with `f` until the `buffer-name` doesn't start with a \"*\"."
+  "Switch buffers with `f` ignoring those when `matt-buffer-swith-ignore-p' is true"
   (funcall f)
-  (if (equal "*" (substring (buffer-name) 0 1))
+  (if (matt-buffer-swith-ignore-p (buffer-name))
       (progn
         (message "Skipped buffer %s" (buffer-name))
         (matt-normal-buffer-switch f))))
