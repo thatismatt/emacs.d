@@ -335,6 +335,10 @@
 
 (require 'alarm)
 
+(defun matt-kill-this-buffer ()
+  (interactive)
+  (kill-buffer (current-buffer)))
+
 ;; window & buffer switching
 (defun matt-normal-buffer-switch (f)
   "Switch buffers with `f` until the `buffer-name` doesn't start with a \"*\"."
@@ -428,7 +432,7 @@
 ;; KEYS
 
 ;; kill buffer - without confirmation
-(global-set-key (kbd "C-x k") 'kill-this-buffer)
+(global-set-key (kbd "C-x k") 'matt-kill-this-buffer)
 
 (global-set-key (kbd "M-SPC") 'matt-just-one-space-multiline)
 
