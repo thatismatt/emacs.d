@@ -74,6 +74,14 @@
 
 (matt-install-packages)
 
+(require 'dash)
+
+(defun matt-packages-installed-implicitly ()
+  "List packages that are installed (i.e. in `package-alist'),
+   but not listed explicitly in `matt-packages'"
+  (let ((pkgs (-map 'car package-alist)))
+    (-filter (lambda (x) (not (-contains-p matt-packages x))) pkgs)))
+
 ;; hide tool bar & menu bar
 (tool-bar-mode -1)
 (menu-bar-mode -1)
@@ -189,7 +197,6 @@
 (define-key ibuffer-name-map [(mouse-2)] 'ibuffer-mouse-toggle-mark)
 
 (require 'recentf)
-(require 'dash)
 (setq recentf-save-file (expand-file-name "recentf" user-emacs-directory)
       recentf-max-saved-items 500
       recentf-max-menu-items 15
