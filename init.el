@@ -43,6 +43,7 @@
     ido-ubiquitous
     flx-ido
     markdown-mode
+    highlight-symbol
     ;;web-mode
     )
   "A list of packages to ensure are installed at launch.")
@@ -152,6 +153,10 @@
 ;(put 'narrow-to-region 'disabled nil)
 ;(put 'narrow-to-page 'disabled nil)
 
+;; keys
+(setq matt-keymap (make-sparse-keymap))
+(global-set-key (kbd "C-,") matt-keymap)
+
 (require 'smex)
 ;; (setq smex-save-file (expand-file-name ".smex-items" prelude-savefile-dir))
 (smex-initialize)
@@ -253,6 +258,11 @@
 ;; NOTE - yas fails to load if a dir that doesn't exist is in yas-snippets-dir
 ;;        ~/.emacs.d/snippets is in there by default, and doesn't exist
 (yas-reload-all)
+
+(require 'highlight-symbol)
+(define-key matt-keymap (kbd "C-,") 'highlight-symbol-at-point)
+(define-key matt-keymap (kbd "C-n") 'highlight-symbol-next)
+(define-key matt-keymap (kbd "C-p") 'highlight-symbol-prev)
 
 (require 'projectile)
 (projectile-global-mode)
