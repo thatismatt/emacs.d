@@ -462,6 +462,14 @@
         ((custom-theme-enabled-p 'witness) (disable-theme 'witness) (load-theme 'footlamp t))
         (t (message "Current theme unknown."))))
 
+(defun matt-create-scratch-buffer ()
+  "Create a new scratch buffer."
+  (interactive)
+  (let ((buf (generate-new-buffer "*scratch*")))
+    (switch-to-buffer buf)
+    (funcall initial-major-mode)
+    (insert initial-scratch-message)))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; KEYS
 
