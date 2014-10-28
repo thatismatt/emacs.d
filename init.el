@@ -310,6 +310,10 @@
 (define-key org-mode-map (kbd "C-<left>") nil)
 (define-key org-mode-map (kbd "C-<right>") nil)
 
+(require 'markdown)
+(define-key markdown-mode-map (kbd "M-<left>") nil)
+(define-key markdown-mode-map (kbd "M-<right>") nil)
+
 (defun matt-font-lock-comment-annotations ()
   "Highlight well known comment annotations."
   (font-lock-add-keywords
