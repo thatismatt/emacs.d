@@ -377,6 +377,16 @@
   (lambda () (interactive) (matt-normal-buffer-switch 'next-buffer)))
 (define-key global-map (kbd "C-<menu>") 'other-window)
 
+(defun matt-swap-windows ()
+  "Swap the buffers in `selected-window' and `next-window'."
+  (interactive)
+  (let* ((this (selected-window))
+         (other (next-window))
+         (this-buffer (window-buffer this))
+         (other-buffer (window-buffer other)))
+    (set-window-buffer other this-buffer)
+    (set-window-buffer this other-buffer)))
+
 (defun matt-toggle-window-dedicated ()
   "Toggle whether the current active window is dedicated or not"
   (interactive)
