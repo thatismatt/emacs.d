@@ -260,6 +260,7 @@
 (yas-reload-all)
 
 (require 'highlight-symbol)
+(setq highlight-symbol-colors '("#f9b" "#fb7" "#fe8" "#ce9" "#9fb" "#9dd" "#9bf" "#b9f"))
 (define-key matt-keymap (kbd "C-,") 'highlight-symbol-at-point)
 (define-key matt-keymap (kbd "C-n") 'highlight-symbol-next)
 (define-key matt-keymap (kbd "C-p") 'highlight-symbol-prev)
