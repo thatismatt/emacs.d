@@ -88,6 +88,7 @@
    `(underline ((t (:underline t))))
    `(success ((t (:foreground ,*green*))))
    `(match ((t (:foreground ,*background* :background ,*highlight-1*))))
+   `(error ((t (:foreground ,*warning*))))
 
    ;; font-lock
    `(font-lock-builtin-face ((t (:foreground ,*builtins*))))
