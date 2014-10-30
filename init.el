@@ -310,7 +310,7 @@
 (define-key org-mode-map (kbd "C-<left>") nil)
 (define-key org-mode-map (kbd "C-<right>") nil)
 
-(require 'markdown)
+(require 'markdown-mode)
 (define-key markdown-mode-map (kbd "M-<left>") nil)
 (define-key markdown-mode-map (kbd "M-<right>") nil)
 
