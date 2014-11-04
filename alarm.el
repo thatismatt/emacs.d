@@ -46,8 +46,8 @@ For example \"11:30am\"."
   "Get the alarm set for TIME."
   (assoc time alarm-alist))
 
-(define-derived-mode alarm-mode tabulated-list-mode "Alarm Menu"
-  "A major mode for viewing a list of alarms."
+(define-derived-mode alarm-mode tabulated-list-mode "Alarm List"
+  "A major mode for viewing the list of alarms."
   (add-hook 'tabulated-list-revert-hook 'alarm-refresh nil t))
 
 (defun alarm-refresh ()
@@ -55,16 +55,32 @@ For example \"11:30am\"."
   (setq tabulated-list-format
         (vector '("Triggered" 20 t)
                 '("Alarm"     50 t)
-                '("Time"      20 t)))
+                '("Time"      20 t)
+                '("Time till" 20 t)))
   (setq tabulated-list-use-header-line t)
   (let ((table-contents (mapcar
-                         (lambda (x) `("" [,(if (timer--triggered (caddr x)) "✔" "✗") ;; triggered
+                         (lambda (x) `("" [,(if (alarm-triggered x) "✔" "✗") ;; triggered
                                            ,(cadr x) ;; name
                                            ,(car x) ;; time
+                                           ,(if (alarm-triggered x) "--" (alarm-format-seconds (alarm-seconds-till x))) ;; time till
                                            ]))
                          alarm-alist)))
     (setq tabulated-list-entries table-contents))
   (tabulated-list-init-header))
+
+(defun alarm-triggered (a)
+  (timer--triggered (caddr a)))
+
+(defun alarm-seconds-till (a)
+  (floor (- (float-time (timer--time (caddr a)))
+            (float-time (current-time)))))
+
+(defun alarm-format-seconds (seconds)
+  (let ((format (cond
+   ((>= seconds (* 60 60)) "%hh %mm %ss")
+   ((>= seconds 60)        "%mm %ss")
+   (t                      "%ss"))))
+    (format-seconds format seconds)))
 
 (defun alarm-get-buffer ()
   "Return the alarm list buffer, creating it if necessary."
