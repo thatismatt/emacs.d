@@ -14,10 +14,6 @@
 
 (deftheme witness "The Witness color theme.")
 
-(custom-theme-set-variables
-  'witness
-  '(rainbow-delimiters-max-face-count 5))
-
 (let* ((*grey-1*             "#111")
        (*grey-2*             "#222")
        (*grey-3*             "#333")
@@ -128,11 +124,15 @@
    `(sp-show-pair-match-face ((t (:background ,*visual-selection-3*))))
 
    ;; rainbow delimiters
-   `(rainbow-delimiters-depth-1-face ((t (:foreground "#800"))))
-   `(rainbow-delimiters-depth-2-face ((t (:foreground "#23b"))))
-   `(rainbow-delimiters-depth-3-face ((t (:foreground "#070"))))
-   `(rainbow-delimiters-depth-4-face ((t (:foreground "#808"))))
-   `(rainbow-delimiters-depth-5-face ((t (:foreground "#870"))))
+   `(rainbow-delimiters-depth-1-face ((t (:foreground "#900"))))
+   `(rainbow-delimiters-depth-2-face ((t (:foreground "#a30"))))
+   `(rainbow-delimiters-depth-3-face ((t (:foreground "#870"))))
+   `(rainbow-delimiters-depth-4-face ((t (:foreground "#070"))))
+   `(rainbow-delimiters-depth-5-face ((t (:foreground "#156"))))
+   `(rainbow-delimiters-depth-6-face ((t (:foreground "#23b"))))
+   `(rainbow-delimiters-depth-7-face ((t (:foreground "#41a"))))
+   `(rainbow-delimiters-depth-8-face ((t (:foreground "#808"))))
+   `(rainbow-delimiters-depth-9-face ((t (:foreground "#a06"))))
 
    ;; search
    `(isearch ((t (:background ,*search-1* :foreground ,*background*))))
