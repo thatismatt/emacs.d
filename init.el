@@ -290,6 +290,7 @@
 
 (require 'ediff)
 (setq ediff-window-setup-function 'ediff-setup-windows-plain) ;; don't start another frame
+(setq ediff-split-window-function 'split-window-horizontally)
 
 (require 'org)
 (setq org-todo-keywords '((type "TODO" "DOING" "DONE" "|" "POSTPONED")))
