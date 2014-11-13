@@ -500,6 +500,9 @@
 (global-set-key (kbd "S-<right>") 'next-buffer)
 (global-set-key (kbd "S-<left>") 'previous-buffer)
 
+(global-set-key (kbd "C-<tab>") 'next-buffer)
+(global-set-key (kbd "C-S-<iso-lefttab>") 'previous-buffer)
+
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 (global-set-key (kbd "C-o") 'other-window)
 
