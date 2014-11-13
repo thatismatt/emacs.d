@@ -277,6 +277,9 @@
   (if (get-buffer " SPEEDBAR")
       (kill-buffer " SPEEDBAR")))
 
+(require 'multiple-cursors)
+(define-key matt-keymap (kbd "m c") 'mc/mark-more-like-this-extended)
+
 (require 'move-text)
 (global-set-key (kbd "C-S-<up>") 'move-text-up)
 (global-set-key (kbd "C-S-<down>") 'move-text-down)
