@@ -458,7 +458,7 @@
     (define-key map '[?=] 'enlarge-window)
     (set-temporary-overlay-map map t)))
 
-(defun matt-theme-toggle-light-dark ()
+(defun matt-toggle-theme ()
   (interactive)
   (cond ((custom-theme-enabled-p 'footlamp) (disable-theme 'footlamp) (load-theme 'witness t))
         ((custom-theme-enabled-p 'witness) (disable-theme 'witness) (load-theme 'footlamp t))
