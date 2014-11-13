@@ -277,6 +277,10 @@
   (if (get-buffer " SPEEDBAR")
       (kill-buffer " SPEEDBAR")))
 
+(require 'move-text)
+(global-set-key (kbd "C-S-<up>") 'move-text-up)
+(global-set-key (kbd "C-S-<down>") 'move-text-down)
+
 (require 'magit)
 ;;(setq magit-diff-options '("--ignore-space-change"))
 (setq magit-status-buffer-switch-function 'switch-to-buffer)
@@ -505,6 +509,3 @@
 
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 (global-set-key (kbd "C-o") 'other-window)
-
-(global-set-key (kbd "C-S-<up>") 'move-text-up)
-(global-set-key (kbd "C-S-<down>") 'move-text-down)
