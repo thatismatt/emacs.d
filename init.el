@@ -489,6 +489,12 @@
                  (message "%s deleted." filename))
         (message "%s not deleted." filename)))))
 
+(defun matt-insert-filename ()
+  (interactive)
+  (let ((filename (buffer-file-name)))
+    (if (not filename) (message "This buffer is not associated with a file.")
+      (insert (file-name-base filename)))))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; KEYS
 
