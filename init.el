@@ -482,13 +482,12 @@
 (defun matt-delete-file-and-buffer ()
   (interactive)
   (let ((filename (buffer-file-name)))
-    (if (not filename)
-        (message "This buffer is not associated with a file.")
-        (if (y-or-n-p (format "Are you sure you want to delete %s?" filename))
-            (progn (delete-file filename)
-                   (kill-buffer (current-buffer))
-                   (message "%s deleted." filename))
-          (message "%s not deleted." filename)))))
+    (if (not filename) (message "This buffer is not associated with a file.")
+      (if (y-or-n-p (format "Are you sure you want to delete %s?" filename))
+          (progn (delete-file filename)
+                 (kill-buffer (current-buffer))
+                 (message "%s deleted." filename))
+        (message "%s not deleted." filename)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; KEYS
