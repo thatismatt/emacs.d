@@ -29,7 +29,7 @@
        (*purple*             "#64a")
        (*blue*               "#009")
        (*blue-1*             "#26d")
-       (*blue-2*             "#28b")
+       (*blue-2*             "#059")
        (*cyan*               "#067")
        (*green*              "#071")
        (*green-1*            "#8a0")
@@ -43,7 +43,7 @@
        (*visual-selection-2* "#cde")
        (*visual-selection-3* "#bcd")
 
-       (*comments*           *grey-9*)
+       (*comments*           *grey-8*)
        (*keywords*           *blue*)
        (*constant*           *cyan*)
        (*type-face*          *blue-2*)
