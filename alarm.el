@@ -10,7 +10,7 @@
 (defvar alarm-alist nil
   "An alist of alarms.")
 
-(defvar alarm-buffer "*alarm*")
+(defvar alarm-buffer "*Alarm*")
 
 (defun alarm-action (message time)
   "The actual alarm action.
