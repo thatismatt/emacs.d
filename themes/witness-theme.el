@@ -51,6 +51,7 @@
        (*number*             *blue-1*)
        (*string*             *green*)
        (*builtins*           *pink*)
+       (*link*               *purple*)
        (*warning*            *red*)
        (*regexp*             "#a36")
        (*search-1*           *yellow*)
@@ -73,12 +74,12 @@
    'witness
 
    `(bold ((t (:bold t))))
-   `(button ((t (:foreground ,*purple* :underline t))))
+   `(button ((t (:foreground ,*link* :underline t))))
    `(default ((t (:background ,*background* :foreground ,*normal*))))
    `(header-line ((t (:foreground ,*highlight-1*))))
    `(highlight ((t (:background ,*highlight-1* :foreground ,*background*))))
    `(hl-line ((t (:weight bold :inherit nil))))
-   `(info-xref ((t (:foreground ,*purple* :underline t))))
+   `(info-xref ((t (:foreground ,*link* :underline t))))
    `(region ((t (:background ,*visual-selection* :foreground nil))))
    `(secondary-selection ((t (:background ,*visual-selection-2*))))
    `(underline ((t (:underline t))))
@@ -160,10 +161,9 @@
    `(magit-log-head-label-remote ((t (:foreground ,*highlight-3* :background nil :box 1))))
    `(magit-log-head-label-default ((t (:foreground ,*highlight-4* :background nil :box 1))))
 
-
    ;; speedbar
-   `(speedbar-file-face ((t (:foreground ,*purple*))))
-   `(speedbar-directory-face ((t (:foreground ,*purple*))))
+   `(speedbar-file-face ((t (:foreground ,*link*))))
+   `(speedbar-directory-face ((t (:foreground ,*link*))))
    `(speedbar-selected-face ((t (:foreground ,*highlight-2*))))
    `(speedbar-highlight-face ((t (:foreground ,*grey-a*))))
    `(speedbar-button-face ((t (:foreground ,*green*))))
@@ -174,7 +174,7 @@
    `(org-code ((t (:foreground ,*green*))))
    `(org-table ((t (:foreground ,*blue-1*))))
    `(org-document-title ((t (:foreground ,*yellow*))))
-   `(org-document-info-keyword ((t (:foreground ,*purple*))))
+   `(org-document-info-keyword ((t (:foreground ,*link*))))
 
    ;; eshell
    `(eshell-prompt ((t (:foreground ,*highlight-2*))))

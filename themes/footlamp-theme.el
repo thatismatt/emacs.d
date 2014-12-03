@@ -26,10 +26,9 @@
        (*grey-d*             "#ddd")
        (*grey-e*             "#eee")
        (*red*                "#b10")
-       (*purple*             "#64a")
-       (*blue*               "#009")
-       (*blue-1*             "#26d")
-       (*blue-2*             "#059")
+       (*blue*               "#00b")
+       (*blue-1*             "#119")
+       (*blue-2*             "#049")
        (*cyan*               "#067")
        (*green*              "#071")
        (*green-1*            "#8a0")
@@ -50,7 +49,8 @@
        (*function*           *blue-2*)
        (*number*             *blue-2*)
        (*string*             *green*)
-       (*builtins*           *purple*)
+       (*builtins*           *blue-1*)
+       (*link*               *blue*)
        (*warning*            *red*)
        (*regexp*             "#a36")
        (*search-1*           *yellow*)
@@ -73,12 +73,12 @@
    'footlamp
 
    `(bold ((t (:bold t))))
-   `(button ((t (:foreground ,*purple* :underline t))))
+   `(button ((t (:foreground ,*link* :underline t))))
    `(default ((t (:background ,*background* :foreground ,*normal*))))
    `(header-line ((t (:foreground ,*highlight-1*))))
    `(highlight ((t (:background ,*highlight-1* :foreground ,*background*))))
    `(hl-line ((t (:weight bold :inherit nil))))
-   `(info-xref ((t (:foreground ,*purple* :underline t))))
+   `(info-xref ((t (:foreground ,*link* :underline t))))
    `(region ((t (:background ,*visual-selection* :foreground nil))))
    `(secondary-selection ((t (:background ,*visual-selection-2*))))
    `(underline ((t (:underline t))))
@@ -124,8 +124,6 @@
    `(sp-show-pair-match-face ((t (:background ,*visual-selection-3*))))
 
    ;; rainbow delimiters
-
-   ;; rainbow delimiters
    `(rainbow-delimiters-depth-1-face ((t (:foreground "#900"))))
    `(rainbow-delimiters-depth-2-face ((t (:foreground "#a30"))))
    `(rainbow-delimiters-depth-3-face ((t (:foreground "#870"))))
@@ -163,8 +161,8 @@
    `(magit-log-head-label-default ((t (:foreground ,*highlight-4* :background nil :box 1))))
 
    ;; speedbar
-   `(speedbar-file-face ((t (:foreground ,*purple*))))
-   `(speedbar-directory-face ((t (:foreground ,*purple*))))
+   `(speedbar-file-face ((t (:foreground ,*link*))))
+   `(speedbar-directory-face ((t (:foreground ,*link*))))
    `(speedbar-selected-face ((t (:foreground ,*highlight-2*))))
    `(speedbar-highlight-face ((t (:foreground ,*grey-a*))))
    `(speedbar-button-face ((t (:foreground ,*green*))))
@@ -175,7 +173,7 @@
    `(org-code ((t (:foreground ,*green*))))
    `(org-table ((t (:foreground ,*blue-1*))))
    `(org-document-title ((t (:foreground ,*yellow*))))
-   `(org-document-info-keyword ((t (:foreground ,*purple*))))
+   `(org-document-info-keyword ((t (:foreground ,*link*))))
 
    ;; eshell
    `(eshell-prompt ((t (:foreground ,*highlight-2*))))
