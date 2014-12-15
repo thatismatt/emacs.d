@@ -299,13 +299,18 @@
 (setq ediff-window-setup-function 'ediff-setup-windows-plain) ;; don't start another frame
 (setq ediff-split-window-function 'split-window-horizontally)
 
+(defface org-todo-face '((t (:foreground "#f00"))) "org mode face for TODO items")
+(defface org-done-face '((t (:foreground "#0f0"))) "org mode face for TODO items")
+(defface org-doing-face '((t (:foreground "#ff0"))) "org mode face for TODO items")
+(defface org-postponed-face '((t (:foreground "#666"))) "org mode face for TODO items")
+
 (require 'org)
 (setq org-todo-keywords '((type "TODO" "DOING" "DONE" "|" "POSTPONED")))
 (setq org-todo-keyword-faces
-      '(("TODO" :foreground "#d55" :weight bold)
-        ("DONE" :foreground "#5d5" :weight bold)
-        ("DOING" :foreground "#ed5" :weight bold)
-        ("POSTPONED" :foreground "#aa9" :weight bold)))
+      '(("TODO" 'org-todo-face)
+        ("DONE" 'org-done-face)
+        ("DOING" org-doing-face)
+        ("POSTPONED" 'org-postponed-face)))
 (setq org-startup-folded nil)
 (setq org-log-done nil)
 (setq org-export-html-preamble nil)

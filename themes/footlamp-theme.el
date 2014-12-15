@@ -174,6 +174,10 @@
    `(org-table ((t (:foreground ,*blue-1*))))
    `(org-document-title ((t (:foreground ,*yellow*))))
    `(org-document-info-keyword ((t (:foreground ,*link*))))
+   `(org-todo-face ((t (:foreground ,*red*))))
+   `(org-done-face ((t (:foreground ,*green*))))
+   `(org-doing-face ((t (:foreground ,*yellow*))))
+   `(org-postponed-face ((t (:foreground ,*grey-4*))))
 
    ;; eshell
    `(eshell-prompt ((t (:foreground ,*highlight-2*))))
