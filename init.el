@@ -44,6 +44,7 @@
     flx-ido
     markdown-mode
     highlight-symbol
+    multiple-cursors
     ;;web-mode
     )
   "A list of packages to ensure are installed at launch.")
