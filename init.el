@@ -46,6 +46,7 @@
     markdown-mode
     highlight-symbol
     multiple-cursors
+    tuareg
     ;;web-mode
     )
   "A list of packages to ensure are installed at launch.")
@@ -367,6 +368,8 @@
 ;;   (local-set-key (kbd "M-.") 'sbt-find-definitions)
 ;;   (local-set-key (kbd "C-x '") 'sbt-run-previous-command)
 ;;   (local-set-key (kbd "C-M-x") 'sbt-send-region)))
+
+(require 'tuareg)
 
 (require 'sgml-mode)
 (add-to-list 'auto-mode-alist '("\\.\\(jspf?\\|tag\\)$" . html-mode))
