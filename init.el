@@ -392,6 +392,11 @@
   (lambda () (interactive) (matt-normal-buffer-switch 'next-buffer)))
 (define-key global-map (kbd "C-<menu>") 'other-window)
 
+(defun matt-mru-buffer ()
+  "Switch to the most recently used buffer."
+  (interactive)
+  (switch-to-buffer (other-buffer (current-buffer) 1)))
+
 (defun matt-swap-windows ()
   "Swap the buffers in `selected-window' and `next-window'."
   (interactive)
@@ -517,6 +522,8 @@
 
 (global-set-key (kbd "S-<right>") 'next-buffer)
 (global-set-key (kbd "S-<left>") 'previous-buffer)
+(global-set-key (kbd "S-<up>") 'matt-mru-buffer)
+(global-set-key (kbd "S-<down>") 'ibuffer)
 
 (global-set-key (kbd "C-<tab>") 'next-buffer)
 (global-set-key (kbd "C-S-<iso-lefttab>") 'previous-buffer)
