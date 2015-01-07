@@ -40,6 +40,7 @@
     js2-refactor
     sbt-mode
     scala-mode2
+    ensime
     ido-ubiquitous
     flx-ido
     markdown-mode
@@ -355,7 +356,9 @@
 (setq css-indent-offset 4)
 (add-hook 'css-mode-hook 'rainbow-mode)
 
-;;(require 'scala)
+(require 'scala-mode2)
+(require 'ensime)
+(add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
 ;;(setq sbt:program-name "~/opt/sbt/sbt")
 ;;(add-hook 'sbt-mode-hook '(lambda ()
 ;;  (setq compilation-skip-threshold 1)
