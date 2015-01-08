@@ -10,17 +10,34 @@
 (defvar alarm-alist nil
   "An alist of alarms.")
 
-(defvar alarm-buffer "*Alarm*")
+(defvar alarm-popup-buffer "*Alarm*")
 
 (defun alarm-action (message time)
   "The actual alarm action.
-Displays MESSAGE (and TIME) in `alarm-buffer'."
+Displays MESSAGE (and TIME) in `alarm-popup-buffer'."
   (progn
-    (switch-to-buffer-other-frame alarm-buffer)
+    (switch-to-buffer-other-frame alarm-popup-buffer)
     (goto-char (point-max))
     (insert (format "\n### ALARM (%s) ###\n\n" time))
     (insert message)
-    (insert "\n\n")))
+    (insert "\n\n")
+    (alarm-popup-mode)))
+
+(defun alarm-popup-kill ()
+  (interactive)
+  (kill-buffer (current-buffer))
+  (delete-frame))
+
+(defvar alarm-popup-mode-map
+  (let ((map (make-sparse-keymap)))
+    (define-key map  (kbd "q") 'alarm-popup-kill)
+    map)
+  "Keymap for `alarm-popup-mode'.")
+
+(define-derived-mode alarm-popup-mode fundamental-mode
+  "Alarm Popup"
+  "A mode for the Alarm Popup"
+  (use-local-map alarm-popup-mode-map))
 
 ;;;###autoload
 (defun alarm (time message)
