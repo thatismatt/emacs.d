@@ -185,10 +185,13 @@
 (setq ibuffer-default-sorting-mode 'alphabetic)
 (setq ibuffer-formats
       '((mark modified read-only " "
+              (name 52 52 :left :elide) " "
+              filename-and-process)
+        (mark modified read-only " "
               (name 25 25 :left :elide) " "
               (size 9 -1 :right) " "
-              (mode 16 16 :left :elide) " " filename-and-process)
-        (mark " " (name 16 -1) " " filename)))
+              (mode 16 16 :left :elide) " "
+              filename-and-process)))
 (defun ibuffer-ido-find-file (file &optional wildcards)
   "Like `ido-find-file', but default to the directory of the buffer at point."
   (interactive
