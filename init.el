@@ -177,9 +177,9 @@
 (setq ido-default-file-method 'selected-window)
 (setq ido-auto-merge-work-directories-length -1)
 (setq ido-use-faces nil)
-(ido-mode +1)
-(ido-ubiquitous-mode +1)
-(flx-ido-mode +1)
+(ido-mode 1)
+(ido-ubiquitous-mode 1)
+(flx-ido-mode 1)
 
 (require 'ibuffer)
 (setq ibuffer-default-sorting-mode 'alphabetic)
@@ -236,7 +236,7 @@
 (setq sp-autoskip-closing-pair 'always)
 (setq sp-hybrid-kill-entire-symbol nil)
 (sp-use-paredit-bindings)
-(show-smartparens-global-mode +1)
+(show-smartparens-global-mode 1)
 (add-hook 'prog-mode-hook 'smartparens-mode)
 
 (require 'company)
@@ -294,7 +294,7 @@
 (global-set-key (kbd "C-x g") 'magit-status)
 
 (require 'diff-hl)
-(global-diff-hl-mode +1)
+(global-diff-hl-mode 1)
 (add-hook 'dired-mode-hook 'diff-hl-dired-mode)
 (global-set-key (kbd "C-c g") diff-hl-command-map)
 
