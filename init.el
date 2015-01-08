@@ -539,7 +539,7 @@
 (global-set-key (kbd "S-<right>") 'next-buffer)
 (global-set-key (kbd "S-<left>") 'previous-buffer)
 (global-set-key (kbd "S-<up>") 'matt-mru-buffer)
-(global-set-key (kbd "S-<down>") 'ibuffer)
+(global-set-key (kbd "S-<down>") 'ido-switch-buffer)
 
 (global-set-key (kbd "C-<tab>") 'next-buffer)
 (global-set-key (kbd "C-S-<iso-lefttab>") 'previous-buffer)
