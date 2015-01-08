@@ -46,8 +46,10 @@ An alarm will occur at TIME with the MESSAGE.
 The time format is the same accepted by `run-at-time'.
 For example \"11:30am\"."
   (interactive "sTime: \nsMessage: ")
-  (let ((alarm-timer (run-at-time time nil 'alarm-action message time)))
-    (add-to-list 'alarm-alist `(,time ,message ,alarm-timer))))
+  (let* ((alarm-timer (run-at-time time nil 'alarm-action message time))
+         (a `(,time ,message ,alarm-timer)))
+    (add-to-list 'alarm-alist a)
+    (message "Alarm will go off in %s" (alarm-format-seconds (alarm-seconds-till a)))))
 
 (defun alarm-cancel (time)
   "Cancel the alarm clock set for TIME."
