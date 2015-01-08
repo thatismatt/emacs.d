@@ -446,7 +446,7 @@
     (insert "* " date " ----------------------------------------------------------------\n")))
 
 (defun matt-font-size (sz)
-  (interactive "nSize: ")
+  (interactive "NSize: ")
   (set-face-attribute 'default nil :height (* sz 10)))
 
 (defun matt-insert-date ()
