@@ -94,7 +94,8 @@
 ;; themes
 (setq custom-theme-load-path
       (cons "~/.emacs.d/themes/" custom-theme-load-path))
-(load-theme 'witness t)
+(if (display-graphic-p)
+    (load-theme 'witness t))
 
 ;; font
 (set-face-attribute 'default nil :height 130)
