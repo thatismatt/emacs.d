@@ -299,7 +299,7 @@
 (global-set-key (kbd "C-S-<down>") 'move-text-down)
 
 (require 'magit)
-;;(setq magit-diff-options '("--ignore-space-change"))
+(setq magit-diff-options '()) ;; '("--ignore-all-space" "--ignore-blank-lines"))
 (setq magit-status-buffer-switch-function 'switch-to-buffer)
 ;;(setq magit-server-window-for-commit nil)
 (global-set-key (kbd "C-x g") 'magit-status)
