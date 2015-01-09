@@ -386,6 +386,8 @@
 (add-to-list 'auto-mode-alist '("\\.\\(jspf?\\|tag\\)$" . html-mode))
 
 (require 'alarm)
+(define-key matt-keymap (kbd "a a") 'alarm)
+(define-key matt-keymap (kbd "a l") 'alarm-list)
 
 (defun matt-kill-this-buffer ()
   (interactive)
