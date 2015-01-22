@@ -373,8 +373,8 @@
 (add-hook 'css-mode-hook 'rainbow-mode)
 
 (require 'scala-mode2)
-(require 'ensime)
-(add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
+;;(require 'ensime)
+;;(add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
 ;;(setq sbt:program-name "~/opt/sbt/sbt")
 ;;(add-hook 'sbt-mode-hook '(lambda ()
 ;;  (setq compilation-skip-threshold 1)
