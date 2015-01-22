@@ -38,6 +38,7 @@
     yasnippet
     js2-mode
     js2-refactor
+    lua-mode
     sbt-mode
     scala-mode2
     ensime
