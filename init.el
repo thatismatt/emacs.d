@@ -529,6 +529,18 @@
     (if (not filename) (message "This buffer is not associated with a file.")
       (insert (file-name-base filename)))))
 
+(require 'json)
+(defun matt-whats-my-ip ()
+  (with-current-buffer (url-retrieve-synchronously "http://ip.jsontest.com/")
+    (setf (point) url-http-end-of-headers)
+    (let ((json (json-read)))
+      (kill-buffer)
+      (cdr (assoc 'ip json)))))
+
+(defun matt-insert-my-ip ()
+  (interactive)
+  (insert (matt-whats-my-ip)))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; KEYS
 
