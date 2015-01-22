@@ -197,6 +197,10 @@
 
    ;; js2
    `(js2-external-variable ((t (:foreground ,*warning*))))
+
+   ;; ocaml
+   `(tuareg-font-lock-governing-face ((t (:foreground ,*keywords*))))
+   `(tuareg-font-lock-operator-face ((t (:foreground ,*function*))))
    ))
 
 ;;;###autoload
