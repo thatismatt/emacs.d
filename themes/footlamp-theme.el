@@ -155,6 +155,7 @@
    `(magit-branch ((t (:foreground ,*highlight-1*))))
    `(magit-log-sha1 ((t (:foreground ,*highlight-2*))))
    `(magit-tag ((t (:foreground ,*highlight-3* :background nil))))
+   `(magit-log-head-label-tags ((t (:foreground ,*highlight-3* :background nil :box 1))))
    `(magit-log-head-label-head ((t (:foreground ,*highlight-1* :background nil :box 1))))
    `(magit-log-head-label-local ((t (:foreground ,*highlight-2* :background nil :box 1))))
    `(magit-log-head-label-remote ((t (:foreground ,*highlight-3* :background nil :box 1))))
