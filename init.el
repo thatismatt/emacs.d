@@ -118,6 +118,9 @@
                    (abbreviate-file-name (buffer-file-name))
                  "%b"))))
 
+;; enable column numbers
+(column-number-mode)
+
 ;; delete trailing whitespace on save
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
