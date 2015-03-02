@@ -102,6 +102,9 @@
 (if (or (display-graphic-p)
         (daemonp))
     (load-theme 'witness t))
+(define-key matt-keymap (kbd "t t") 'matt-toggle-theme)
+(define-key matt-keymap (kbd "t d") (lambda () (interactive) (load-theme 'witness t)))
+(define-key matt-keymap (kbd "t l") (lambda () (interactive) (load-theme 'footlamp t)))
 
 ;; font
 (set-face-attribute 'default nil :height 130)
