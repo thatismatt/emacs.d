@@ -107,7 +107,7 @@
 (define-key matt-keymap (kbd "t l") (lambda () (interactive) (load-theme 'footlamp t)))
 
 ;; font
-(set-face-attribute 'default nil :height 130)
+(set-face-attribute 'default nil :height 110)
 ;; (set-face-attribute 'default nil :family "Nimbus Mono L")
 ;; (set-face-attribute 'default nil :family "Liberation Mono")
 ;; (set-face-attribute 'default nil :family "DejaVu Sans Mono")
