@@ -166,9 +166,9 @@
       `((".*" ,temporary-file-directory t)))
 
 ;; enable stuff
-;(put 'upcase-region 'disabled nil)
-;(put 'narrow-to-region 'disabled nil)
-;(put 'narrow-to-page 'disabled nil)
+;;(put 'upcase-region 'disabled nil)
+;;(put 'narrow-to-region 'disabled nil)
+;;(put 'narrow-to-page 'disabled nil)
 
 ;; keys
 (setq matt-keymap (make-sparse-keymap))
