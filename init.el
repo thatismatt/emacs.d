@@ -95,6 +95,9 @@
 ;; themes
 (setq custom-theme-load-path
       (cons "~/.emacs.d/themes/" custom-theme-load-path))
+(setq custom-safe-themes '("a1a378cd998669d1e83dbb4880d04901580c7963827e09ae429501b71e3a42af"
+                           "9e7ac170abee236bf9d8d6b0381fc8739bb036d022e484e3935ae8141dd2bfa9"
+                           default))
 (require 'server)
 (if (or (display-graphic-p)
         (daemonp))
