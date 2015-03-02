@@ -369,6 +369,7 @@
 
 (require 'js2-mode)
 (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
+(setq-default js2-basic-offset 2)
 (setq js2-global-externs
       '("setTimeout" "setInterval" "require" "module" "exports" "$" "angular" "_"
         "Highcharts" "google" "d3" "chai" "it" "describe" "suite" "test"))
