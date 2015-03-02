@@ -532,6 +532,10 @@
                  (message "%s deleted." filename))
         (message "%s not deleted." filename)))))
 
+(defun matt-indent-buffer ()
+  (interactive)
+  (indent-region (point-min) (point-max)))
+
 (defun matt-insert-filename ()
   (interactive)
   (let ((filename (buffer-file-name)))
