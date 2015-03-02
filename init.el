@@ -542,6 +542,16 @@
     (if (not filename) (message "This buffer is not associated with a file.")
       (insert (file-name-base filename)))))
 
+(defun matt-wget (url)
+  (interactive "sURL: ")
+  (with-current-buffer (url-retrieve-synchronously url)
+    (let ((content (buffer-substring (marker-position url-http-end-of-headers) (buffer-size))))
+      (kill-buffer)
+      (let ((wget-buffer (get-buffer-create "*wget*")))
+        (with-current-buffer wget-buffer
+          (insert content)
+          (view-buffer wget-buffer))))))
+
 (require 'json)
 (defun matt-whats-my-ip ()
   (with-current-buffer (url-retrieve-synchronously "http://ip.jsontest.com/")
