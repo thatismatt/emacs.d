@@ -95,7 +95,9 @@
 ;; themes
 (setq custom-theme-load-path
       (cons "~/.emacs.d/themes/" custom-theme-load-path))
-(if (display-graphic-p)
+(require 'server)
+(if (or (display-graphic-p)
+        (daemonp))
     (load-theme 'witness t))
 
 ;; font
