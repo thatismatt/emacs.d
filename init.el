@@ -533,7 +533,7 @@
 (require 'json)
 (defun matt-whats-my-ip ()
   (with-current-buffer (url-retrieve-synchronously "http://ip.jsontest.com/")
-    (setf (point) url-http-end-of-headers)
+    (goto-char url-http-end-of-headers)
     (let ((json (json-read)))
       (kill-buffer)
       (cdr (assoc 'ip json)))))
