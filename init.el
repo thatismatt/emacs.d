@@ -92,6 +92,10 @@
 (tool-bar-mode -1)
 (menu-bar-mode -1)
 
+;; keys
+(setq matt-keymap (make-sparse-keymap))
+(global-set-key (kbd "C-,") matt-keymap)
+
 ;; themes
 (setq custom-theme-load-path
       (cons "~/.emacs.d/themes/" custom-theme-load-path))
@@ -169,10 +173,6 @@
 ;;(put 'upcase-region 'disabled nil)
 ;;(put 'narrow-to-region 'disabled nil)
 ;;(put 'narrow-to-page 'disabled nil)
-
-;; keys
-(setq matt-keymap (make-sparse-keymap))
-(global-set-key (kbd "C-,") matt-keymap)
 
 (require 'smex)
 ;; (setq smex-save-file (expand-file-name ".smex-items" prelude-savefile-dir))
