@@ -484,11 +484,13 @@
 (defun matt-open-init ()
   (interactive)
   (find-file "~/.emacs.d/init.el"))
+(define-key matt-keymap (kbd "o i") 'matt-open-init)
 
 (defun matt-open-theme ()
   (interactive)
   (let ((theme (car custom-enabled-themes)))
     (find-file (format "~/.emacs.d/themes/%s-theme.el" theme))))
+(define-key matt-keymap (kbd "o t") 'matt-open-theme)
 
 (defun matt-open-todo ()
   (interactive)
