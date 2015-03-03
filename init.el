@@ -163,6 +163,8 @@
 (setq split-height-threshold 0)
 (setq split-width-threshold nil)
 
+(savehist-mode)
+
 ;; store all backup and autosave files in the tmp dir
 (setq backup-directory-alist
       `((".*" . ,temporary-file-directory)))
