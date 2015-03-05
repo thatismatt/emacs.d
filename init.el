@@ -540,6 +540,7 @@
 (defun matt-indent-buffer ()
   (interactive)
   (indent-region (point-min) (point-max)))
+(define-key matt-keymap (kbd "i") 'matt-indent-buffer)
 
 (defun matt-insert-filename ()
   (interactive)
