@@ -482,6 +482,7 @@
   "Insert the current date. e.g 16-Jun-2014"
   (interactive)
   (insert (format-time-string "%d-%b-%Y" (current-time))))
+(define-key matt-keymap (kbd "i d") 'matt-insert-date)
 
 (defun matt-open-init ()
   (interactive)
@@ -540,13 +541,14 @@
 (defun matt-indent-buffer ()
   (interactive)
   (indent-region (point-min) (point-max)))
-(define-key matt-keymap (kbd "i") 'matt-indent-buffer)
+(define-key matt-keymap (kbd "<tab>") 'matt-indent-buffer)
 
 (defun matt-insert-filename ()
   (interactive)
   (let ((filename (buffer-file-name)))
     (if (not filename) (message "This buffer is not associated with a file.")
       (insert (file-name-base filename)))))
+(define-key matt-keymap (kbd "i f") 'matt-insert-filename)
 
 (defun matt-wget (url)
   (interactive "sURL: ")
