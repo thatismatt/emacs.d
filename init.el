@@ -572,6 +572,11 @@
   (interactive)
   (insert (matt-whats-my-ip)))
 
+(defun matt-tmux-yank ()
+  (interactive)
+  (insert (shell-command-to-string "tmux showb")))
+(define-key matt-keymap (kbd "t y") 'matt-tmux-yank)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; KEYS
 
