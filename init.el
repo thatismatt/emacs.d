@@ -32,7 +32,6 @@
     rainbow-delimiters
     rainbow-mode
     smartparens
-    smartrep
     smex
     undo-tree
     yasnippet
@@ -49,7 +48,6 @@
     highlight-symbol
     multiple-cursors
     tuareg
-    ;;web-mode
     )
   "A list of packages to ensure are installed at launch.")
 
