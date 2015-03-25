@@ -268,6 +268,8 @@
 (setq company-minimum-prefix-length 2)
 (setq company-tooltip-flip-when-above t)
 (global-company-mode 1)
+(setq company-dabbrev-downcase nil)
+(setq company-dabbrev-ignore-case 't)
 
 (require 'linum)
 (setq linum-format "%4i ")
