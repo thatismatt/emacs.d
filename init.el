@@ -24,6 +24,7 @@
     dash
     diff-hl
     elisp-slime-nav
+    geiser
     gitconfig-mode
     gitignore-mode
     projectile
@@ -395,6 +396,12 @@
 ;;   (local-set-key (kbd "M-.") 'sbt-find-definitions)
 ;;   (local-set-key (kbd "C-x '") 'sbt-run-previous-command)
 ;;   (local-set-key (kbd "C-M-x") 'sbt-send-region)))
+
+(require 'geiser)
+(setq geiser-active-implementations '(chicken))
+(add-hook 'scheme-mode-hook 'rainbow-delimiters-mode)
+(add-hook 'geiser-repl-mode-hook 'rainbow-delimiters-mode)
+(add-hook 'geiser-repl-mode-hook 'smartparens-mode)
 
 (require 'tuareg)
 
