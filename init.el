@@ -413,6 +413,7 @@
 (define-key matt-keymap (kbd "a l") 'alarm-list)
 
 (defun matt-kill-this-buffer ()
+  "Kill buffer without confirmation."
   (interactive)
   (kill-buffer (current-buffer)))
 
@@ -612,7 +613,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; KEYS
 
-;; kill buffer - without confirmation
 (global-set-key (kbd "C-x k") 'matt-kill-this-buffer)
 
 (global-set-key (kbd "M-SPC") 'matt-just-one-space-multiline)
