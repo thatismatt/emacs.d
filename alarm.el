@@ -51,23 +51,32 @@ For example \"11:30am\"."
     (add-to-list 'alarm-alist a)
     (message "Alarm will go off in %s" (alarm-format-seconds (alarm-seconds-till a)))))
 
-(defun alarm-cancel (time)
+(defun alarm-cancel (a)
+  "Cancel the alarm A."
+  (progn (cancel-timer (caddr a))
+         (setq alarm-alist (delq a alarm-alist))
+         (message "Cancelled alarm '%s' set for %s." (cadr a) (car a))))
+
+(defun alarm-cancel-by-time (time)
   "Cancel the alarm clock set for TIME."
   (interactive "sTime: ")
-  (let ((a (alarm-get time)))
-    (if a
-        (progn (cancel-timer (caddr a))
-               (setq alarm-alist (delq a alarm-alist))
-               (message "Cancelled alarm set for %s." time))
+  (let ((a (assoc time alarm-alist)))
+    (if a (alarm-cancel a)
       (message "No alarm set for %s." time))))
-
-(defun alarm-get (time)
-  "Get the alarm set for TIME."
-  (assoc time alarm-alist))
 
 (define-derived-mode alarm-mode tabulated-list-mode "Alarm List"
   "A major mode for viewing the list of alarms."
   (add-hook 'tabulated-list-revert-hook 'alarm-refresh nil t))
+
+(defun alarm-kill (pos)
+  "Kill Alarm under point."
+  (interactive (list (1- (line-number-at-pos))))
+  (let ((a (nth pos alarm-alist)))
+    (if (y-or-n-p (format "Are you sure you want to cancel alarm '%s'?" (cadr a)))
+        (alarm-cancel a)
+      (message "Alarm '%s' not cancelled." (cadr a))))
+  (tabulated-list-revert))
+(define-key alarm-mode-map (kbd "k") 'alarm-kill)
 
 (defun alarm-refresh ()
   "Refresh the table of alarms."
