@@ -105,9 +105,6 @@
 (if (or (display-graphic-p)
         (daemonp))
     (load-theme 'witness t))
-(define-key matt-keymap (kbd "t t") 'matt-toggle-theme)
-(define-key matt-keymap (kbd "t d") (lambda () (interactive) (load-theme 'witness t)))
-(define-key matt-keymap (kbd "t l") (lambda () (interactive) (load-theme 'footlamp t)))
 
 ;; font
 (set-face-attribute 'default nil :height 110)
@@ -517,9 +514,34 @@
 
 (defun matt-toggle-theme ()
   (interactive)
-  (cond ((custom-theme-enabled-p 'footlamp) (disable-theme 'footlamp) (load-theme 'witness t))
-        ((custom-theme-enabled-p 'witness) (disable-theme 'witness) (load-theme 'footlamp t))
+  (cond ((custom-theme-enabled-p 'footlamp) (matt-disable-all-themes) (load-theme 'witness t))
+        ((custom-theme-enabled-p 'witness) (matt-disable-all-themes) (load-theme 'footlamp t))
         (t (message "Current theme unknown."))))
+(define-key matt-keymap (kbd "t t") 'matt-toggle-theme)
+
+(defun matt-disable-current-theme ()
+  (interactive)
+  (disable-theme (car custom-enabled-themes)))
+
+(defun matt-disable-all-themes ()
+  (interactive)
+  (if (eql nil custom-enabled-themes)
+      (message "All themes disabled.")
+    (progn (matt-disable-current-theme)
+           (matt-disable-all-themes))))
+(define-key matt-keymap (kbd "t ESC") 'matt-disable-all-themes)
+
+(defun matt-load-dark-theme ()
+  (interactive)
+  (matt-disable-all-themes)
+  (load-theme 'witness t))
+(define-key matt-keymap (kbd "t d") 'matt-load-dark-theme)
+
+(defun matt-load-light-theme ()
+  (interactive)
+  (matt-disable-current-theme)
+  (load-theme 'footlamp t))
+(define-key matt-keymap (kbd "t l") 'matt-load-light-theme)
 
 (defun matt-create-scratch-buffer ()
   "Create a new scratch buffer."
