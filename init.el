@@ -633,3 +633,5 @@
 
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 (global-set-key (kbd "C-o") 'other-window)
+
+(define-key matt-keymap (kbd "g") 'rgrep)
