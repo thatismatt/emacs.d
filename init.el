@@ -98,8 +98,10 @@
 ;; themes
 (setq custom-theme-load-path
       (cons "~/.emacs.d/themes/" custom-theme-load-path))
-(setq custom-safe-themes '("a1a378cd998669d1e83dbb4880d04901580c7963827e09ae429501b71e3a42af"
-                           "9e7ac170abee236bf9d8d6b0381fc8739bb036d022e484e3935ae8141dd2bfa9"
+;; (secure-hash 'sha256 (current-buffer))
+(setq custom-safe-themes '(default))
+(setq custom-safe-themes '("de8f4162b577e16f9bfdee4789faa43f5b832f03bb0a8194fc2329de0cea9aa4"
+                           "9eadc30c0a936fbb4db8272792e2fdc95ca42a29d38fd7ab05e684dd81848ef2"
                            default))
 (require 'server)
 (if (or (display-graphic-p)

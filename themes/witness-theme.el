@@ -125,15 +125,15 @@
    `(sp-show-pair-match-face ((t (:background ,*visual-selection-3*))))
 
    ;; rainbow delimiters
-   `(rainbow-delimiters-depth-1-face ((t (:foreground "#639"))))
-   `(rainbow-delimiters-depth-2-face ((t (:foreground "#83b"))))
-   `(rainbow-delimiters-depth-3-face ((t (:foreground "#a3d"))))
-   `(rainbow-delimiters-depth-4-face ((t (:foreground "#b3e"))))
-   `(rainbow-delimiters-depth-5-face ((t (:foreground "#d3d"))))
-   `(rainbow-delimiters-depth-6-face ((t (:foreground "#e3c"))))
-   `(rainbow-delimiters-depth-7-face ((t (:foreground "#93b"))))
-   `(rainbow-delimiters-depth-8-face ((t (:foreground "#63a"))))
-   `(rainbow-delimiters-depth-9-face ((t (:foreground "#539"))))
+   `(rainbow-delimiters-depth-1-face ((t (:foreground "#e3c"))))
+   `(rainbow-delimiters-depth-2-face ((t (:foreground "#93b"))))
+   `(rainbow-delimiters-depth-3-face ((t (:foreground "#63a"))))
+   `(rainbow-delimiters-depth-4-face ((t (:foreground "#539"))))
+   `(rainbow-delimiters-depth-5-face ((t (:foreground "#639"))))
+   `(rainbow-delimiters-depth-6-face ((t (:foreground "#83b"))))
+   `(rainbow-delimiters-depth-7-face ((t (:foreground "#a3d"))))
+   `(rainbow-delimiters-depth-8-face ((t (:foreground "#b3e"))))
+   `(rainbow-delimiters-depth-9-face ((t (:foreground "#d3d"))))
 
    ;; search
    `(isearch ((t (:background ,*search-1* :foreground ,*background*))))
