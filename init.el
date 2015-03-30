@@ -93,6 +93,7 @@
 ;; keys
 (setq matt-keymap (make-sparse-keymap))
 (global-set-key (kbd "C-,") matt-keymap)
+(global-set-key (kbd "C-x ,") matt-keymap) ;; C-, doesn't work in terminal
 
 ;; themes
 (setq custom-theme-load-path
