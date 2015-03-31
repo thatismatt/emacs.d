@@ -71,10 +71,11 @@ For example \"11:30am\"."
 (defun alarm-kill (pos)
   "Kill Alarm under point."
   (interactive (list (1- (line-number-at-pos))))
-  (let ((a (nth pos alarm-alist)))
-    (if (y-or-n-p (format "Are you sure you want to cancel alarm '%s'?" (cadr a)))
+  (let* ((a (nth pos alarm-alist))
+         (triggered (alarm-triggered a)))
+    (if (y-or-n-p (format "Are you sure you want to %s alarm '%s'?" (if triggered "delete" "cancel") (cadr a)))
         (alarm-cancel a)
-      (message "Alarm '%s' not cancelled." (cadr a))))
+      (message "Alarm '%s' not %s." (cadr a) (if triggered "deleted" "cancelled"))))
   (tabulated-list-revert))
 (define-key alarm-mode-map (kbd "k") 'alarm-kill)
 
