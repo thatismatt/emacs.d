@@ -7,6 +7,8 @@
 
 (eval-when-compile (require 'cl))
 
+(require 'dash)
+
 (defvar alarm-alist nil
   "An alist of alarms.")
 
@@ -124,6 +126,13 @@ For example \"11:30am\"."
   "View the list of alarms."
   (interactive)
   (view-buffer (alarm-get-buffer)))
+
+(defun alarm-next ()
+  (interactive)
+  (let ((untriggered (--filter (not (alarm-triggered it)) alarm-alist)))
+    (if (eq untriggered '()) (message "No alarms set.")
+      (let ((a (car (--sort (< (alarm-seconds-till it) (alarm-seconds-till other)) untriggered))))
+          (message "Next alarm: %s in %s" (cadr a) (alarm-format-seconds (alarm-seconds-till a)))))))
 
 (provide 'alarm)
 

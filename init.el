@@ -411,6 +411,7 @@
 (require 'alarm)
 (define-key matt-keymap (kbd "a a") 'alarm)
 (define-key matt-keymap (kbd "a l") 'alarm-list)
+(define-key matt-keymap (kbd "a n") 'alarm-next)
 
 (defun matt-kill-this-buffer ()
   "Kill buffer without confirmation."
