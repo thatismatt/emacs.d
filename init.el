@@ -95,6 +95,8 @@
 (setq matt-keymap (make-sparse-keymap))
 (global-set-key (kbd "C-,") matt-keymap)
 (global-set-key (kbd "C-x ,") matt-keymap) ;; C-, doesn't work in terminal
+(defun matt-define-key (key def)
+  (define-key matt-keymap (kbd key) def))
 
 ;; themes
 (setq custom-theme-load-path
@@ -291,9 +293,9 @@
 
 (require 'highlight-symbol)
 (setq highlight-symbol-colors '("#f9b" "#fb7" "#fe8" "#ce9" "#9fb" "#9dd" "#9bf" "#b9f"))
-(define-key matt-keymap (kbd "C-,") 'highlight-symbol-at-point)
-(define-key matt-keymap (kbd "C-n") 'highlight-symbol-next)
-(define-key matt-keymap (kbd "C-p") 'highlight-symbol-prev)
+(matt-define-key "C-," 'highlight-symbol-at-point)
+(matt-define-key "C-n" 'highlight-symbol-next)
+(matt-define-key "C-p" 'highlight-symbol-prev)
 
 (require 'projectile)
 (projectile-global-mode)
@@ -308,7 +310,7 @@
       (kill-buffer " SPEEDBAR")))
 
 (require 'multiple-cursors)
-(define-key matt-keymap (kbd "m c") 'mc/mark-more-like-this-extended)
+(matt-define-key "m c" 'mc/mark-more-like-this-extended)
 
 (require 'move-text)
 (global-set-key (kbd "C-S-<up>") 'move-text-up)
@@ -410,9 +412,9 @@
 (add-to-list 'auto-mode-alist '("\\.\\(jspf?\\|tag\\)$" . html-mode))
 
 (require 'alarm)
-(define-key matt-keymap (kbd "a a") 'alarm)
-(define-key matt-keymap (kbd "a l") 'alarm-list)
-(define-key matt-keymap (kbd "a n") 'alarm-next)
+(matt-define-key "a a" 'alarm)
+(matt-define-key "a l" 'alarm-list)
+(matt-define-key "a n" 'alarm-next)
 
 (defun matt-kill-this-buffer ()
   "Kill buffer without confirmation."
@@ -492,18 +494,18 @@
   "Insert the current date. e.g 16-Jun-2014"
   (interactive)
   (insert (format-time-string "%d-%b-%Y" (current-time))))
-(define-key matt-keymap (kbd "i d") 'matt-insert-date)
+(matt-define-key "i d" 'matt-insert-date)
 
 (defun matt-open-init ()
   (interactive)
   (find-file "~/.emacs.d/init.el"))
-(define-key matt-keymap (kbd "o i") 'matt-open-init)
+(matt-define-key "o i" 'matt-open-init)
 
 (defun matt-open-theme ()
   (interactive)
   (let ((theme (car custom-enabled-themes)))
     (find-file (format "~/.emacs.d/themes/%s-theme.el" theme))))
-(define-key matt-keymap (kbd "o t") 'matt-open-theme)
+(matt-define-key "o t" 'matt-open-theme)
 
 (defun matt-open-todo ()
   (interactive)
@@ -529,7 +531,7 @@
   (cond ((custom-theme-enabled-p 'footlamp) (matt-disable-all-themes) (load-theme 'witness t))
         ((custom-theme-enabled-p 'witness) (matt-disable-all-themes) (load-theme 'footlamp t))
         (t (message "Current theme unknown."))))
-(define-key matt-keymap (kbd "t t") 'matt-toggle-theme)
+(matt-define-key "t t" 'matt-toggle-theme)
 
 (defun matt-disable-current-theme ()
   (interactive)
@@ -541,19 +543,19 @@
       (message "All themes disabled.")
     (progn (matt-disable-current-theme)
            (matt-disable-all-themes))))
-(define-key matt-keymap (kbd "t ESC") 'matt-disable-all-themes)
+(matt-define-key "t ESC" 'matt-disable-all-themes)
 
 (defun matt-load-dark-theme ()
   (interactive)
   (matt-disable-all-themes)
   (load-theme 'witness t))
-(define-key matt-keymap (kbd "t d") 'matt-load-dark-theme)
+(matt-define-key "t d" 'matt-load-dark-theme)
 
 (defun matt-load-light-theme ()
   (interactive)
   (matt-disable-current-theme)
   (load-theme 'footlamp t))
-(define-key matt-keymap (kbd "t l") 'matt-load-light-theme)
+(matt-define-key "t l" 'matt-load-light-theme)
 
 (defun matt-create-scratch-buffer ()
   "Create a new scratch buffer."
@@ -576,14 +578,14 @@
 (defun matt-indent-buffer ()
   (interactive)
   (indent-region (point-min) (point-max)))
-(define-key matt-keymap (kbd "<tab>") 'matt-indent-buffer)
+(matt-define-key "<tab>" 'matt-indent-buffer)
 
 (defun matt-insert-filename ()
   (interactive)
   (let ((filename (buffer-file-name)))
     (if (not filename) (message "This buffer is not associated with a file.")
       (insert (file-name-base filename)))))
-(define-key matt-keymap (kbd "i f") 'matt-insert-filename)
+(matt-define-key "i f" 'matt-insert-filename)
 
 (defun matt-wget (url)
   (interactive "sURL: ")
@@ -610,7 +612,7 @@
 (defun matt-tmux-yank ()
   (interactive)
   (insert (shell-command-to-string "tmux showb")))
-(define-key matt-keymap (kbd "t y") 'matt-tmux-yank)
+(matt-define-key "t y" 'matt-tmux-yank)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; KEYS
@@ -636,4 +638,4 @@
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 (global-set-key (kbd "C-o") 'other-window)
 
-(define-key matt-keymap (kbd "g") 'rgrep)
+(matt-define-key "g" 'rgrep)
