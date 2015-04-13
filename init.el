@@ -277,6 +277,7 @@
 (add-hook 'prog-mode-hook 'linum-mode)
 (add-hook 'css-mode-hook 'linum-mode)
 (add-hook 'html-mode-hook 'linum-mode)
+(add-hook 'nxml-mode-hook 'linum-mode)
 
 (require 'yasnippet)
 (yas-global-mode)
