@@ -332,9 +332,9 @@
 (setq ediff-split-window-function 'split-window-horizontally)
 
 (defface org-todo-face '((t (:foreground "#f00"))) "org mode face for TODO items")
-(defface org-done-face '((t (:foreground "#0f0"))) "org mode face for TODO items")
-(defface org-doing-face '((t (:foreground "#ff0"))) "org mode face for TODO items")
-(defface org-postponed-face '((t (:foreground "#666"))) "org mode face for TODO items")
+(defface org-done-face '((t (:foreground "#0f0"))) "org mode face for DONE items")
+(defface org-doing-face '((t (:foreground "#ff0"))) "org mode face for DOING items")
+(defface org-postponed-face '((t (:foreground "#666"))) "org mode face for POSTPONED items")
 
 (require 'org)
 (setq org-todo-keywords '((type "TODO" "DOING" "DONE" "|" "POSTPONED")))
