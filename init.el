@@ -266,7 +266,7 @@
 (setq sp-hybrid-kill-entire-symbol nil)
 (sp-use-paredit-bindings)
 (show-smartparens-global-mode 1)
-(add-hook 'prog-mode-hook 'smartparens-mode)
+(add-hook 'prog-mode-hook 'smartparens-strict-mode)
 
 (require 'company)
 (setq company-idle-delay 0.1)
