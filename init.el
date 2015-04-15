@@ -36,6 +36,8 @@
     smex
     undo-tree
     yasnippet
+    clojure-mode
+    cider
     js2-mode
     js2-refactor
     lua-mode
