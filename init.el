@@ -49,6 +49,7 @@
     highlight-symbol
     multiple-cursors
     tuareg
+    web-mode
     )
   "A list of packages to ensure are installed at launch.")
 
@@ -410,6 +411,10 @@
 
 (require 'sgml-mode)
 (add-to-list 'auto-mode-alist '("\\.\\(jspf?\\|tag\\)$" . html-mode))
+
+(require 'web-mode)
+(setq web-mode-markup-indent-offset 2)
+(add-to-list 'auto-mode-alist '("\\.jsx$" . web-mode))
 
 (require 'alarm)
 (matt-define-key "a a" 'alarm)
