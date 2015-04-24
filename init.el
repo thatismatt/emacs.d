@@ -52,6 +52,7 @@
     multiple-cursors
     tuareg
     web-mode
+    less-css-mode
     )
   "A list of packages to ensure are installed at launch.")
 
@@ -400,6 +401,8 @@
 (require 'web-mode)
 (setq web-mode-markup-indent-offset 2)
 (add-to-list 'auto-mode-alist '("\\.jsx$" . web-mode))
+
+(require 'less-css-mode)
 
 (require 'alarm)
 (matt-define-key "a a" 'alarm)
