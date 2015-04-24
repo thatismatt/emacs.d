@@ -348,13 +348,6 @@
 (define-key markdown-mode-map (kbd "M-<left>") nil)
 (define-key markdown-mode-map (kbd "M-<right>") nil)
 
-(defun matt-font-lock-comment-annotations ()
-  "Highlight well known comment annotations."
-  (font-lock-add-keywords
-   nil '((" \\<\\(\\(FIX\\(ME\\)?\\|TODO\\|OPTIMIZE\\|HACK\\|REFACTOR\\)\\)[: ]"
-          1 font-lock-warning-face t))))
-(add-hook 'prog-mode-hook 'matt-font-lock-comment-annotations)
-
 (require 'lisp-mode)
 (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
 (add-hook 'emacs-lisp-mode-hook 'elisp-slime-nav-mode)
@@ -403,6 +396,16 @@
 (add-to-list 'auto-mode-alist '("\\.\\(jspf?\\|tag\\)$" . web-mode))
 
 (require 'less-css-mode)
+
+(defun matt-font-lock-comment-annotations ()
+  "Highlight well known comment annotations."
+  (font-lock-add-keywords
+   nil '((" \\<\\(\\(FIX\\|TODO\\|HACK\\|XXX\\)\\)[: ]"
+          1 font-lock-warning-face t))))
+(add-hook 'prog-mode-hook 'matt-font-lock-comment-annotations)
+(add-hook 'web-mode-hook 'matt-font-lock-comment-annotations)
+(add-hook 'less-css-mode-hook 'matt-font-lock-comment-annotations)
+(add-hook 'css-mode-hook 'matt-font-lock-comment-annotations)
 
 (require 'alarm)
 (matt-define-key "a a" 'alarm)
