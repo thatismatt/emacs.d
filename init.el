@@ -395,12 +395,11 @@
 
 (require 'tuareg)
 
-(require 'sgml-mode)
-(add-to-list 'auto-mode-alist '("\\.\\(jspf?\\|tag\\)$" . html-mode))
-
 (require 'web-mode)
 (setq web-mode-markup-indent-offset 2)
+(setq web-mode-code-indent-offset 2)
 (add-to-list 'auto-mode-alist '("\\.jsx$" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.\\(jspf?\\|tag\\)$" . web-mode))
 
 (require 'less-css-mode)
 
