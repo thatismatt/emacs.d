@@ -394,6 +394,7 @@
 (setq web-mode-code-indent-offset 2)
 (add-to-list 'auto-mode-alist '("\\.jsx$" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.\\(jspf?\\|tag\\)$" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.[sx]?html?\\(\\.[a-zA-Z_]+\\)?\\'" . web-mode))
 
 (require 'less-css-mode)
 
