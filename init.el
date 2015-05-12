@@ -493,7 +493,7 @@
 
 (defun matt-font-size-large ()
   (interactive)
-  (matt-font-size 20))
+  (matt-font-size 18))
 (matt-define-key "f l" 'matt-font-size-large)
 
 (defun matt-insert-date ()
