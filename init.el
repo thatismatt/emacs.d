@@ -573,6 +573,12 @@
     (funcall initial-major-mode)
     (insert initial-scratch-message)))
 
+(defun matt-jump-to-scratch-buffer ()
+  "Switch to the scratch buffer."
+  (interactive)
+  (switch-to-buffer "*scratch*"))
+(matt-define-key "b s" 'matt-jump-to-scratch-buffer)
+
 (defun matt-delete-file-and-buffer ()
   (interactive)
   (let ((filename (buffer-file-name)))
