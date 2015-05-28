@@ -171,7 +171,10 @@
    `(speedbar-separator-face ((t (:foreground ,*grey-4*))))
 
    ;; org
-   `(org-level-1 ((t (:foreground ,*blue*))))
+   `(org-level-1 ((t (:foreground ,*highlight-1*))))
+   `(org-level-2 ((t (:foreground ,*highlight-2*))))
+   `(org-level-3 ((t (:foreground ,*highlight-3*))))
+   `(org-level-4 ((t (:foreground ,*highlight-4*))))
    `(org-code ((t (:foreground ,*green*))))
    `(org-table ((t (:foreground ,*blue-1*))))
    `(org-document-title ((t (:foreground ,*yellow*))))
@@ -179,7 +182,7 @@
    `(org-todo-face ((t (:foreground ,*red*))))
    `(org-done-face ((t (:foreground ,*green*))))
    `(org-doing-face ((t (:foreground ,*yellow*))))
-   `(org-postponed-face ((t (:foreground ,*grey-4*))))
+   `(org-postponed-face ((t (:foreground ,*grey-7*))))
 
    ;; eshell
    `(eshell-prompt ((t (:foreground ,*highlight-2*))))
