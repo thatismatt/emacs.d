@@ -135,39 +135,21 @@
                    (abbreviate-file-name (buffer-file-name))
                  "%b"))))
 
-;; enable column numbers
 (column-number-mode)
-
-;; delete trailing whitespace on save
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
-
-;; kill whole line
 (setq kill-whole-line t)
-
-;; middle click paste at point (not mouse pointer)
-(setq mouse-yank-at-point t)
-
-;; turn off newline on save
+(setq mouse-yank-at-point t) ;; middle click paste at point (not mouse pointer)
 (setq require-final-newline nil)
-
-;; spaces, not tabs
 (setq-default indent-tabs-mode nil)
-(setq-default tab-width 8) ;; but maintain correct appearance
-
-;; auto revert
+(setq-default tab-width 4)
 (global-auto-revert-mode t)
-
-;; y/n answers
 (fset 'yes-or-no-p 'y-or-n-p)
-
-;; delete the selection with a keypress
-(delete-selection-mode t)
+(delete-selection-mode t) ;; delete the selection with a keypress
+(savehist-mode)
 
 ;; window splitting - always horizontal
 (setq split-height-threshold 0)
 (setq split-width-threshold nil)
-
-(savehist-mode)
 
 ;; store all backup and autosave files in the tmp dir
 (setq backup-directory-alist
@@ -176,9 +158,8 @@
       `((".*" ,temporary-file-directory t)))
 
 ;; enable stuff
-;;(put 'upcase-region 'disabled nil)
-;;(put 'narrow-to-region 'disabled nil)
-;;(put 'narrow-to-page 'disabled nil)
+;; (put 'narrow-to-region 'disabled nil)
+;; (put 'narrow-to-page 'disabled nil)
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
 
