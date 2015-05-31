@@ -179,6 +179,8 @@
 ;;(put 'upcase-region 'disabled nil)
 ;;(put 'narrow-to-region 'disabled nil)
 ;;(put 'narrow-to-page 'disabled nil)
+(put 'upcase-region 'disabled nil)
+(put 'downcase-region 'disabled nil)
 
 (require 'smex)
 ;; (setq smex-save-file (expand-file-name ".smex-items" prelude-savefile-dir))
