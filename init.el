@@ -525,6 +525,12 @@
          (filename  (format "~/tmp/emacs-temp-%s" timestamp)))
     (find-file filename)))
 
+(defun matt-open-org-file (filename)
+  (interactive "F")
+  (let* ((timestamp (format-time-string "%Y-%m-%d" (current-time)))
+         (filename  (format "%s-%s.%s" filename timestamp "org")))
+    (find-file filename)))
+
 (defun matt-window-adjust ()
   "Interactively adjust window size."
   (interactive)
