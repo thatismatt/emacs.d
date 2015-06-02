@@ -385,6 +385,7 @@
 (require 'geiser)
 (setq geiser-active-implementations '(guile chicken))
 (add-hook 'scheme-mode-hook 'rainbow-delimiters-mode)
+(add-hook 'scheme-mode-hook 'smartparens-strict-mode)
 (add-hook 'geiser-repl-mode-hook 'rainbow-delimiters-mode)
 (add-hook 'geiser-repl-mode-hook 'smartparens-mode)
 
