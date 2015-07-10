@@ -27,8 +27,10 @@
        (*grey-d*             "#ddd")
        (*grey-e*             "#eee")
        (*red*                "#d10")
+       (*red-1*              "#a00")
        (*yellow*             "#f90")
        (*green*              "#090")
+       (*green-1*            "#060")
        (*pink*               "#c0a")
        (*purple*             "#93e")
        (*purple-1*           "#609")
@@ -153,7 +155,14 @@
    `(ediff-odd-diff-B ((t (:foreground ,*grey-a* :background ,*visual-selection-2*))))
 
    ;; magit
-   `(magit-branch ((t (:foreground ,*highlight-1*))))
+   `(magit-diff-context ((t (:foreground ,*grey-8* :background ,*background*))))
+   `(magit-diff-removed ((t (:foreground ,*red-1* :background ,*background*))))
+   `(magit-diff-added ((t (:foreground ,*green-1* :background ,*background*))))
+   `(magit-diff-context-highlight ((t (:foreground ,*normal* :background ,*background*))))
+   `(magit-diff-removed-highlight ((t (:foreground ,*red* :background ,*background*))))
+   `(magit-diff-added-highlight ((t (:foreground ,*green* :background ,*background*))))
+   `(magit-branch-local ((t (:foreground ,*highlight-1*))))
+   `(magit-branch-remote ((t (:foreground ,*highlight-2*))))
    `(magit-log-sha1 ((t (:foreground ,*highlight-2*))))
    `(magit-tag ((t (:foreground ,*highlight-3* :background nil))))
    `(magit-log-head-label-tags ((t (:foreground ,*highlight-3* :background nil :box 1))))
@@ -161,6 +170,8 @@
    `(magit-log-head-label-local ((t (:foreground ,*highlight-2* :background nil :box 1))))
    `(magit-log-head-label-remote ((t (:foreground ,*highlight-3* :background nil :box 1))))
    `(magit-log-head-label-default ((t (:foreground ,*highlight-4* :background nil :box 1))))
+   `(magit-section-heading ((t (:foreground ,*highlight-1* :background nil))))
+   `(magit-section-highlight ((t (:foreground nil :background nil))))
 
    ;; speedbar
    `(speedbar-file-face ((t (:foreground ,*normal*))))
