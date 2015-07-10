@@ -367,7 +367,7 @@
 (define-key js2-mode-map (kbd "<C-S-up>") nil)
 
 (require 'css-mode)
-(setq css-indent-offset 4)
+(setq css-indent-offset 2)
 (add-hook 'css-mode-hook 'rainbow-mode)
 
 (require 'scala-mode2)
