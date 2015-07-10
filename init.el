@@ -370,6 +370,9 @@
 (setq css-indent-offset 2)
 (add-hook 'css-mode-hook 'rainbow-mode)
 
+(require 'cc-mode)
+(add-hook 'java-mode-hook '(lambda () (c-set-offset 'arglist-intro '+)))
+
 (require 'scala-mode2)
 ;;(require 'ensime)
 ;;(add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
