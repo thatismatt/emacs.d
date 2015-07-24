@@ -218,10 +218,10 @@
 (define-key ibuffer-name-map [(mouse-2)] 'ibuffer-mouse-toggle-mark)
 
 (require 'recentf)
-(setq recentf-save-file (expand-file-name "recentf" user-emacs-directory)
-      recentf-max-saved-items 500
-      recentf-max-menu-items 15
-      recentf-auto-cleanup 'never) ;; disable - can cause problems with remote files
+(setq recentf-save-file (expand-file-name "recentf" user-emacs-directory))
+(setq recentf-max-saved-items 500)
+(setq recentf-max-menu-items 15)
+(setq recentf-auto-cleanup 'never) ;; disable - can cause problems with remote files
 (recentf-mode 1)
 (defun matt-recentf-ido-find-file ()
   "Find a recent file using ido."
@@ -236,8 +236,8 @@
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'forward)
 (setq uniquify-separator "/")
-(setq uniquify-after-kill-buffer-p t) ; rename after killing uniquified
-(setq uniquify-ignore-buffers-re "^\\*") ; don't muck with special buffers
+(setq uniquify-after-kill-buffer-p t) ;; rename after killing uniquified
+(setq uniquify-ignore-buffers-re "^\\*") ;; don't muck with special buffers
 
 (require 'undo-tree)
 (global-undo-tree-mode)
