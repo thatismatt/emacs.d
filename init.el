@@ -270,6 +270,9 @@
 (require 'powerline)
 (powerline-default-theme)
 
+(require 'grep)
+(setq grep-find-ignored-directories (cons "target" grep-find-ignored-directories))
+
 (require 'yasnippet)
 (yas-global-mode)
 ;;(setq yas-snippet-dirs '("~/.emacs.d/snippets" "~/.emacs.d/elpa/yasnippet-20140106.1009/snippets"))
