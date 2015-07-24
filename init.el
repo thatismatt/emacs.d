@@ -36,6 +36,7 @@
     smex
     undo-tree
     yasnippet
+    powerline
     clojure-mode
     cider
     js2-mode
@@ -267,6 +268,9 @@
 (add-hook 'css-mode-hook 'linum-mode)
 (add-hook 'html-mode-hook 'linum-mode)
 (add-hook 'nxml-mode-hook 'linum-mode)
+
+(require 'powerline)
+(powerline-default-theme)
 
 (require 'yasnippet)
 (yas-global-mode)
