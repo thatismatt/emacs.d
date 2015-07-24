@@ -25,8 +25,6 @@
     diff-hl
     elisp-slime-nav
     geiser
-    gitconfig-mode
-    gitignore-mode
     projectile
     magit
     move-text
