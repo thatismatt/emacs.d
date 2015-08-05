@@ -635,6 +635,13 @@
       (insert (file-name-base filename)))))
 (matt-define-key "i f" 'matt-insert-filename)
 
+(defun matt-insert-full-filename ()
+  (interactive)
+  (let ((filename (buffer-file-name)))
+    (if (not filename) (message "This buffer is not associated with a file.")
+      (insert filename))))
+(matt-define-key "i C-f" 'matt-insert-full-filename)
+
 (defun matt-wget (url)
   (interactive "sURL: ")
   (with-current-buffer (url-retrieve-synchronously url)
