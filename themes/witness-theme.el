@@ -29,6 +29,7 @@
        (*red*                "#d10")
        (*red-1*              "#a00")
        (*yellow*             "#f90")
+       (*yellow-1*           "#d80")
        (*green*              "#090")
        (*green-1*            "#060")
        (*pink*               "#c0a")
@@ -62,7 +63,7 @@
        (*variable-2*         "#585")
        (*highlight-1*        *blue*)
        (*highlight-2*        *pink*)
-       (*highlight-3*        *yellow*)
+       (*highlight-3*        *yellow-1*)
        (*highlight-4*        *green*)
        (*mode-line-bg*       *grey-6*)
        (*mode-line-fg*       *grey-1*)
@@ -173,6 +174,7 @@
    `(magit-log-head-label-default ((t (:foreground ,*highlight-4* :background nil :box 1))))
    `(magit-section-heading ((t (:foreground ,*highlight-1* :background nil))))
    `(magit-section-highlight ((t (:foreground nil :background nil))))
+   `(magit-hash ((t (:foreground ,*highlight-3*))))
 
    ;; speedbar
    `(speedbar-file-face ((t (:foreground ,*normal*))))
