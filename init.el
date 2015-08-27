@@ -665,6 +665,7 @@
 (defun matt-insert-my-ip ()
   (interactive)
   (insert (matt-whats-my-ip)))
+(matt-define-key "i C-i" 'matt-insert-my-ip)
 
 (defun matt-tmux-yank ()
   (interactive)
