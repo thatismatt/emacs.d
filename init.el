@@ -520,11 +520,13 @@
   (interactive)
   (matt-font-size 11))
 (matt-define-key "f s" 'matt-font-size-small)
+(global-set-key (kbd "C--") 'matt-font-size-small)
 
 (defun matt-font-size-large ()
   (interactive)
   (matt-font-size 18))
 (matt-define-key "f l" 'matt-font-size-large)
+(global-set-key (kbd "C-=") 'matt-font-size-large)
 
 (defun matt-insert-date ()
   "Insert the current date. e.g 16-Jun-2014"
