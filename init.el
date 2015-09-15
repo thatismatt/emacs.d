@@ -235,7 +235,6 @@
               (file-writable-p buffer-file-name)
               (matt-file-owned-by-user-p buffer-file-name))
     (matt-find-alternate-file-as-root buffer-file-name)))
-(add-hook 'find-file-hook 'matt-file-reopen-as-root)
 
 (require 'recentf)
 (setq recentf-save-file (expand-file-name "recentf" user-emacs-directory))
