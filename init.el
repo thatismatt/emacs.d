@@ -691,5 +691,6 @@
 
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 (global-set-key (kbd "C-o") 'other-window)
+(define-key compilation-minor-mode-map "\C-o" nil) ;; unbind so above binding works in grep
 
 (matt-define-key "g" 'rgrep)
