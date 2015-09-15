@@ -141,6 +141,7 @@
 (setq require-final-newline nil)
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 4)
+(setq-default fill-column 100)
 (global-auto-revert-mode t)
 (fset 'yes-or-no-p 'y-or-n-p)
 (delete-selection-mode t) ;; delete the selection with a keypress
