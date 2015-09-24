@@ -620,6 +620,7 @@
                  (kill-buffer (current-buffer))
                  (message "%s deleted." filename))
         (message "%s not deleted." filename)))))
+(matt-define-key "k" 'matt-delete-file-and-buffer)
 
 (defun matt-indent-buffer ()
   (interactive)
