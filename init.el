@@ -279,6 +279,7 @@
 (global-company-mode 1)
 (setq company-dabbrev-downcase nil)
 (setq company-dabbrev-ignore-case 't)
+(define-key company-active-map (kbd "<tab>") nil) ;; conflicts with yas
 
 (require 'linum)
 (setq linum-format "%4i ")
