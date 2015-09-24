@@ -669,6 +669,12 @@
   (insert (shell-command-to-string "tmux showb")))
 (matt-define-key "t y" 'matt-tmux-yank)
 
+(defun matt-kill-emacs ()
+  (interactive)
+  (if (y-or-n-p "Kill Emacs?")
+      (save-buffers-kill-emacs)))
+(matt-define-key "q" 'matt-kill-emacs)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; KEYS
 
