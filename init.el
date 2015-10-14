@@ -293,13 +293,6 @@
 
 (require 'yasnippet)
 (yas-global-mode)
-;;(setq yas-snippet-dirs '("~/.emacs.d/snippets" "~/.emacs.d/elpa/yasnippet-20140106.1009/snippets"))
-;;(setq yas-snippet-dirs '("~/.emacs.d/snippets"))
-(setq yas-snippet-dirs (cons "~/.emacs.d/snippets" (cdr yas-snippet-dirs)))
-;; HACK - relies on the second element of yas-snippets-dir being the snippets from melpa
-;; NOTE - yas fails to load if a dir that doesn't exist is in yas-snippets-dir
-;;        ~/.emacs.d/snippets is in there by default, and doesn't exist
-(yas-reload-all)
 
 (require 'highlight-symbol)
 (setq highlight-symbol-colors '("#f9b" "#fb7" "#fe8" "#ce9" "#9fb" "#9dd" "#9bf" "#b9f"))
