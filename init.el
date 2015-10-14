@@ -89,6 +89,15 @@
   (let ((pkgs (-map 'car package-alist)))
     (-filter (lambda (x) (not (-contains-p matt-packages x))) pkgs)))
 
+(defun matt-packages-with-dependencies (packages)
+  (-map (lambda (pkg)
+          (let* ((reqs-ids (car (package-desc-reqs
+                                 (cadr
+                                  (assq pkg package-alist)))))
+                 (reqs (-map (lambda (r) (memq r package-activated-list)) reqs-ids)))
+            (cons pkg reqs)))
+        packages))
+
 ;; hide tool bar & menu bar
 (tool-bar-mode -1)
 (menu-bar-mode -1)
