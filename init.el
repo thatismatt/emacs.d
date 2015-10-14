@@ -24,7 +24,6 @@
     dash
     diff-hl
     elisp-slime-nav
-    geiser
     projectile
     magit
     move-text
@@ -34,21 +33,18 @@
     smex
     undo-tree
     yasnippet
-    clojure-mode
-    cider
+    ido-ubiquitous
+    ido-vertical-mode
+    flx-ido
+    highlight-symbol
+    multiple-cursors
     js2-mode
     js2-refactor
     lua-mode
     sbt-mode
     scala-mode2
     ensime
-    ido-ubiquitous
-    ido-vertical-mode
-    flx-ido
     markdown-mode
-    highlight-symbol
-    multiple-cursors
-    tuareg
     web-mode
     less-css-mode
     )
@@ -400,15 +396,6 @@
 (require 'ensime)
 (add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
 (setq-default ensime-sem-high-enabled-p nil)
-
-(require 'geiser)
-(setq geiser-active-implementations '(guile chicken))
-(add-hook 'scheme-mode-hook 'rainbow-delimiters-mode)
-(add-hook 'scheme-mode-hook 'smartparens-strict-mode)
-(add-hook 'geiser-repl-mode-hook 'rainbow-delimiters-mode)
-(add-hook 'geiser-repl-mode-hook 'smartparens-mode)
-
-(require 'tuareg)
 
 (require 'web-mode)
 (setq web-mode-markup-indent-offset 2)
