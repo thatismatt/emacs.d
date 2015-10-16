@@ -683,4 +683,7 @@
 (global-set-key (kbd "C-o") 'other-window)
 (define-key compilation-minor-mode-map "\C-o" nil) ;; unbind so above binding works in grep
 
+(global-set-key (kbd "M-[") 'scroll-up-line)
+(global-set-key (kbd "M-]") 'scroll-down-line)
+
 (matt-define-key "g" 'rgrep)
