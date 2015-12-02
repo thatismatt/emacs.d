@@ -542,6 +542,11 @@
          (filename  (format "%s-%s.%s" filename timestamp "org")))
     (find-file filename)))
 
+(defun matt-org-title ()
+  (interactive)
+  (let* ((date (format-time-string "%a, %d %B %Y" (current-time))))
+    (insert "#+TITLE: - " date "\n")))
+
 (defun matt-window-adjust ()
   "Interactively adjust window size."
   (interactive)
