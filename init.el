@@ -402,6 +402,7 @@
 (require 'web-mode)
 (setq web-mode-markup-indent-offset 2)
 (setq web-mode-code-indent-offset 2)
+(setq web-mode-enable-comment-interpolation nil)
 (add-to-list 'auto-mode-alist '("\\.jsx$" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.\\(jspf?\\|tag\\)$" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.[sx]?html?\\(\\.[a-zA-Z_]+\\)?\\'" . web-mode))
