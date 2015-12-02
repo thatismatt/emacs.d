@@ -354,6 +354,8 @@
 (setq org-export-html-postamble nil)
 (define-key org-mode-map (kbd "C-<up>") 'org-backward-element)
 (define-key org-mode-map (kbd "C-<down>") 'org-forward-element)
+(define-key org-mode-map (kbd "C-S-<up>") 'org-metaup)
+(define-key org-mode-map (kbd "C-S-<down>") 'org-metadown)
 (define-key org-mode-map (kbd "S-<up>") nil)
 (define-key org-mode-map (kbd "S-<down>") nil)
 (define-key org-mode-map (kbd "S-<left>") nil)
