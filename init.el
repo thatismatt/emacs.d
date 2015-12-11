@@ -693,10 +693,13 @@
 (global-set-key (kbd "C-S-<iso-lefttab>") 'previous-buffer)
 
 (global-set-key (kbd "C-x C-b") 'ibuffer)
-(global-set-key (kbd "C-o") 'other-window)
-(define-key compilation-minor-mode-map "\C-o" nil) ;; unbind so above binding works in grep
-
 (global-set-key (kbd "M-[") 'scroll-up-line)
 (global-set-key (kbd "M-]") 'scroll-down-line)
+
+(global-set-key (kbd "C-o") 'other-window)
+;; unbind C-o in grep, dired, ibuffer
+(define-key compilation-minor-mode-map (kbd "C-o") nil)
+(define-key dired-mode-map (kbd "C-o") nil)
+(define-key ibuffer-mode-map (kbd "C-o") nil)
 
 (matt-define-key "g" 'rgrep)
