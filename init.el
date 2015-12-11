@@ -294,6 +294,10 @@
 (add-hook 'html-mode-hook 'linum-mode)
 (add-hook 'nxml-mode-hook 'linum-mode)
 
+(require 'rainbow-mode)
+(setq-default rainbow-html-colors nil)
+(setq-default rainbow-x-colors nil)
+
 (require 'grep)
 (setq grep-find-ignored-directories (cons "target" grep-find-ignored-directories))
 
