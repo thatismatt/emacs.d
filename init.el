@@ -233,6 +233,7 @@
   "Wraps `find-alternate-file' with opening a file as root."
   (find-alternate-file (concat "/sudo:root@localhost:" filename)))
 (defun matt-file-reopen-as-root ()
+  (interactive)
   "Find file as root if necessary."
   (unless (or (tramp-tramp-file-p buffer-file-name)
               (equal major-mode 'dired-mode)
