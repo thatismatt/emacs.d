@@ -312,6 +312,7 @@
 
 (require 'projectile)
 (projectile-global-mode)
+(global-set-key (kbd "C-x p") 'projectile-find-file)
 
 (require 'speedbar)
 (setq speedbar-show-unknown-files t)
