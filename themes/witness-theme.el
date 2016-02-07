@@ -89,6 +89,7 @@
    `(success ((t (:foreground ,*green*))))
    `(match ((t (:foreground ,*background* :background ,*highlight-1*))))
    `(shadow ((t (:foreground ,*purple*))))
+   `(link ((t (:foreground ,*link*))))
    `(error ((t (:foreground ,*warning*))))
 
    ;; font-lock
