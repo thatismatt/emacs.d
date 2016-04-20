@@ -438,11 +438,16 @@
   "Kill buffer without confirmation."
   (interactive)
   (kill-buffer (current-buffer)))
+(global-set-key (kbd "C-x k") 'matt-kill-this-buffer)
 
 (defun matt-mru-buffer ()
   "Switch to the most recently used buffer."
   (interactive)
   (switch-to-buffer (other-buffer (current-buffer) 1)))
+(global-set-key (kbd "S-<right>") 'next-buffer)
+(global-set-key (kbd "S-<left>") 'previous-buffer)
+(global-set-key (kbd "S-<up>") 'matt-mru-buffer)
+(global-set-key (kbd "S-<down>") 'ido-switch-buffer)
 
 (defun matt-swap-windows ()
   "Swap the buffers in `selected-window' and `next-window'."
@@ -468,6 +473,7 @@
 (defun matt-just-one-space-multiline ()
   (interactive)
   (just-one-space -1))
+(global-set-key (kbd "M-SPC") 'matt-just-one-space-multiline)
 
 (defun matt-journal ()
   (interactive)
@@ -653,31 +659,20 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; KEYS
 
-(global-set-key (kbd "C-x k") 'matt-kill-this-buffer)
+(global-set-key (kbd "<M-backspace>")     'backward-kill-word)
+(global-set-key (kbd "<C-backspace>")     'backward-kill-word)
 
-(global-set-key (kbd "M-SPC") 'matt-just-one-space-multiline)
+(global-set-key (kbd "M-DEL")             'kill-word)
+(global-set-key (kbd "<M-delete>")        'kill-word)
 
-(global-set-key (kbd "<M-backspace>") 'backward-kill-word)
-(global-set-key (kbd "<C-backspace>") 'backward-kill-word)
+(global-set-key (kbd "M-[")               'scroll-up-line)
+(global-set-key (kbd "M-]")               'scroll-down-line)
 
-(global-set-key (kbd "M-DEL") 'kill-word)
-(global-set-key (kbd "<M-delete>") 'kill-word)
-
-(global-set-key (kbd "S-<right>") 'next-buffer)
-(global-set-key (kbd "S-<left>") 'previous-buffer)
-(global-set-key (kbd "S-<up>") 'matt-mru-buffer)
-(global-set-key (kbd "S-<down>") 'ido-switch-buffer)
-
-(global-set-key (kbd "C-<tab>") 'next-buffer)
-(global-set-key (kbd "C-S-<iso-lefttab>") 'previous-buffer)
-
-(global-set-key (kbd "M-[") 'scroll-up-line)
-(global-set-key (kbd "M-]") 'scroll-down-line)
-
-(global-set-key (kbd "C-o") 'other-window)
+(global-set-key (kbd "C-o")               'other-window)
 ;; unbind C-o in grep, dired, ibuffer
-(define-key compilation-minor-mode-map (kbd "C-o") nil)
-(define-key dired-mode-map (kbd "C-o") nil)
-(define-key ibuffer-mode-map (kbd "C-o") nil)
+(define-key compilation-minor-mode-map    (kbd "C-o") nil)
+(define-key dired-mode-map                (kbd "C-o") nil)
+(define-key ibuffer-mode-map              (kbd "C-o") nil)
 
-(matt-define-key "g" 'rgrep)
+(matt-define-key "g"                      'rgrep)
+(matt-define-key "a r"                    'align-regexp)
