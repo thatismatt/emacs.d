@@ -48,6 +48,8 @@
     markdown-mode
     web-mode
     less-css-mode
+    clojure-mode
+    cider
     )
   "A list of packages to ensure are installed at launch.")
 
@@ -411,6 +413,11 @@
 (add-to-list 'auto-mode-alist '("\\.[sx]?html?\\(\\.[a-zA-Z_]+\\)?\\'" . web-mode))
 
 (require 'less-css-mode)
+
+(require 'clojure-mode)
+(add-hook 'clojure-mode-hook 'turn-on-eldoc-mode)
+(add-hook 'cider-repl-mode 'turn-on-eldoc-mode)
+(add-hook 'cider-repl-mode 'smartparens-mode)
 
 (defun matt-font-lock-comment-annotations ()
   "Highlight well known comment annotations."
