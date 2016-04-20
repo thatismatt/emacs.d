@@ -439,24 +439,6 @@
   (interactive)
   (kill-buffer (current-buffer)))
 
-;; window & buffer switching
-(defun matt-buffer-swith-ignore-p (bn)
-  "Ignore special buffers except *scratch*."
-  (and (not (equal "*scratch*" bn))
-       (equal "*" (substring bn 0 1))))
-(defun matt-normal-buffer-switch (f)
-  "Switch buffers with `f` ignoring those when `matt-buffer-swith-ignore-p' is true"
-  (funcall f)
-  (if (matt-buffer-swith-ignore-p (buffer-name))
-      (progn
-        (message "Skipped buffer %s" (buffer-name))
-        (matt-normal-buffer-switch f))))
-(define-key global-map (kbd "S-<menu>")
-  (lambda () (interactive) (matt-normal-buffer-switch 'previous-buffer)))
-(define-key global-map (kbd "<menu>")
-  (lambda () (interactive) (matt-normal-buffer-switch 'next-buffer)))
-(define-key global-map (kbd "C-<menu>") 'other-window)
-
 (defun matt-mru-buffer ()
   "Switch to the most recently used buffer."
   (interactive)
