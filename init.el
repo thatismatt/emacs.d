@@ -37,6 +37,7 @@
     ido-vertical-mode
     flx-ido
     highlight-symbol
+    idle-highlight-mode
     multiple-cursors
     js2-mode
     js2-refactor
@@ -310,6 +311,9 @@
 (matt-define-key "C-," 'highlight-symbol-at-point)
 (matt-define-key "C-n" 'highlight-symbol-next)
 (matt-define-key "C-p" 'highlight-symbol-prev)
+
+(require 'idle-highlight-mode)
+(add-hook 'prog-mode-hook 'idle-highlight-mode)
 
 (require 'projectile)
 (projectile-global-mode)
