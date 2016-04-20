@@ -220,6 +220,7 @@
 (define-key ibuffer-mode-map "\C-x\C-f" 'ibuffer-ido-find-file)
 (define-key ibuffer-name-map [(mouse-1)] 'ibuffer-mouse-visit-buffer)
 (define-key ibuffer-name-map [(mouse-2)] 'ibuffer-mouse-toggle-mark)
+(global-set-key (kbd "C-x C-b") 'ibuffer)
 
 ;; open as root - from emacs prelude
 (defun matt-file-owner-uid (filename)
@@ -694,7 +695,6 @@
 (global-set-key (kbd "C-<tab>") 'next-buffer)
 (global-set-key (kbd "C-S-<iso-lefttab>") 'previous-buffer)
 
-(global-set-key (kbd "C-x C-b") 'ibuffer)
 (global-set-key (kbd "M-[") 'scroll-up-line)
 (global-set-key (kbd "M-]") 'scroll-down-line)
 
