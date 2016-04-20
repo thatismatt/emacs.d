@@ -315,15 +315,6 @@
 (projectile-global-mode)
 (global-set-key (kbd "C-x p") 'projectile-find-file)
 
-(require 'speedbar)
-(setq speedbar-show-unknown-files t)
-(setq speedbar-use-images nil)
-(add-to-list 'speedbar-frame-parameters '(width . 30))
-(defun speedbar-kill ()
-  (interactive)
-  (if (get-buffer " SPEEDBAR")
-      (kill-buffer " SPEEDBAR")))
-
 (require 'multiple-cursors)
 (matt-define-key "m c" 'mc/mark-more-like-this-extended)
 
@@ -484,14 +475,6 @@
 (defun matt-just-one-space-multiline ()
   (interactive)
   (just-one-space -1))
-
-(defun matt-speedbar-and-arrange-windows ()
-  (interactive)
-  (let ((top 29) (height 56) (width 160))
-    (set-frame-position (selected-frame) 299 top)
-    (set-frame-size (selected-frame) width height)
-    (speedbar)
-    (set-frame-position (car (frame-list)) 0 top)))
 
 (defun matt-journal ()
   (interactive)
