@@ -166,15 +166,10 @@
    `(magit-diff-added-highlight ((t (:foreground ,*green* :background ,*background*))))
    `(magit-branch-local ((t (:foreground ,*highlight-1*))))
    `(magit-branch-remote ((t (:foreground ,*highlight-2*))))
-   `(magit-log-sha1 ((t (:foreground ,*highlight-2*))))
-   `(magit-tag ((t (:foreground ,*highlight-3* :background nil))))
-   `(magit-log-head-label-tags ((t (:foreground ,*highlight-3* :background nil :box 1))))
-   `(magit-log-head-label-head ((t (:foreground ,*highlight-1* :background nil :box 1))))
-   `(magit-log-head-label-local ((t (:foreground ,*highlight-2* :background nil :box 1))))
-   `(magit-log-head-label-remote ((t (:foreground ,*highlight-3* :background nil :box 1))))
-   `(magit-log-head-label-default ((t (:foreground ,*highlight-4* :background nil :box 1))))
+   `(magit-tag ((t (:foreground ,*highlight-4* :background nil :box 1))))
    `(magit-section-heading ((t (:foreground ,*highlight-1* :background nil))))
    `(magit-section-highlight ((t (:foreground nil :background nil))))
+   `(magit-section-heading-selection ((t (:foreground ,*highlight-4*))))
    `(magit-hash ((t (:foreground ,*highlight-3*))))
 
    ;; speedbar

@@ -131,13 +131,13 @@
    `(sp-show-pair-match-face ((t (:background ,*visual-selection-3*))))
 
    ;; rainbow delimiters
-   `(rainbow-delimiters-depth-1-face ((t (:foreground "#f0a"))))
+   `(rainbow-delimiters-depth-1-face ((t (:foreground "#e0b"))))
    `(rainbow-delimiters-depth-2-face ((t (:foreground "#f0e"))))
-   `(rainbow-delimiters-depth-3-face ((t (:foreground "#d0f"))))
-   `(rainbow-delimiters-depth-4-face ((t (:foreground "#90f"))))
-   `(rainbow-delimiters-depth-5-face ((t (:foreground "#60f"))))
-   `(rainbow-delimiters-depth-6-face ((t (:foreground "#90f"))))
-   `(rainbow-delimiters-depth-7-face ((t (:foreground "#c0f"))))
+   `(rainbow-delimiters-depth-3-face ((t (:foreground "#d1f"))))
+   `(rainbow-delimiters-depth-4-face ((t (:foreground "#a2f"))))
+   `(rainbow-delimiters-depth-5-face ((t (:foreground "#82f"))))
+   `(rainbow-delimiters-depth-6-face ((t (:foreground "#a2f"))))
+   `(rainbow-delimiters-depth-7-face ((t (:foreground "#c1f"))))
    `(rainbow-delimiters-depth-8-face ((t (:foreground "#f0f"))))
    `(rainbow-delimiters-depth-9-face ((t (:foreground "#f0d"))))
 
@@ -167,15 +167,10 @@
    `(magit-diff-added-highlight ((t (:foreground ,*green* :background ,*background*))))
    `(magit-branch-local ((t (:foreground ,*highlight-1*))))
    `(magit-branch-remote ((t (:foreground ,*highlight-2*))))
-   `(magit-log-sha1 ((t (:foreground ,*highlight-2*))))
-   `(magit-tag ((t (:foreground ,*highlight-3* :background nil))))
-   `(magit-log-head-label-tags ((t (:foreground ,*highlight-3* :background nil :box 1))))
-   `(magit-log-head-label-head ((t (:foreground ,*highlight-1* :background nil :box 1))))
-   `(magit-log-head-label-local ((t (:foreground ,*highlight-2* :background nil :box 1))))
-   `(magit-log-head-label-remote ((t (:foreground ,*highlight-3* :background nil :box 1))))
-   `(magit-log-head-label-default ((t (:foreground ,*highlight-4* :background nil :box 1))))
+   `(magit-tag ((t (:foreground ,*highlight-4* :background nil :box 1))))
    `(magit-section-heading ((t (:foreground ,*highlight-1* :background nil))))
    `(magit-section-highlight ((t (:foreground nil :background nil))))
+   `(magit-section-heading-selection ((t (:foreground ,*highlight-4*))))
    `(magit-hash ((t (:foreground ,*highlight-3*))))
 
    ;; speedbar
