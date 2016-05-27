@@ -417,8 +417,9 @@
 (require 'clojure-mode)
 (add-hook 'clojure-mode-hook 'turn-on-eldoc-mode)
 (add-hook 'clojure-mode-hook 'rainbow-delimiters-mode)
-(add-hook 'cider-repl-mode 'turn-on-eldoc-mode)
-(add-hook 'cider-repl-mode 'smartparens-mode)
+(add-hook 'cider-repl-mode-hook 'turn-on-eldoc-mode)
+(add-hook 'cider-repl-mode-hook 'smartparens-mode)
+(add-hook 'cider-repl-mode-hook 'rainbow-delimiters-mode)
 
 (defun matt-font-lock-comment-annotations ()
   "Highlight well known comment annotations."
