@@ -64,6 +64,7 @@
        (*highlight-2*        *red*)
        (*highlight-3*        *yellow-1*)
        (*highlight-4*        *green*)
+       (*highlight-bg*       *grey-c*)
        (*mode-line-bg*       *grey-c*)
        (*mode-line-fg*       *grey-4*)
        (*mode-line-bg-2*     *grey-d*)
@@ -183,6 +184,9 @@
    `(speedbar-highlight-face ((t (:foreground ,*highlight-2* :background nil))))
    `(speedbar-button-face ((t (:foreground ,*highlight-4*))))
    `(speedbar-separator-face ((t (:foreground ,*grey-4*))))
+
+   ;; idle-highlight
+   `(idle-highlight ((t (:background ,*highlight-bg* :foreground nil))))
 
    ;; org
    `(org-level-1 ((t (:foreground ,*highlight-1*))))
