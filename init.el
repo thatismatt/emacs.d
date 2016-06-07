@@ -460,6 +460,7 @@
          (other-buffer (window-buffer other)))
     (set-window-buffer other this-buffer)
     (set-window-buffer this other-buffer)))
+(matt-define-key "w s" 'matt-swap-windows)
 
 (defun matt-toggle-window-dedicated ()
   "Toggle whether the current active window is dedicated or not"
@@ -548,6 +549,7 @@
     (define-key map '[?-] 'shrink-window)
     (define-key map '[?=] 'enlarge-window)
     (set-temporary-overlay-map map t)))
+(matt-define-key "w a" 'matt-window-adjust)
 
 (defun matt-toggle-theme ()
   (interactive)
@@ -678,3 +680,4 @@
 
 (matt-define-key "g"                      'rgrep)
 (matt-define-key "a r"                    'align-regexp)
+(matt-define-key "s r"                    'replace-string)
