@@ -303,7 +303,8 @@
 (setq-default rainbow-x-colors nil)
 
 (require 'grep)
-(setq grep-find-ignored-directories (cons "target" grep-find-ignored-directories))
+(setq grep-find-ignored-directories (append grep-find-ignored-directories '("target" "out")))
+(add-hook 'grep-mode-hook (lambda () (toggle-truncate-lines 1)))
 
 (require 'yasnippet)
 (yas-global-mode)
