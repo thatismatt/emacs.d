@@ -486,6 +486,7 @@
 (defun matt-journal ()
   (interactive)
   (find-file "~/work/journal.org"))
+(matt-define-key "o j" 'matt-journal)
 
 (defun matt-journal-title ()
   (interactive)
