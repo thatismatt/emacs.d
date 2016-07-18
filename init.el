@@ -121,15 +121,32 @@
     (load-theme 'witness t))
 
 ;; font
-(set-face-attribute 'default nil :height 110)
+(defun matt-font-size (sz)
+  (interactive "NFont size: ")
+  (set-face-attribute 'default nil :height (truncate (* sz 10))))
+(matt-define-key "f f" 'matt-font-size)
+
+(defun matt-font-size-small ()
+  (interactive)
+  (matt-font-size 11))
+(matt-define-key "f s" 'matt-font-size-small)
+(global-set-key (kbd "C--") 'matt-font-size-small)
+
+(defun matt-font-size-large ()
+  (interactive)
+  (matt-font-size 18))
+(matt-define-key "f l" 'matt-font-size-large)
+(global-set-key (kbd "C-=") 'matt-font-size-large)
+
+(matt-font-size-small)
 ;; (set-face-attribute 'default nil :family "Nimbus Mono L")
 ;; (set-face-attribute 'default nil :family "Liberation Mono")
 ;; (set-face-attribute 'default nil :family "DejaVu Sans Mono")
 ;; (set-face-attribute 'default nil :family "Droid Sans Mono")
-(set-face-attribute 'default nil :family "Inconsolata")
-;; (set-face-attribute 'default nil :family "Monofur")
-;; (set-face-attribute 'default nil :family "Ubuntu Mono")
-;; (set-face-attribute 'default nil :family "Andale Mono")
+;; (set-face-attribute 'default nil :family "Inconsolata")
+(set-face-attribute 'default nil :family "VL Gothic")
+;; (set-face-attribute 'default nil :family "Mononoki")
+;; (set-face-attribute 'default nil :family "Space Mono")
 
 ;; cursor - bar instead of a block
 (set-default 'cursor-type '(bar . 2))
@@ -485,22 +502,6 @@
   (interactive)
   (let* ((date (format-time-string "%a, %b %d %Y" (current-time))))
     (insert "* " date " ----------------------------------------------------------------\n")))
-
-(defun matt-font-size (sz)
-  (interactive "NSize: ")
-  (set-face-attribute 'default nil :height (* sz 10)))
-
-(defun matt-font-size-small ()
-  (interactive)
-  (matt-font-size 11))
-(matt-define-key "f s" 'matt-font-size-small)
-(global-set-key (kbd "C--") 'matt-font-size-small)
-
-(defun matt-font-size-large ()
-  (interactive)
-  (matt-font-size 18))
-(matt-define-key "f l" 'matt-font-size-large)
-(global-set-key (kbd "C-=") 'matt-font-size-large)
 
 (defun matt-insert-date ()
   "Insert the current date. e.g 16-Jun-2014"
