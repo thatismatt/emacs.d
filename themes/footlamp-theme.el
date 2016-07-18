@@ -219,6 +219,9 @@
    ;; ocaml
    `(tuareg-font-lock-governing-face ((t (:foreground ,*keywords*))))
    `(tuareg-font-lock-operator-face ((t (:foreground ,*function*))))
+
+   ;; nxml
+   `(nxml-glyph ((t (:foreground ,*keywords*))))
    ))
 
 ;;;###autoload
