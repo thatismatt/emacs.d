@@ -36,7 +36,6 @@
     ido-ubiquitous
     ido-vertical-mode
     flx-ido
-    highlight-symbol
     idle-highlight-mode
     multiple-cursors
     js2-mode
@@ -312,12 +311,6 @@
 
 (require 'yasnippet)
 (yas-global-mode)
-
-(require 'highlight-symbol)
-(setq highlight-symbol-colors '("#f9b" "#fb7" "#fe8" "#ce9" "#9fb" "#9dd" "#9bf" "#b9f"))
-(matt-define-key "C-," 'highlight-symbol-at-point)
-(matt-define-key "C-n" 'highlight-symbol-next)
-(matt-define-key "C-p" 'highlight-symbol-prev)
 
 (require 'idle-highlight-mode)
 (add-hook 'prog-mode-hook 'idle-highlight-mode)
