@@ -171,6 +171,10 @@
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
 
+(require 'browse-url)
+(setq browse-url-browser-function 'browse-url-generic)
+(setq browse-url-generic-program "google-chrome")
+
 (require 'smex)
 ;; (setq smex-save-file (expand-file-name ".smex-items" prelude-savefile-dir))
 (smex-initialize)
