@@ -8,7 +8,7 @@
 (require 'cl)
 (require 'package)
 
-(add-to-list 'load-path (expand-file-name "." user-emacs-directory))
+(add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 
 (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
                          ("marmalade" . "http://marmalade-repo.org/packages/")
