@@ -112,13 +112,52 @@
       (cons "~/.emacs.d/themes/" custom-theme-load-path))
 ;; (secure-hash 'sha256 (current-buffer))
 (setq custom-safe-themes '(default))
-(setq custom-safe-themes '("de8f4162b577e16f9bfdee4789faa43f5b832f03bb0a8194fc2329de0cea9aa4"
-                           "9eadc30c0a936fbb4db8272792e2fdc95ca42a29d38fd7ab05e684dd81848ef2"
+(setq custom-safe-themes '("121a0945a35f92cebbcbd60b9c4e85e554d73ff6488c51d9351d63b6a929f67b" ;; witness
+                           "4dc9517f2328de92e6a308c59bcbb2ee8d4fa987a30ed9ceeedc6240aa61918a" ;; footlamp
+                           "c51a5ea6a72e533b262235ec0fb6bbf29d59f2c5f26b0f951b8cfd1ae90a63a7" ;; sandaldust
                            default))
+
+(defun matt-disable-current-theme ()
+  (interactive)
+  (disable-theme (car custom-enabled-themes)))
+
+(defun matt-disable-all-themes ()
+  (interactive)
+  (when (not (eql nil custom-enabled-themes))
+    (matt-disable-current-theme)
+    (matt-disable-all-themes)))
+(matt-define-key "t ESC" 'matt-disable-all-themes)
+
+(defun matt-load-theme (theme)
+  (interactive
+   (list
+    (intern (completing-read "Load custom theme: "
+                             (mapcar 'symbol-name (custom-available-themes))))))
+  (matt-disable-all-themes)
+  (load-theme theme t))
+
+(defun matt-load-dark-theme ()
+  (interactive)
+  (matt-load-theme 'witness))
+(matt-define-key "t d" 'matt-load-dark-theme)
+
+(defun matt-load-light-theme ()
+  (interactive)
+  (matt-load-theme 'footlamp))
+(matt-define-key "t l" 'matt-load-light-theme)
+
+(defun matt-toggle-theme ()
+  (interactive)
+  (cond ((custom-theme-enabled-p 'footlamp) (matt-load-theme 'witness))
+        ((custom-theme-enabled-p 'witness) (matt-load-theme 'sandaldust))
+        ((custom-theme-enabled-p 'sandaldust)  (matt-load-theme 'footlamp))
+        (t (message "Current theme unknown."))))
+(matt-define-key "t t" 'matt-toggle-theme)
+
 (require 'server)
 (if (or (display-graphic-p)
         (daemonp))
-    (load-theme 'witness t))
+    (matt-load-theme 'witness))
 
 ;; font
 (defun matt-font-size (sz)
@@ -550,37 +589,6 @@
     (define-key map '[?=] 'enlarge-window)
     (set-temporary-overlay-map map t)))
 (matt-define-key "w a" 'matt-window-adjust)
-
-(defun matt-toggle-theme ()
-  (interactive)
-  (cond ((custom-theme-enabled-p 'footlamp) (matt-disable-all-themes) (load-theme 'witness t))
-        ((custom-theme-enabled-p 'witness) (matt-disable-all-themes) (load-theme 'footlamp t))
-        (t (message "Current theme unknown."))))
-(matt-define-key "t t" 'matt-toggle-theme)
-
-(defun matt-disable-current-theme ()
-  (interactive)
-  (disable-theme (car custom-enabled-themes)))
-
-(defun matt-disable-all-themes ()
-  (interactive)
-  (if (eql nil custom-enabled-themes)
-      (message "All themes disabled.")
-    (progn (matt-disable-current-theme)
-           (matt-disable-all-themes))))
-(matt-define-key "t ESC" 'matt-disable-all-themes)
-
-(defun matt-load-dark-theme ()
-  (interactive)
-  (matt-disable-all-themes)
-  (load-theme 'witness t))
-(matt-define-key "t d" 'matt-load-dark-theme)
-
-(defun matt-load-light-theme ()
-  (interactive)
-  (matt-disable-current-theme)
-  (load-theme 'footlamp t))
-(matt-define-key "t l" 'matt-load-light-theme)
 
 (defun matt-create-scratch-buffer ()
   "Create a new scratch buffer."
