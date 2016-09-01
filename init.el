@@ -594,7 +594,7 @@
   "Switch to the scratch buffer."
   (interactive)
   (switch-to-buffer "*scratch*"))
-(matt-define-key "b s" 'matt-jump-to-scratch-buffer)
+(matt-define-key "o s" 'matt-jump-to-scratch-buffer)
 
 (defun matt-delete-file-and-buffer ()
   (interactive)
