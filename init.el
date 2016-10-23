@@ -556,6 +556,8 @@
       (replace-match "" nil nil))))
 (matt-define-key "j k" 'matt-kill-whitespace)
 
+(define-key isearch-mode-map (kbd "C-.") 'isearch-forward-symbol-at-point)
+
 (defun matt-journal ()
   (interactive)
   (find-file "~/work/journal.org"))
