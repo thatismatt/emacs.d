@@ -349,10 +349,7 @@
 (require 'smartparens)
 (require 'smartparens-config)
 (setq sp-highlight-pair-overlay nil)
-(setq sp-base-key-bindings 'paredit)
-(setq sp-autoskip-closing-pair 'always)
-(setq sp-hybrid-kill-entire-symbol nil)
-(sp-use-paredit-bindings)
+(sp-use-smartparens-bindings)
 (show-smartparens-global-mode 1)
 (add-hook 'prog-mode-hook 'smartparens-mode)
 
