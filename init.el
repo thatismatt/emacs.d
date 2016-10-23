@@ -566,7 +566,8 @@
 (defun matt-journal-title ()
   (interactive)
   (let* ((date (format-time-string "%a, %b %d %Y" (current-time))))
-    (insert "* " date " ----------------------------------------------------------------\n")))
+    (insert "* " date " ----------------------------------------------------------------\n"
+            "** 8 hrs : 09:00-17:00 : 0 hrs up")))
 
 (defun matt-insert-date ()
   "Insert the current date. e.g 16-Jun-2014"
