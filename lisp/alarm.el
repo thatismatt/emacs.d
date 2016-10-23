@@ -46,7 +46,7 @@ Displays MESSAGE (and TIME) in `alarm-popup-buffer'."
   "Set an alarm.
 An alarm will occur at TIME with the MESSAGE.
 The time format is the same accepted by `run-at-time'.
-For example \"11:30am\"."
+For example \"11:30am\" or \"5 mins\"."
   (interactive "sTime: \nsMessage: ")
   (let* ((alarm-timer (run-at-time time nil 'alarm-action message time))
          (a `(,time ,message ,alarm-timer)))

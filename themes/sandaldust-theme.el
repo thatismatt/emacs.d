@@ -5,7 +5,7 @@
 ;; License: MIT
 
 ;;; Commentary:
-;; A dark theme.
+;; A brown theme.
 
 ;;; Code:
 
