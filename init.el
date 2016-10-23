@@ -544,6 +544,17 @@
   (interactive)
   (just-one-space -1))
 (global-set-key (kbd "M-SPC") 'matt-just-one-space-multiline)
+(matt-define-key "j j" 'matt-just-one-space-multiline)
+
+(defun matt-kill-whitespace ()
+  "Kill the whitespace between two non-whitespace characters"
+  (interactive)
+  (save-excursion
+    (progn
+      (re-search-backward "[^ \t\r\n]" nil t)
+      (re-search-forward "[ \t\r\n]+" nil t)
+      (replace-match "" nil nil))))
+(matt-define-key "j k" 'matt-kill-whitespace)
 
 (defun matt-journal ()
   (interactive)
