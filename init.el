@@ -492,6 +492,16 @@
       "(do (require 'figwheel-sidecar.repl-api)
            (figwheel-sidecar.repl-api/start-figwheel!)
            (figwheel-sidecar.repl-api/cljs-repl))")
+;; special config for clojure & openscad
+(defvar matt-openscad-file "designs/temp.scad")
+(defun matt-cider-eval-to-openscad ()
+  "Write the last sexp to an scad file."
+  (interactive)
+  (let* ((bounds (cider-last-sexp 'bounds))
+         (scad (apply #'buffer-substring bounds))
+         (form (concat "(spit \"" matt-openscad-file "\" (write-scad " scad "))")))
+    (cider-interactive-eval form nil bounds)))
+(matt-define-key "e" 'matt-cider-eval-to-openscad)
 
 (defun matt-font-lock-comment-annotations ()
   "Highlight well known comment annotations."
