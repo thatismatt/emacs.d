@@ -487,6 +487,11 @@
 (add-hook 'cider-repl-mode-hook 'turn-on-eldoc-mode)
 (add-hook 'cider-repl-mode-hook 'smartparens-mode)
 (add-hook 'cider-repl-mode-hook 'rainbow-delimiters-mode)
+;; hook figwheel in to cider
+(setq cider-cljs-lein-repl
+      "(do (require 'figwheel-sidecar.repl-api)
+           (figwheel-sidecar.repl-api/start-figwheel!)
+           (figwheel-sidecar.repl-api/cljs-repl))")
 
 (defun matt-font-lock-comment-annotations ()
   "Highlight well known comment annotations."
