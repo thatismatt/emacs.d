@@ -204,7 +204,10 @@
 
 ;; window title - include file's full path
 (setq frame-title-format
-      '("" invocation-name " - "
+      '("" invocation-name
+        (:eval (if (not (equal server-name "server"))
+                   (concat " - " server-name " ")))
+        " - "
         (:eval (if (buffer-file-name)
                    (abbreviate-file-name (buffer-file-name))
                  "%b"))))
