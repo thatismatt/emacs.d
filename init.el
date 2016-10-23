@@ -165,6 +165,25 @@
   (set-face-attribute 'default nil :height (truncate (* sz 10))))
 (matt-define-key "f f" 'matt-font-size)
 
+(defun matt-font-face-wide ()
+  (interactive)
+  (set-face-attribute 'default nil :family "Inconsolata"))
+(matt-define-key "f w" 'matt-font-face-wide)
+
+(defun matt-font-face-narrow ()
+  (interactive)
+  (set-face-attribute 'default nil :family "VL Gothic"))
+(matt-define-key "f n" 'matt-font-face-narrow)
+
+;; (set-face-attribute 'default nil :family "Inconsolata")
+;; (set-face-attribute 'default nil :family "VL Gothic")
+;; (set-face-attribute 'default nil :family "Nimbus Mono L")
+;; (set-face-attribute 'default nil :family "Liberation Mono")
+;; (set-face-attribute 'default nil :family "DejaVu Sans Mono")
+;; (set-face-attribute 'default nil :family "Droid Sans Mono")
+;; (set-face-attribute 'default nil :family "Mononoki")
+;; (set-face-attribute 'default nil :family "Space Mono")
+
 (defun matt-font-size-small ()
   (interactive)
   (matt-font-size 11))
@@ -178,14 +197,7 @@
 (global-set-key (kbd "C-=") 'matt-font-size-large)
 
 (matt-font-size-small)
-;; (set-face-attribute 'default nil :family "Nimbus Mono L")
-;; (set-face-attribute 'default nil :family "Liberation Mono")
-;; (set-face-attribute 'default nil :family "DejaVu Sans Mono")
-;; (set-face-attribute 'default nil :family "Droid Sans Mono")
-;; (set-face-attribute 'default nil :family "Inconsolata")
-(set-face-attribute 'default nil :family "VL Gothic")
-;; (set-face-attribute 'default nil :family "Mononoki")
-;; (set-face-attribute 'default nil :family "Space Mono")
+(matt-font-face-narrow)
 
 ;; cursor - bar instead of a block
 (set-default 'cursor-type '(bar . 2))
