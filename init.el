@@ -224,6 +224,7 @@
 (fset 'yes-or-no-p 'y-or-n-p)
 (delete-selection-mode t) ;; delete the selection with a keypress
 (savehist-mode)
+(global-set-key (kbd "C-d") 'backward-delete-char)
 
 ;; window splitting - always horizontal
 (setq split-height-threshold 0)
