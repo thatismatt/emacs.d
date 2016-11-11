@@ -9,7 +9,7 @@
 
 ;;; Code:
 
-(unless (>= 24 emacs-major-version)
+(unless (>= emacs-major-version 24)
   (error "Requires Emacs 24 or later"))
 
 (deftheme sandaldust "The Sandaldust color theme.")
