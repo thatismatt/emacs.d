@@ -369,6 +369,7 @@
 (add-hook 'css-mode-hook 'linum-mode)
 (add-hook 'html-mode-hook 'linum-mode)
 (add-hook 'nxml-mode-hook 'linum-mode)
+(add-hook 'conf-mopde-hook 'linum-mode)
 
 (require 'rainbow-mode)
 (setq-default rainbow-html-colors nil)
@@ -512,6 +513,7 @@
 (add-hook 'web-mode-hook 'matt-font-lock-comment-annotations)
 (add-hook 'less-css-mode-hook 'matt-font-lock-comment-annotations)
 (add-hook 'css-mode-hook 'matt-font-lock-comment-annotations)
+(add-hook 'conf-mode-hook 'matt-font-lock-comment-annotations)
 
 (require 'alarm)
 (matt-define-key "a a" 'alarm)
