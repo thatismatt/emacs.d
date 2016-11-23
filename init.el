@@ -613,6 +613,17 @@
                        periods)))
     (message (format "%.1f" (apply '+ hours)))))
 
+(defun matt-runs ()
+  (interactive)
+  (find-file "~/Documents/runs.org"))
+(matt-define-key "o r" 'matt-runs)
+
+(defun matt-runs-time-string-to-minutes (time-string)
+  "Converts human readable times to minutes, e.g. \"30:30\" becomes 30.5."
+  (destructuring-bind
+      (minutes seconds) (-map 'string-to-number (split-string time-string ":" t))
+    (+ minutes (/ seconds 60.0))))
+
 (defun matt-insert-date ()
   "Insert the current date. e.g 16-Jun-2014"
   (interactive)
