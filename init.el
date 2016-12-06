@@ -589,6 +589,7 @@
   (let* ((date (format-time-string "%a, %b %d %Y" (current-time))))
     (insert "* " date " ----------------------------------------------------------------\n"
             "** 8 hrs : 09:00-17:00 : 0 hrs up")))
+(matt-define-key "j t" 'matt-journal-title)
 
 (defun matt-journal-hours-total ()
   (interactive)
@@ -604,6 +605,7 @@
                            time-lines))
          (total (apply '+ overtimes)))
     (message (format "%.1f" total))))
+(matt-define-key "j h t" 'matt-journal-hours-total)
 
 (defun matt-journal-hours-day ()
   (interactive)
@@ -616,6 +618,7 @@
                          (+ (- to-h from-h) (/ (- to-m from-m) 60.0)))
                        periods)))
     (message (format "%.1f" (apply '+ hours)))))
+(matt-define-key "j h d" 'matt-journal-hours-day)
 
 (defun matt-runs ()
   (interactive)
