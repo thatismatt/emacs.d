@@ -101,8 +101,7 @@
 (menu-bar-mode -1)
 
 ;; scroll at same rate as the cursor - this stops the scroll "jumping" when you move off the top/bottom
-(when window-system
-  (setq scroll-conservatively 1))
+(setq scroll-conservatively 1)
 
 ;; keys
 (setq matt-keymap (make-sparse-keymap))
