@@ -49,6 +49,7 @@
     less-css-mode
     clojure-mode
     cider
+    inf-mongo
     )
   "A list of packages to ensure are installed at launch.")
 
@@ -507,6 +508,10 @@
          (form (concat "(spit \"" matt-openscad-file "\" (write-scad " scad "))")))
     (cider-interactive-eval form nil bounds)))
 (matt-define-key "e" 'matt-cider-eval-to-openscad)
+
+(require 'inf-mongo)
+(setq inf-mongo-command "/usr/bin/mongo 127.0.0.1:27017")
+(add-hook 'inf-mongo-mode-hook 'smartparens-mode)
 
 (defun matt-font-lock-comment-annotations ()
   "Highlight well known comment annotations."
