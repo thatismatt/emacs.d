@@ -245,6 +245,8 @@
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
 
+(require 'dired)
+
 (require 'browse-url)
 (setq browse-url-browser-function 'browse-url-generic)
 (setq browse-url-generic-program "google-chrome")
