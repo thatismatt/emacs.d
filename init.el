@@ -372,7 +372,7 @@
 (add-hook 'css-mode-hook 'linum-mode)
 (add-hook 'html-mode-hook 'linum-mode)
 (add-hook 'nxml-mode-hook 'linum-mode)
-(add-hook 'conf-mopde-hook 'linum-mode)
+(add-hook 'conf-mode-hook 'linum-mode)
 
 (require 'rainbow-mode)
 (setq-default rainbow-html-colors nil)
