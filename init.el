@@ -519,6 +519,9 @@
 (setq inf-mongo-command "/usr/bin/mongo 127.0.0.1:27017")
 (add-hook 'inf-mongo-mode-hook 'smartparens-mode)
 
+(require 'image)
+(define-key image-map "=" 'image-increase-size)
+
 (defun matt-font-lock-comment-annotations ()
   "Highlight well known comment annotations."
   (font-lock-add-keywords
