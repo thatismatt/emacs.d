@@ -522,6 +522,11 @@
 (require 'image)
 (define-key image-map "=" 'image-increase-size)
 
+(require 'alarm)
+(matt-define-key "a a" 'alarm)
+(matt-define-key "a l" 'alarm-list)
+(matt-define-key "a n" 'alarm-next)
+
 (defun matt-font-lock-comment-annotations ()
   "Highlight well known comment annotations."
   (font-lock-add-keywords
@@ -532,11 +537,6 @@
 (add-hook 'less-css-mode-hook 'matt-font-lock-comment-annotations)
 (add-hook 'css-mode-hook 'matt-font-lock-comment-annotations)
 (add-hook 'conf-mode-hook 'matt-font-lock-comment-annotations)
-
-(require 'alarm)
-(matt-define-key "a a" 'alarm)
-(matt-define-key "a l" 'alarm-list)
-(matt-define-key "a n" 'alarm-next)
 
 (defun matt-kill-this-buffer ()
   "Kill buffer without confirmation."
