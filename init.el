@@ -509,6 +509,9 @@
     (cider-interactive-eval form nil bounds)))
 (matt-define-key "e" 'matt-cider-eval-to-openscad)
 
+(require 'scheme)
+(add-to-list 'auto-mode-alist '("\\.ms$" . scheme-mode)) ;; microscheme
+
 (require 'inf-mongo)
 (setq inf-mongo-command "/usr/bin/mongo 127.0.0.1:27017")
 (add-hook 'inf-mongo-mode-hook 'smartparens-mode)
