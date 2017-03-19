@@ -200,6 +200,12 @@
    `(org-doing-face ((t (:foreground ,*yellow* :box 1))))
    `(org-postponed-face ((t (:foreground ,*grey-7* :box 1))))
 
+   ;; markdown
+   `(markdown-link-face ((t (:foreground ,*blue-1*))))
+
+   ;; calendar
+   `(calendar-today ((t (:foreground ,*green* :background nil :box 1))))
+
    ;; eshell
    `(eshell-prompt ((t (:foreground ,*highlight-2*))))
 
