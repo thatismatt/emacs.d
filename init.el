@@ -667,6 +667,7 @@
   (let* ((timestamp (format-time-string "%Y-%m-%d_%H-%M-%S" (current-time)))
          (filename  (format "~/tmp/emacs-temp-%s" timestamp)))
     (find-file filename)))
+(matt-define-key "o p" 'matt-open-temp-file)
 
 (defun matt-open-org-file (filename)
   (interactive "F")
