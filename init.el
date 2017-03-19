@@ -414,6 +414,9 @@
 (setq ediff-window-setup-function 'ediff-setup-windows-plain) ;; don't start another frame
 (setq ediff-split-window-function 'split-window-horizontally)
 
+(require 'calendar)
+(add-hook 'calendar-today-visible-hook 'calendar-mark-today)
+
 (require 'org)
 (defface org-todo-face '((t (:foreground "#f00"))) "org mode face for TODO items")
 (defface org-done-face '((t (:foreground "#0f0"))) "org mode face for DONE items")
