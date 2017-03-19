@@ -649,6 +649,16 @@
   (insert (format-time-string "%d-%b-%Y" (current-time))))
 (matt-define-key "i d" 'matt-insert-date)
 
+(defun matt-insert-underline (c)
+  "Underline the line above with the character C."
+  (interactive "cCharacter:")
+  (previous-line)
+  (let ((b (point))
+        (e (point-at-eol)))
+    (next-line)
+    (insert (make-string (- e b) c))))
+(matt-define-key "i u" 'matt-insert-underline)
+
 (defun matt-open-init ()
   (interactive)
   (find-file "~/.emacs.d/init.el"))
