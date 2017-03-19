@@ -749,22 +749,21 @@
 (matt-define-key "i C-f" 'matt-insert-full-filename)
 
 (defun matt-wget (url)
-  (interactive "sURL: ")
   (with-current-buffer (url-retrieve-synchronously url)
-    (let ((content (buffer-substring (marker-position url-http-end-of-headers) (buffer-size))))
+    (let ((content (buffer-substring (marker-position url-http-end-of-headers)
+                                     (buffer-size))))
       (kill-buffer)
-      (let ((wget-buffer (get-buffer-create "*wget*")))
-        (with-current-buffer wget-buffer
-          (insert content)
-          (view-buffer wget-buffer))))))
+      content)))
+
+(defun matt-insert-wget (url)
+  (interactive "sURL: ")
+  (let ((content (matt-wget url)))
+    (insert content)))
 
 (require 'json)
 (defun matt-whats-my-ip ()
-  (with-current-buffer (url-retrieve-synchronously "http://ip.jsontest.com/")
-    (goto-char url-http-end-of-headers)
-    (let ((json (json-read)))
-      (kill-buffer)
-      (cdr (assoc 'ip json)))))
+  (let ((json (json-read-from-string (matt-wget "http://ip.jsontest.com/"))))
+    (cdr (assoc 'ip json))))
 
 (defun matt-insert-my-ip ()
   (interactive)
