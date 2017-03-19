@@ -770,6 +770,21 @@
   (insert (matt-whats-my-ip)))
 (matt-define-key "i C-i" 'matt-insert-my-ip)
 
+(defun matt-change-at-point (f)
+  (skip-chars-backward "0-9")
+  (or (looking-at "[0-9]+")
+      (error "Nothing matched at point"))
+  (let ((raw (match-string 0)))
+    (replace-match (number-to-string (funcall f (string-to-number raw))))))
+
+(defun matt-increment-at-point ()
+  (interactive)
+  (matt-change-at-point '1+))
+
+(defun matt-decrement-at-point ()
+  (interactive)
+  (matt-change-at-point '1-))
+
 (defun matt-tmux-yank ()
   (interactive)
   (insert (shell-command-to-string "tmux showb")))
