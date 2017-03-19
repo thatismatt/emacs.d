@@ -510,6 +510,8 @@
 
 (require 'ruby-mode)
 (add-to-list 'auto-mode-alist '("\\.pp$" . ruby-mode)) ;; puppet
+(add-to-list 'auto-mode-alist '("\\^Vagrantfile$" . ruby-mode)) ;; vagrant
+(add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode)) ;; ruby erb files
 
 (require 'inf-mongo)
 (setq inf-mongo-command "/usr/bin/mongo 127.0.0.1:27017")
