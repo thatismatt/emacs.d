@@ -383,7 +383,7 @@
 (add-hook 'grep-mode-hook (lambda () (toggle-truncate-lines 1)))
 
 (require 'yasnippet)
-(yas-global-mode)
+(yas-global-mode 1)
 
 (require 'idle-highlight-mode)
 (add-hook 'prog-mode-hook 'idle-highlight-mode)
