@@ -42,8 +42,6 @@
     js2-refactor
     lua-mode
     sbt-mode
-    scala-mode2
-    ensime
     markdown-mode
     web-mode
     less-css-mode
@@ -474,11 +472,6 @@
 
 (require 'cc-mode)
 (add-hook 'java-mode-hook '(lambda () (c-set-offset 'arglist-intro '+)))
-
-(require 'scala-mode2)
-(require 'ensime)
-(add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
-(setq-default ensime-sem-high-enabled-p nil)
 
 (require 'web-mode)
 (setq web-mode-markup-indent-offset 2)
