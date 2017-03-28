@@ -414,6 +414,7 @@
 
 (require 'calendar)
 (add-hook 'calendar-today-visible-hook 'calendar-mark-today)
+(matt-define-key "o c" 'calendar)
 
 (require 'org)
 (defface org-todo-face '((t (:foreground "#f00"))) "org mode face for TODO items")
