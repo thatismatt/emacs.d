@@ -635,7 +635,7 @@
 
 (defun matt-runs ()
   (interactive)
-  (find-file "~/Documents/runs.org"))
+  (find-file "~/notes/runs.org"))
 (matt-define-key "o r" 'matt-runs)
 
 (defun matt-runs-time-string-to-minutes (time-string)
