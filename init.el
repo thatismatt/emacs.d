@@ -391,6 +391,7 @@
 (require 'projectile)
 (projectile-global-mode)
 (global-set-key (kbd "C-x p") 'projectile-find-file)
+(setq projectile-svn-command "find . -type f -not -iwholename '*.svn/*' -print0") ;; see https://github.com/bbatsov/projectile/issues/520
 
 (require 'multiple-cursors)
 (matt-define-key "m c" 'mc/mark-more-like-this-extended)
