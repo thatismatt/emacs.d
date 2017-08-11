@@ -33,7 +33,7 @@
     smex
     undo-tree
     yasnippet
-    ido-ubiquitous
+    ido-completing-read+
     ido-vertical-mode
     flx-ido
     idle-highlight-mode
@@ -257,7 +257,7 @@
 
 (require 'ido)
 (require 'ido-vertical-mode)
-(require 'ido-ubiquitous)
+(require 'ido-completing-read+)
 (require 'flx-ido)
 (setq ido-enable-prefix nil)
 (setq ido-enable-flex-matching t)
@@ -273,7 +273,7 @@
 (setq ido-max-window-height (+ ido-max-prospects 2))
 (ido-mode 1)
 (ido-vertical-mode 1)
-(ido-ubiquitous-mode 1)
+(ido-everywhere 1)
 (flx-ido-mode 1)
 
 (require 'ibuffer)
