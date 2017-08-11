@@ -822,3 +822,4 @@
 (matt-define-key "s r"                    'replace-string)
 (matt-define-key "w l"                    'toggle-truncate-lines) ;; mnemonic "wrap lines"
 (matt-define-key "w w"                    'toggle-word-wrap)
+(matt-define-key "l n"                    'linum-mode)
