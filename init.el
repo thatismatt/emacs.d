@@ -394,7 +394,8 @@
 (setq projectile-svn-command "find . -type f -not -iwholename '*.svn/*' -print0") ;; see https://github.com/bbatsov/projectile/issues/520
 
 (require 'multiple-cursors)
-(matt-define-key "m c" 'mc/mark-more-like-this-extended)
+(matt-define-key "m m" 'mc/mark-more-like-this-extended)
+(matt-define-key "m r" 'mc/edit-lines)
 
 (require 'move-text)
 (global-set-key (kbd "C-S-<up>") 'move-text-up)
