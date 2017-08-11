@@ -150,9 +150,9 @@
 
 (defun matt-toggle-theme ()
   (interactive)
-  (cond ((custom-theme-enabled-p 'footlamp) (matt-load-theme 'witness))
-        ((custom-theme-enabled-p 'witness) (matt-load-theme 'sandaldust))
-        ((custom-theme-enabled-p 'sandaldust)  (matt-load-theme 'footlamp))
+  (cond ((custom-theme-enabled-p 'footlamp)   (matt-load-theme 'witness))
+        ((custom-theme-enabled-p 'witness)    (matt-load-theme 'sandaldust))
+        ((custom-theme-enabled-p 'sandaldust) (matt-load-theme 'footlamp))
         (t (message "Current theme unknown."))))
 (matt-define-key "t t" 'matt-toggle-theme)
 
