@@ -174,17 +174,20 @@
 
 (defun matt-font-face-narrow ()
   (interactive)
-  (set-face-attribute 'default nil :family "VL Gothic"))
+  (set-face-attribute 'default nil :family "M+ 1m"))
 (matt-define-key "f n" 'matt-font-face-narrow)
 
-;; (set-face-attribute 'default nil :family "Inconsolata")
-;; (set-face-attribute 'default nil :family "VL Gothic")
+;; (set-face-attribute 'default nil :family "Inconsolata")     ;; apt: fonts-inconsolata
+;; (set-face-attribute 'default nil :family "M+ 1mn")          ;; apt: fonts-mplus
+;; (set-face-attribute 'default nil :family "M+ 1m")
+;; (set-face-attribute 'default nil :family "VL Gothic")       ;; apt: fonts-vlgothic
 ;; (set-face-attribute 'default nil :family "Nimbus Mono L")
-;; (set-face-attribute 'default nil :family "Liberation Mono")
+;; (set-face-attribute 'default nil :family "Liberation Mono") ;; apt: fonts-liberation
 ;; (set-face-attribute 'default nil :family "DejaVu Sans Mono")
 ;; (set-face-attribute 'default nil :family "Droid Sans Mono")
-;; (set-face-attribute 'default nil :family "Mononoki")
+;; (set-face-attribute 'default nil :family "Mononoki")        ;; apt: fonts-mononoki
 ;; (set-face-attribute 'default nil :family "Space Mono")
+;; (set-face-attribute 'default nil :family "Courier 10 Pitch")
 
 (defun matt-font-size-small ()
   (interactive)
