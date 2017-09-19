@@ -612,7 +612,7 @@
   (interactive)
   (let* ((date (format-time-string "%a, %b %d %Y" (current-time))))
     (insert "* " date " ----------------------------------------------------------------\n"
-            "** 8 hrs : 09:00-17:00 : 0 hrs up")))
+            "** 7 hrs : 09:00-12:00 13:00-17:00 : 0 hrs up")))
 (matt-define-key "j t" 'matt-journal-title)
 
 (defun matt-journal-hours-total ()
