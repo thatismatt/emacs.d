@@ -460,8 +460,8 @@
 (add-hook 'emacs-lisp-mode-hook 'rainbow-delimiters-mode)
 (add-hook 'emacs-lisp-mode-hook 'rainbow-mode)
 
-(require 'js-mode)
-(add-to-list 'auto-mode-alist '("\\.json\\'" . js-mode)) ;; cloud formation
+(require 'js)
+(add-to-list 'auto-mode-alist '("\\.json\\'" . js-mode))
 (add-to-list 'auto-mode-alist '("\\.cfn\\'" . js-mode)) ;; cloud formation
 
 (require 'js2-mode)
