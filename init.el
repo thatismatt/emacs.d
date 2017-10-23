@@ -385,6 +385,9 @@
 (setq grep-find-ignored-directories (append grep-find-ignored-directories '("target" "out")))
 (add-hook 'grep-mode-hook (lambda () (toggle-truncate-lines 1)))
 
+(require 'flyspell)
+(define-key flyspell-mode-map (kbd "C-,") nil)
+
 (require 'yasnippet)
 (yas-global-mode 1)
 
