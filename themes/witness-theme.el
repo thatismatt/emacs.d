@@ -35,7 +35,6 @@
        (*green-2*            "#094")
        (*pink*               "#e0b")
        (*purple*             "#93e")
-       (*purple-1*           "#609")
        (*blue*               "#0bd")
        (*blue-1*             "#59f")
 
