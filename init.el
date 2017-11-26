@@ -666,6 +666,14 @@
            (current-time))))
 (matt-define-key "i d" 'matt-insert-date)
 
+(defun matt-insert-time (arg)
+  "Insert the current time. e.g 2017-11-02"
+  (interactive "P")
+  (insert (format-time-string
+           "%FT%T%z" ;; "%Y-%m-%d"
+           (current-time))))
+(matt-define-key "i t" 'matt-insert-time)
+
 (defun matt-insert-underline (c)
   "Underline the line above with the character C."
   (interactive "cCharacter:")
