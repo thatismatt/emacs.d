@@ -429,7 +429,7 @@
 (defface org-done-face '((t (:foreground "#0f0"))) "org mode face for DONE items")
 (defface org-doing-face '((t (:foreground "#ff0"))) "org mode face for DOING items")
 (defface org-postponed-face '((t (:foreground "#666"))) "org mode face for POSTPONED items")
-(setq org-todo-keywords '((type "TODO" "DOING" "DONE" "POSTPONED")))
+(setq org-todo-keywords '((sequence "TODO" "DOING" "DONE") (sequence "POSTPONED")))
 (setq org-todo-keyword-faces
       '(("TODO" 'org-todo-face)
         ("DONE" 'org-done-face)
