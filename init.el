@@ -658,10 +658,12 @@
       (minutes seconds) (-map 'string-to-number (split-string time-string ":" t))
     (+ minutes (/ seconds 60.0))))
 
-(defun matt-insert-date ()
-  "Insert the current date. e.g 16-Jun-2014"
-  (interactive)
-  (insert (format-time-string "%d-%b-%Y" (current-time))))
+(defun matt-insert-date (arg)
+  "Insert the current date. e.g 2017-11-02"
+  (interactive "P")
+  (insert (format-time-string
+           (if arg "%d-%b-%Y" "%Y-%m-%d")
+           (current-time))))
 (matt-define-key "i d" 'matt-insert-date)
 
 (defun matt-insert-underline (c)
