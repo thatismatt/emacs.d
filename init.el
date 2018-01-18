@@ -33,6 +33,7 @@
     smex
     undo-tree
     yasnippet
+    yasnippet-snippets
     ido-completing-read+
     ido-vertical-mode
     flx-ido
