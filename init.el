@@ -115,8 +115,7 @@
 (setq custom-theme-load-path
       (cons "~/.emacs.d/themes/" custom-theme-load-path))
 ;; (secure-hash 'sha256 (current-buffer))
-(setq custom-safe-themes '(default))
-(setq custom-safe-themes '("121a0945a35f92cebbcbd60b9c4e85e554d73ff6488c51d9351d63b6a929f67b" ;; witness
+(setq custom-safe-themes '("3a3a9608bc30bab203cd2738d361b4d6f5074b10017d53c5caa26a59ee46e4bf" ;; witness
                            "4dc9517f2328de92e6a308c59bcbb2ee8d4fa987a30ed9ceeedc6240aa61918a" ;; footlamp
                            "c51a5ea6a72e533b262235ec0fb6bbf29d59f2c5f26b0f951b8cfd1ae90a63a7" ;; sandaldust
                            default))

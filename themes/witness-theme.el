@@ -198,6 +198,7 @@
    `(org-done-face ((t (:foreground ,*green* :box 1))))
    `(org-doing-face ((t (:foreground ,*yellow* :box 1))))
    `(org-postponed-face ((t (:foreground ,*grey-7* :box 1))))
+   `(org-query-face ((t (:foreground ,*purple* :box 1))))
 
    ;; markdown
    `(markdown-link-face ((t (:foreground ,*blue-1*))))
