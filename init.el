@@ -48,6 +48,7 @@
     less-css-mode
     clojure-mode
     cider
+    clj-refactor
     inf-mongo
     )
   "A list of packages to ensure are installed at launch.")
