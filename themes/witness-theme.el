@@ -93,6 +93,8 @@
    `(shadow ((t (:foreground ,*purple*))))
    `(link ((t (:foreground ,*link*))))
    `(error ((t (:foreground ,*warning*))))
+   `(fixed-pitch ((t (:family nil))))
+   `(fixed-pitch-serif ((t (:family nil))))
 
    ;; font-lock
    `(font-lock-builtin-face ((t (:foreground ,*builtins*))))
