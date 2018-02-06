@@ -614,15 +614,15 @@
 (defun matt-journal-title ()
   (interactive)
   (let* ((date (format-time-string "%a, %b %d %Y" (current-time))))
-    (insert "* " date " ----------------------------------------------------------------\n"
-            "** 7 hrs : 09:00-12:00 13:00-17:00 : 0 hrs up")))
+    (insert "** " date " ----------------------------------------------------------------\n"
+            "*** 7 hrs : 09:00-12:00 13:00-17:00 : 0 hrs up")))
 (matt-define-key "j t" 'matt-journal-title)
 
 (defun matt-journal-hours-total ()
   (interactive)
   (matt-journal)
   (let* ((content (split-string (buffer-string) "\n" t))
-         (time-lines (--filter (string-match "^\\*\\* .* : .* : " it) content))
+         (time-lines (--filter (string-match "^\\*+ .* : .* : " it) content))
          (overtimes (--map (-> it
                                (split-string " : ")
                                (caddr)
