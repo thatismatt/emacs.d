@@ -543,7 +543,7 @@
 (defun matt-font-lock-comment-annotations ()
   "Highlight well known comment annotations."
   (font-lock-add-keywords
-   nil '((" \\<\\(\\(FIX\\|TODO\\|NOTE\\|HACK\\|XXX\\)\\)[: ]"
+   nil '((" \\<\\(\\(FIX\\|TODO\\|NOTE\\|HACK\\|XXX\\|\\?\\?\\?\\)\\)[: ]"
           1 font-lock-warning-face t))))
 (add-hook 'prog-mode-hook 'matt-font-lock-comment-annotations)
 (add-hook 'web-mode-hook 'matt-font-lock-comment-annotations)
