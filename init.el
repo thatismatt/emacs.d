@@ -660,17 +660,20 @@
 
 (defun matt-insert-date (arg)
   "Insert the current date. e.g 2017-11-02"
+  ;; "%Y-%m-%d"      2018-02-08
+  ;; "%a, %d %B %Y"  Thu, 08 February 2018
+  ;; "%d-%b-%Y"      08-Feb-2018
   (interactive "P")
   (insert (format-time-string
-           (if arg "%d-%b-%Y" "%Y-%m-%d")
+           (if arg "%a, %d %B %Y" "%Y-%m-%d")
            (current-time))))
 (matt-define-key "i d" 'matt-insert-date)
 
 (defun matt-insert-time (arg)
-  "Insert the current time. e.g 2017-11-02"
+  "Insert the current time. e.g 2018-02-08T16:34:42+0000"
   (interactive "P")
   (insert (format-time-string
-           "%FT%T%z" ;; "%Y-%m-%d"
+           "%FT%T%z"
            (current-time))))
 (matt-define-key "i t" 'matt-insert-time)
 
