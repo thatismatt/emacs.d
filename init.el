@@ -11,6 +11,7 @@
 (package-initialize) ;; NOTE: required for first run, but issues warning thereafter
 
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
+(add-to-list 'load-path (expand-file-name "~/code/fennel-mode"))
 
 (add-to-list 'package-archives '("melpa" . "https://melpa.milkbox.net/packages/"))
 
@@ -532,6 +533,13 @@
 
 (require 'scheme)
 (add-to-list 'auto-mode-alist '("\\.ms$" . scheme-mode)) ;; microscheme
+
+(require 'fennel-mode)
+(defun matt-fennel-init ()
+  (setq inferior-lisp-program
+        (expand-file-name "~/code/fennel/fennel --repl")))
+(add-hook 'fennel-mode-hook 'rainbow-delimiters-mode)
+(add-hook 'fennel-mode-hook 'matt-fennel-init)
 
 (require 'ruby-mode)
 (add-to-list 'auto-mode-alist '("\\.pp$" . ruby-mode)) ;; puppet
