@@ -656,22 +656,31 @@
       (minutes seconds) (-map 'string-to-number (split-string time-string ":" t))
     (+ minutes (/ seconds 60.0))))
 
+;; (format-time-string
+;;  (apply 'concat
+;;         (-interpose " %"
+;;                     '("" "A" "B" "C" "D" "E" "F" "G" "H" "I" "J" "K" "L" "M" "N" "O" "P" "Q" "R" "S" "T" "U" "V" "W" "X" "Y" "Z"
+;;                          "a" "b" "c" "d" "e" "f" "g" "h" "i" "j" "k" "l" "m" "n" "o" "p" "q" "r" "s" "t" "u" "v" "w" "x" "y" "z")
+;;                     ))
+;;   (current-time))
+;; " Wednesday February 20 02/07/18 %E 2018-02-07 2018 15 03 %J %K %L 28 312138752 %O pm %Q 15:28 35 15:28:35 05 06 06 15:28:35 2018 GMT Wed Feb Wed 07 Feb 2018 15:28:35 GMT 07  7 %f 18 Feb %i 038 15  3 02
+;;  %o pm 1  3:28:35 pm GMT 1518017315 	 3 %v 3 07/02/18 18 +0000"
 (defun matt-insert-date (arg)
   "Insert the current date. e.g 2017-11-02"
-  ;; "%Y-%m-%d"      2018-02-08
-  ;; "%a, %d %B %Y"  Thu, 08 February 2018
-  ;; "%d-%b-%Y"      08-Feb-2018
-  (interactive "P")
+  (interactive "p")
   (insert (format-time-string
-           (if arg "%a, %d %B %Y" "%Y-%m-%d")
-           (current-time))))
+           (cond
+            ((eq arg 16) "%a, %d %B %Y") ;; Thu, 08 February 2018
+            ((eq arg 4)  "%d-%b-%Y")     ;; 08-Feb-2018
+            (t           "%Y-%m-%d"))    ;; 2018-02-08
+           (current-time)))) ;;
 (matt-define-key "i d" 'matt-insert-date)
 
 (defun matt-insert-time (arg)
-  "Insert the current time. e.g 2018-02-08T16:34:42+0000"
+  "Insert the current time. e.g 16:34:42 or 2018-02-08T16:34:42+0000"
   (interactive "P")
   (insert (format-time-string
-           "%FT%T%z"
+           (if arg "%FT%T%z" "%T")
            (current-time))))
 (matt-define-key "i t" 'matt-insert-time)
 
