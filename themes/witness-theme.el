@@ -196,6 +196,8 @@
    `(org-table ((t (:foreground ,*blue-1*))))
    `(org-document-title ((t (:foreground ,*yellow*))))
    `(org-document-info-keyword ((t (:foreground ,*link*))))
+   `(org-todo ((t (:foreground ,*red*))))
+   `(org-done ((t (:foreground ,*green*))))
    `(org-todo-face ((t (:foreground ,*red* :box 1))))
    `(org-done-face ((t (:foreground ,*green* :box 1))))
    `(org-doing-face ((t (:foreground ,*yellow* :box 1))))
