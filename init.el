@@ -305,6 +305,7 @@
 (define-key ibuffer-name-map [(mouse-2)] 'ibuffer-mouse-toggle-mark)
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
+(require 'tramp)
 ;; open as root - from emacs prelude
 (defun matt-file-owner-uid (filename)
   "Return the UID of the FILENAME as an integer. See `file-attributes' for more info."
