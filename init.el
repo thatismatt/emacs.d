@@ -470,6 +470,7 @@
 (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
 (setq-default js-indent-level 2)
 (setq-default js2-basic-offset 2)
+(setq-default js2-strict-trailing-comma-warning nil)
 (setq js2-global-externs
       '("setTimeout" "setInterval" "clearTimeout" "clearInterval" "global" "require" "module" "exports" "WebSocket" "$" "angular" "_"
         "Highcharts" "google" "d3" "chai" "it" "describe" "suite" "test"))
