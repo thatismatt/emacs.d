@@ -473,7 +473,7 @@
 (setq-default js2-strict-trailing-comma-warning nil)
 (setq js2-global-externs
       '("setTimeout" "setInterval" "clearTimeout" "clearInterval" "global" "require" "module" "exports" "WebSocket" "$" "angular" "_"
-        "Highcharts" "google" "d3" "chai" "it" "describe" "suite" "test"))
+        "Highcharts" "google" "d3" "chai" "it" "describe" "suite" "test" "chrome" "config"))
 (require 'js2-refactor)
 (js2r-add-keybindings-with-prefix "C-c C-m")
 (define-key js2-mode-map (kbd "<C-S-down>") nil)
