@@ -410,6 +410,9 @@
 (require 'magit)
 (setq magit-status-buffer-switch-function 'switch-to-buffer)
 (global-set-key (kbd "C-x g") 'magit-status)
+(setf (nth 1 magit-log-margin) "%a %d %b %R")
+;; (setf (nth 1 magit-log-margin) 'age) ;; the default
+;; (setf (nth 1 magit-log-margin) 'age-abbreviated) ;; an alternative
 
 (require 'diff-hl)
 (global-diff-hl-mode 1)
