@@ -757,6 +757,12 @@
   (switch-to-buffer "*scratch*"))
 (matt-define-key "o s" 'matt-jump-to-scratch-buffer)
 
+(defun matt-jump-to-messages-buffer ()
+  "Switch to the messages buffer."
+  (interactive)
+  (switch-to-buffer "*Messages*"))
+(matt-define-key "o m" 'matt-jump-to-messages-buffer)
+
 (defun matt-delete-file-and-buffer ()
   (interactive)
   (let ((filename (buffer-file-name)))
