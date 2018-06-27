@@ -509,7 +509,7 @@
 (add-hook 'cider-repl-mode-hook 'smartparens-mode)
 (add-hook 'cider-repl-mode-hook 'rainbow-delimiters-mode)
 (setq cider-repl-history-size 1000)
-(setq cider-repl-history-file ".cider-repl-history") ;; local file, to get per project history
+(setq cider-repl-history-file (expand-file-name ".cider-repl-history" user-emacs-directory))
 ;; hook figwheel in to cider
 (setq cider-cljs-lein-repl
       "(do (require 'figwheel-sidecar.repl-api)
