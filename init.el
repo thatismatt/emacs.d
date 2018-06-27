@@ -402,6 +402,8 @@
 (require 'multiple-cursors)
 (matt-define-key "m m" 'mc/mark-more-like-this-extended)
 (matt-define-key "m r" 'mc/edit-lines)
+(global-set-key (kbd "C->") 'mc/mark-next-like-this)
+(global-set-key (kbd "C-<") 'mc/unmark-next-like-this)
 
 (require 'move-text)
 (global-set-key (kbd "C-S-<up>") 'move-text-up)
