@@ -724,16 +724,19 @@
     (find-file filename)))
 (matt-define-key "o p" 'matt-open-temp-file)
 
+(defun matt-org-title ()
+  (interactive)
+  (let* ((date (format-time-string "%a, %d %B %Y" (current-time)))
+         (title (file-name-base (buffer-file-name))))
+    (insert (format "#+TITLE: %s - %s\n" title date))))
+
 (defun matt-open-org-file (filename)
   (interactive "F")
   (let* ((timestamp (format-time-string "%Y-%m-%d" (current-time)))
-         (filename  (format "%s-%s.%s" filename timestamp "org")))
-    (find-file filename)))
-
-(defun matt-org-title ()
-  (interactive)
-  (let* ((date (format-time-string "%a, %d %B %Y" (current-time))))
-    (insert "#+TITLE: - " date "\n")))
+         (filename-full (format "%s-%s.%s" filename timestamp "org")))
+    (find-file filename-full)
+    (matt-org-title)))
+(matt-define-key "o o" 'matt-open-org-file)
 
 (defun matt-window-adjust ()
   "Interactively adjust window size."
