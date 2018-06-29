@@ -848,6 +848,12 @@
       (save-buffers-kill-emacs)))
 (matt-define-key "q" 'matt-kill-emacs)
 
+(defun matt-chmod+x ()
+  (interactive)
+  (let ((filename (buffer-file-name (current-buffer))))
+    (chmod filename
+           (file-modes-symbolic-to-number "+x" (file-modes filename)))))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; KEYS
 
