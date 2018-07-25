@@ -721,6 +721,11 @@
   (interactive)
   (find-file "~/notes/todo.org"))
 
+(defun matt-open-awesome-rc ()
+  (interactive)
+  (find-file "~/.config/awesome/rc.lua"))
+(matt-define-key "o a" 'matt-open-awesome-rc)
+
 (defun matt-open-temp-file ()
   (interactive)
   (let* ((timestamp (format-time-string "%Y-%m-%d_%H-%M-%S" (current-time)))
