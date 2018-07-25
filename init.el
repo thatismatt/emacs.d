@@ -462,6 +462,7 @@
 (define-key markdown-mode-map (kbd "M-<right>") nil)
 
 (require 'lisp-mode)
+(add-hook 'lisp-mode-hook 'rainbow-delimiters-mode)
 (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
 (add-hook 'emacs-lisp-mode-hook 'elisp-slime-nav-mode)
 (add-hook 'emacs-lisp-mode-hook 'rainbow-delimiters-mode)
