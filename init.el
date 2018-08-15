@@ -47,6 +47,7 @@
     clojure-mode
     cider
     clj-refactor
+    inf-clojure
     inf-mongo
     )
   "A list of packages to ensure are installed at launch.")
@@ -527,6 +528,11 @@
          (form (concat "(spit \"" matt-openscad-file "\" (write-scad " scad "))")))
     (cider-interactive-eval form nil bounds)))
 (matt-define-key "e" 'matt-cider-eval-to-openscad)
+
+(require 'inf-clojure)
+(add-hook 'inf-clojure-mode-hook 'turn-on-eldoc-mode)
+(add-hook 'inf-clojure-mode-hook 'smartparens-mode)
+(add-hook 'inf-clojure-mode-hook 'rainbow-delimiters-mode)
 
 (require 'scheme)
 (add-to-list 'auto-mode-alist '("\\.ms$" . scheme-mode)) ;; microscheme
