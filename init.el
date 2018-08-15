@@ -173,9 +173,10 @@
 
 (defun matt-font-face-narrow ()
   (interactive)
-  (set-face-attribute 'default nil :family "M+ 1m"))
+  (set-face-attribute 'default nil :family "Iosevka"))
 (matt-define-key "f n" 'matt-font-face-narrow)
 
+;; (set-face-attribute 'default nil :family "Iosevka")         ;; https://be5invis.github.io/Iosevka/
 ;; (set-face-attribute 'default nil :family "Inconsolata")     ;; apt: fonts-inconsolata
 ;; (set-face-attribute 'default nil :family "M+ 1mn")          ;; apt: fonts-mplus
 ;; (set-face-attribute 'default nil :family "M+ 1m")
@@ -190,7 +191,7 @@
 
 (defun matt-font-size-small ()
   (interactive)
-  (matt-font-size 11))
+  (matt-font-size 14))
 (matt-define-key "f s" 'matt-font-size-small)
 (global-set-key (kbd "C--") 'matt-font-size-small)
 
