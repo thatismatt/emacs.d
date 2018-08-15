@@ -383,7 +383,7 @@
 (setq-default rainbow-x-colors nil)
 
 (require 'grep)
-(setq grep-find-ignored-directories (append grep-find-ignored-directories '("target" "out")))
+(setq grep-find-ignored-directories (append grep-find-ignored-directories '("target" "out" "node_modules")))
 (add-hook 'grep-mode-hook (lambda () (toggle-truncate-lines 1)))
 
 (require 'flyspell)
