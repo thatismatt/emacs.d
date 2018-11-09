@@ -891,6 +891,7 @@
 (matt-define-key "g"                      'rgrep)
 (matt-define-key "a r"                    'align-regexp)
 (matt-define-key "s r"                    'replace-string)
+(matt-define-key "w b"                    'balance-windows)
 (matt-define-key "w l"                    'toggle-truncate-lines) ;; mnemonic "wrap lines"
 (matt-define-key "w w"                    'toggle-word-wrap)
 (matt-define-key "l n"                    'linum-mode)
