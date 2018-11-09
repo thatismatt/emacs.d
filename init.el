@@ -505,7 +505,7 @@
 
 (require 'clojure-mode)
 (require 'cider)
-(add-hook 'clojure-mode-hook 'turn-on-eldoc-mode)
+(add-hook 'cider-mode-hook #'eldoc-mode)
 (add-hook 'clojure-mode-hook 'rainbow-delimiters-mode)
 (add-hook 'cider-repl-mode-hook 'turn-on-eldoc-mode)
 (add-hook 'cider-repl-mode-hook 'smartparens-mode)
