@@ -883,6 +883,8 @@
 (define-key dired-mode-map                (kbd "C-o") nil)
 (define-key ibuffer-mode-map              (kbd "C-o") nil)
 (define-key ido-file-completion-map       (kbd "C-o") nil)
+(require 'hexl)
+(define-key hexl-mode-map                 (kbd "C-o") nil)
 
 (matt-define-key "g"                      'rgrep)
 (matt-define-key "a r"                    'align-regexp)
