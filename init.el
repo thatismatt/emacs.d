@@ -155,11 +155,6 @@
         (t (message "Current theme unknown."))))
 (matt-define-key "t t" 'matt-toggle-theme)
 
-(require 'server)
-(if (or (display-graphic-p)
-        (daemonp))
-    (matt-load-theme 'witness))
-
 ;; font
 (defun matt-font-size (sz)
   (interactive "NFont size: ")
@@ -896,3 +891,11 @@
 (matt-define-key "w l"                    'toggle-truncate-lines) ;; mnemonic "wrap lines"
 (matt-define-key "w w"                    'toggle-word-wrap)
 (matt-define-key "l n"                    'linum-mode)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; init
+
+(require 'server)
+(if (or (display-graphic-p)
+        (daemonp))
+    (matt-load-theme 'witness))
