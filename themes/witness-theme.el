@@ -116,6 +116,8 @@
    `(font-lock-variable-name-face ((t (:foreground ,*variable*))))
    `(font-lock-warning-face ((t (:foreground ,*warning* :slant italic))))
 
+   `(minibuffer-prompt ((t (:foreground ,*function*))))
+
    ;; GUI
    `(fringe ((t (:background ,*background*))))
    `(linum ((t (:background ,*linum-bg* :foreground ,*linum-fg*))))
@@ -217,6 +219,9 @@
    `(sh-heredoc ((t (:foreground ,*green*))))
    `(sh-quoted-exec ((t (:foreground ,*highlight-2*))))
 
+   ;; cider
+   `(cider-test-failure-face ((t (:foreground ,*grey-1* :background ,*red-1*))))
+
    ;; scala
    `(scala-font-lock:var-face ((t (:foreground ,*variable-2* :inherit nil))))
 
@@ -235,6 +240,18 @@
 
    ;; nxml
    `(nxml-glyph ((t (:foreground ,*keywords*))))
+
+   ;; erc
+   `(erc-notice-face ((t (:foreground ,*keywords*))))
+   `(erc-timestamp-face ((t (:foreground ,*type-face*))))
+   `(erc-current-nick-face ((t (:foreground ,*builtins*))))
+   `(erc-my-nick-face ((t (:foreground ,*string*))))
+   `(erc-input-face ((t (:foreground ,*normal*))))
+   `(erc-nick-default-face ((t (:weight bold))))
+   `(erc-prompt-face ((t (:foreground ,*function*))))
+   `(erc-nick-msg-face ((t (:foreground ,*builtins*))))
+   `(erc-direct-msg-face ((t (:foreground ,*normal*))))
+   `(erc-error-face ((t (:foreground ,*warning*))))
    ))
 
 ;;;###autoload
