@@ -871,7 +871,7 @@
            (file-modes-symbolic-to-number "+x" (file-modes filename)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; KEYS
+;; keys
 
 (global-set-key (kbd "<M-backspace>")     'backward-kill-word)
 (global-set-key (kbd "<C-backspace>")     'backward-kill-word)
