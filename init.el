@@ -330,14 +330,14 @@
 (setq recentf-max-menu-items 15)
 (setq recentf-auto-cleanup 'never) ;; disable - can cause problems with remote files
 (recentf-mode 1)
-(defun matt-recentf-ido-find-file ()
+(defun matt-recentf-ido-find-file (file)
   "Find a recent file using ido."
-  (interactive)
-  (let ((file (ido-completing-read "Choose recent file: "
-                                   (-map 'abbreviate-file-name recentf-list)
-                                   nil t)))
-    (when file
-      (find-file file))))
+  (interactive
+   (list
+    (ido-completing-read "Choose recent file: "
+                         (-map 'abbreviate-file-name recentf-list)
+                         nil t)))
+  (find-file file))
 (global-set-key (kbd "C-x f") 'matt-recentf-ido-find-file)
 
 (require 'uniquify)
