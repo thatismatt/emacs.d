@@ -132,8 +132,9 @@
 (defun matt-load-theme (theme)
   (interactive
    (list
-    (intern (completing-read "Load custom theme: "
-                             (mapcar 'symbol-name (custom-available-themes))))))
+    (intern
+     (ido-completing-read "Load custom theme: "
+                          (mapcar 'symbol-name (custom-available-themes))))))
   (matt-disable-all-themes)
   (load-theme theme t))
 
