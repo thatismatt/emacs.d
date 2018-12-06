@@ -8,6 +8,8 @@
 (require 'cl)
 (require 'package)
 
+(package-initialize) ;; NOTE: required for first run, but issues warning thereafter
+
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 
 (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
