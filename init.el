@@ -361,6 +361,7 @@
 (sp-use-smartparens-bindings)
 (show-smartparens-global-mode 1)
 (add-hook 'prog-mode-hook 'smartparens-mode)
+(add-hook 'inferior-lisp-mode-hook 'smartparens-mode)
 
 (require 'company)
 (setq company-idle-delay 0.1)
