@@ -139,6 +139,11 @@
   (matt-disable-all-themes)
   (load-theme theme t))
 
+(defun matt-reload-theme ()
+  (interactive)
+  (matt-load-theme (car custom-enabled-themes)))
+(matt-define-key "t r" 'matt-reload-theme)
+
 (defun matt-load-dark-theme ()
   (interactive)
   (matt-load-theme 'witness))
