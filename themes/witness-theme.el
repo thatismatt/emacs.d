@@ -220,6 +220,9 @@
    `(sh-heredoc ((t (:foreground ,*green*))))
    `(sh-quoted-exec ((t (:foreground ,*highlight-2*))))
 
+   ;; eldoc
+   `(eldoc-highlight-function-argument ((t (:foreground ,*purple*))))
+
    ;; cider
    `(cider-test-failure-face ((t (:foreground ,*grey-1* :background ,*red-1*))))
 
