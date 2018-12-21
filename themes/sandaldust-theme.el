@@ -182,7 +182,6 @@
    `(magit-diff-added-highlight ((t (:foreground ,*green* :background ,*background*))))
    `(magit-diff-hunk-heading ((t (:foreground ,*background* :background ,*brown-6*))))
    `(magit-diff-hunk-heading-highlight ((t (:foreground ,*background* :background ,*brown-7*))))
-
    `(magit-branch-local ((t (:foreground ,*highlight-1*))))
    `(magit-branch-remote ((t (:foreground ,*highlight-2*))))
    `(magit-tag ((t (:foreground ,*highlight-4* :background nil :box 1))))

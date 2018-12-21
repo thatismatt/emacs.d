@@ -14,6 +14,10 @@
 
 (deftheme witness "The Witness color theme.")
 
+(defun color-hsl-to-hex (h s l)
+  "Create a hex color from H, S, & L."
+  (apply 'color-rgb-to-hex (color-hsl-to-rgb h s l)))
+
 (let* ((*grey-1*             "#111")
        (*grey-2*             "#222")
        (*grey-3*             "#333")
@@ -29,10 +33,14 @@
        (*grey-e*             "#eee")
        (*red*                "#f03")
        (*red-1*              "#a01")
+       (*red-2*              "#700")
        (*yellow*             "#f91")
+       (*yellow-1*           "#d70")
+       (*orange*             "#a30")
        (*green*              "#0a2")
        (*green-1*            "#060")
        (*green-2*            "#094")
+       (*green-3*            "#040")
        (*pink*               "#e0b")
        (*purple*             "#a3f")
        (*blue*               "#0bd")
@@ -58,14 +66,14 @@
        (*warning*            *red*)
        (*regexp*             "#a36")
        (*search-1*           *yellow*)
-       (*search-2*           "#a30")
+       (*search-2*           *orange*)
        (*variable*           "#0a8")
        (*variable-2*         "#585")
        (*highlight-1*        *blue*)
        (*highlight-2*        *pink*)
        (*highlight-3*        *yellow*)
        (*highlight-4*        *green*)
-       (*highlight-bg*       *grey-2*)
+       (*highlight-bg*       *grey-3*)
        (*mode-line-bg*       *grey-6*)
        (*mode-line-fg*       *grey-1*)
        (*mode-line-bg-2*     *grey-4*)
@@ -95,6 +103,7 @@
    `(error ((t (:foreground ,*warning*))))
    `(fixed-pitch ((t (:family nil))))
    `(fixed-pitch-serif ((t (:family nil))))
+   `(minibuffer-prompt ((t (:foreground ,*function*))))
 
    ;; font-lock
    `(font-lock-builtin-face ((t (:foreground ,*builtins*))))
@@ -116,9 +125,7 @@
    `(font-lock-variable-name-face ((t (:foreground ,*variable*))))
    `(font-lock-warning-face ((t (:foreground ,*warning* :slant italic))))
 
-   `(minibuffer-prompt ((t (:foreground ,*function*))))
-
-   ;; GUI
+   ;; gui
    `(fringe ((t (:background ,*background*))))
    `(linum ((t (:background ,*linum-bg* :foreground ,*linum-fg*))))
    `(minibuffer-prompt ((t (:foreground ,*variable*))))
@@ -157,6 +164,12 @@
    `(diff-added ((t (:foreground ,*green* :background nil))))
    `(diff-removed ((t (:foreground ,*red* :background nil))))
 
+   ;; smerge
+   `(smerge-refined-added ((t (:background ,*green-1*))))
+   `(smerge-refined-removed ((t (:background ,*red-1*))))
+   `(smerge-upper ((t (:background ,*red-2*))))
+   `(smerge-lower ((t (:background ,*green-3*))))
+
    ;; ediff
    `(ediff-even-diff-A ((t (:foreground ,*grey-8* :background ,*visual-selection-2*))))
    `(ediff-odd-diff-A ((t (:foreground ,*grey-a* :background ,*visual-selection-2*))))
@@ -187,7 +200,7 @@
    `(speedbar-separator-face ((t (:foreground ,*grey-4*))))
 
    ;; idle-highlight
-   `(idle-highlight ((t (:background ,*highlight-bg* :foreground nil))))
+   `(idle-highlight ((t (:background ,*grey-2* :foreground nil))))
 
    ;; org
    `(org-level-1 ((t (:foreground ,*highlight-1*))))
@@ -206,6 +219,7 @@
    `(org-postponed-face ((t (:foreground ,*grey-7* :box 1))))
    `(org-query-face ((t (:foreground ,*purple* :box 1))))
    `(org-date ((t (:foreground ,*blue*))))
+   `(org-block ((t (:foreground nil))))
 
    ;; markdown
    `(markdown-link-face ((t (:foreground ,*blue-1*))))
@@ -221,10 +235,11 @@
    `(sh-quoted-exec ((t (:foreground ,*highlight-2*))))
 
    ;; eldoc
-   `(eldoc-highlight-function-argument ((t (:foreground ,*purple*))))
+   `(eldoc-highlight-function-argument ((t (:foreground ,*pink*))))
 
    ;; cider
    `(cider-test-failure-face ((t (:foreground ,*grey-1* :background ,*red-1*))))
+   `(cider-test-error-face ((t (:foreground ,*grey-1* :background ,*yellow-1*))))
 
    ;; scala
    `(scala-font-lock:var-face ((t (:foreground ,*variable-2* :inherit nil))))
