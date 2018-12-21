@@ -193,7 +193,7 @@
 
 (defun matt-font-size-small ()
   (interactive)
-  (matt-font-size 14))
+  (matt-font-size 11))
 (matt-define-key "f s" 'matt-font-size-small)
 (global-set-key (kbd "C--") 'matt-font-size-small)
 
