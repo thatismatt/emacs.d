@@ -630,6 +630,12 @@
 
 (define-key isearch-mode-map (kbd "C-.") 'isearch-forward-symbol-at-point)
 
+(defun matt-time-string-to-minutes (time-string)
+  "Converts human readable times to minutes, e.g. \"30:30\" becomes 30.5."
+  (destructuring-bind
+      (minutes seconds) (mapcar 'string-to-number (split-string time-string ":" t))
+    (+ minutes (/ seconds 60.0))))
+
 (defun matt-journal ()
   (interactive)
   (find-file "~/Documents/journal.org"))
@@ -675,12 +681,6 @@
   (interactive)
   (find-file "~/notes/runs.org"))
 (matt-define-key "o r" 'matt-runs)
-
-(defun matt-runs-time-string-to-minutes (time-string)
-  "Converts human readable times to minutes, e.g. \"30:30\" becomes 30.5."
-  (destructuring-bind
-      (minutes seconds) (-map 'string-to-number (split-string time-string ":" t))
-    (+ minutes (/ seconds 60.0))))
 
 ;; (format-time-string
 ;;  (apply 'concat
