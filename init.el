@@ -447,6 +447,7 @@
         ("POSTPONED" 'org-postponed-face)
         ("???" 'org-query-face)))
 (setq org-startup-folded nil)
+(setq org-duration-format 'h:mm) ;; display days as hours
 (define-key org-mode-map (kbd "C-<up>") 'org-backward-element)
 (define-key org-mode-map (kbd "C-<down>") 'org-forward-element)
 (define-key org-mode-map (kbd "C-S-<up>") 'org-metaup)
@@ -460,6 +461,10 @@
 (define-key org-mode-map (kbd "C-<left>") nil)
 (define-key org-mode-map (kbd "C-<right>") nil)
 (define-key org-mode-map (kbd "C-,") nil)
+(matt-define-key "c i" 'org-clock-in)
+(matt-define-key "c o" 'org-clock-out)
+(matt-define-key "c r" 'org-clock-report)
+(matt-define-key "l l" 'org-store-link)
 
 (require 'markdown-mode)
 (define-key markdown-mode-map (kbd "M-<left>") nil)
