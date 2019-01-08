@@ -163,6 +163,8 @@
    `(diff-file-header ((t (:background ,*visual-selection-1*))))
    `(diff-added ((t (:foreground ,*green* :background nil))))
    `(diff-removed ((t (:foreground ,*red* :background nil))))
+   `(diff-refine-added ((t (:background ,*green-1*))))
+   `(diff-refine-removed ((t (:background ,*red-1*))))
 
    ;; smerge
    `(smerge-refined-added ((t (:background ,*green-1*))))
