@@ -99,7 +99,7 @@
    `(success ((t (:foreground ,*green*))))
    `(match ((t (:foreground ,*background* :background ,*highlight-1*))))
    `(shadow ((t (:foreground ,*purple*))))
-   `(link ((t (:foreground ,*link*))))
+   `(link ((t (:foreground ,*link* :underline t))))
    `(error ((t (:foreground ,*warning*))))
    `(fixed-pitch ((t (:family nil))))
    `(fixed-pitch-serif ((t (:family nil))))
