@@ -641,6 +641,12 @@
       (minutes seconds) (mapcar 'string-to-number (split-string time-string ":" t))
     (+ minutes (/ seconds 60.0))))
 
+(defun matt-minutes-to-time-string (mins)
+  "Converts minutes to human readable times, e.g. 30.5 becomes \"30:30\"."
+  (let* ((ms (floor mins))
+         (ss (round (* 60 (- mins ms)))))
+    (format "%02d:%02d" ms ss)))
+
 (defun matt-journal ()
   (interactive)
   (find-file "~/Documents/journal.org"))
