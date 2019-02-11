@@ -420,7 +420,16 @@
 
 (require 'magit)
 (setq magit-status-buffer-switch-function 'switch-to-buffer)
-(global-set-key (kbd "C-x g") 'magit-status)
+(add-to-list 'magit-repository-directories '("~/work/" . 1))
+(add-to-list 'magit-repository-directories '("~/code/" . 1))
+(defun matt-magit (&optional git-dir)
+  (interactive
+   (list
+    (when (or current-prefix-arg (not (magit-toplevel)))
+      (ido-completing-read "Git Repo: " (magit-list-repos)))))
+  (magit git-dir))
+(define-key magit-file-mode-map (kbd "C-x g") nil)
+(global-set-key (kbd "C-x g") 'matt-magit)
 (setf (nth 1 magit-log-margin) "%a %d %b %R")
 ;; (setf (nth 1 magit-log-margin) 'age) ;; the default
 ;; (setf (nth 1 magit-log-margin) 'age-abbreviated) ;; an alternative
