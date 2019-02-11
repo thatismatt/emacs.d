@@ -909,15 +909,6 @@
 (global-set-key (kbd "M-[")               'scroll-up-line)
 (global-set-key (kbd "M-]")               'scroll-down-line)
 
-(global-set-key (kbd "C-o")               'other-window)
-;; unbind C-o in modes where it clashes
-(define-key compilation-minor-mode-map    (kbd "C-o") nil)
-(define-key dired-mode-map                (kbd "C-o") nil)
-(define-key ibuffer-mode-map              (kbd "C-o") nil)
-(define-key ido-file-completion-map       (kbd "C-o") nil)
-(require 'hexl)
-(define-key hexl-mode-map                 (kbd "C-o") nil)
-
 (matt-define-key "g"                      'rgrep)
 (matt-define-key "a r"                    'align-regexp)
 (matt-define-key "s r"                    'replace-string)
