@@ -540,6 +540,7 @@
          (form (concat "(spit \"" matt-openscad-file "\" (write-scad " scad "))")))
     (cider-interactive-eval form nil bounds)))
 (matt-define-key "e" 'matt-cider-eval-to-openscad)
+(define-clojure-indent (fact 1)) ;; midje
 
 (require 'inf-clojure)
 (add-hook 'inf-clojure-mode-hook 'turn-on-eldoc-mode)
