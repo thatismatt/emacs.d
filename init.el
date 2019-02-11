@@ -35,6 +35,7 @@
     ido-completing-read+
     ido-vertical-mode
     flx-ido
+    ibuffer-vc
     idle-highlight-mode
     multiple-cursors
     js2-mode
