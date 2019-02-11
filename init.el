@@ -249,6 +249,7 @@
 ;; (put 'narrow-to-page 'disabled nil)
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
+(put 'scroll-left 'disabled nil)
 
 (require 'dired)
 
