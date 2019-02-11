@@ -909,6 +909,7 @@
 (global-set-key (kbd "M-[")               'scroll-up-line)
 (global-set-key (kbd "M-]")               'scroll-down-line)
 
+(matt-define-key "b b"                    'bury-buffer)
 (matt-define-key "g g"                    'rgrep)
 (matt-define-key "g p"                    'projectile-grep)
 (matt-define-key "a r"                    'align-regexp)
