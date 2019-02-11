@@ -636,16 +636,16 @@
 
 (define-key isearch-mode-map (kbd "C-.") 'isearch-forward-symbol-at-point)
 
-(defun matt-time-string-to-minutes (time-string)
-  "Converts human readable times to minutes, e.g. \"30:30\" becomes 30.5."
+(defun matt-time-string-to-numeric (time-string)
+  "Converts human readable times to a numeric value (minutes or hours), e.g. \"30:30\" becomes 30.5."
   (destructuring-bind
       (minutes seconds) (mapcar 'string-to-number (split-string time-string ":" t))
     (+ minutes (/ seconds 60.0))))
 
-(defun matt-minutes-to-time-string (mins)
-  "Converts minutes to human readable times, e.g. 30.5 becomes \"30:30\"."
-  (let* ((ms (floor mins))
-         (ss (round (* 60 (- mins ms)))))
+(defun matt-time-numeric-to-string (time)
+  "Converts a numeric value (minutes or hours) to human readable times, e.g. 30.5 becomes \"30:30\"."
+  (let* ((ms (floor time))
+         (ss (round (* 60 (- time ms)))))
     (format "%02d:%02d" ms ss)))
 
 (defun matt-journal ()
