@@ -452,7 +452,6 @@
         ("DOING" org-doing-face)
         ("POSTPONED" 'org-postponed-face)
         ("???" 'org-query-face)))
-(setq org-startup-folded nil)
 (setq org-duration-format 'h:mm) ;; display days as hours
 (define-key org-mode-map (kbd "C-<up>") 'org-backward-element)
 (define-key org-mode-map (kbd "C-<down>") 'org-forward-element)
