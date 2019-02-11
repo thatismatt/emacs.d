@@ -926,3 +926,6 @@
 (if (or (display-graphic-p)
         (daemonp))
     (matt-load-theme 'witness))
+
+;; require an init-local if present
+(require 'init-local nil t)
