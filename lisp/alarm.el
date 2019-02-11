@@ -84,10 +84,10 @@ For example \"11:30am\" or \"5 mins\"."
 (defun alarm-refresh ()
   "Refresh the table of alarms."
   (setq tabulated-list-format
-        (vector '("Triggered" 20 t)
-                '("Alarm"     50 t)
-                '("Time"      20 t)
-                '("Time till" 20 t)))
+        '[("Triggered" 20 t)
+          ("Alarm"     50 t)
+          ("Time"      20 t)
+          ("Time till" 20 t)])
   (setq tabulated-list-use-header-line t)
   (let ((table-contents (mapcar
                          (lambda (x) `("" [,(if (alarm-triggered x) "✔" "✗") ;; triggered
