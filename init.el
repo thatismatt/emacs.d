@@ -502,6 +502,7 @@
 (matt-define-key "c o" 'matt-org-clock-out)
 (matt-define-key "c r" 'org-clock-report)
 (matt-define-key "l l" 'org-store-link)
+(matt-define-key "l t" 'org-toggle-link-display)
 
 (require 'markdown-mode)
 (define-key markdown-mode-map (kbd "M-<left>") nil)
