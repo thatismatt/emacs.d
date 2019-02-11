@@ -282,7 +282,10 @@
 (flx-ido-mode 1)
 
 (require 'ibuffer)
-(setq ibuffer-default-sorting-mode 'alphabetic)
+(require 'ibuffer-vc)
+(setq ibuffer-default-sorting-mode 'filename/process) ;; groups file buffers together
+(setq ibuffer-show-empty-filter-groups nil)
+(add-hook 'ibuffer-hook 'ibuffer-vc-set-filter-groups-by-vc-root)
 (setq ibuffer-formats
       '((mark modified read-only " "
               (name 52 52 :left :elide) " "
