@@ -108,9 +108,9 @@ For example \"11:30am\" or \"5 mins\"."
 
 (defun alarm-format-seconds (seconds)
   (let ((format (cond
-   ((>= seconds (* 60 60)) "%hh %mm %ss")
-   ((>= seconds 60)        "%mm %ss")
-   (t                      "%ss"))))
+                 ((>= seconds (* 60 60)) "%hh %mm %ss")
+                 ((>= seconds 60)        "%mm %ss")
+                 (t                      "%ss"))))
     (format-seconds format seconds)))
 
 (defun alarm-get-buffer ()
