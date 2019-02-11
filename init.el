@@ -45,7 +45,6 @@
     less-css-mode
     clojure-mode
     cider
-    clj-refactor
     inf-clojure
     inf-mongo
     monroe
