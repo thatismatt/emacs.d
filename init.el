@@ -439,6 +439,7 @@
 (matt-define-key "o c" 'calendar)
 
 (require 'org)
+(require 'org-clock)
 (defface org-todo-face '((t (:foreground "#f00"))) "org mode face for TODO items")
 (defface org-done-face '((t (:foreground "#0f0"))) "org mode face for DONE items")
 (defface org-doing-face '((t (:foreground "#ff0"))) "org mode face for DOING items")
@@ -466,8 +467,31 @@
 (define-key org-mode-map (kbd "C-<left>") nil)
 (define-key org-mode-map (kbd "C-<right>") nil)
 (define-key org-mode-map (kbd "C-,") nil)
-(matt-define-key "c i" 'org-clock-in)
-(matt-define-key "c o" 'org-clock-out)
+(defun matt-org-insert-timestamp ()
+  (interactive)
+  (org-insert-time-stamp (org-current-time 0) 'with-hm 'inactive))
+(defun matt-org-clock-in ()
+  "A stripped down version of `org-clock-in' that just inserts
+   the current time in the correct position & format."
+  (interactive)
+  (save-excursion
+    (org-clock-find-position nil)
+    (insert-before-markers "\n")
+    (backward-char 1)
+    (org-indent-line)
+    (insert org-clock-string " ")
+    (matt-org-insert-timestamp)))
+(defun matt-org-clock-out ()
+  "A stripped down version of `org-clock-out' that just inserts
+   the current time in the correct position & format."
+  (interactive)
+  (save-excursion
+    (org-clock-find-position nil)
+    (goto-char (line-end-position))
+    (insert "--")
+    (matt-org-insert-timestamp)))
+(matt-define-key "c i" 'matt-org-clock-in)
+(matt-define-key "c o" 'matt-org-clock-out)
 (matt-define-key "c r" 'org-clock-report)
 (matt-define-key "l l" 'org-store-link)
 
