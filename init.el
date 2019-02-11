@@ -653,6 +653,11 @@
   (find-file "~/Documents/journal.org"))
 (matt-define-key "o j" 'matt-journal)
 
+(defun matt-log ()
+  (interactive)
+  (find-file "~/Documents/log.org"))
+(matt-define-key "o l" 'matt-log)
+
 (defun matt-journal-title ()
   (interactive)
   (let* ((date (format-time-string "%a, %b %d %Y" (current-time))))
