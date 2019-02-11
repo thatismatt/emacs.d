@@ -40,7 +40,6 @@
     js2-mode
     js2-refactor
     lua-mode
-    sbt-mode
     markdown-mode
     web-mode
     less-css-mode
