@@ -3,6 +3,8 @@
 ;;; Commentary:
 ;; Use Emacs as an alarm.
 
+;; TODO: make the `alarm-popup-buffer' read only
+
 ;;; Code:
 
 (eval-when-compile (require 'cl))
