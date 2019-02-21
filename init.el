@@ -672,8 +672,6 @@
       (replace-match "" nil nil))))
 (matt-define-key "j k" 'matt-kill-whitespace)
 
-(define-key isearch-mode-map (kbd "C-.") 'isearch-forward-symbol-at-point)
-
 (defun matt-time-string-to-numeric (time-string)
   "Converts human readable times to a numeric value (minutes or hours), e.g. \"30:30\" becomes 30.5."
   (destructuring-bind
@@ -956,6 +954,8 @@
 (matt-define-key "w l"                    'toggle-truncate-lines) ;; mnemonic "wrap lines"
 (matt-define-key "w w"                    'toggle-word-wrap)
 (matt-define-key "l n"                    'linum-mode)
+
+(define-key isearch-mode-map (kbd "C-.") 'isearch-forward-symbol-at-point)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; init
