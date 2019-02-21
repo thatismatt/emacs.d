@@ -351,6 +351,11 @@
   (find-file file))
 (global-set-key (kbd "C-x f") 'matt-recentf-ido-find-file)
 
+(require 'bookmark)
+(matt-define-key "b m" 'bookmark-set)
+(matt-define-key "b j" 'bookmark-jump)
+(matt-define-key "b l" 'bookmark-bmenu-list)
+
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'forward)
 (setq uniquify-separator "/")
