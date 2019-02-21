@@ -185,12 +185,14 @@
    `(magit-diff-context-highlight ((t (:foreground ,*normal* :background ,*background*))))
    `(magit-diff-removed-highlight ((t (:foreground ,*red* :background ,*background*))))
    `(magit-diff-added-highlight ((t (:foreground ,*green* :background ,*background*))))
+   `(magit-diff-file-heading-selection ((t (:foreground ,*highlight-2*))))
+   `(magit-diff-lines-heading ((t (:foreground ,*background* :background ,*highlight-2*))))
    `(magit-branch-local ((t (:foreground ,*highlight-1*))))
    `(magit-branch-remote ((t (:foreground ,*highlight-2*))))
-   `(magit-tag ((t (:foreground ,*highlight-4* :background nil :box 1))))
+   `(magit-tag ((t (:foreground ,*highlight-4* :background nil :box t))))
    `(magit-section-heading ((t (:foreground ,*highlight-1* :background nil))))
    `(magit-section-highlight ((t (:foreground nil :background nil))))
-   `(magit-section-heading-selection ((t (:foreground ,*highlight-4*))))
+   `(magit-section-heading-selection ((t (:foreground ,*highlight-2*))))
    `(magit-hash ((t (:foreground ,*highlight-3*))))
 
    ;; speedbar
@@ -213,21 +215,24 @@
    `(org-table ((t (:foreground ,*blue-1*))))
    `(org-document-title ((t (:foreground ,*yellow*))))
    `(org-document-info-keyword ((t (:foreground ,*link*))))
-   `(org-todo ((t (:foreground ,*red*))))
-   `(org-done ((t (:foreground ,*green*))))
-   `(org-todo-face ((t (:foreground ,*red* :box 1))))
-   `(org-done-face ((t (:foreground ,*green* :box 1))))
-   `(org-doing-face ((t (:foreground ,*yellow* :box 1))))
-   `(org-postponed-face ((t (:foreground ,*grey-7* :box 1))))
-   `(org-query-face ((t (:foreground ,*purple* :box 1))))
+   `(org-todo ((t (:foreground ,*red* :box t))))
+   `(org-done ((t (:foreground ,*green* :box t))))
+   `(org-todo-face ((t (:foreground ,*red* :box t))))
+   `(org-done-face ((t (:foreground ,*green* :box t))))
+   `(org-doing-face ((t (:foreground ,*yellow* :box t))))
+   `(org-postponed-face ((t (:foreground ,*grey-7* :box t))))
+   `(org-query-face ((t (:foreground ,*purple* :box t))))
+   `(org-checkbox ((t (:foreground ,*yellow*))))
    `(org-date ((t (:foreground ,*blue*))))
    `(org-block ((t (:foreground nil))))
+   `(org-priority ((t (:foreground ,*blue*))))
 
    ;; markdown
    `(markdown-link-face ((t (:foreground ,*blue-1*))))
+   `(markdown-code-face ((t (:foreground ,*purple*))))
 
    ;; calendar
-   `(calendar-today ((t (:foreground ,*green* :background nil :box 1))))
+   `(calendar-today ((t (:foreground ,*green* :background nil :box t))))
 
    ;; eshell
    `(eshell-prompt ((t (:foreground ,*highlight-2*))))
