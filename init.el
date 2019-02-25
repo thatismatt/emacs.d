@@ -548,8 +548,8 @@
 (setq web-mode-markup-indent-offset 2)
 (setq web-mode-code-indent-offset 2)
 (setq web-mode-enable-comment-interpolation nil)
-(add-to-list 'auto-mode-alist '("\\.jsx$" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.mustache$" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.jsx\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
 
 (require 'less-css-mode)
 
@@ -586,7 +586,7 @@
 (add-hook 'inf-clojure-mode-hook 'rainbow-delimiters-mode)
 
 (require 'scheme)
-(add-to-list 'auto-mode-alist '("\\.ms$" . scheme-mode)) ;; microscheme
+(add-to-list 'auto-mode-alist '("\\.ms\\'" . scheme-mode)) ;; microscheme
 
 (require 'fennel-mode)
 (defun matt-fennel-init ()
@@ -596,8 +596,8 @@
 (add-hook 'fennel-mode-hook 'matt-fennel-init)
 
 (require 'ruby-mode)
-(add-to-list 'auto-mode-alist '("\\.pp$" . ruby-mode)) ;; puppet
-(add-to-list 'auto-mode-alist '("\\^Vagrantfile$" . ruby-mode)) ;; vagrant
+(add-to-list 'auto-mode-alist '("\\.pp\\'" . ruby-mode)) ;; puppet
+(add-to-list 'auto-mode-alist '("\\^Vagrantfile\\'" . ruby-mode)) ;; vagrant
 (add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode)) ;; ruby erb files
 
 (require 'image)
