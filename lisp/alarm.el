@@ -3,8 +3,6 @@
 ;;; Commentary:
 ;; Use Emacs as an alarm.
 
-;; TODO: make the `alarm-popup-buffer' read only
-
 ;;; Code:
 
 (eval-when-compile (require 'cl))
@@ -41,7 +39,8 @@ Displays MESSAGE (and TIME) in `alarm-popup-buffer'."
 (define-derived-mode alarm-popup-mode fundamental-mode
   "Alarm Popup"
   "A mode for the Alarm Popup"
-  (use-local-map alarm-popup-mode-map))
+  (use-local-map alarm-popup-mode-map)
+  (read-only-mode))
 
 ;;;###autoload
 (defun alarm (time message)
