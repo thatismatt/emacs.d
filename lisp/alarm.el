@@ -86,16 +86,18 @@ For example \"11:30am\" or \"5 mins\"."
 (defun alarm-refresh ()
   "Refresh the table of alarms."
   (setq tabulated-list-format
-        '[("Triggered" 20 t)
-          ("Alarm"     50 t)
-          ("Time"      20 t)
-          ("Time till" 20 t)])
+        '[("Triggered" 10 t)
+          ("Alarm"     20 t) ;; TODO: dynamically calculate width
+          ("Time"      10 t)
+          ("Time till" 10 t)
+          ("Time set"  10 t)])
   (setq tabulated-list-use-header-line t)
   (let ((table-contents (mapcar
-                         (lambda (x) `("" [,(if (alarm-triggered x) "✔" "✗") ;; triggered
-                                           ,(cadr x) ;; name
-                                           ,(car x) ;; time
-                                           ,(if (alarm-triggered x) "--" (alarm-format-seconds (alarm-seconds-till x))) ;; time till
+                         (lambda (a) `("" [,(if (alarm-triggered a) "✔" "✗") ;; triggered
+                                           ,(cadr a) ;; name
+                                           ,(alarm-format-time a) ;; time
+                                           ,(if (alarm-triggered a) "--" (alarm-format-seconds (alarm-seconds-till a))) ;; time till
+                                           ,(car a) ;; time set
                                            ]))
                          alarm-alist)))
     (setq tabulated-list-entries table-contents))
@@ -114,6 +116,9 @@ For example \"11:30am\" or \"5 mins\"."
                  ((>= seconds 60)        "%mm %ss")
                  (t                      "%ss"))))
     (format-seconds format seconds)))
+
+(defun alarm-format-time (a)
+  (format-time-string "%T" (timer--time (caddr a))))
 
 (defun alarm-get-buffer ()
   "Return the alarm list buffer, creating it if necessary."
