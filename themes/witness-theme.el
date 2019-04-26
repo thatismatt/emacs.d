@@ -47,6 +47,7 @@
        (*blue-1*             "#59f")
 
        (*background*         "#011")
+       (*background-1*       "#101d1f")
        (*normal*             *grey-b*)
        (*cursor*             *grey-9*)
        (*visual-selection*   "#135")
@@ -126,7 +127,7 @@
    `(font-lock-warning-face ((t (:foreground ,*warning* :slant italic))))
 
    ;; gui
-   `(fringe ((t (:background ,*background*))))
+   `(fringe ((t (:background ,*background-1*))))
    `(linum ((t (:background ,*linum-bg* :foreground ,*linum-fg*))))
    `(minibuffer-prompt ((t (:foreground ,*variable*))))
    `(cursor ((t (:background ,*cursor*))))
