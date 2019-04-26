@@ -947,9 +947,6 @@
 (global-set-key (kbd "M-DEL")             'kill-word)
 (global-set-key (kbd "<M-delete>")        'kill-word)
 
-(global-set-key (kbd "M-[")               'scroll-up-line)
-(global-set-key (kbd "M-]")               'scroll-down-line)
-
 (matt-define-key "b b"                    'bury-buffer)
 (matt-define-key "g g"                    'rgrep)
 (matt-define-key "g p"                    'projectile-grep)
