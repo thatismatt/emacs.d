@@ -225,7 +225,7 @@
    `(org-checkbox ((t (:foreground ,*yellow*))))
    `(org-date ((t (:foreground ,*blue*))))
    `(org-block ((t (:foreground nil))))
-   `(org-priority ((t (:foreground ,*blue*))))
+   `(org-priority ((t (:foreground ,*yellow*))))
 
    ;; markdown
    `(markdown-link-face ((t (:foreground ,*blue-1*))))
