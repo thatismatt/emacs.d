@@ -256,8 +256,6 @@
 (put 'downcase-region 'disabled nil)
 (put 'scroll-left 'disabled nil)
 
-(require 'dired)
-
 (require 'browse-url)
 (setq browse-url-browser-function 'browse-url-chrome)
 
@@ -445,7 +443,6 @@
 
 (require 'diff-hl)
 (global-diff-hl-mode 1)
-(add-hook 'dired-mode-hook 'diff-hl-dired-mode)
 (global-set-key (kbd "C-c g") diff-hl-command-map)
 
 (require 'ediff)
