@@ -649,6 +649,26 @@
     (set-window-buffer this other-buffer)))
 (matt-define-key "w s" 'matt-swap-windows)
 
+(setq matt-window-delta 4)
+(defun matt-window-adjust ()
+  "Interactively adjust window size."
+  (interactive)
+  (message "Adjust window size.")
+  (let ((map (make-sparse-keymap)))
+    (define-key map "-" '(lambda () (interactive)
+                           (shrink-window matt-window-delta (not (window--resizable-p nil (- matt-window-delta))))))
+    (define-key map "=" '(lambda () (interactive)
+                           (enlarge-window matt-window-delta (not (window--resizable-p nil matt-window-delta)))))
+    (define-key map "_" '(lambda () (interactive)
+                           (shrink-window matt-window-delta t)))
+    (define-key map "+" '(lambda () (interactive)
+                           (enlarge-window matt-window-delta t)))
+    (define-key map "o" 'other-window)
+    (define-key map "s" 'matt-swap-windows)
+    (define-key map "b" 'balance-windows)
+    (set-temporary-overlay-map map t)))
+(matt-define-key "w a" 'matt-window-adjust)
+
 (defun matt-toggle-window-dedicated ()
   "Toggle whether the current active window is dedicated or not"
   (interactive)
@@ -821,16 +841,6 @@
     (find-file filename-full)
     (matt-org-title)))
 (matt-define-key "o o" 'matt-open-org-file)
-
-(defun matt-window-adjust ()
-  "Interactively adjust window size."
-  (interactive)
-  (message "Adjust window size.")
-  (let ((map (make-sparse-keymap)))
-    (define-key map '[?-] 'shrink-window)
-    (define-key map '[?=] 'enlarge-window)
-    (set-temporary-overlay-map map t)))
-(matt-define-key "w a" 'matt-window-adjust)
 
 (defun matt-create-scratch-buffer ()
   "Create a new scratch buffer."
