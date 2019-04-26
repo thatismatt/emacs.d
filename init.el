@@ -764,8 +764,9 @@
   (interactive "p")
   (insert (format-time-string
            (cond
-            ((eq arg 16) "%Y-%m-%d_%H-%M-%S") ;; 2018-02-08_16-34-42
-            ((eq arg 4)  "%FT%T%z")           ;; 2018-02-08T16:34:42+0000
+            ((eq arg 64) "%Y-%m-%d_%H-%M-%S") ;; 2018-02-08_16-34-42
+            ((eq arg 16) "%FT%T%z")           ;; 2018-02-08T16:34:42+0000
+            ((eq arg 4)  "%H:%M")             ;; 16:34
             (t           "%T"))               ;; 16:34:42
            (current-time))))
 (matt-define-key "i t" 'matt-insert-time)
