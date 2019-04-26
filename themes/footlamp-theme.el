@@ -59,7 +59,6 @@
        (*search-1*           *yellow*)
        (*search-2*           *red*)
        (*variable*           *purple*)
-       (*variable-2*         *cyan*)
        (*highlight-1*        *blue*)
        (*highlight-2*        *red*)
        (*highlight-3*        *yellow-1*)
@@ -203,9 +202,6 @@
    ;; shell
    `(sh-heredoc ((t (:foreground ,*green*))))
    `(sh-quoted-exec ((t (:foreground ,*highlight-2*))))
-
-   ;; scala
-   `(scala-font-lock:var-face ((t (:foreground ,*variable-2* :inherit nil))))
 
    ;; web
    `(web-mode-html-tag-face ((t (:foreground ,*function*))))

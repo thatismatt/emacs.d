@@ -69,7 +69,6 @@
        (*search-1*           *yellow*)
        (*search-2*           *orange*)
        (*variable*           "#0a8")
-       (*variable-2*         "#585")
        (*highlight-1*        *blue*)
        (*highlight-2*        *pink*)
        (*highlight-3*        *yellow*)
@@ -248,9 +247,6 @@
    ;; cider
    `(cider-test-failure-face ((t (:foreground ,*grey-1* :background ,*red-1*))))
    `(cider-test-error-face ((t (:foreground ,*grey-1* :background ,*yellow-1*))))
-
-   ;; scala
-   `(scala-font-lock:var-face ((t (:foreground ,*variable-2* :inherit nil))))
 
    ;; web
    `(web-mode-html-tag-face ((t (:foreground ,*function*))))

@@ -75,7 +75,6 @@
        (*search-1*           *yellow*)
        (*search-2*           "#a30")
        (*variable*           (color-hsl-to-hex 0.13 0.80 0.6))
-       (*variable-2*         (color-hsl-to-hex 0.13 0.80 0.6))
        (*highlight-1*        (color-hsl-to-hex 0.15 0.80 0.5))
        (*highlight-2*        (color-hsl-to-hex 0.10 0.80 0.5))
        (*highlight-3*        (color-hsl-to-hex 0.05 0.80 0.5))
@@ -221,9 +220,6 @@
    ;; shell
    `(sh-heredoc ((t (:foreground ,*green*))))
    `(sh-quoted-exec ((t (:foreground ,*highlight-2*))))
-
-   ;; scala
-   `(scala-font-lock:var-face ((t (:foreground ,*variable-2* :inherit nil))))
 
    ;; web
    `(web-mode-html-tag-face ((t (:foreground ,*function*))))
