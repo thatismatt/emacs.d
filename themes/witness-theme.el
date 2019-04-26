@@ -256,6 +256,7 @@
 
    ;; js2
    `(js2-external-variable ((t (:foreground ,*warning*))))
+   `(js2-object-property ((t (:foreground ,*variable*))))
 
    ;; ocaml
    `(tuareg-font-lock-governing-face ((t (:foreground ,*keywords*))))
