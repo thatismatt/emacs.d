@@ -194,6 +194,7 @@
 ;; (set-face-attribute 'default nil :family "Mononoki")        ;; apt: fonts-mononoki
 ;; (set-face-attribute 'default nil :family "Space Mono")
 ;; (set-face-attribute 'default nil :family "Courier 10 Pitch")
+;; (set-face-attribute 'default nil :family "Ubuntu Mono")
 
 (defun matt-font-size-small ()
   (interactive)
