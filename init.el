@@ -5,6 +5,10 @@
 
 ;;; Code:
 
+(setq matt-init-start-time (current-time))
+
+(setq gc-cons-threshold (* 512 1024 1024)) ;; speedup startup
+
 (require 'cl)
 (require 'package)
 
@@ -967,3 +971,8 @@
 
 ;; require an init-local if present
 (require 'init-local nil t)
+
+(setq matt-init-stop-time (current-time))
+
+(message "init time: %.2fms"
+         (* 1000.0 (float-time (time-subtract matt-init-stop-time matt-init-start-time))))
