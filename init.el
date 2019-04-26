@@ -12,7 +12,9 @@
 (require 'cl)
 (require 'package)
 
-(package-initialize) ;; NOTE: required for first run, but issues warning thereafter
+(unless (bound-and-true-p package--initialized) ;; to avoid warnings in 27
+  (setq package-enable-at-startup nil)          ;; to prevent initializing twice
+  (package-initialize))
 
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 (add-to-list 'load-path (expand-file-name "~/code/fennel-mode"))
