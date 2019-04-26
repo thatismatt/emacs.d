@@ -259,8 +259,7 @@
 (require 'dired)
 
 (require 'browse-url)
-(setq browse-url-browser-function 'browse-url-generic)
-(setq browse-url-generic-program "google-chrome")
+(setq browse-url-browser-function 'browse-url-chrome)
 
 (require 'smex)
 (smex-initialize)
