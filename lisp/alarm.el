@@ -30,29 +30,13 @@ Displays MESSAGE (and TIME) in `alarm-popup-buffer'."
   (kill-buffer (current-buffer))
   (delete-frame))
 
-(defvar alarm-popup-mode-map
-  (let ((map (make-sparse-keymap)))
-    (define-key map  (kbd "q") 'alarm-popup-kill)
-    map)
-  "Keymap for `alarm-popup-mode'.")
+(define-derived-mode alarm-popup-mode fundamental-mode "Alarm Popup"
+  "A mode for the Alarm Popup
 
-(define-derived-mode alarm-popup-mode fundamental-mode
-  "Alarm Popup"
-  "A mode for the Alarm Popup"
-  (use-local-map alarm-popup-mode-map)
+\\{alarm-popup-mode-map}"
   (read-only-mode))
 
-;;;###autoload
-(defun alarm (time message)
-  "Set an alarm.
-An alarm will occur at TIME with the MESSAGE.
-The time format is the same accepted by `run-at-time'.
-For example \"11:30am\" or \"5 mins\"."
-  (interactive "sTime: \nsMessage: ")
-  (let* ((alarm-timer (run-at-time time nil 'alarm-action message time))
-         (a `(,time ,message ,alarm-timer)))
-    (add-to-list 'alarm-alist a)
-    (message "Alarm will go off in %s" (alarm-format-seconds (alarm-seconds-till a)))))
+(define-key alarm-popup-mode-map (kbd "q") 'alarm-popup-kill)
 
 (defun alarm-cancel (a)
   "Cancel the alarm A."
@@ -67,9 +51,22 @@ For example \"11:30am\" or \"5 mins\"."
     (if a (alarm-cancel a)
       (message "No alarm set for %s." time))))
 
-(define-derived-mode alarm-mode tabulated-list-mode "Alarm List"
-  "A major mode for viewing the list of alarms."
-  (add-hook 'tabulated-list-revert-hook 'alarm-refresh nil t))
+(defun alarm-triggered (a)
+  (timer--triggered (caddr a)))
+
+(defun alarm-seconds-till (a)
+  (floor (- (float-time (timer--time (caddr a)))
+            (float-time (current-time)))))
+
+(defun alarm-format-seconds (seconds)
+  (let ((format (cond
+                 ((>= seconds (* 60 60)) "%hh %mm %ss")
+                 ((>= seconds 60)        "%mm %ss")
+                 (t                      "%ss"))))
+    (format-seconds format seconds)))
+
+(defun alarm-format-time (a)
+  (format-time-string "%T" (timer--time (caddr a))))
 
 (defun alarm-kill (pos)
   "Kill Alarm under point."
@@ -80,7 +77,6 @@ For example \"11:30am\" or \"5 mins\"."
         (alarm-cancel a)
       (message "Alarm '%s' not %s." (cadr a) (if triggered "deleted" "cancelled"))))
   (tabulated-list-revert))
-(define-key alarm-mode-map (kbd "k") 'alarm-kill)
 
 (defun alarm-refresh ()
   "Refresh the table of alarms."
@@ -102,23 +98,6 @@ For example \"11:30am\" or \"5 mins\"."
     (setq tabulated-list-entries table-contents))
   (tabulated-list-init-header))
 
-(defun alarm-triggered (a)
-  (timer--triggered (caddr a)))
-
-(defun alarm-seconds-till (a)
-  (floor (- (float-time (timer--time (caddr a)))
-            (float-time (current-time)))))
-
-(defun alarm-format-seconds (seconds)
-  (let ((format (cond
-                 ((>= seconds (* 60 60)) "%hh %mm %ss")
-                 ((>= seconds 60)        "%mm %ss")
-                 (t                      "%ss"))))
-    (format-seconds format seconds)))
-
-(defun alarm-format-time (a)
-  (format-time-string "%T" (timer--time (caddr a))))
-
 (defun alarm-get-buffer ()
   "Return the alarm list buffer, creating it if necessary."
   (let ((buffer (get-buffer-create "*Alarm List*")))
@@ -139,6 +118,27 @@ For example \"11:30am\" or \"5 mins\"."
     (if (eq untriggered '()) (message "No alarms set.")
       (let ((a (car (--sort (< (alarm-seconds-till it) (alarm-seconds-till other)) untriggered))))
           (message "Next alarm: %s in %s" (cadr a) (alarm-format-seconds (alarm-seconds-till a)))))))
+
+;;;###autoload
+(defun alarm (time message)
+  "Set an alarm.
+An alarm will occur at TIME with the MESSAGE.
+The time format is the same accepted by `run-at-time'.
+For example \"11:30am\" or \"5 mins\"."
+  (interactive "sTime: \nsMessage: ")
+  (let* ((alarm-timer (run-at-time time nil 'alarm-action message time))
+         (a `(,time ,message ,alarm-timer)))
+    (add-to-list 'alarm-alist a)
+    (message "Alarm will go off in %s" (alarm-format-seconds (alarm-seconds-till a)))))
+
+(define-derived-mode alarm-mode tabulated-list-mode "Alarm List"
+  "A major mode for viewing the list of alarms.
+
+\\{alarm-mode-map}"
+  (add-hook 'tabulated-list-revert-hook 'alarm-refresh nil t))
+
+(define-key alarm-mode-map (kbd "k") 'alarm-kill)
+(define-key alarm-mode-map (kbd "a") 'alarm)
 
 (provide 'alarm)
 
