@@ -983,6 +983,8 @@
 ;; require an init-local if present
 (require 'init-local nil t)
 
+(setq gc-cons-threshold (* 64 1024 1024)) ;; reduce gc pauses
+
 (setq matt-init-stop-time (current-time))
 
 (message "init time: %.2fms"
