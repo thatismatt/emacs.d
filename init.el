@@ -244,6 +244,7 @@
 (fset 'yes-or-no-p 'y-or-n-p)
 (delete-selection-mode t) ;; delete the selection with a keypress
 (savehist-mode)
+(save-place-mode 1)
 (global-set-key (kbd "C-d") 'backward-delete-char)
 (setq set-mark-command-repeat-pop t)
 
