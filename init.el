@@ -513,9 +513,15 @@
     (goto-char (line-end-position))
     (insert "--")
     (matt-org-insert-timestamp)))
+(defun matt-org-clock-report ()
+  (interactive)
+  (save-excursion
+    (beginning-of-buffer)
+    (search-forward "#+BEGIN: clocktable")
+    (org-clock-report)))
 (matt-define-key "c i" 'matt-org-clock-in)
 (matt-define-key "c o" 'matt-org-clock-out)
-(matt-define-key "c r" 'org-clock-report)
+(matt-define-key "c r" 'matt-org-clock-report)
 (matt-define-key "l l" 'org-store-link)
 (matt-define-key "l t" 'org-toggle-link-display)
 
