@@ -16,6 +16,12 @@
   (setq package-enable-at-startup nil)          ;; to prevent initializing twice
   (package-initialize))
 
+(unless (package-installed-p 'use-package)
+  (package-install 'use-package))
+
+(eval-when-compile
+  (require 'use-package))
+
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 (add-to-list 'load-path (expand-file-name "~/code/fennel-mode"))
 
@@ -50,8 +56,8 @@
     markdown-mode
     web-mode
     less-css-mode
-    clojure-mode
-    cider
+    ;; clojure-mode
+    ;; cider
     inf-clojure
     monroe
     yaml-mode
@@ -556,32 +562,24 @@
 
 (require 'less-css-mode)
 
-(require 'clojure-mode)
-(require 'cider)
-(add-hook 'cider-mode-hook #'eldoc-mode)
-(add-hook 'clojure-mode-hook 'rainbow-delimiters-mode)
-(add-hook 'cider-repl-mode-hook 'turn-on-eldoc-mode)
-(add-hook 'cider-repl-mode-hook 'smartparens-mode)
-(add-hook 'cider-repl-mode-hook 'rainbow-delimiters-mode)
-(setq cider-repl-history-size 1000)
-(setq cider-repl-history-file (expand-file-name ".cider-repl-history" user-emacs-directory))
-(define-key cider-mode-map (kbd "C-c ;") 'cider-pprint-eval-last-sexp-to-comment)
-;; hook figwheel in to cider
-(setq cider-cljs-lein-repl
-      "(do (require 'figwheel-sidecar.repl-api)
-           (figwheel-sidecar.repl-api/start-figwheel!)
-           (figwheel-sidecar.repl-api/cljs-repl))")
-;; special config for clojure & openscad
-(defvar matt-openscad-file "designs/temp.scad")
-(defun matt-cider-eval-to-openscad ()
-  "Write the last sexp to an scad file."
-  (interactive)
-  (let* ((bounds (cider-last-sexp 'bounds))
-         (scad (apply #'buffer-substring bounds))
-         (form (concat "(spit \"" matt-openscad-file "\" (write-scad " scad "))")))
-    (cider-interactive-eval form nil bounds)))
-(matt-define-key "e" 'matt-cider-eval-to-openscad)
-(define-clojure-indent (fact 1)) ;; midje
+(use-package clojure-mode
+  :ensure t
+  :defer t
+  :config
+  (add-hook 'cider-repl-mode-hook #'smartparens-mode)
+  (add-hook 'clojure-mode-hook #'rainbow-delimiters-mode))
+
+(use-package cider
+  :ensure t
+  :defer t
+  :custom
+  (cider-repl-history-size 1000)
+  (cider-repl-history-file (expand-file-name ".cider-repl-history" user-emacs-directory))
+  :config
+  (add-hook 'cider-mode-hook #'eldoc-mode)
+  (add-hook 'cider-repl-mode-hook #'eldoc-mode)
+  (add-hook 'cider-repl-mode-hook #'smartparens-mode)
+  (add-hook 'cider-repl-mode-hook #'rainbow-delimiters-mode))
 
 (require 'inf-clojure)
 (add-hook 'inf-clojure-mode-hook 'turn-on-eldoc-mode)
