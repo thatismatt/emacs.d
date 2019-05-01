@@ -976,10 +976,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; init
 
-(require 'server)
-(if (or (display-graphic-p)
-        (daemonp))
-    (matt-load-theme 'witness))
+(when (or (display-graphic-p)
+          (daemonp))
+  (matt-load-dark-theme))
 
 ;; require an init-local if present
 (require 'init-local nil t)
