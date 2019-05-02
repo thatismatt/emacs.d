@@ -510,9 +510,11 @@
   (interactive)
   (save-excursion
     (org-clock-find-position nil)
+    ;; TODO: verify that we haven't already clocked out
     (goto-char (line-end-position))
     (insert "--")
-    (matt-org-insert-timestamp)))
+    (matt-org-insert-timestamp)
+    (org-clock-update-time-maybe)))
 (defun matt-org-clock-report ()
   (interactive)
   (save-excursion
