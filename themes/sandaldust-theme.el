@@ -1,5 +1,5 @@
 ;;; sandaldust-theme.el --- A dark theme for Emacs.
-;; Copyright (C) 2014 Matt Lee
+;; Copyright (c) Matt Lee
 ;; Author: Matt Lee
 ;; URL: http://github.com/thatismatt
 ;; License: MIT
