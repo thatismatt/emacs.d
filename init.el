@@ -522,6 +522,7 @@
   (save-excursion
     (beginning-of-buffer)
     (search-forward "#+BEGIN: clocktable")
+    (org-show-entry)
     (org-clock-report)))
 (matt-define-key "c i" 'matt-org-clock-in)
 (matt-define-key "c o" 'matt-org-clock-out)
