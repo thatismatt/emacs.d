@@ -47,7 +47,15 @@
        (*blue-1*             "#59f")
 
        (*background*         "#011")
-       (*background-1*       "#101d1f")
+       (*background-1*       "#10191f")
+
+       (*mode-line-bg*       *grey-6*)
+       (*mode-line-fg*       *grey-1*)
+       (*mode-line-bg-2*     *grey-4*)
+       (*mode-line-fg-2*     *grey-2*)
+       (*linum-bg*           *grey-6*)
+       (*linum-fg*           *grey-1*)
+
        (*normal*             *grey-b*)
        (*cursor*             *grey-9*)
        (*visual-selection*   "#135")
@@ -74,12 +82,6 @@
        (*highlight-3*        *yellow*)
        (*highlight-4*        *green*)
        (*highlight-bg*       *grey-3*)
-       (*mode-line-bg*       *grey-6*)
-       (*mode-line-fg*       *grey-1*)
-       (*mode-line-bg-2*     *grey-4*)
-       (*mode-line-fg-2*     *grey-2*)
-       (*linum-bg*           *grey-6*)
-       (*linum-fg*           *grey-1*)
        )
 
   (custom-theme-set-faces
@@ -155,7 +157,7 @@
 
    ;; search
    `(isearch ((t (:background ,*search-1* :foreground ,*background*))))
-   `(isearch-fail ((t (:background ,*warning*))))
+   `(isearch-fail ((t (:background ,*warning* :foreground ,*background*))))
    `(lazy-highlight ((t (:background ,*search-2* :foreground ,*background*))))
 
    ;; diff
@@ -204,7 +206,7 @@
    `(speedbar-separator-face ((t (:foreground ,*grey-4*))))
 
    ;; idle-highlight
-   `(idle-highlight ((t (:background ,*grey-2* :foreground nil))))
+   `(idle-highlight ((t (:background ,*grey-3* :foreground nil))))
 
    ;; org
    `(org-level-1 ((t (:foreground ,*highlight-1*))))
@@ -236,6 +238,11 @@
 
    ;; eshell
    `(eshell-prompt ((t (:foreground ,*highlight-2*))))
+   `(eshell-ls-directory ((t (:foreground ,*blue*))))
+   `(eshell-ls-symlink ((t (:foreground ,*blue-1*))))
+   `(eshell-ls-executable ((t (:foreground ,*green*))))
+   `(eshell-ls-readonly ((t (:foreground ,*red*))))
+   `(eshell-ls-missing ((t (:foreground ,*red*))))
 
    ;; shell
    `(sh-heredoc ((t (:foreground ,*green*))))
@@ -247,6 +254,7 @@
    ;; cider
    `(cider-test-failure-face ((t (:foreground ,*grey-1* :background ,*red-1*))))
    `(cider-test-error-face ((t (:foreground ,*grey-1* :background ,*yellow-1*))))
+   `(cider-test-success-face ((t (:foreground ,*grey-1* :background ,*green*))))
 
    ;; web
    `(web-mode-html-tag-face ((t (:foreground ,*function*))))

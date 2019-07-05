@@ -1,4 +1,4 @@
-;;; sandaldust-theme.el --- A dark theme for Emacs.
+;;; sandaldust-theme.el --- A brown theme for Emacs.
 ;; Copyright (c) Matt Lee
 ;; Author: Matt Lee
 ;; URL: http://github.com/thatismatt

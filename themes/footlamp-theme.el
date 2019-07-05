@@ -18,10 +18,12 @@
        (*grey-2*             "#222")
        (*grey-3*             "#333")
        (*grey-4*             "#444")
+       (*grey-6*             "#666")
        (*grey-7*             "#777")
        (*grey-8*             "#888")
        (*grey-9*             "#999")
        (*grey-a*             "#aaa")
+       (*grey-b*             "#bbb")
        (*grey-c*             "#ccc")
        (*grey-d*             "#ddd")
        (*grey-e*             "#eee")
@@ -29,16 +31,27 @@
        (*red-1*              "#700")
        (*purple*             "#419")
        (*pink*               "#939")
+       (*pink-1*             "#a36")
        (*blue*               "#00b")
        (*blue-1*             "#049")
-       (*cyan*               "#067")
+       (*cyan*               "#057")
        (*green*              "#071")
        (*green-1*            "#040")
+       (*green-2*            "#0b0")
        (*yellow*             "#b80")
        (*yellow-1*           "#b60")
 
-       (*background*         *grey-e*)
-       (*normal*             *grey-2*)
+       (*background*         "#e6e9ee")
+       (*background-1*       (color-darken-name *background* 7))
+
+       (*mode-line-bg*       (color-darken-name *background* 30))
+       (*mode-line-fg*       (color-darken-name *background* 70))
+       (*mode-line-bg-2*     (color-darken-name *background* 10))
+       (*mode-line-fg-2*     (color-darken-name *background* 30))
+       (*linum-bg*           (color-darken-name *background* 20))
+       (*linum-fg*           (color-darken-name *background* 50))
+
+       (*normal*             *grey-4*)
        (*cursor*             *grey-9*)
        (*visual-selection*   "#cef")
        (*visual-selection-1* "#def")
@@ -55,7 +68,7 @@
        (*builtins*           *purple*)
        (*link*               *blue*)
        (*warning*            *red*)
-       (*regexp*             "#a36")
+       (*regexp*             *pink-1*)
        (*search-1*           *yellow*)
        (*search-2*           *red*)
        (*variable*           *purple*)
@@ -64,12 +77,6 @@
        (*highlight-3*        *yellow-1*)
        (*highlight-4*        *green*)
        (*highlight-bg*       *grey-c*)
-       (*mode-line-bg*       *grey-c*)
-       (*mode-line-fg*       *grey-4*)
-       (*mode-line-bg-2*     *grey-d*)
-       (*mode-line-fg-2*     *grey-9*)
-       (*linum-bg*           *grey-d*)
-       (*linum-fg*           *grey-8*)
        )
 
   (custom-theme-set-faces
@@ -80,6 +87,7 @@
    `(default ((t (:background ,*background* :foreground ,*normal*))))
    `(header-line ((t (:foreground ,*highlight-1*))))
    `(highlight ((t (:background ,*highlight-1* :foreground ,*background*))))
+   `(italic ((t (:foreground ,*grey-9* :slant italic))))
    `(hl-line ((t (:weight bold :inherit nil))))
    `(info-xref ((t (:foreground ,*link* :underline t))))
    `(region ((t (:background ,*visual-selection* :foreground nil))))
@@ -88,8 +96,11 @@
    `(success ((t (:foreground ,*green*))))
    `(match ((t (:foreground ,*background* :background ,*highlight-1*))))
    `(shadow ((t (:foreground ,*purple*))))
-   `(link ((t (:foreground ,*link*))))
+   `(link ((t (:foreground ,*link* :underline t))))
    `(error ((t (:foreground ,*warning*))))
+   `(fixed-pitch ((t (:family nil))))
+   `(fixed-pitch-serif ((t (:family nil))))
+   `(minibuffer-prompt ((t (:foreground ,*function*))))
 
    ;; font-lock
    `(font-lock-builtin-face ((t (:foreground ,*builtins*))))
@@ -111,8 +122,8 @@
    `(font-lock-variable-name-face ((t (:foreground ,*variable*))))
    `(font-lock-warning-face ((t (:foreground ,*warning* :slant italic))))
 
-   ;; GUI
-   `(fringe ((t (:background ,*background*))))
+   ;; gui
+   `(fringe ((t (:background ,*background-1*))))
    `(linum ((t (:background ,*linum-bg* :foreground ,*linum-fg*))))
    `(minibuffer-prompt ((t (:foreground ,*variable*))))
    `(cursor ((t (:background ,*cursor*))))
@@ -141,7 +152,7 @@
 
    ;; search
    `(isearch ((t (:background ,*search-1* :foreground ,*background*))))
-   `(isearch-fail ((t (:background ,*warning*))))
+   `(isearch-fail ((t (:background ,*warning* :foreground ,*background*))))
    `(lazy-highlight ((t (:background ,*search-2* :foreground ,*background*))))
 
    ;; diff
@@ -149,6 +160,8 @@
    `(diff-file-header ((t (:background ,*visual-selection-1*))))
    `(diff-added ((t (:foreground ,*green* :background nil))))
    `(diff-removed ((t (:foreground ,*red* :background nil))))
+   `(diff-refine-added ((t (:background ,*green-1*))))
+   `(diff-refine-removed ((t (:background ,*red-1*))))
 
    ;; ediff
    `(ediff-even-diff-A ((t (:foreground ,*grey-8* :background ,*visual-selection-2*))))
@@ -163,12 +176,14 @@
    `(magit-diff-context-highlight ((t (:foreground ,*normal* :background ,*background*))))
    `(magit-diff-removed-highlight ((t (:foreground ,*red* :background ,*background*))))
    `(magit-diff-added-highlight ((t (:foreground ,*green* :background ,*background*))))
+   `(magit-diff-file-heading-selection ((t (:foreground ,*highlight-2*))))
+   `(magit-diff-lines-heading ((t (:foreground ,*background* :background ,*highlight-2*))))
    `(magit-branch-local ((t (:foreground ,*highlight-1*))))
    `(magit-branch-remote ((t (:foreground ,*highlight-2*))))
-   `(magit-tag ((t (:foreground ,*highlight-4* :background nil :box 1))))
+   `(magit-tag ((t (:foreground ,*highlight-4* :background nil :box t))))
    `(magit-section-heading ((t (:foreground ,*highlight-1* :background nil))))
    `(magit-section-highlight ((t (:foreground nil :background nil))))
-   `(magit-section-heading-selection ((t (:foreground ,*highlight-4*))))
+   `(magit-section-heading-selection ((t (:foreground ,*highlight-2*))))
    `(magit-hash ((t (:foreground ,*highlight-3*))))
 
    ;; speedbar
@@ -191,10 +206,24 @@
    `(org-table ((t (:foreground ,*purple*))))
    `(org-document-title ((t (:foreground ,*yellow*))))
    `(org-document-info-keyword ((t (:foreground ,*link*))))
-   `(org-todo-face ((t (:foreground ,*red* :box 1))))
-   `(org-done-face ((t (:foreground ,*green* :box 1))))
-   `(org-doing-face ((t (:foreground ,*yellow* :box 1))))
-   `(org-postponed-face ((t (:foreground ,*grey-7* :box 1))))
+   `(org-todo ((t (:foreground ,*red* :box t))))
+   `(org-done ((t (:foreground ,*green* :box t))))
+   `(org-todo-face ((t (:foreground ,*red* :box t))))
+   `(org-done-face ((t (:foreground ,*green* :box t))))
+   `(org-doing-face ((t (:foreground ,*yellow* :box t))))
+   `(org-postponed-face ((t (:foreground ,*grey-7* :box t))))
+   `(org-query-face ((t (:foreground ,*purple* :box t))))
+   `(org-checkbox ((t (:foreground ,*yellow*))))
+   `(org-date ((t (:foreground ,*blue*))))
+   `(org-block ((t (:foreground nil))))
+   `(org-priority ((t (:foreground ,*yellow*))))
+
+   ;; markdown
+   `(markdown-link-face ((t (:foreground ,*blue-1*))))
+   `(markdown-code-face ((t (:foreground ,*purple*))))
+
+   ;; calendar
+   `(calendar-today ((t (:foreground ,*green* :background nil :box t))))
 
    ;; eshell
    `(eshell-prompt ((t (:foreground ,*highlight-2*))))
@@ -202,6 +231,15 @@
    ;; shell
    `(sh-heredoc ((t (:foreground ,*green*))))
    `(sh-quoted-exec ((t (:foreground ,*highlight-2*))))
+
+   ;; eldoc
+   `(eldoc-highlight-function-argument ((t (:foreground ,*pink*))))
+
+   ;; cider
+   `(cider-test-failure-face ((t (:foreground ,*red*))))
+   `(cider-test-error-face ((t (:foreground ,*yellow-1*))))
+   `(cider-test-success-face ((t (:foreground ,*green*))))
+   `(cider-fringe-good-face ((t (:foreground ,*green-2*))))
 
    ;; web
    `(web-mode-html-tag-face ((t (:foreground ,*function*))))
@@ -211,6 +249,7 @@
 
    ;; js2
    `(js2-external-variable ((t (:foreground ,*warning*))))
+   `(js2-object-property ((t (:foreground ,*variable*))))
 
    ;; ocaml
    `(tuareg-font-lock-governing-face ((t (:foreground ,*keywords*))))
@@ -218,6 +257,18 @@
 
    ;; nxml
    `(nxml-glyph ((t (:foreground ,*keywords*))))
+
+   ;; erc
+   `(erc-notice-face ((t (:foreground ,*keywords*))))
+   `(erc-timestamp-face ((t (:foreground ,*type-face*))))
+   `(erc-current-nick-face ((t (:foreground ,*builtins*))))
+   `(erc-my-nick-face ((t (:foreground ,*string*))))
+   `(erc-input-face ((t (:foreground ,*normal*))))
+   `(erc-nick-default-face ((t (:weight bold))))
+   `(erc-prompt-face ((t (:foreground ,*function*))))
+   `(erc-nick-msg-face ((t (:foreground ,*builtins*))))
+   `(erc-direct-msg-face ((t (:foreground ,*normal*))))
+   `(erc-error-face ((t (:foreground ,*warning*))))
    ))
 
 ;;;###autoload
