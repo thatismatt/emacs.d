@@ -472,11 +472,11 @@
 (defface org-query-face '((t (:foreground "#f0f"))) "org mode face for ??? (query) items")
 (setq org-todo-keywords '((sequence "TODO" "DOING" "DONE") (sequence "POSTPONED") (sequence "???" "DONE")))
 (setq org-todo-keyword-faces
-      '(("TODO" 'org-todo-face)
-        ("DONE" 'org-done-face)
+      '(("TODO" org-todo-face)
+        ("DONE" org-done-face)
         ("DOING" org-doing-face)
-        ("POSTPONED" 'org-postponed-face)
-        ("???" 'org-query-face)))
+        ("POSTPONED" org-postponed-face)
+        ("???" org-query-face)))
 (setq org-duration-format 'h:mm) ;; display days as hours
 (define-key org-mode-map (kbd "C-<up>") 'org-backward-element)
 (define-key org-mode-map (kbd "C-<down>") 'org-forward-element)
