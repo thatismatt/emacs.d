@@ -443,7 +443,8 @@
   (interactive
    (list
     (when (or current-prefix-arg (not (magit-toplevel)))
-      (ido-completing-read "Git Repo: " (magit-list-repos)))))
+      (ido-completing-read "Git Repo: " (mapcar #'abbreviate-file-name
+                                                (magit-list-repos))))))
   (magit git-dir))
 (define-key magit-file-mode-map (kbd "C-x g") nil)
 (global-set-key (kbd "C-x g") 'matt-magit)
