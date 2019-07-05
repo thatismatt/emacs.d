@@ -579,7 +579,6 @@
   :ensure t
   :defer t
   :config
-  (add-hook 'cider-repl-mode-hook #'smartparens-mode)
   (add-hook 'clojure-mode-hook #'rainbow-delimiters-mode))
 
 (use-package cider
