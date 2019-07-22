@@ -47,7 +47,6 @@
     lua-mode
     markdown-mode
     web-mode
-    less-css-mode
     inf-clojure
     monroe
     yaml-mode
@@ -575,7 +574,6 @@
 (add-to-list 'auto-mode-alist '("\\.jsx\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
 
-(require 'less-css-mode)
 
 (use-package clojure-mode
   :ensure t
@@ -628,7 +626,6 @@
           1 font-lock-warning-face t))))
 (add-hook 'prog-mode-hook 'matt-font-lock-comment-annotations)
 (add-hook 'web-mode-hook 'matt-font-lock-comment-annotations)
-(add-hook 'less-css-mode-hook 'matt-font-lock-comment-annotations)
 (add-hook 'css-mode-hook 'matt-font-lock-comment-annotations)
 (add-hook 'conf-mode-hook 'matt-font-lock-comment-annotations)
 
