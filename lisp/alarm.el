@@ -71,12 +71,11 @@ Displays MESSAGE (and TIME) in `alarm-popup-buffer'."
 (defun alarm-kill (pos)
   "Kill Alarm under point."
   (interactive (list (1- (line-number-at-pos))))
-  (let* ((a (nth pos alarm-alist))
-         (triggered (alarm-triggered a)))
-    (if (y-or-n-p (format "Are you sure you want to %s alarm '%s'?" (if triggered "delete" "cancel") (cadr a)))
+  (when-let ((a (nth pos alarm-alist)))
+    (if (y-or-n-p (format "Are you sure you want to %s alarm '%s'?" (if (alarm-triggered a) "delete" "cancel") (cadr a)))
         (alarm-cancel a)
-      (message "Alarm '%s' not %s." (cadr a) (if triggered "deleted" "cancelled"))))
-  (tabulated-list-revert))
+      (message "Alarm '%s' not %s." (cadr a) (if (alarm-triggered a) "deleted" "cancelled")))
+    (tabulated-list-revert)))
 
 (defun alarm-refresh ()
   "Refresh the table of alarms."
@@ -103,7 +102,7 @@ Displays MESSAGE (and TIME) in `alarm-popup-buffer'."
   (let ((buffer (get-buffer-create "*Alarm List*")))
     (with-current-buffer buffer
       (alarm-mode)
-      (alarm-refresh)
+      (tabulated-list-revert)
       (tabulated-list-print))
     buffer))
 
@@ -129,7 +128,8 @@ For example \"11:30am\" or \"5 mins\"."
   (let* ((alarm-timer (run-at-time time nil 'alarm-action message time))
          (a `(,time ,message ,alarm-timer)))
     (add-to-list 'alarm-alist a)
-    (message "Alarm will go off in %s" (alarm-format-seconds (alarm-seconds-till a)))))
+    (message "Alarm will go off in %s" (alarm-format-seconds (alarm-seconds-till a)))
+    (alarm-get-buffer)))
 
 (define-derived-mode alarm-mode tabulated-list-mode "Alarm List"
   "A major mode for viewing the list of alarms.
