@@ -48,8 +48,6 @@
     ibuffer-vc
     idle-highlight-mode
     multiple-cursors
-    js2-mode
-    js2-refactor
     lua-mode
     markdown-mode
     web-mode
@@ -533,19 +531,6 @@
 (require 'js)
 (add-to-list 'auto-mode-alist '("\\.json\\'" . js-mode))
 (add-to-list 'auto-mode-alist '("\\.cfn\\'" . js-mode)) ;; cloud formation
-
-(require 'js2-mode)
-(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
-(setq-default js-indent-level 2)
-(setq-default js2-basic-offset 2)
-(setq-default js2-strict-trailing-comma-warning nil)
-(setq js2-global-externs
-      '("setTimeout" "setInterval" "clearTimeout" "clearInterval" "global" "require" "module" "exports" "WebSocket" "$" "angular" "_"
-        "Highcharts" "google" "d3" "chai" "it" "describe" "suite" "test" "chrome" "config"))
-(require 'js2-refactor)
-(js2r-add-keybindings-with-prefix "C-c C-m")
-(define-key js2-mode-map (kbd "<C-S-down>") nil)
-(define-key js2-mode-map (kbd "<C-S-up>") nil)
 
 (require 'css-mode)
 (setq css-indent-offset 2)
