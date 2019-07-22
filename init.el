@@ -560,7 +560,6 @@
 
 (require 'lisp-mode)
 (add-hook 'lisp-mode-hook 'rainbow-delimiters-mode)
-(add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
 (add-hook 'emacs-lisp-mode-hook 'elisp-slime-nav-mode)
 (add-hook 'emacs-lisp-mode-hook 'rainbow-delimiters-mode)
 
@@ -592,12 +591,10 @@
 (use-package cider
   :ensure t
   :defer t
-  :custom
-  (cider-repl-history-size 1000)
-  (cider-repl-history-file (expand-file-name ".cider-repl-history" user-emacs-directory))
+  ;; :pin melpa-stable
   :config
-  (add-hook 'cider-mode-hook #'eldoc-mode)
-  (add-hook 'cider-repl-mode-hook #'eldoc-mode)
+  (setq cider-repl-history-size 1000)
+  (setq cider-repl-history-file (expand-file-name ".cider-repl-history" user-emacs-directory))
   (add-hook 'cider-repl-mode-hook #'rainbow-delimiters-mode))
 
 (require 'inf-clojure)
