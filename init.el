@@ -39,7 +39,6 @@
     magit
     move-text
     rainbow-delimiters
-    rainbow-mode
     smartparens
     ido-completing-read+
     ido-vertical-mode
@@ -392,10 +391,13 @@
 (setq company-dabbrev-downcase nil)
 (setq company-dabbrev-ignore-case 't)
 
+(use-package rainbow-mode
+  :ensure t
+  :init
+  (setq rainbow-html-colors nil)
+  (setq rainbow-x-colors nil)
+  :hook (emacs-lisp-mode-hook css-mode-hook))
 
-(require 'rainbow-mode)
-(setq-default rainbow-html-colors nil)
-(setq-default rainbow-x-colors nil)
 
 (require 'grep)
 (setq grep-find-ignored-directories (append grep-find-ignored-directories '("target" "out" "node_modules" "build" "dist" "bower")))
@@ -527,7 +529,6 @@
 (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
 (add-hook 'emacs-lisp-mode-hook 'elisp-slime-nav-mode)
 (add-hook 'emacs-lisp-mode-hook 'rainbow-delimiters-mode)
-(add-hook 'emacs-lisp-mode-hook 'rainbow-mode)
 
 (require 'js)
 (add-to-list 'auto-mode-alist '("\\.json\\'" . js-mode))
@@ -535,7 +536,6 @@
 
 (require 'css-mode)
 (setq css-indent-offset 2)
-(add-hook 'css-mode-hook 'rainbow-mode)
 
 (require 'cc-mode)
 (add-hook 'java-mode-hook '(lambda () (c-set-offset 'arglist-intro '+)))
