@@ -49,7 +49,6 @@
     web-mode
     inf-clojure
     monroe
-    yaml-mode
     )
   "A list of packages to ensure are installed at launch.")
 
