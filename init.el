@@ -318,6 +318,22 @@
 (define-key ibuffer-name-map [(mouse-2)] 'ibuffer-mouse-toggle-mark)
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
+(use-package eshell
+  :init
+  (add-hook 'eshell-first-time-mode-hook ;; can't use `:bind' because `eshell-mode-map' is buffer local
+            (lambda ()
+              (define-key eshell-mode-map [up] 'previous-line)
+              (define-key eshell-mode-map [down] 'next-line)
+              (define-key eshell-mode-map [C-up] 'eshell-previous-matching-input-from-input)
+              (define-key eshell-mode-map [C-down] 'eshell-next-matching-input-from-input)
+              (define-key eshell-mode-map [M-up] 'eshell-previous-input)
+              (define-key eshell-mode-map [M-down] 'eshell-next-input)))
+  :config
+  (setq eshell-hist-ignoredups t)
+  (setq eshell-history-size 1024)
+  :bind (:map matt-keymap
+              ("o e" . eshell)))
+
 (require 'tramp)
 ;; open as root - from emacs prelude
 (defun matt-file-owner-uid (filename)
