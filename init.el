@@ -258,8 +258,9 @@
 (put 'downcase-region 'disabled nil)
 (put 'scroll-left 'disabled nil)
 
-(require 'browse-url)
-(setq browse-url-browser-function 'browse-url-chrome)
+(use-package browse-url
+  :init
+  (setq browse-url-browser-function 'browse-url-chrome))
 
 (use-package smex
   :ensure t
