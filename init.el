@@ -43,8 +43,6 @@
     smartparens
     smex
     undo-tree
-    yasnippet
-    yasnippet-snippets
     ido-completing-read+
     ido-vertical-mode
     flx-ido
@@ -395,7 +393,6 @@
 (global-company-mode 1)
 (setq company-dabbrev-downcase nil)
 (setq company-dabbrev-ignore-case 't)
-(define-key company-active-map (kbd "<tab>") nil) ;; conflicts with yas
 
 
 (require 'rainbow-mode)
@@ -408,9 +405,6 @@
 
 (require 'flyspell)
 (define-key flyspell-mode-map (kbd "C-,") nil)
-
-(require 'yasnippet)
-(yas-global-mode 1)
 
 (require 'idle-highlight-mode)
 (add-hook 'prog-mode-hook 'idle-highlight-mode)
