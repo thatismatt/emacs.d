@@ -35,7 +35,6 @@
     dash
     diff-hl
     elisp-slime-nav
-    projectile
     magit
     move-text
     rainbow-delimiters
@@ -419,10 +418,18 @@
   (setq rainbow-x-colors nil)
   :hook (emacs-lisp-mode-hook css-mode-hook))
 
+(use-package grep
+  :config
+  (setq grep-find-ignored-directories (append grep-find-ignored-directories '("target" "out" "node_modules" "build" "dist" "bower")))
+  (add-hook 'grep-mode-hook (lambda () (toggle-truncate-lines 1))))
 
-(require 'grep)
-(setq grep-find-ignored-directories (append grep-find-ignored-directories '("target" "out" "node_modules" "build" "dist" "bower")))
-(add-hook 'grep-mode-hook (lambda () (toggle-truncate-lines 1)))
+(use-package ag
+  :ensure t
+  :config
+  (setq ag-highlight-search t)
+  :bind (:map matt-keymap
+              (("g g" . ag)
+               ("g p" . ag-project))))
 
 (require 'flyspell)
 (define-key flyspell-mode-map (kbd "C-,") nil)
@@ -430,10 +437,16 @@
 (require 'idle-highlight-mode)
 (add-hook 'prog-mode-hook 'idle-highlight-mode)
 
-(require 'projectile)
-(projectile-global-mode)
-(global-set-key (kbd "C-x p") 'projectile-find-file)
-(setq projectile-svn-command "find . -type f -not -iwholename '*.svn/*' -print0") ;; see https://github.com/bbatsov/projectile/issues/520
+(use-package projectile
+  :ensure t
+  :init
+  (projectile-global-mode)
+  :config
+  (setq projectile-svn-command "find . -type f -not -iwholename '*.svn/*' -print0") ;; see https://github.com/bbatsov/projectile/issues/520
+  :bind (("C-x p" . projectile-find-file)
+         (:map matt-keymap
+               ("p b" . projectile-switch-to-buffer)
+               ("p t" . projectile-toggle-between-implementation-and-test))))
 
 (require 'multiple-cursors)
 (matt-define-key "m m" 'mc/mark-more-like-this-extended)
@@ -960,8 +973,6 @@
 (global-set-key (kbd "<M-delete>")        'kill-word)
 
 (matt-define-key "b b"                    'bury-buffer)
-(matt-define-key "g g"                    'rgrep)
-(matt-define-key "g p"                    'projectile-grep)
 (matt-define-key "a r"                    'align-regexp)
 (matt-define-key "s r"                    'replace-string)
 (matt-define-key "w b"                    'balance-windows)
