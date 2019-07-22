@@ -375,6 +375,9 @@
 
 (require 'undo-tree)
 (global-undo-tree-mode)
+(use-package display-line-numbers
+  :init
+  (global-display-line-numbers-mode))
 
 (require 'smartparens)
 (require 'smartparens-config)
@@ -394,13 +397,6 @@
 (setq company-dabbrev-ignore-case 't)
 (define-key company-active-map (kbd "<tab>") nil) ;; conflicts with yas
 
-(require 'linum)
-(setq linum-format "%4i ")
-(add-hook 'prog-mode-hook 'linum-mode)
-(add-hook 'css-mode-hook 'linum-mode)
-(add-hook 'html-mode-hook 'linum-mode)
-(add-hook 'nxml-mode-hook 'linum-mode)
-(add-hook 'conf-mode-hook 'linum-mode)
 
 (require 'rainbow-mode)
 (setq-default rainbow-html-colors nil)
@@ -973,7 +969,6 @@
 (matt-define-key "w b"                    'balance-windows)
 (matt-define-key "w l"                    'toggle-truncate-lines) ;; mnemonic "wrap lines"
 (matt-define-key "w w"                    'toggle-word-wrap)
-(matt-define-key "l n"                    'linum-mode)
 
 (define-key isearch-mode-map (kbd "C-.") 'isearch-forward-symbol-at-point)
 

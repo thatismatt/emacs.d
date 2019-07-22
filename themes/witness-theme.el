@@ -50,11 +50,9 @@
        (*background-1*       "#10191f")
 
        (*mode-line-bg*       *grey-6*)
-       (*mode-line-fg*       *grey-1*)
+       (*mode-line-fg*       *background*)
        (*mode-line-bg-2*     *grey-4*)
        (*mode-line-fg-2*     *grey-2*)
-       (*linum-bg*           *grey-6*)
-       (*linum-fg*           *grey-1*)
 
        (*normal*             *grey-b*)
        (*cursor*             *grey-9*)
@@ -129,7 +127,8 @@
 
    ;; gui
    `(fringe ((t (:background ,*background-1*))))
-   `(linum ((t (:background ,*linum-bg* :foreground ,*linum-fg*))))
+   `(line-number ((t (:background ,*mode-line-bg-2* :foreground ,*mode-line-fg-2*))))
+   `(line-number-current-line ((t (:background ,*mode-line-bg* :foreground ,*mode-line-fg*))))
    `(minibuffer-prompt ((t (:foreground ,*variable*))))
    `(cursor ((t (:background ,*cursor*))))
    `(text-cursor ((t (:background ,*cursor*))))
