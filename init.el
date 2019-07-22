@@ -600,7 +600,6 @@
 (require 'ruby-mode)
 (add-to-list 'auto-mode-alist '("\\.pp\\'" . ruby-mode)) ;; puppet
 (add-to-list 'auto-mode-alist '("\\^Vagrantfile\\'" . ruby-mode)) ;; vagrant
-(add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode)) ;; ruby erb files
 
 (use-package image
   :bind (:map image-map
