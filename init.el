@@ -616,13 +616,15 @@
 (add-to-list 'auto-mode-alist '("\\^Vagrantfile\\'" . ruby-mode)) ;; vagrant
 (add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode)) ;; ruby erb files
 
-(require 'image)
-(define-key image-map "=" 'image-increase-size)
+(use-package image
+  :bind (:map image-map
+              ("=" . image-increase-size)))
 
-(require 'alarm)
-(matt-define-key "a a" 'alarm)
-(matt-define-key "a l" 'alarm-list)
-(matt-define-key "a n" 'alarm-next)
+(use-package alarm
+  :bind (:map matt-keymap
+              ("a a" . alarm)
+              ("a l" . alarm-list)
+              ("a n" . alarm-next)))
 
 (defun matt-font-lock-comment-annotations ()
   "Highlight well known comment annotations."
