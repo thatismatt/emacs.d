@@ -590,13 +590,6 @@
   (setq cider-repl-history-file (expand-file-name ".cider-repl-history" user-emacs-directory))
   (add-hook 'cider-repl-mode-hook #'rainbow-delimiters-mode))
 
-(require 'inf-clojure)
-(add-hook 'inf-clojure-mode-hook 'turn-on-eldoc-mode)
-(add-hook 'inf-clojure-mode-hook 'rainbow-delimiters-mode)
-
-(require 'scheme)
-(add-to-list 'auto-mode-alist '("\\.ms\\'" . scheme-mode)) ;; microscheme
-
 (require 'fennel-mode)
 (defun matt-fennel-init ()
   (setq inferior-lisp-program
