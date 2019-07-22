@@ -840,7 +840,13 @@
   (let* ((timestamp (format-time-string "%Y-%m-%d_%H-%M-%S" (current-time)))
          (filename  (format "~/tmp/emacs-temp-%s" timestamp)))
     (find-file filename)))
-(matt-define-key "o p" 'matt-open-temp-file)
+
+(defun matt-open-temp-buffer ()
+  (interactive)
+  (let* ((timestamp (format-time-string "%Y-%m-%d_%H-%M-%S" (current-time)))
+         (buffer    (format "*temp-%s*" timestamp)))
+    (switch-to-buffer buffer)))
+(matt-define-key "o p" 'matt-open-temp-buffer)
 
 (defun matt-org-title ()
   (interactive)
