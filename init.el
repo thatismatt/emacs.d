@@ -39,7 +39,6 @@
     magit
     move-text
     rainbow-delimiters
-    smartparens
     ido-completing-read+
     ido-vertical-mode
     flx-ido
@@ -370,17 +369,21 @@
   :init
   (global-display-line-numbers-mode))
 
-(require 'smartparens)
-(require 'smartparens-config)
-(setq sp-highlight-pair-overlay nil)
-(sp-use-smartparens-bindings)
-(show-smartparens-global-mode 1)
-(add-hook 'prog-mode-hook 'smartparens-mode)
-(add-hook 'inferior-lisp-mode-hook 'smartparens-mode)
 (use-package undo-tree
   :ensure t
   :init
   (global-undo-tree-mode))
+
+(use-package smartparens
+  :ensure t
+  :init
+  (use-package smartparens-config)
+  (smartparens-global-mode 1)
+  (show-smartparens-global-mode 1)
+  (add-to-list 'sp-ignore-modes-list 'org-mode)
+  :config
+  (sp-use-smartparens-bindings)
+  (setq sp-highlight-pair-overlay nil))
 
 (require 'company)
 (setq company-idle-delay 0.1)
@@ -564,12 +567,10 @@
   :config
   (add-hook 'cider-mode-hook #'eldoc-mode)
   (add-hook 'cider-repl-mode-hook #'eldoc-mode)
-  (add-hook 'cider-repl-mode-hook #'smartparens-mode)
   (add-hook 'cider-repl-mode-hook #'rainbow-delimiters-mode))
 
 (require 'inf-clojure)
 (add-hook 'inf-clojure-mode-hook 'turn-on-eldoc-mode)
-(add-hook 'inf-clojure-mode-hook 'smartparens-mode)
 (add-hook 'inf-clojure-mode-hook 'rainbow-delimiters-mode)
 
 (require 'scheme)
