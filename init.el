@@ -41,7 +41,6 @@
     rainbow-delimiters
     rainbow-mode
     smartparens
-    undo-tree
     ido-completing-read+
     ido-vertical-mode
     flx-ido
@@ -368,8 +367,6 @@
 (setq uniquify-after-kill-buffer-p t) ;; rename after killing uniquified
 (setq uniquify-ignore-buffers-re "^\\*") ;; don't muck with special buffers
 
-(require 'undo-tree)
-(global-undo-tree-mode)
 (use-package display-line-numbers
   :init
   (global-display-line-numbers-mode))
@@ -381,6 +378,10 @@
 (show-smartparens-global-mode 1)
 (add-hook 'prog-mode-hook 'smartparens-mode)
 (add-hook 'inferior-lisp-mode-hook 'smartparens-mode)
+(use-package undo-tree
+  :ensure t
+  :init
+  (global-undo-tree-mode))
 
 (require 'company)
 (setq company-idle-delay 0.1)
