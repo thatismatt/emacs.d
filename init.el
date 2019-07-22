@@ -12,9 +12,13 @@
 (require 'cl)
 (require 'package)
 
-(unless (bound-and-true-p package--initialized) ;; to avoid warnings in 27
-  (setq package-enable-at-startup nil)          ;; to prevent initializing twice
-  (package-initialize))
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
+;; (add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/"))
+
+(package-initialize)
+
+(unless package-archive-contents
+  (package-refresh-contents))
 
 (unless (package-installed-p 'use-package)
   (package-install 'use-package))
@@ -24,9 +28,6 @@
 
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 (add-to-list 'load-path (expand-file-name "~/code/fennel-mode"))
-
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
-;; (add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/"))
 
 (defvar matt-packages
   '(browse-kill-ring
