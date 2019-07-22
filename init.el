@@ -367,7 +367,7 @@
   (interactive
    (list
     (ido-completing-read "Choose recent file: "
-                         (-map 'abbreviate-file-name recentf-list)
+                         (mapcar 'abbreviate-file-name recentf-list)
                          nil t)))
   (find-file file))
 (global-set-key (kbd "C-x f") 'matt-recentf-ido-find-file)
