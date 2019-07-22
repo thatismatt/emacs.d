@@ -732,42 +732,6 @@
   (find-file "~/Documents/log.org"))
 (matt-define-key "o l" 'matt-log)
 
-(defun matt-journal-title ()
-  (interactive)
-  (let* ((date (format-time-string "%a, %b %d %Y" (current-time))))
-    (insert "** " date " ----------------------------------------------------------------\n"
-            "*** 7 hrs : 09:00-12:00 13:00-17:00 : 0 hrs up")))
-(matt-define-key "j t" 'matt-journal-title)
-
-(defun matt-journal-hours-total ()
-  (interactive)
-  (matt-journal)
-  (let* ((content (split-string (buffer-string) "\n" t))
-         (time-lines (--filter (string-match "^\\*+ .* : .* : " it) content))
-         (overtimes (--map (-> it
-                               (split-string " : ")
-                               (caddr)
-                               ((lambda (x)
-                                  (* (string-to-number x)
-                                     (if (string-match "down$" x) -1 1)))))
-                           time-lines))
-         (total (apply '+ overtimes)))
-    (message (format "%.1f" total))))
-(matt-define-key "j h t" 'matt-journal-hours-total)
-
-(defun matt-journal-hours-day ()
-  (interactive)
-  (let* ((line (thing-at-point 'line t)) ;; e.g. "** 7.5 hrs : 08:30-15:00 19:00-20:00 : 0.5 hr down"
-         (times (cadr (split-string line " : " t)))
-         (periods (->> (split-string times " " t)
-                       (--map (->> (split-string it "-" t)
-                                   (-map (lambda (x) (-map 'string-to-number (split-string x ":" t))))))))
-         (hours (--map (destructuring-bind ((from-h from-m) (to-h to-m)) it
-                         (+ (- to-h from-h) (/ (- to-m from-m) 60.0)))
-                       periods)))
-    (message (format "%.1f" (apply '+ hours)))))
-(matt-define-key "j h d" 'matt-journal-hours-day)
-
 (defun matt-runs ()
   (interactive)
   (find-file "~/notes/runs.org"))
