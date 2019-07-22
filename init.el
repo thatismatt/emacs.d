@@ -239,6 +239,7 @@
 (save-place-mode 1)
 (global-set-key (kbd "C-d") 'backward-delete-char)
 (setq set-mark-command-repeat-pop t)
+(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 
 ;; window splitting - always horizontal
 (setq split-height-threshold 0)
