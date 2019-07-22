@@ -41,7 +41,6 @@
     rainbow-delimiters
     rainbow-mode
     smartparens
-    smex
     undo-tree
     ido-completing-read+
     ido-vertical-mode
@@ -266,10 +265,10 @@
 (require 'browse-url)
 (setq browse-url-browser-function 'browse-url-chrome)
 
-(require 'smex)
-(smex-initialize)
-(global-set-key (kbd "M-x") 'smex)
-(global-set-key (kbd "M-X") 'smex-major-mode-commands)
+(use-package smex
+  :ensure t
+  :bind (("M-x" . smex))
+  :config (smex-initialize))
 
 (require 'ido)
 (require 'ido-vertical-mode)
