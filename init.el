@@ -566,13 +566,14 @@
 (require 'cc-mode)
 (add-hook 'java-mode-hook '(lambda () (c-set-offset 'arglist-intro '+)))
 
-(require 'web-mode)
-(setq web-mode-markup-indent-offset 2)
-(setq web-mode-code-indent-offset 2)
-(setq web-mode-enable-comment-interpolation nil)
-(add-to-list 'auto-mode-alist '("\\.jsx\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
-
+(use-package web-mode
+  :ensure t
+  :init
+  (setq web-mode-markup-indent-offset 2)
+  (setq web-mode-code-indent-offset 2)
+  (setq web-mode-enable-comment-interpolation nil)
+  (add-to-list 'auto-mode-alist '("\\.jsx\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode)))
 
 (use-package clojure-mode
   :ensure t
