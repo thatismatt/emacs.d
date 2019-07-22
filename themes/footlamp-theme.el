@@ -71,9 +71,9 @@
        (*search-2*           *red*)
        (*variable*           *purple*)
        (*highlight-1*        *blue*)
-       (*highlight-2*        *red*)
+       (*highlight-2*        *pink*)
        (*highlight-3*        *yellow-1*)
-       (*highlight-4*        *green*)
+       (*highlight-4*        *purple*)
        (*highlight-bg*       *grey-c*)
        )
 
