@@ -138,6 +138,7 @@ For example \"11:30am\" or \"5 mins\"."
   (add-hook 'tabulated-list-revert-hook 'alarm-refresh nil t))
 
 (define-key alarm-mode-map (kbd "k") 'alarm-kill)
+(define-key alarm-mode-map (kbd "x") 'alarm-kill)
 (define-key alarm-mode-map (kbd "a") 'alarm)
 
 (provide 'alarm)
