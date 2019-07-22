@@ -57,8 +57,6 @@
     markdown-mode
     web-mode
     less-css-mode
-    ;; clojure-mode
-    ;; cider
     inf-clojure
     monroe
     yaml-mode
