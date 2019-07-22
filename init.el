@@ -213,7 +213,7 @@
                  (concat " - " server-name)))
         " - "
         (:eval (if (buffer-file-name)
-                   (abbreviate-file-name (buffer-file-name))
+                   (replace-regexp-in-string "%" "%%" (abbreviate-file-name (buffer-file-name)))
                  "%b"))))
 
 (column-number-mode)
