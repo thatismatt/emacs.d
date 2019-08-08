@@ -44,6 +44,8 @@
        (*green-3*            "#040")
        (*pink*               "#e0b")
        (*purple*             "#a3f")
+       (*purple-1*           "#705")
+       (*purple-2*           "#503")
        (*blue*               "#0bd")
        (*blue-1*             "#59f")
 
@@ -71,13 +73,14 @@
        (*string*             *green-2*)
        (*builtins*           *pink*)
        (*link*               *purple*)
+       (*code*               *purple*)
        (*warning*            *red*)
        (*regexp*             "#a36")
        (*search-1*           *yellow*)
        (*search-2*           *orange*)
        (*variable*           "#0a8")
-       (*highlight-1*        *blue*)
-       (*highlight-2*        *pink*)
+       (*highlight-1*        *pink*)
+       (*highlight-2*        *blue*)
        (*highlight-3*        *yellow*)
        (*highlight-4*        *green*)
        (*highlight-bg*       *grey-3*)
@@ -98,10 +101,10 @@
    `(underline ((t (:underline t))))
    `(success ((t (:foreground ,*green*))))
    `(match ((t (:foreground ,*background* :background ,*highlight-1*))))
-   `(shadow ((t (:foreground ,*purple*))))
+   `(shadow ((t (:foreground ,*code*))))
    `(link ((t (:foreground ,*link* :underline t))))
    `(error ((t (:foreground ,*warning*))))
-   `(fixed-pitch ((t (:family nil))))
+   `(fixed-pitch ((t (:foreground ,*code* :family nil))))
    `(fixed-pitch-serif ((t (:family nil))))
    `(minibuffer-prompt ((t (:foreground ,*function*))))
 
@@ -191,44 +194,40 @@
    `(magit-branch-local ((t (:foreground ,*highlight-1*))))
    `(magit-branch-remote ((t (:foreground ,*highlight-2*))))
    `(magit-tag ((t (:foreground ,*highlight-4* :background nil :box t))))
-   `(magit-section-heading ((t (:foreground ,*highlight-1* :background nil))))
+   `(magit-section-heading ((t (:height 1.2 :foreground ,*highlight-1*))))
    `(magit-section-highlight ((t (:foreground nil :background nil))))
    `(magit-section-heading-selection ((t (:foreground ,*highlight-2*))))
    `(magit-hash ((t (:foreground ,*highlight-3*))))
 
    ;; idle-highlight
-   `(idle-highlight ((t (:background ,*grey-3* :foreground nil))))
+   `(idle-highlight ((t (:background ,*highlight-bg* :foreground nil))))
 
    ;; org
    `(org-level-1 ((t (:foreground ,*highlight-1*))))
    `(org-level-2 ((t (:foreground ,*highlight-2*))))
    `(org-level-3 ((t (:foreground ,*highlight-3*))))
    `(org-level-4 ((t (:foreground ,*highlight-4*))))
-   `(org-code ((t (:foreground ,*green*))))
    `(org-table ((t (:foreground ,*blue-1*))))
-   `(org-document-title ((t (:foreground ,*yellow*))))
+   `(org-document-title ((t (:height 1.2 :foreground ,*highlight-3*))))
    `(org-document-info-keyword ((t (:foreground ,*link*))))
-   `(org-todo ((t (:foreground ,*red* :box t))))
-   `(org-done ((t (:foreground ,*green* :box t))))
-   `(org-todo-face ((t (:foreground ,*red* :box t))))
-   `(org-done-face ((t (:foreground ,*green* :box t))))
-   `(org-doing-face ((t (:foreground ,*yellow* :box t))))
-   `(org-postponed-face ((t (:foreground ,*grey-7* :box t))))
-   `(org-query-face ((t (:foreground ,*purple* :box t))))
+   `(org-todo ((t (:height 0.9 :foreground ,*red* :box t))))
+   `(org-done ((t (:height 0.9 :foreground ,*green* :box t))))
+   `(org-todo-face ((t (:height 0.9 :foreground ,*red* :box t))))
+   `(org-done-face ((t (:height 0.9 :foreground ,*green* :box t))))
+   `(org-doing-face ((t (:height 0.9 :foreground ,*yellow* :box t))))
+   `(org-postponed-face ((t (:height 0.9 :foreground ,*grey-7* :box t))))
+   `(org-query-face ((t (:height 0.9 :foreground ,*purple* :box t))))
    `(org-checkbox ((t (:foreground ,*yellow*))))
    `(org-date ((t (:foreground ,*blue*))))
    `(org-block ((t (:foreground nil))))
    `(org-priority ((t (:foreground ,*yellow*))))
-
-   ;; markdown
-   `(markdown-link-face ((t (:foreground ,*blue-1*))))
-   `(markdown-code-face ((t (:foreground ,*purple*))))
+   `(org-meta-line ((t (:foreground ,*grey-4*))))
 
    ;; calendar
    `(calendar-today ((t (:foreground ,*green* :background nil :box t))))
 
    ;; eshell
-   `(eshell-prompt ((t (:foreground ,*highlight-2*))))
+   `(eshell-prompt ((t (:foreground ,*code*))))
    `(eshell-ls-directory ((t (:foreground ,*blue*))))
    `(eshell-ls-symlink ((t (:foreground ,*blue-1*))))
    `(eshell-ls-executable ((t (:foreground ,*green*))))
@@ -238,6 +237,26 @@
    ;; shell
    `(sh-heredoc ((t (:foreground ,*green*))))
    `(sh-quoted-exec ((t (:foreground ,*highlight-2*))))
+
+   ;; helm
+   `(helm-selection ((t (:background ,*visual-selection*))))
+   `(helm-header ((t (:height 0.9 :foreground ,*highlight-2*))))
+   `(helm-source-header ((t (:height 1.2 :foreground ,*background* :background ,*highlight-1*))))
+   `(helm-candidate-number ((t (:foreground ,*purple-1*))))
+   `(helm-candidate-number-suspended ((t (:foreground ,*purple-2*))))
+   `(helm-buffer-size ((t (:foreground ,*comments*))))
+   `(helm-buffer-process ((t (:foreground ,*green-1*)))) ;; TODO: highlight-4-
+   `(helm-buffer-file ((t (:foreground ,*highlight-1*))))
+   `(helm-buffer-modified ((t (:foreground ,*purple*)))) ;; TODO: highlight-1+
+   `(helm-buffer-not-saved ((t (:foreground ,*warning*)))) ;; TODO: highlight-1-warning
+   `(helm-ff-prefix ((t (:foreground ,*background* :background ,*highlight-3*))))
+   `(helm-ff-directory ((t (:foreground ,*highlight-2*))))
+   ;; `(helm-ff-directory-files ((t (:foreground ,*highlight-2*))))
+   `(helm-ff-executable ((t (:foreground ,*green*))))
+   `(helm-ff-dotted-directory ((t (:foreground ,*comments*))))
+   `(helm-ff-symlink ((t (:foreground ,*blue-1*))))
+   `(helm-ff-truename ((t (:foreground ,*green*))))
+   `(helm-grep-finish ((t (:foreground ,*purple-1*))))
 
    ;; eldoc
    `(eldoc-highlight-function-argument ((t (:foreground ,*pink*))))
