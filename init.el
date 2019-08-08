@@ -421,6 +421,12 @@
   :ensure t
   :hook (prog-mode))
 
+(use-package multiple-cursors
+  :ensure t
+  :bind (:map matt-keymap
+              ("m m" . mc/mark-more-like-this-extended)
+              ("m r" . mc/edit-lines)))
+
 
 (use-package projectile
   :ensure t
@@ -432,12 +438,6 @@
          (:map matt-keymap
                ("p b" . projectile-switch-to-buffer)
                ("p t" . projectile-toggle-between-implementation-and-test))))
-
-(require 'multiple-cursors)
-(matt-define-key "m m" 'mc/mark-more-like-this-extended)
-(matt-define-key "m r" 'mc/edit-lines)
-(global-set-key (kbd "C->") 'mc/mark-next-like-this)
-(global-set-key (kbd "C-<") 'mc/unmark-next-like-this)
 
 (require 'move-text)
 (global-set-key (kbd "C-S-<up>") 'move-text-up)
