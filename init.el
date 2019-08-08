@@ -54,6 +54,7 @@
   (require 'use-package))
 
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
+(add-to-list 'load-path (expand-file-name "themes" user-emacs-directory)) ;; HACK: ensure matt-make-theme in on the load-path
 
 ;; hide tool bar & menu bar & tab bar
 (tool-bar-mode -1)
@@ -99,7 +100,7 @@
   (matt-load-theme (car custom-enabled-themes)))
 (matt-define-key "t r" 'matt-reload-theme)
 
-(setq matt-default-theme 'witness)
+(setq matt-default-theme 'xorbit)
 
 (defun matt-load-default-theme ()
   (interactive)
