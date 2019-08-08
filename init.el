@@ -558,11 +558,12 @@
 (require 'markdown-mode)
 (define-key markdown-mode-map (kbd "M-<left>") nil)
 (define-key markdown-mode-map (kbd "M-<right>") nil)
+(use-package rainbow-delimiters
+  :ensure t
+  :hook ((emacs-lisp-mode lisp-mode clojure-mode cider-repl-mode) . rainbow-delimiters-mode-enable))
 
 (require 'lisp-mode)
-(add-hook 'lisp-mode-hook 'rainbow-delimiters-mode)
 (add-hook 'emacs-lisp-mode-hook 'elisp-slime-nav-mode)
-(add-hook 'emacs-lisp-mode-hook 'rainbow-delimiters-mode)
 
 (require 'js)
 (add-to-list 'auto-mode-alist '("\\.json\\'" . js-mode))
@@ -585,9 +586,7 @@
 
 (use-package clojure-mode
   :ensure t
-  :defer t
-  :config
-  (add-hook 'clojure-mode-hook #'rainbow-delimiters-mode))
+  :defer t)
 
 (use-package cider
   :ensure t
@@ -595,14 +594,12 @@
   ;; :pin melpa-stable
   :config
   (setq cider-repl-history-size 1000)
-  (setq cider-repl-history-file (expand-file-name ".cider-repl-history" user-emacs-directory))
-  (add-hook 'cider-repl-mode-hook #'rainbow-delimiters-mode))
+  (setq cider-repl-history-file (expand-file-name ".cider-repl-history" user-emacs-directory)))
 
 (require 'fennel-mode)
 (defun matt-fennel-init ()
   (setq inferior-lisp-program
         (expand-file-name "~/code/fennel/fennel --repl")))
-(add-hook 'fennel-mode-hook 'rainbow-delimiters-mode)
 (add-hook 'fennel-mode-hook 'matt-fennel-init)
 
 (use-package ruby-mode
