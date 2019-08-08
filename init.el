@@ -927,18 +927,18 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; keys
 
-(global-set-key (kbd "<M-backspace>")     'backward-kill-word)
-(global-set-key (kbd "<C-backspace>")     'backward-kill-word)
+(global-set-key (kbd "<M-backspace>") 'backward-kill-word)
+(global-set-key (kbd "<C-backspace>") 'backward-kill-word)
 
-(global-set-key (kbd "M-DEL")             'kill-word)
-(global-set-key (kbd "<M-delete>")        'kill-word)
+(global-set-key (kbd "M-DEL")         'kill-word)
+(global-set-key (kbd "<M-delete>")    'kill-word)
 
-(matt-define-key "b b"                    'bury-buffer)
-(matt-define-key "a r"                    'align-regexp)
-(matt-define-key "s r"                    'replace-string)
-(matt-define-key "w b"                    'balance-windows)
-(matt-define-key "w l"                    'toggle-truncate-lines) ;; mnemonic "wrap lines"
-(matt-define-key "w w"                    'toggle-word-wrap)
+(matt-define-key "b b"                'bury-buffer)
+(matt-define-key "a r"                'align-regexp)
+(matt-define-key "s r"                'replace-string)
+(matt-define-key "w b"                'balance-windows)
+(matt-define-key "w l"                'toggle-truncate-lines) ;; mnemonic "wrap lines"
+(matt-define-key "w w"                'toggle-word-wrap)
 
 (define-key isearch-mode-map (kbd "C-.") 'isearch-forward-symbol-at-point)
 
