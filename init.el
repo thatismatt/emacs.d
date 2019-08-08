@@ -243,6 +243,10 @@
 (setq auto-save-file-name-transforms
       `((".*" ,temporary-file-directory t)))
 
+(use-package git-buffer-naming
+  :config
+  (git-buffer-naming-load))
+
 ;; enable stuff
 ;; (put 'narrow-to-region 'disabled nil)
 ;; (put 'narrow-to-page 'disabled nil)
