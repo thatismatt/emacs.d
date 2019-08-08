@@ -185,14 +185,6 @@
    `(magit-section-heading-selection ((t (:foreground ,*highlight-2*))))
    `(magit-hash ((t (:foreground ,*highlight-3*))))
 
-   ;; speedbar
-   `(speedbar-file-face ((t (:foreground ,*normal*))))
-   `(speedbar-directory-face ((t (:foreground ,*normal*))))
-   `(speedbar-selected-face ((t (:foreground ,*highlight-1*))))
-   `(speedbar-highlight-face ((t (:foreground ,*highlight-2* :background nil))))
-   `(speedbar-button-face ((t (:foreground ,*highlight-4*))))
-   `(speedbar-separator-face ((t (:foreground ,*grey-4*))))
-
    ;; idle-highlight
    `(idle-highlight ((t (:background ,*highlight-bg* :foreground nil))))
 
