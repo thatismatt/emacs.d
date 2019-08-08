@@ -129,8 +129,8 @@
   (interactive
    (list
     (intern
-     (ido-completing-read "Load custom theme: "
-                          (mapcar 'symbol-name (custom-available-themes))))))
+     (completing-read "Load custom theme: "
+                      (mapcar 'symbol-name (custom-available-themes))))))
   (matt-disable-all-themes)
   (load-theme theme t))
 
@@ -258,31 +258,31 @@
   :init
   (setq browse-url-browser-function 'browse-url-chrome))
 
-(use-package smex
+(use-package helm
   :ensure t
-  :bind (("M-x" . smex))
-  :config (smex-initialize))
+  ;; :init
+  ;; (setq helm-M-x-fuzzy-match t)
+  :bind (("M-x" . helm-M-x)
+         ("S-<down>" . helm-mini)
+         ("C-x b" . helm-buffers-list)
+         ("C-x C-f" . helm-find-files)
+         ("C-x f" . helm-recentf)))
 
-(require 'ido)
-(require 'ido-vertical-mode)
-(require 'ido-completing-read+)
-(require 'flx-ido)
-(setq ido-enable-prefix nil)
-(setq ido-enable-flex-matching t)
-(setq ido-create-new-buffer 'always)
-(setq ido-use-filename-at-point 'guess)
-(setq ido-max-prospects 10)
-(setq ido-save-directory-list-file (expand-file-name "ido.hist" user-emacs-directory))
-(setq ido-default-file-method 'selected-window)
-(setq ido-auto-merge-work-directories-length -1)
-(setq ido-use-faces nil)
-(setq ido-vertical-define-keys 'C-n-C-p-up-down-left-right)
-(setq ido-max-prospects 25)
-(setq ido-max-window-height (+ ido-max-prospects 2))
-(ido-mode 1)
-(ido-vertical-mode 1)
-(ido-everywhere 1)
-(flx-ido-mode 1)
+(use-package projectile
+  :ensure t
+  :init
+  (projectile-global-mode)
+  :config
+  (setq projectile-svn-command "find . -type f -not -iwholename '*.svn/*' -print0") ;; see https://github.com/bbatsov/projectile/issues/520
+  :bind (:map matt-keymap
+              ("p b" . projectile-switch-to-buffer)
+              ("p t" . projectile-toggle-between-implementation-and-test)))
+
+(use-package helm-projectile
+  :ensure t
+  :bind (("C-x p" . helm-projectile-find-file)
+         (:map matt-keymap
+               ("g p" . helm-projectile-grep))))
 
 (use-package ibuffer
   :init
@@ -348,15 +348,6 @@
 (setq recentf-max-menu-items 15)
 (setq recentf-auto-cleanup 'never) ;; disable - can cause problems with remote files
 (recentf-mode 1)
-(defun matt-recentf-ido-find-file (file)
-  "Find a recent file using ido."
-  (interactive
-   (list
-    (ido-completing-read "Choose recent file: "
-                         (mapcar 'abbreviate-file-name recentf-list)
-                         nil t)))
-  (find-file file))
-(global-set-key (kbd "C-x f") 'matt-recentf-ido-find-file)
 
 (use-package bookmark
   :bind (:map matt-keymap
@@ -414,8 +405,7 @@
   :config
   (setq ag-highlight-search t)
   :bind (:map matt-keymap
-              (("g g" . ag)
-               ("g p" . ag-project))))
+              ("g g" . ag)))
 
 (use-package idle-highlight-mode
   :ensure t
@@ -432,33 +422,14 @@
   :bind (("C-S-<up>" . move-text-up)
          ("C-S-<down>" . move-text-down)))
 
-(use-package projectile
+(use-package magit
   :ensure t
   :init
-  (projectile-global-mode)
-  :config
-  (setq projectile-svn-command "find . -type f -not -iwholename '*.svn/*' -print0") ;; see https://github.com/bbatsov/projectile/issues/520
-  :bind (("C-x p" . projectile-find-file)
-         (:map matt-keymap
-               ("p b" . projectile-switch-to-buffer)
-               ("p t" . projectile-toggle-between-implementation-and-test))))
+  (setq magit-status-buffer-switch-function 'switch-to-buffer)
+  (require 'magit-log)
+  (setf (nth 1 magit-log-margin) "%a %d %b %R")
+  :bind ("C-x g" . magit))
 
-(require 'magit)
-(setq magit-status-buffer-switch-function 'switch-to-buffer)
-(add-to-list 'magit-repository-directories '("~/work/" . 1))
-(add-to-list 'magit-repository-directories '("~/code/" . 1))
-(defun matt-magit (&optional git-dir)
-  (interactive
-   (list
-    (when (or current-prefix-arg (not (magit-toplevel)))
-      (ido-completing-read "Git Repo: " (mapcar #'abbreviate-file-name
-                                                (magit-list-repos))))))
-  (magit git-dir))
-(define-key magit-file-mode-map (kbd "C-x g") nil)
-(global-set-key (kbd "C-x g") 'matt-magit)
-(setf (nth 1 magit-log-margin) "%a %d %b %R")
-;; (setf (nth 1 magit-log-margin) 'age) ;; the default
-;; (setf (nth 1 magit-log-margin) 'age-abbreviated) ;; an alternative
 (use-package diff-hl
   :init
   (global-diff-hl-mode 1)
@@ -638,7 +609,6 @@
 (global-set-key (kbd "S-<right>") 'next-buffer)
 (global-set-key (kbd "S-<left>") 'previous-buffer)
 (global-set-key (kbd "S-<up>") 'matt-mru-buffer)
-(global-set-key (kbd "S-<down>") 'ido-switch-buffer)
 
 (defun matt-swap-windows ()
   "Swap the buffers in `selected-window' and `next-window'."
