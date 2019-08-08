@@ -561,6 +561,9 @@
   :mode (("\\.json\\'" . js-mode)
          ("\\.cfn\\'" . js-mode))) ;; cloud formation
 
+(use-package lua-mode
+  :ensure t)
+
 (use-package css-mode
   :ensure t
   :config
