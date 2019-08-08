@@ -546,8 +546,9 @@
   :ensure t
   :hook ((emacs-lisp-mode lisp-mode clojure-mode cider-repl-mode) . rainbow-delimiters-mode-enable))
 
-(require 'lisp-mode)
-(add-hook 'emacs-lisp-mode-hook 'elisp-slime-nav-mode)
+(use-package elisp-slime-nav
+  :ensure t
+  :hook ((emacs-lisp-mode) . turn-on-elisp-slime-nav-mode))
 
 (use-package markdown-mode
   :ensure t
