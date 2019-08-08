@@ -323,7 +323,8 @@
               (define-key eshell-mode-map [C-up] 'eshell-previous-matching-input-from-input)
               (define-key eshell-mode-map [C-down] 'eshell-next-matching-input-from-input)
               (define-key eshell-mode-map [M-up] 'eshell-previous-input)
-              (define-key eshell-mode-map [M-down] 'eshell-next-input)))
+              (define-key eshell-mode-map [M-down] 'eshell-next-input)
+              (define-key eshell-mode-map [home] 'eshell-bol)))
   :config
   (setq eshell-hist-ignoredups t)
   (setq eshell-history-size 1024)
