@@ -605,9 +605,10 @@
 (add-hook 'fennel-mode-hook 'rainbow-delimiters-mode)
 (add-hook 'fennel-mode-hook 'matt-fennel-init)
 
-(require 'ruby-mode)
-(add-to-list 'auto-mode-alist '("\\.pp\\'" . ruby-mode)) ;; puppet
-(add-to-list 'auto-mode-alist '("\\^Vagrantfile\\'" . ruby-mode)) ;; vagrant
+(use-package ruby-mode
+  :ensure t
+  :mode (("\\.pp\\'" . ruby-mode)
+         ("\\^Vagrantfile\\'" . ruby-mode)))
 
 (use-package image
   :bind (:map image-map
