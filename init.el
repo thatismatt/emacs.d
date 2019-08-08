@@ -72,6 +72,7 @@ Focus change event is debounced so we don't gc on focus."
   (require 'use-package))
 
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
+(add-to-list 'load-path (expand-file-name "themes" user-emacs-directory)) ;; HACK: ensure matt-make-theme is on the load-path
 
 (defun matt-recompile-packages ()
   "Recompile all packages in `package-user-dir'."
@@ -135,13 +136,24 @@ Focus change event is debounced so we don't gc on focus."
   (matt-load-theme (car custom-enabled-themes)))
 (matt-define-key "t r" 'matt-reload-theme)
 
-(defvar matt-default-theme 'witness)
+(defvar matt-default-theme 'xorbit)
+
+(defvar matt-secondary-theme 'gruuvem)
 
 (defun matt-load-default-theme ()
   "Load the default theme, specified by `matt-default-theme'."
   (interactive)
   (matt-load-theme matt-default-theme))
 (matt-define-key "t d" 'matt-load-default-theme)
+
+(defun matt-toggle-theme ()
+  "Toggle between default and secondary themes."
+  (interactive)
+  (matt-load-theme
+   (if (eq matt-secondary-theme (car custom-enabled-themes))
+       matt-default-theme
+     matt-secondary-theme)))
+(matt-define-key "t t" 'matt-toggle-theme)
 
 ;; font
 (defun matt-font-size (&optional sz)
