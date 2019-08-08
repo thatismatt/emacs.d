@@ -284,35 +284,24 @@
 (ido-everywhere 1)
 (flx-ido-mode 1)
 
-(require 'ibuffer)
-(require 'ibuffer-vc)
-(setq ibuffer-default-sorting-mode 'filename/process) ;; groups file buffers together
-(setq ibuffer-show-empty-filter-groups nil)
-(add-hook 'ibuffer-hook 'ibuffer-vc-set-filter-groups-by-vc-root)
-(setq ibuffer-formats
-      '((mark modified read-only " "
-              (name 52 52 :left :elide) " "
-              filename-and-process)
-        (mark modified read-only " "
-              (name 25 25 :left :elide) " "
-              (size 9 -1 :right) " "
-              (mode 16 16 :left :elide) " "
-              filename-and-process)))
-(defun ibuffer-ido-find-file (file &optional wildcards)
-  "Like `ido-find-file', but default to the directory of the buffer at point."
-  (interactive
-   (let ((default-directory
-           (let ((buf (ibuffer-current-buffer)))
-             (if (buffer-live-p buf)
-                 (with-current-buffer buf
-                   default-directory)
-               default-directory))))
-     (list (ido-read-file-name "Find file: " default-directory) t)))
-  (find-file file wildcards))
-(define-key ibuffer-mode-map "\C-x\C-f" 'ibuffer-ido-find-file)
-(define-key ibuffer-name-map [(mouse-1)] 'ibuffer-mouse-visit-buffer)
-(define-key ibuffer-name-map [(mouse-2)] 'ibuffer-mouse-toggle-mark)
-(global-set-key (kbd "C-x C-b") 'ibuffer)
+(use-package ibuffer
+  :init
+  (setq ibuffer-default-sorting-mode 'filename/process) ;; groups file buffers together
+  (setq ibuffer-show-empty-filter-groups nil)
+  (setq ibuffer-formats
+        '((mark modified read-only " "
+                (name 52 52 :left :elide) " "
+                filename-and-process)
+          (mark modified read-only " "
+                (name 25 25 :left :elide) " "
+                (size 9 -1 :right) " "
+                (mode 16 16 :left :elide) " "
+                filename-and-process)))
+  :config
+  (use-package ibuffer-vc
+    :init
+    (add-hook 'ibuffer-hook 'ibuffer-vc-set-filter-groups-by-vc-root))
+  :bind ("C-x C-b" . ibuffer))
 
 (use-package eshell
   :init
