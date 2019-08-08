@@ -402,14 +402,16 @@
   (sp-use-smartparens-bindings)
   (setq sp-highlight-pair-overlay nil))
 
-(require 'company)
-(setq company-idle-delay 0.1)
-(setq company-tooltip-limit 10)
-(setq company-minimum-prefix-length 2)
-(setq company-tooltip-flip-when-above t)
-(global-company-mode 1)
-(setq company-dabbrev-downcase nil)
-(setq company-dabbrev-ignore-case 't)
+(use-package company
+  :ensure t
+  :init
+  (setq company-idle-delay 0.1)
+  (setq company-tooltip-limit 10)
+  (setq company-minimum-prefix-length 2)
+  (setq company-tooltip-flip-when-above t)
+  (setq company-dabbrev-downcase nil)
+  (setq company-dabbrev-ignore-case 't)
+  (global-company-mode 1))
 
 (use-package rainbow-mode
   :ensure t
