@@ -416,7 +416,7 @@
   :init
   (setq rainbow-html-colors nil)
   (setq rainbow-x-colors nil)
-  :hook (emacs-lisp-mode-hook css-mode-hook))
+  :hook (emacs-lisp-mode css-mode))
 
 (use-package grep
   :config
