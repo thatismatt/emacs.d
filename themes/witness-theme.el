@@ -92,7 +92,6 @@
    `(header-line ((t (:foreground ,*highlight-1*))))
    `(highlight ((t (:background ,*highlight-1* :foreground ,*background*))))
    `(italic ((t (:foreground ,*grey-9* :slant italic))))
-   `(hl-line ((t (:weight bold :inherit nil))))
    `(info-xref ((t (:foreground ,*link* :underline t))))
    `(region ((t (:background ,*visual-selection* :foreground nil))))
    `(secondary-selection ((t (:background ,*visual-selection-2*))))
