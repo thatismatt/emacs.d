@@ -479,7 +479,7 @@
 (require 'org-clock)
 (defface org-todo-face '((t (:inherit org-todo))) "org mode face for TODO items")
 (defface org-done-face '((t (:inherit org-done))) "org mode face for DONE items")
-(defface org-doing-face '((t (:inherit org-done))) "org mode face for DOING items")
+(defface org-doing-face '((t (:inherit org-todo))) "org mode face for DOING items")
 (defface org-postponed-face '((t (:inherit org-done))) "org mode face for POSTPONED items")
 (defface org-query-face '((t (:inherit org-todo))) "org mode face for ??? (query) items")
 (setq org-todo-keywords '((sequence "TODO" "DOING" "DONE") (sequence "BLOCKED") (sequence "POSTPONED") (sequence "???" "DONE")))
