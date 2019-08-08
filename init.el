@@ -907,11 +907,6 @@
   (interactive)
   (matt-change-at-point '1-))
 
-(defun matt-tmux-yank ()
-  (interactive)
-  (insert (shell-command-to-string "tmux showb")))
-(matt-define-key "t y" 'matt-tmux-yank)
-
 (defun matt-kill-emacs ()
   (interactive)
   (if (y-or-n-p "Kill Emacs?")
