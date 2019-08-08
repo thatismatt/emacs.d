@@ -433,9 +433,10 @@
               (("g g" . ag)
                ("g p" . ag-project))))
 
+(use-package idle-highlight-mode
+  :ensure t
+  :hook (prog-mode))
 
-(require 'idle-highlight-mode)
-(add-hook 'prog-mode-hook 'idle-highlight-mode)
 
 (use-package projectile
   :ensure t
