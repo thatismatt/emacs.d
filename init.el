@@ -382,7 +382,9 @@
 
 (use-package display-line-numbers
   :init
-  (global-display-line-numbers-mode))
+  (global-display-line-numbers-mode)
+  :config
+  (setq display-line-numbers-width-start t))
 
 (use-package undo-tree
   :ensure t
