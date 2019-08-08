@@ -459,18 +459,21 @@
 (setf (nth 1 magit-log-margin) "%a %d %b %R")
 ;; (setf (nth 1 magit-log-margin) 'age) ;; the default
 ;; (setf (nth 1 magit-log-margin) 'age-abbreviated) ;; an alternative
+(use-package diff-hl
+  :init
+  (global-diff-hl-mode 1)
+  :bind ("C-c g" . diff-hl-command-map))
 
-(require 'diff-hl)
-(global-diff-hl-mode 1)
-(global-set-key (kbd "C-c g") diff-hl-command-map)
+(use-package ediff
+  :init
+  (setq ediff-window-setup-function 'ediff-setup-windows-plain) ;; don't start another frame
+  (setq ediff-split-window-function 'split-window-horizontally))
 
-(require 'ediff)
-(setq ediff-window-setup-function 'ediff-setup-windows-plain) ;; don't start another frame
-(setq ediff-split-window-function 'split-window-horizontally)
-
-(require 'calendar)
-(add-hook 'calendar-today-visible-hook 'calendar-mark-today)
-(matt-define-key "o c" 'calendar)
+(use-package calendar
+  :init
+  (add-hook 'calendar-today-visible-hook 'calendar-mark-today)
+  :bind (:map matt-keymap
+              ("o c" . calendar)))
 
 (require 'org)
 (require 'org-clock)
