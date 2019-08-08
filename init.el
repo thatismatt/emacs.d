@@ -561,8 +561,10 @@
   :mode (("\\.json\\'" . js-mode)
          ("\\.cfn\\'" . js-mode))) ;; cloud formation
 
-(require 'css-mode)
-(setq css-indent-offset 2)
+(use-package css-mode
+  :ensure t
+  :config
+  (setq css-indent-offset 2))
 
 (require 'cc-mode)
 (add-hook 'java-mode-hook '(lambda () (c-set-offset 'arglist-intro '+)))
