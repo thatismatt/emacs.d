@@ -542,15 +542,18 @@
 (matt-define-key "l l" 'org-store-link)
 (matt-define-key "l t" 'org-toggle-link-display)
 
-(require 'markdown-mode)
-(define-key markdown-mode-map (kbd "M-<left>") nil)
-(define-key markdown-mode-map (kbd "M-<right>") nil)
 (use-package rainbow-delimiters
   :ensure t
   :hook ((emacs-lisp-mode lisp-mode clojure-mode cider-repl-mode) . rainbow-delimiters-mode-enable))
 
 (require 'lisp-mode)
 (add-hook 'emacs-lisp-mode-hook 'elisp-slime-nav-mode)
+
+(use-package markdown-mode
+  :ensure t
+  :bind (:map markdown-mode-map
+              ("M-<left>" . nil)
+              ("M-<right>" . nil)))
 
 (require 'js)
 (add-to-list 'auto-mode-alist '("\\.json\\'" . js-mode))
