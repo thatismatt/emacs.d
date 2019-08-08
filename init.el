@@ -427,6 +427,10 @@
               ("m m" . mc/mark-more-like-this-extended)
               ("m r" . mc/edit-lines)))
 
+(use-package move-text
+  :ensure t
+  :bind (("C-S-<up>" . move-text-up)
+         ("C-S-<down>" . move-text-down)))
 
 (use-package projectile
   :ensure t
@@ -438,10 +442,6 @@
          (:map matt-keymap
                ("p b" . projectile-switch-to-buffer)
                ("p t" . projectile-toggle-between-implementation-and-test))))
-
-(require 'move-text)
-(global-set-key (kbd "C-S-<up>") 'move-text-up)
-(global-set-key (kbd "C-S-<down>") 'move-text-down)
 
 (require 'magit)
 (setq magit-status-buffer-switch-function 'switch-to-buffer)
