@@ -358,16 +358,17 @@
   (find-file file))
 (global-set-key (kbd "C-x f") 'matt-recentf-ido-find-file)
 
-(require 'bookmark)
-(matt-define-key "b m" 'bookmark-set)
-(matt-define-key "b j" 'bookmark-jump)
-(matt-define-key "b l" 'bookmark-bmenu-list)
 
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'forward)
 (setq uniquify-separator "/")
 (setq uniquify-after-kill-buffer-p t) ;; rename after killing uniquified
 (setq uniquify-ignore-buffers-re "^\\*") ;; don't muck with special buffers
+(use-package bookmark
+  :bind (:map matt-keymap
+              ("b m" . bookmark-set)
+              ("b j" . bookmark-jump)
+              ("b l" . bookmark-bmenu-list)))
 
 (use-package display-line-numbers
   :init
