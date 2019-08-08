@@ -433,8 +433,6 @@
               (("g g" . ag)
                ("g p" . ag-project))))
 
-(require 'flyspell)
-(define-key flyspell-mode-map (kbd "C-,") nil)
 
 (require 'idle-highlight-mode)
 (add-hook 'prog-mode-hook 'idle-highlight-mode)
