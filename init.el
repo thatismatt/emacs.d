@@ -555,9 +555,11 @@
               ("M-<left>" . nil)
               ("M-<right>" . nil)))
 
-(require 'js)
-(add-to-list 'auto-mode-alist '("\\.json\\'" . js-mode))
-(add-to-list 'auto-mode-alist '("\\.cfn\\'" . js-mode)) ;; cloud formation
+(use-package js
+  :init
+  (setq js-indent-level 2)
+  :mode (("\\.json\\'" . js-mode)
+         ("\\.cfn\\'" . js-mode))) ;; cloud formation
 
 (require 'css-mode)
 (setq css-indent-offset 2)
