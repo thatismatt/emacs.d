@@ -39,7 +39,7 @@
 ;; keys
 (setq matt-keymap (make-sparse-keymap))
 (global-set-key (kbd "C-,") matt-keymap)
-(global-set-key (kbd "C-x ,") matt-keymap) ;; C-, doesn't work in terminal
+(global-set-key (kbd "M-m") matt-keymap) ;; C-, doesn't work in terminal
 (defun matt-define-key (key def)
   (define-key matt-keymap (kbd key) def))
 
