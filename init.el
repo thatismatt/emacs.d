@@ -176,16 +176,16 @@
 (setq auto-save-file-name-transforms
       `((".*" ,temporary-file-directory t)))
 
-(use-package git-buffer-naming
-  :config
-  (git-buffer-naming-load))
-
 ;; enable stuff
 ;; (put 'narrow-to-region 'disabled nil)
 ;; (put 'narrow-to-page 'disabled nil)
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
 (put 'scroll-left 'disabled nil)
+
+(use-package git-buffer-naming
+  :config
+  (git-buffer-naming-load))
 
 (use-package browse-url
   :init
