@@ -96,7 +96,7 @@
    `(highlight ((t (:background ,*highlight-1* :foreground ,*background*))))
    `(italic ((t (:foreground ,*grey-9* :slant italic))))
    `(info-xref ((t (:foreground ,*link* :underline t))))
-   `(region ((t (:background ,*visual-selection* :foreground nil))))
+   `(region ((t (:background ,*visual-selection* :foreground nil :distant-foreground nil))))
    `(secondary-selection ((t (:background ,*visual-selection-2*))))
    `(underline ((t (:underline t))))
    `(success ((t (:foreground ,*green*))))
@@ -244,8 +244,10 @@
    `(helm-source-header ((t (:height 1.2 :foreground ,*background* :background ,*highlight-1*))))
    `(helm-candidate-number ((t (:foreground ,*purple-1*))))
    `(helm-candidate-number-suspended ((t (:foreground ,*purple-2*))))
+   `(helm-visible-mark ((t (:foreground ,*background* :background ,*highlight-4*))))
    `(helm-buffer-size ((t (:foreground ,*comments*))))
    `(helm-buffer-process ((t (:foreground ,*green-1*)))) ;; TODO: highlight-4-
+   `(helm-buffer-directory ((t (:foreground ,*highlight-2*))))
    `(helm-buffer-file ((t (:foreground ,*highlight-1*))))
    `(helm-buffer-modified ((t (:foreground ,*purple*)))) ;; TODO: highlight-1+
    `(helm-buffer-not-saved ((t (:foreground ,*warning*)))) ;; TODO: highlight-1-warning
@@ -256,6 +258,8 @@
    `(helm-ff-dotted-directory ((t (:foreground ,*comments*))))
    `(helm-ff-symlink ((t (:foreground ,*blue-1*))))
    `(helm-ff-truename ((t (:foreground ,*green*))))
+   `(helm-grep-match ((t (:foreground ,*highlight-1*))))
+   `(helm-grep-lineno ((t (:foreground ,*highlight-3*))))
    `(helm-grep-finish ((t (:foreground ,*purple-1*))))
 
    ;; eldoc
