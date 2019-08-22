@@ -193,10 +193,10 @@
 
 (use-package helm
   :ensure t
-  ;; :init
-  ;; (setq helm-M-x-fuzzy-match t)
+  :init
+  (setq helm-buffer-max-length nil)
   :bind (("M-x" . helm-M-x)
-         ("S-<down>" . helm-mini)
+         ("S-<down>" . helm-buffers-list)
          ("C-x b" . helm-buffers-list)
          ("C-x C-f" . helm-find-files)
          ("C-x f" . helm-recentf)))
