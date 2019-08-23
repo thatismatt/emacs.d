@@ -230,8 +230,8 @@
                 (size 9 -1 :right) " "
                 (mode 16 16 :left :elide) " "
                 filename-and-process)))
-  :config
   (use-package ibuffer-vc
+    :ensure t
     :init
     (add-hook 'ibuffer-hook 'ibuffer-vc-set-filter-groups-by-vc-root))
   :bind ("C-x C-b" . ibuffer))
@@ -364,6 +364,7 @@
   :bind ("C-x g" . magit))
 
 (use-package diff-hl
+  :ensure t
   :init
   (global-diff-hl-mode 1)
   :bind ("C-c g" . diff-hl-command-map))
