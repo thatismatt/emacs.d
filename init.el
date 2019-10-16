@@ -615,9 +615,11 @@
          (ss (round (* 60 (- time ms)))))
     (format "%02d:%02d" ms ss)))
 
+(defvar matt-journal-file "~/Documents/journal.org")
+
 (defun matt-journal ()
   (interactive)
-  (find-file "~/Documents/journal.org"))
+  (find-file matt-journal-file))
 (matt-define-key "o j" 'matt-journal)
 
 (defun matt-log ()
