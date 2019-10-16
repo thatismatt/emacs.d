@@ -183,9 +183,10 @@
 (put 'downcase-region 'disabled nil)
 (put 'scroll-left 'disabled nil)
 
-(use-package git-buffer-naming
+(use-package buffer-naming
   :config
-  (git-buffer-naming-load))
+  (buffer-naming-load)
+  (buffer-naming-set-fn 'projectile-buffer-naming-generate-buffer-name))
 
 (use-package browse-url
   :init
