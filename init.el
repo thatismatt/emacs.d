@@ -827,10 +827,13 @@
 (defun matt-increment-at-point ()
   (interactive)
   (matt-change-at-point '1+))
+(matt-define-key "p +" 'matt-increment-at-point)
+(matt-define-key "p =" 'matt-increment-at-point)
 
 (defun matt-decrement-at-point ()
   (interactive)
   (matt-change-at-point '1-))
+(matt-define-key "p -" 'matt-decrement-at-point)
 
 (defun matt-kill-emacs ()
   (interactive)
