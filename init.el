@@ -437,10 +437,11 @@
 (defun matt-org-clock-report ()
   (interactive)
   (save-excursion
-    (beginning-of-buffer)
+    (goto-char (point-min))
     (search-forward "#+BEGIN: clocktable")
     (org-show-entry)
-    (org-clock-report)))
+    (org-clock-report))
+  (scroll-down))
 (matt-define-key "c i" 'matt-org-clock-in)
 (matt-define-key "c o" 'matt-org-clock-out)
 (matt-define-key "c r" 'matt-org-clock-report)
