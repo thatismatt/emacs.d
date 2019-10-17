@@ -594,7 +594,7 @@
     (define-key map "o" 'other-window)
     (define-key map "s" 'matt-swap-windows)
     (define-key map "b" 'balance-windows)
-    (set-temporary-overlay-map map t)))
+    (set-transient-map map t)))
 (matt-define-key "w a" 'matt-window-adjust)
 
 (defun matt-toggle-window-dedicated ()
@@ -688,10 +688,10 @@
 (defun matt-insert-underline (c)
   "Underline the line above with the character C."
   (interactive "cCharacter:")
-  (previous-line)
+  (forward-line -1)
   (let ((b (point))
         (e (point-at-eol)))
-    (next-line)
+    (forward-line)
     (insert (make-string (- e b) c))))
 (matt-define-key "i u" 'matt-insert-underline)
 
@@ -702,8 +702,9 @@
 
 (defun matt-open-theme ()
   (interactive)
-  (let ((theme (car custom-enabled-themes)))
-    (find-file (format "~/.emacs.d/themes/%s-theme.el" theme))))
+  (if-let ((theme (car custom-enabled-themes)))
+      (find-file (format "~/.emacs.d/themes/%s-theme.el" theme))
+    (message "No theme currently active")))
 (matt-define-key "o t" 'matt-open-theme)
 
 (defun matt-open-todo ()
@@ -818,10 +819,10 @@
 
 (defun matt-change-at-point (f)
   (skip-chars-backward "0-9")
-  (or (looking-at "[0-9]+")
-      (error "Nothing matched at point"))
-  (let ((raw (match-string 0)))
-    (replace-match (number-to-string (funcall f (string-to-number raw))))))
+  (if (looking-at "[0-9]+")
+      (let ((raw (match-string 0)))
+        (replace-match (number-to-string (funcall f (string-to-number raw)))))
+    (error "Nothing matched at point")))
 
 (defun matt-increment-at-point ()
   (interactive)
