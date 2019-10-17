@@ -205,7 +205,7 @@
 (use-package projectile
   :ensure t
   :init
-  (projectile-global-mode)
+  (projectile-mode)
   :config
   (setq projectile-svn-command "find . -type f -not -iwholename '*.svn/*' -print0") ;; see https://github.com/bbatsov/projectile/issues/520
   :bind (:map matt-keymap
@@ -214,7 +214,7 @@
 
 (use-package helm-projectile
   :ensure t
-  :bind (("C-x p" . helm-projectile-find-file)
+  :bind (("C-x p" . helm-projectile)
          (:map matt-keymap
                ("g p" . helm-projectile-grep))))
 
