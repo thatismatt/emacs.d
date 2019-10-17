@@ -7,7 +7,19 @@
 
 (setq matt-init-start-time (current-time))
 
-(setq gc-cons-threshold (* 512 1024 1024)) ;; speedup startup
+;; gc tweaks - see http://bling.github.io/blog/2016/01/18/why-are-you-changing-gc-cons-threshold/
+(setq garbage-collection-messages t)
+
+(defun matt-gc-inhibit ()
+  (setq gc-cons-threshold (* 512 1024 1024)))
+(add-hook 'minibuffer-setup-hook #'matt-gc-inhibit)
+
+(defun matt-gc-uninhibit ()
+  (setq gc-cons-threshold (* 256 1024 1024)))
+;; 128G - 3 long GC pauses over 6hr period
+(add-hook 'minibuffer-exit-hook #'matt-gc-uninhibit)
+
+(matt-gc-inhibit) ;; speedup startup
 
 (require 'package)
 
@@ -875,7 +887,7 @@
 ;; require an init-local if present
 (require 'init-local nil t)
 
-(setq gc-cons-threshold (* 64 1024 1024)) ;; reduce gc pauses
+(matt-gc-uninhibit)
 
 (setq matt-init-stop-time (current-time))
 
