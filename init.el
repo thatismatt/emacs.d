@@ -859,6 +859,10 @@
     (chmod filename
            (file-modes-symbolic-to-number "+x" (file-modes filename)))))
 
+(defun matt-clear-text-properties (begin end)
+  (interactive "r")
+  (set-text-properties begin end nil))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; keys
 
