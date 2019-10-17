@@ -9,7 +9,6 @@
 
 (setq gc-cons-threshold (* 512 1024 1024)) ;; speedup startup
 
-(require 'cl)
 (require 'package)
 
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
