@@ -355,6 +355,23 @@
   :bind (("C-S-<up>" . move-text-up)
          ("C-S-<down>" . move-text-down)))
 
+(use-package string-inflection
+  :ensure t
+  :config
+  (defun string-inflection-snake-kebab-function (str)
+    "foo_bar => foo-bar"
+    (if (string-inflection-kebab-case-p str)
+        (string-inflection-underscore-function str)
+      (string-inflection-kebab-case-function str)))
+  (defun string-inflection-snake-kebab ()
+    "foo_bar => foo-bar"
+    (interactive)
+    (string-inflection-insert
+     (string-inflection-snake-kebab-function (string-inflection-get-current-word))))
+  :bind (:map matt-keymap
+              ("-" . string-inflection-snake-kebab)
+              ("M--" . string-inflection-all-cycle)))
+
 (use-package magit
   :ensure t
   :init
