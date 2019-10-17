@@ -190,13 +190,16 @@
 
 (use-package helm
   :ensure t
-  :init
+  :config
+  (helm-mode 1) ;; ensure helm sub packages are loaded (e.g. helm-buffers)
   (setq helm-buffer-max-length nil)
   :bind (("M-x" . helm-M-x)
          ("S-<down>" . helm-buffers-list)
          ("C-x b" . helm-buffers-list)
          ("C-x C-f" . helm-find-files)
-         ("C-x f" . helm-recentf)))
+         ("C-x f" . helm-recentf)
+         (:map helm-map
+               ("C-t" . helm-toggle-full-frame))))
 
 (use-package projectile
   :ensure t
