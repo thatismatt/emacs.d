@@ -517,6 +517,10 @@
   (setq cider-repl-history-size 1000)
   (setq cider-repl-history-file (expand-file-name ".cider-repl-history" user-emacs-directory)))
 
+(use-package sql
+  :init
+  (setq sql-input-ring-file-name (expand-file-name ".sql-history" user-emacs-directory)))
+
 (require 'fennel-mode)
 (defun matt-fennel-init ()
   (setq inferior-lisp-program
