@@ -1,2 +1,3 @@
 alias l ls -la $*
+alias c clear :scrollback
 alias e find-file $1
