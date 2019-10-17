@@ -233,6 +233,7 @@
    `(eshell-ls-executable ((t (:foreground ,*green*))))
    `(eshell-ls-readonly ((t (:foreground ,*red*))))
    `(eshell-ls-missing ((t (:foreground ,*red*))))
+   `(eshell-ls-backup ((t (:foreground ,*highlight-3*))))
 
    ;; shell
    `(sh-heredoc ((t (:foreground ,*green*))))
