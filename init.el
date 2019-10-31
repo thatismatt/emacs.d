@@ -185,11 +185,11 @@
       `((".*" ,temporary-file-directory t)))
 
 ;; enable stuff
-;; (put 'narrow-to-region 'disabled nil)
-;; (put 'narrow-to-page 'disabled nil)
-(put 'upcase-region 'disabled nil)
-(put 'downcase-region 'disabled nil)
-(put 'scroll-left 'disabled nil)
+(put 'upcase-region    'disabled nil)
+(put 'downcase-region  'disabled nil)
+(put 'scroll-left      'disabled nil)
+(put 'narrow-to-page   'disabled nil)
+(put 'narrow-to-region 'disabled nil)
 
 (use-package buffer-naming
   :config
