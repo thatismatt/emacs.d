@@ -20,7 +20,7 @@
 
 (defvar buffer-naming-separator " | ")
 
-(defun git-buffer-naming-generate-buffer-name (filename)
+(defun git-buffer-naming-fn (filename)
   (when-let* ((project-path      (and filename (vc-git-root filename)))
               (parts             (split-string project-path "/" 'omit-nulls))
               (project-name      (car (last parts)))
@@ -31,7 +31,7 @@
               (new-buffer-name   (string-join buffer-name-parts buffer-naming-separator)))
     new-buffer-name))
 
-(defun projectile-buffer-naming-generate-buffer-name (filename)
+(defun projectile-buffer-naming-fn (filename)
   (when-let* ((project-path      (and filename (projectile-project-root filename)))
               (parts             (split-string project-path "/" 'omit-nulls))
               (project-name      (car (last parts)))
@@ -42,11 +42,11 @@
               (new-buffer-name   (string-join buffer-name-parts buffer-naming-separator)))
     new-buffer-name))
 
-(defvar buffer-naming-generate-buffer-name-fn 'identity)
+(defvar buffer-naming-fn 'identity)
 
 (defun buffer-naming-rename-buffer (buffer filename)
-  "Rename a buffer as per `buffer-naming-generate-buffer-name-fn'."
-  (when-let* ((new-buffer-name (funcall buffer-naming-generate-buffer-name-fn filename)))
+  "Rename a buffer as per `buffer-naming-fn'."
+  (when-let* ((new-buffer-name (funcall buffer-naming-fn filename)))
     (with-current-buffer buffer (rename-buffer new-buffer-name)))
   buffer)
 
@@ -74,7 +74,7 @@
   (advice-remove 'create-file-buffer #'buffer-naming-create-file-buffer-advice))
 
 (defun buffer-naming-set-fn (fn)
-  (setq buffer-naming-generate-buffer-name-fn fn)
+  (setq buffer-naming-fn fn)
   (buffer-naming-rename-all-buffers))
 
 (provide 'buffer-naming)

@@ -194,7 +194,7 @@
 (use-package buffer-naming
   :config
   (buffer-naming-load)
-  (buffer-naming-set-fn 'projectile-buffer-naming-generate-buffer-name))
+  (buffer-naming-set-fn 'projectile-buffer-naming-fn))
 
 (use-package browse-url
   :init
