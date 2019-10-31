@@ -316,7 +316,8 @@
   :init
   (global-display-line-numbers-mode)
   :config
-  (setq display-line-numbers-width-start t))
+  (setq display-line-numbers-width-start t)
+  (setq display-line-numbers-widen t))
 
 (use-package undo-tree
   :ensure t
