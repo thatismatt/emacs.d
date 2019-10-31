@@ -202,9 +202,16 @@
 
 (use-package helm
   :ensure t
+  :init
+  (use-package helm-buffers
+    :config
+    (setq helm-buffer-max-length nil)
+    (setq helm-boring-buffer-regexp-list
+          (append helm-boring-buffer-regexp-list
+                  '("\\`\\*Help\\*\\'" "\\`\\*Backtrace\\*\\'" "\\`\\*info\\*\\'" "\\`\\*Ibuffer\\*\\'"
+                    "\\`\\*nrepl-server" "\\`\\*Alarm List\\*\\'" "\\`magit-"))))
   :config
-  (helm-mode 1) ;; ensure helm sub packages are loaded (e.g. helm-buffers)
-  (setq helm-buffer-max-length nil)
+  (helm-mode 1)
   :bind (("M-x" . helm-M-x)
          ("S-<down>" . helm-buffers-list)
          ("C-x b" . helm-buffers-list)
@@ -223,11 +230,16 @@
               ("p b" . projectile-switch-to-buffer)
               ("p t" . projectile-toggle-between-implementation-and-test)))
 
+(use-package helm-ag
+  :ensure t
+  :init
+  (setq helm-ag-insert-at-point 'symbol))
+
 (use-package helm-projectile
   :ensure t
   :bind (("C-x p" . helm-projectile)
          (:map matt-keymap
-               ("g p" . helm-projectile-grep))))
+               ("g p" . helm-projectile-ag))))
 
 (use-package ibuffer
   :init
