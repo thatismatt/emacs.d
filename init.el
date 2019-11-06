@@ -203,8 +203,9 @@
   :ensure t
   :init
   (use-package helm-buffers
-    :config
+    :init
     (setq helm-buffer-max-length nil)
+    :config
     (setq helm-boring-buffer-regexp-list
           (append helm-boring-buffer-regexp-list
                   '("\\`\\*Help\\*\\'" "\\`\\*Backtrace\\*\\'" "\\`\\*info\\*\\'" "\\`\\*Ibuffer\\*\\'"
