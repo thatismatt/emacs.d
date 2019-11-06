@@ -590,6 +590,30 @@
 (global-set-key (kbd "S-<left>") 'previous-buffer)
 (global-set-key (kbd "S-<up>") 'matt-mru-buffer)
 
+(defun matt-disposable-buffer-p (buf)
+  (string-match-p
+   (rx (and bos
+            (or "*Messages*" "*info*" "*Help*" "*Backtrace*" "*Warnings*"
+                "*Shell Command Output*" "*helm" "*vc*" "magit"
+                "*ag search" "*cider-error*" "*cider-test-report*")))
+   (buffer-name buf)))
+
+(defun matt-persistent-buffer-p (buf)
+  (eq 'org-mode
+      (with-current-buffer buf
+        major-mode)))
+
+(defun matt-clean-buffers ()
+  (interactive)
+  (thread-last (buffer-list)
+    (seq-filter (lambda (buf)
+                  (or (matt-disposable-buffer-p buf)
+                      (and (not (matt-persistent-buffer-p buf))
+                           (buffer-file-name buf)
+                           (not (buffer-modified-p buf))))))
+    (seq-do 'kill-buffer)))
+(matt-define-key "k" 'matt-clean-buffers)
+
 (defun matt-swap-windows ()
   "Swap the buffers in `selected-window' and `next-window'."
   (interactive)
@@ -797,7 +821,7 @@
                  (kill-buffer (current-buffer))
                  (message "%s deleted." filename))
         (message "%s not deleted." filename)))))
-(matt-define-key "k" 'matt-delete-file-and-buffer)
+(matt-define-key "C-k" 'matt-delete-file-and-buffer)
 
 (defun matt-indent-buffer ()
   (interactive)
