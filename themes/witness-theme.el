@@ -190,7 +190,11 @@
    `(magit-diff-removed-highlight ((t (:foreground ,*red* :background ,*background*))))
    `(magit-diff-added-highlight ((t (:foreground ,*green* :background ,*background*))))
    `(magit-diff-file-heading-selection ((t (:foreground ,*highlight-2*))))
+   ;; (magit-diff-hunk-heading-selection ((t (:foreground ,*highlight-2*))))
+   ;; (magit-diff-hunk-heading-highlight ((t (:foreground ,*highlight-1*))))
+   ;; (magit-diff-hunk-region ((t (:foreground ,*highlight-3*))))
    `(magit-diff-lines-heading ((t (:foreground ,*background* :background ,*highlight-2*))))
+   ;; magit-diff-lines-boundary
    `(magit-branch-local ((t (:foreground ,*highlight-1*))))
    `(magit-branch-remote ((t (:foreground ,*highlight-2*))))
    `(magit-tag ((t (:foreground ,*highlight-4* :background nil :box t))))
@@ -262,9 +266,30 @@
    `(helm-grep-match ((t (:foreground ,*highlight-1*))))
    `(helm-grep-lineno ((t (:foreground ,*highlight-3*))))
    `(helm-grep-finish ((t (:foreground ,*purple-1*))))
+   `(helm-match ((t (:foreground ,*highlight-3*))))
+   `(helm-moccur-buffer ((t (:foreground ,*highlight-2*))))
 
    ;; eldoc
    `(eldoc-highlight-function-argument ((t (:foreground ,*pink*))))
+
+   ;; company
+   ;; company-echo
+   ;; company-echo-common
+   `(company-preview ((t (:background ,*highlight-bg*))))
+   `(company-preview-common ((t (:inherit company-preview :foreground ,*pink*))))
+   ;; company-preview-search
+   `(company-scrollbar-bg ((t (:background ,*grey-4*))))
+   `(company-scrollbar-fg ((t (:background ,*grey-6*))))
+   ;; company-template-field
+   `(company-tooltip ((t (:foreground ,*normal* :background ,*background-1*))))
+   `(company-tooltip-annotation ((t (:foreground ,*green-2*))))
+   ;; company-tooltip-annotation-selection
+   `(company-tooltip-common ((t (:foreground ,*pink*))))
+   ;; company-tooltip-common-selection
+   ;; company-tooltip-mouse
+   ;; company-tooltip-search
+   ;; company-tooltip-search-selection
+   `(company-tooltip-selection ((t (:background ,*highlight-bg*))))
 
    ;; cider
    `(cider-test-failure-face ((t (:foreground ,*grey-1* :background ,*red-1*))))

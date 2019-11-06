@@ -163,6 +163,12 @@
    `(diff-refine-added ((t (:background ,*green-1*))))
    `(diff-refine-removed ((t (:background ,*red-1*))))
 
+   ;; TODO: smerge
+   ;; `(smerge-refined-added ((t (:background ,*green-1*))))
+   ;; `(smerge-refined-removed ((t (:background ,*red-1*))))
+   ;; `(smerge-upper ((t (:background ,*red-2*))))
+   ;; `(smerge-lower ((t (:background ,*green-3*))))
+
    ;; ediff
    `(ediff-even-diff-A ((t (:foreground ,*grey-8* :background ,*visual-selection-2*))))
    `(ediff-odd-diff-A ((t (:foreground ,*grey-a* :background ,*visual-selection-2*))))
@@ -177,7 +183,11 @@
    `(magit-diff-removed-highlight ((t (:foreground ,*red* :background ,*background*))))
    `(magit-diff-added-highlight ((t (:foreground ,*green* :background ,*background*))))
    `(magit-diff-file-heading-selection ((t (:foreground ,*highlight-2*))))
+   ;; (magit-diff-hunk-heading-selection ((t (:foreground ,*highlight-2*))))
+   ;; (magit-diff-hunk-heading-highlight ((t (:foreground ,*highlight-1*))))
+   ;; (magit-diff-hunk-region ((t (:foreground ,*highlight-3*))))
    `(magit-diff-lines-heading ((t (:foreground ,*background* :background ,*highlight-2*))))
+   ;; magit-diff-lines-boundary
    `(magit-branch-local ((t (:foreground ,*highlight-1*))))
    `(magit-branch-remote ((t (:foreground ,*highlight-2*))))
    `(magit-tag ((t (:foreground ,*highlight-4* :background nil :box t))))
