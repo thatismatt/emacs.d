@@ -264,12 +264,12 @@
   :init
   (add-hook 'eshell-first-time-mode-hook ;; can't use `:bind' because `eshell-mode-map' is buffer local
             (lambda ()
-              (define-key eshell-mode-map [up] 'previous-line)
-              (define-key eshell-mode-map [down] 'next-line)
-              (define-key eshell-mode-map [C-up] 'eshell-previous-matching-input-from-input)
-              (define-key eshell-mode-map [C-down] 'eshell-next-matching-input-from-input)
-              (define-key eshell-mode-map [M-up] 'eshell-previous-input)
-              (define-key eshell-mode-map [M-down] 'eshell-next-input)
+              (define-key eshell-hist-mode-map [up] 'previous-line)
+              (define-key eshell-hist-mode-map [down] 'next-line)
+              (define-key eshell-hist-mode-map [C-up] 'eshell-previous-matching-input-from-input)
+              (define-key eshell-hist-mode-map [C-down] 'eshell-next-matching-input-from-input)
+              (define-key eshell-hist-mode-map [M-up] 'eshell-previous-input)
+              (define-key eshell-hist-mode-map [M-down] 'eshell-next-input)
               (define-key eshell-mode-map [home] 'eshell-bol)))
   :config
   (setq eshell-hist-ignoredups t)
