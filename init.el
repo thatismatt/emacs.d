@@ -54,7 +54,7 @@
 
 ;; themes
 (setq custom-theme-load-path
-      (cons "~/.emacs.d/themes/" custom-theme-load-path))
+      (cons (expand-file-name "themes/" user-emacs-directory) custom-theme-load-path))
 
 (defun matt-disable-current-theme ()
   (interactive)
@@ -746,13 +746,13 @@
 
 (defun matt-open-init ()
   (interactive)
-  (find-file "~/.emacs.d/init.el"))
+  (find-file (expand-file-name "init.el" user-emacs-directory)))
 (matt-define-key "o i" 'matt-open-init)
 
 (defun matt-open-theme ()
   (interactive)
   (if-let ((theme (car custom-enabled-themes)))
-      (find-file (format "~/.emacs.d/themes/%s-theme.el" theme))
+      (find-file (expand-file-name (format "themes/%s-theme.el" theme) user-emacs-directory))
     (message "No theme currently active")))
 (matt-define-key "o t" 'matt-open-theme)
 
