@@ -15,8 +15,7 @@
 (add-hook 'minibuffer-setup-hook #'matt-gc-inhibit)
 
 (defun matt-gc-uninhibit ()
-  (setq gc-cons-threshold (* 256 1024 1024)))
-;; 128G - 3 long GC pauses over 6hr period
+  (setq gc-cons-threshold (* 16 1024 1024)))
 (add-hook 'minibuffer-exit-hook #'matt-gc-uninhibit)
 
 (matt-gc-inhibit) ;; speedup startup
