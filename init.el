@@ -715,7 +715,6 @@
   (interactive)
   (just-one-space -1))
 (global-set-key (kbd "M-SPC") 'matt-just-one-space-multiline)
-(matt-define-key "j j" 'matt-just-one-space-multiline)
 
 (defun matt-kill-whitespace ()
   "Kill the whitespace between two non-whitespace characters"
