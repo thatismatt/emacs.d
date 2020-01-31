@@ -529,6 +529,11 @@
 (matt-define-key "l l" 'org-store-link)
 (matt-define-key "l t" 'org-toggle-link-display)
 
+(use-package org-bullets
+  :ensure t
+  :init (setq org-bullets-bullet-list '("●" "○" "✸" "✿"))
+  :hook (org-mode . org-bullets-mode))
+
 (use-package rainbow-delimiters
   :ensure t
   :hook ((emacs-lisp-mode lisp-mode clojure-mode cider-repl-mode) . rainbow-delimiters-mode-enable))
