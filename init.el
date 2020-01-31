@@ -492,7 +492,6 @@
 (define-key org-mode-map (kbd "M-<right>") nil)
 (define-key org-mode-map (kbd "C-<left>") nil)
 (define-key org-mode-map (kbd "C-<right>") nil)
-(define-key org-mode-map (kbd "C-,") nil)
 (defun matt-org-insert-timestamp ()
   (interactive)
   (org-insert-time-stamp (org-current-time 0) 'with-hm 'inactive))
