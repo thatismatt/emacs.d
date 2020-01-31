@@ -214,7 +214,9 @@
 
 (use-package browse-url
   :init
-  (setq browse-url-browser-function 'browse-url-chrome))
+  (setq browse-url-browser-function 'browse-url-chrome)
+  :bind (:map matt-keymap
+              ("o u" . browse-url)))
 
 (use-package helm
   :ensure t
