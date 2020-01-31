@@ -915,6 +915,19 @@
   (interactive "r")
   (set-text-properties begin end nil))
 
+(defun matt-recenter-region (begin end)
+  "Center region in the display."
+  (interactive "r")
+  (save-excursion
+    (goto-char (/ (+ begin end) 2))
+    (recenter nil t)))
+(defun matt-recenter-region-top-bottom (&optional begin end)
+  "If the region's active center on that, otherwise behave like `recenter-top-bottom'."
+  (interactive (if (use-region-p) (list (region-beginning) (region-end))))
+  (if (use-region-p)
+      (matt-recenter-region begin end)
+    (call-interactively 'recenter-top-bottom)))
+(global-set-key (kbd "C-l") 'matt-recenter-region-top-bottom)
 
 (when (or (display-graphic-p)
           (daemonp))
