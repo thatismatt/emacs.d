@@ -237,7 +237,10 @@
          ("C-x C-f" . helm-find-files)
          ("C-x f" . helm-recentf)
          (:map helm-map
-               ("C-t" . helm-toggle-full-frame))))
+               ("C-t" . helm-toggle-full-frame))
+         (:map matt-keymap
+               ("g g" . helm-ag)
+               ("h r" . helm-resume))))
 
 (use-package projectile
   :ensure t
@@ -245,20 +248,23 @@
   (projectile-mode)
   :config
   (setq projectile-svn-command "find . -type f -not -iwholename '*.svn/*' -print0") ;; see https://github.com/bbatsov/projectile/issues/520
-  :bind (:map matt-keymap
-              ("p b" . projectile-switch-to-buffer)
-              ("p t" . projectile-toggle-between-implementation-and-test)))
+  (defun matt-projectile-find-scratch ()
+    (interactive)
+    (let ((scratch-file (expand-file-name "dev/scratch.clj" (projectile-project-root))))
+      (if (file-exists-p scratch-file)
+          (find-file scratch-file)
+        (message "No scratch file found"))))
+  (setq projectile-completion-system 'helm)
+  :bind (("C-x p" . projectile-find-file)
+         (:map matt-keymap
+               ("p b" . projectile-switch-to-buffer)
+               ("p t" . projectile-toggle-between-implementation-and-test)
+               ("p s" . matt-projectile-find-scratch))))
 
 (use-package helm-ag
   :ensure t
   :init
   (setq helm-ag-insert-at-point 'symbol))
-
-(use-package helm-projectile
-  :ensure t
-  :bind (("C-x p" . helm-projectile)
-         (:map matt-keymap
-               ("g p" . helm-projectile-ag))))
 
 (use-package ibuffer
   :init
@@ -380,9 +386,7 @@
 (use-package ag
   :ensure t
   :config
-  (setq ag-highlight-search t)
-  :bind (:map matt-keymap
-              ("g g" . ag)))
+  (setq ag-highlight-search t))
 
 (use-package idle-highlight-mode
   :ensure t
