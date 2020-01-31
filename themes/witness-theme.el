@@ -167,8 +167,8 @@
    `(diff-file-header ((t (:background ,*visual-selection-1*))))
    `(diff-added ((t (:foreground ,*green* :background nil))))
    `(diff-removed ((t (:foreground ,*red* :background nil))))
-   `(diff-refine-added ((t (:background ,*green-1*))))
-   `(diff-refine-removed ((t (:background ,*red-1*))))
+   `(diff-refine-added ((t (:background ,*green-3*))))
+   `(diff-refine-removed ((t (:background ,*red-2*))))
 
    ;; smerge
    `(smerge-refined-added ((t (:background ,*green-1*))))
@@ -226,6 +226,7 @@
    `(org-block ((t (:foreground nil))))
    `(org-priority ((t (:foreground ,*yellow*))))
    `(org-meta-line ((t (:foreground ,*grey-4*))))
+   `(org-drawer ((t (:foreground ,*grey-4*))))
 
    ;; calendar
    `(calendar-today ((t (:foreground ,*green* :background nil :box t))))
