@@ -636,12 +636,18 @@
 (global-set-key (kbd "S-<up>") 'matt-mru-buffer)
 
 (defun matt-disposable-buffer-p (buf)
-  (string-match-p
-   (rx (and bos
-            (or "*Messages*" "*info*" "*Help*" "*Backtrace*" "*Warnings*"
-                "*Shell Command Output*" "*helm" "*vc*" "magit"
-                "*ag search" "*cider-error*" "*cider-test-report*")))
-   (buffer-name buf)))
+  (and (null (get-buffer-process buf)) ;; ref. cider repl buffer
+       (string-match-p
+        (rx (and bos
+                 (or "*Messages*" "*info*" "*Help*" "*Backtrace*" "*Warnings*" "*Compile-Log*"
+                     "*Shell Command Output*" "*vc*" "*vc-" "*Man " "*Calendar*" "magit"
+                     "*ag search" "*helm" "*Alarm*" "*Alarm List*" "*cider-")))
+        (buffer-name buf))))
+
+(defun matt-disposable-major-mode-p (buf)
+  (eq 'dired-mode
+      (with-current-buffer buf
+        major-mode)))
 
 (defun matt-persistent-buffer-p (buf)
   (eq 'org-mode
@@ -653,6 +659,7 @@
   (thread-last (buffer-list)
     (seq-filter (lambda (buf)
                   (or (matt-disposable-buffer-p buf)
+                      (matt-disposable-major-mode-p buf)
                       (and (not (matt-persistent-buffer-p buf))
                            (buffer-file-name buf)
                            (not (buffer-modified-p buf))))))
