@@ -520,10 +520,8 @@
 (defun matt-org-clock-report ()
   (interactive)
   (save-excursion
-    (goto-char (point-min))
-    (search-forward "#+BEGIN: clocktable")
-    (org-show-entry)
-    (org-clock-report))
+    (org-clock-report t))
+  ;; scroll to the clock report at the top of the page
   (scroll-down))
 (matt-define-key "c i" 'matt-org-clock-in)
 (matt-define-key "c o" 'matt-org-clock-out)
