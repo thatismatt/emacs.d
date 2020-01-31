@@ -164,6 +164,7 @@
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 4)
 (setq-default fill-column 100)
+(setq-default display-fill-column-indicator-character ?\u2506)
 (global-auto-revert-mode t)
 (fset 'yes-or-no-p 'y-or-n-p)
 (delete-selection-mode t) ;; delete the selection with a keypress
@@ -185,6 +186,7 @@
 (matt-define-key "w b"                'balance-windows)
 (matt-define-key "w l"                'toggle-truncate-lines) ;; mnemonic "wrap lines"
 (matt-define-key "w w"                'toggle-word-wrap)
+(matt-define-key "w v"                'display-fill-column-indicator-mode)
 
 (define-key isearch-mode-map (kbd "C-.") 'isearch-forward-symbol-at-point)
 
