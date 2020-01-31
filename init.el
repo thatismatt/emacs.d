@@ -694,6 +694,9 @@
     (define-key map "o" 'other-window)
     (define-key map "s" 'matt-swap-windows)
     (define-key map "b" 'balance-windows)
+    (define-key map "1" 'delete-other-windows)
+    (define-key map "2" 'split-window-below)
+    (define-key map "3" 'split-window-right)
     (set-transient-map map t)))
 (matt-define-key "w a" 'matt-window-adjust)
 
