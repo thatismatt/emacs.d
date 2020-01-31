@@ -974,6 +974,10 @@
     (call-interactively 'recenter-top-bottom)))
 (global-set-key (kbd "C-l") 'matt-recenter-region-top-bottom)
 
+(defun matt-beep ()
+  (interactive)
+  (start-process "paplay" nil "paplay" "/usr/share/sounds/freedesktop/stereo/alarm-clock-elapsed.oga"))
+
 (when (or (display-graphic-p)
           (daemonp))
   (matt-load-dark-theme))
