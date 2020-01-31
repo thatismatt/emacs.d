@@ -460,6 +460,7 @@
 (use-package calendar
   :init
   (add-hook 'calendar-today-visible-hook 'calendar-mark-today)
+  (setq calendar-week-start-day 1)
   :bind (:map matt-keymap
               ("o c" . calendar)))
 
