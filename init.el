@@ -765,7 +765,7 @@
 ;; " Wednesday February 20 02/07/18 %E 2018-02-07 2018 15 03 %J %K %L 28 312138752 %O pm %Q 15:28 35 15:28:35 05 06 06 15:28:35 2018 GMT Wed Feb Wed 07 Feb 2018 15:28:35 GMT 07  7 %f 18 Feb %i 038 15  3 02
 ;;  %o pm 1  3:28:35 pm GMT 1518017315 	 3 %v 3 07/02/18 18 +0000"
 (defun matt-insert-date (arg)
-  "Insert the current date. e.g 2018-02-08, 2018 08-Feb-2018 or Thu, 08 February."
+  "Insert the current date. e.g 2018-02-08, 08-Feb-2018 or Thu, 08 February 2018."
   (interactive "p")
   (insert (format-time-string
            (cond
@@ -776,7 +776,7 @@
 (matt-define-key "i d" 'matt-insert-date)
 
 (defun matt-insert-time (arg)
-  "Insert the current time. e.g 16:34:42, 2018-02-08T16:34:42+0000 or 2018-02-08_16-34-42."
+  "Insert the current time. e.g 16:34:42, 16:34, 2018-02-08T16:34:42+0000 or 2018-02-08_16-34-42."
   (interactive "p")
   (insert (format-time-string
            (cond
@@ -786,6 +786,12 @@
             (t           "%T"))               ;; 16:34:42
            (current-time))))
 (matt-define-key "i t" 'matt-insert-time)
+
+(defun matt-insert-timestamp (arg)
+  "Insert the current timestamp. e.g 20200120161313."
+  (interactive "p")
+  (insert (format-time-string "%Y%m%d%H%M%S" (current-time))))
+(matt-define-key "i s" 'matt-insert-timestamp)
 
 (defun matt-insert-underline (c)
   "Underline the line above with the character C."
