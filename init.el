@@ -228,7 +228,7 @@
     (setq helm-boring-buffer-regexp-list
           (append helm-boring-buffer-regexp-list
                   '("\\`\\*Help\\*\\'" "\\`\\*Backtrace\\*\\'" "\\`\\*info\\*\\'" "\\`\\*Ibuffer\\*\\'"
-                    "\\`\\*nrepl-server" "\\`\\*Alarm List\\*\\'" "\\`magit-"))))
+                    "\\`\\*nrepl-server" "\\`\\*Alarm List\\*\\'"))))
   :config
   (helm-mode 1)
   :bind (("M-x" . helm-M-x)
