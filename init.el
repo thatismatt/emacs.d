@@ -747,10 +747,49 @@
   (find-file matt-journal-file))
 (matt-define-key "o j" 'matt-journal)
 
+(defvar matt-log-file "~/Documents/log.org")
+
 (defun matt-log ()
   (interactive)
-  (find-file "~/Documents/log.org"))
+  (find-file matt-log-file))
 (matt-define-key "o l" 'matt-log)
+
+(defun matt-journal+log-window-configuration-p ()
+  (interactive)
+  (let* ((window-child-count (frame-root-window))
+         (left-window (window-child (frame-root-window)))
+         (right-window (window-right left-window)))
+    (and (equal (expand-file-name matt-journal-file)
+                (buffer-file-name (window-buffer left-window)))
+         (equal (expand-file-name matt-log-file)
+                (buffer-file-name (window-buffer right-window))))))
+
+(setq matt-journal+log-window-configuration-stash nil)
+
+(defun matt-journal+log ()
+  (interactive)
+  (setq matt-journal+log-window-configuration-stash (current-window-configuration))
+  (delete-other-windows)
+  (matt-log)
+  (split-window nil nil t)
+  (matt-journal))
+
+(defun matt-log+journal ()
+  (interactive)
+  (matt-journal+log)
+  (other-window 1))
+
+(defun matt-journal+log-back ()
+  (interactive)
+  (when matt-journal+log-window-configuration-stash
+    (set-window-configuration matt-journal+log-window-configuration-stash)))
+
+(defun matt-journal+log-toggle ()
+  (interactive)
+  (if (matt-journal+log-window-configuration-p) ;; TODO: try testing non-nil stash as trigger for jumping back
+      (matt-journal+log-back)
+    (matt-journal+log)))
+(matt-define-key "j j" 'matt-journal+log-toggle)
 
 (defun matt-runs ()
   (interactive)
