@@ -159,6 +159,7 @@
 
 (column-number-mode)
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
+;; (remove-hook 'before-save-hook 'delete-trailing-whitespace)
 (setq kill-whole-line t)
 (setq mouse-yank-at-point t) ;; middle click paste at point (not mouse pointer)
 (setq require-final-newline nil)
