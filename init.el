@@ -39,9 +39,10 @@
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 (add-to-list 'load-path (expand-file-name "~/code/fennel-mode"))
 
-;; hide tool bar & menu bar
+;; hide tool bar & menu bar & tab bar
 (tool-bar-mode -1)
 (menu-bar-mode -1)
+(tab-bar-mode -1)
 
 ;; scroll at same rate as the cursor - this stops the scroll "jumping" when you move off the top/bottom
 (setq scroll-conservatively 1)
