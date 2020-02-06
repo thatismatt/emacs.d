@@ -158,6 +158,7 @@
                  "%b"))))
 
 (column-number-mode)
+(size-indication-mode -1)
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 ;; (remove-hook 'before-save-hook 'delete-trailing-whitespace)
 (setq kill-whole-line t)
