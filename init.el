@@ -157,7 +157,22 @@
                    (replace-regexp-in-string "%" "%%" (abbreviate-file-name (buffer-file-name)))
                  "%b"))))
 
-(column-number-mode)
+(defun matt-number-modes-cycle ()
+  (interactive)
+  (cond ((and line-number-mode column-number-mode)
+         (line-number-mode -1)
+         (column-number-mode -1))
+        (line-number-mode
+         (line-number-mode -1)
+         (column-number-mode 1))
+        (column-number-mode
+         (line-number-mode 1)
+         (column-number-mode 1))
+        (:else
+         (line-number-mode 1)
+         (column-number-mode -1))))
+(column-number-mode -1)
+(line-number-mode -1)
 (size-indication-mode -1)
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 ;; (remove-hook 'before-save-hook 'delete-trailing-whitespace)
