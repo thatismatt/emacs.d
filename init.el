@@ -174,6 +174,7 @@
 (column-number-mode -1)
 (line-number-mode -1)
 (size-indication-mode -1)
+(setq mode-line-percent-position nil)
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 ;; (remove-hook 'before-save-hook 'delete-trailing-whitespace)
 (setq kill-whole-line t)
