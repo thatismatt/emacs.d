@@ -1031,6 +1031,15 @@
     (call-interactively 'recenter-top-bottom)))
 (global-set-key (kbd "C-l") 'matt-recenter-region-top-bottom)
 
+(defun matt-region-size ()
+  (interactive)
+  (if (region-active-p)
+      (message "Mark: %s  Point: %s  Size: %s"
+               (mark) (point)
+               (abs (- (mark) (point))))
+    (message "No region active")))
+(matt-define-key "r s" 'matt-region-size)
+
 (defun matt-beep ()
   (interactive)
   (start-process "paplay" nil "paplay" "/usr/share/sounds/freedesktop/stereo/alarm-clock-elapsed.oga"))
