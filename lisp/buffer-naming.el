@@ -32,7 +32,9 @@
     new-buffer-name))
 
 (defun projectile-buffer-naming-fn (filename)
-  (when-let* ((project-path      (and filename (projectile-project-root filename)))
+  (when-let* ((directory-name    (and filename (if (file-directory-p filename) filename (file-name-directory filename))))
+              ;; NOTE: `projectile-project-root' must not be called on an archive filename
+              (project-path      (projectile-project-root directory-name))
               (parts             (split-string project-path "/" 'omit-nulls))
               (project-name      (car (last parts)))
               (project-sub-path  (file-relative-name filename project-path))
