@@ -9,8 +9,8 @@
 ;;; Usage:
 
 ;; (buffer-naming-load)
-;; (buffer-naming-set-fn 'git-buffer-naming-generate-buffer-name)
-;; (buffer-naming-set-fn 'projectile-buffer-naming-generate-buffer-name)
+;; (buffer-naming-set-fn 'git-buffer-naming-fn)
+;; (buffer-naming-set-fn 'projectile-buffer-naming-fn)
 ;; (buffer-naming-set-fn 'identity)
 
 ;;; Code:
@@ -60,7 +60,7 @@
     (buffer-naming-rename-buffer buffer (buffer-file-name buffer))))
 
 (defun buffer-naming-create-file-buffer-advice (cfb-fun filename &rest args)
-  "Include the project name in a file's buffername."
+  "Advice for `create-file-buffer' that updates a file's buffer name."
   (buffer-naming-rename-buffer (apply cfb-fun filename args) filename))
 
 ;;;###autoload
