@@ -107,6 +107,7 @@
    `(fixed-pitch ((t (:foreground ,*code* :family nil))))
    `(fixed-pitch-serif ((t (:family nil))))
    `(minibuffer-prompt ((t (:foreground ,*function*))))
+   `(completions-common-part ((t (:foreground ,*highlight-3*))))
 
    ;; font-lock
    `(font-lock-builtin-face ((t (:foreground ,*builtins*))))
