@@ -659,7 +659,7 @@
         (rx (and bos
                  (or "*Messages*" "*info*" "*Help*" "*Backtrace*" "*Warnings*" "*Compile-Log*"
                      "*Shell Command Output*" "*vc*" "*vc-" "*Man " "*Calendar*" "magit"
-                     "*ag search" "*helm" "*Alarm*" "*Alarm List*" "*cider-")))
+                     "*ag search" "*helm" "*Alarm*" "*Alarm List*" "*cider-" "*sesman ")))
         (buffer-name buf))))
 
 (defun matt-disposable-major-mode-p (buf)
