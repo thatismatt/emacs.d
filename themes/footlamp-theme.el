@@ -209,8 +209,6 @@
    `(org-document-info-keyword ((t (:foreground ,*link*))))
    `(org-todo ((t (:height 0.9 :foreground ,*red* :box t))))
    `(org-done ((t (:height 0.9 :foreground ,*green* :box t))))
-   `(org-todo-face ((t (:height 0.9 :foreground ,*red* :box t))))
-   `(org-done-face ((t (:height 0.9 :foreground ,*green* :box t))))
    `(org-doing-face ((t (:height 0.9 :foreground ,*yellow* :box t))))
    `(org-postponed-face ((t (:height 0.9 :foreground ,*grey-7* :box t))))
    `(org-query-face ((t (:height 0.9 :foreground ,*purple* :box t))))
