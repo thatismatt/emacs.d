@@ -248,8 +248,10 @@
 
 (use-package helm
   :ensure t
-  :init
+  :config
+  (helm-mode 1)
   (use-package helm-buffers
+    :defer t
     :init
     (setq helm-buffer-max-length nil)
     :config
@@ -257,8 +259,10 @@
           (append helm-boring-buffer-regexp-list
                   '("\\`\\*Help\\*\\'" "\\`\\*Backtrace\\*\\'" "\\`\\*info\\*\\'" "\\`\\*Ibuffer\\*\\'"
                     "\\`\\*nrepl-server" "\\`\\*Alarm List\\*\\'"))))
-  :config
-  (helm-mode 1)
+  (use-package helm-ag
+    :ensure t
+    :init
+    (setq helm-ag-insert-at-point 'symbol))
   :bind (("M-x"      . helm-M-x)
          ("S-<down>" . helm-buffers-list)
          ("C-x b"    . helm-buffers-list)
@@ -288,11 +292,6 @@
                ("p b" . projectile-switch-to-buffer)
                ("p t" . projectile-toggle-between-implementation-and-test)
                ("p s" . matt-projectile-find-scratch))))
-
-(use-package helm-ag
-  :ensure t
-  :init
-  (setq helm-ag-insert-at-point 'symbol))
 
 (use-package ibuffer
   :init
@@ -401,7 +400,8 @@
 (use-package smartparens
   :ensure t
   :init
-  (use-package smartparens-config)
+  (use-package smartparens-config
+    :defer t)
   (smartparens-global-mode 1)
   (show-smartparens-global-mode 1)
   (add-to-list 'sp-ignore-modes-list 'org-mode)
@@ -434,6 +434,7 @@
 
 (use-package ag
   :ensure t
+  :defer t
   :config
   (setq ag-highlight-search t))
 
@@ -486,7 +487,8 @@
   :bind ("C-c g" . diff-hl-command-map))
 
 (use-package ediff
-  :init
+  :defer t
+  :config
   (setq ediff-window-setup-function 'ediff-setup-windows-plain) ;; don't start another frame
   (setq ediff-split-window-function 'split-window-horizontally))
 
@@ -583,6 +585,7 @@
 
 (use-package markdown-mode
   :ensure t
+  :defer t
   :bind (:map markdown-mode-map
               ("M-<left>"  . nil)
               ("M-<right>" . nil)))
@@ -594,12 +597,14 @@
          ("\\.cfn\\'"  . js-mode))) ;; cloud formation
 
 (use-package lua-mode
-  :ensure t)
+  :ensure t
+  :defer t)
 
 (use-package css-mode
   :ensure t
   :config
-  (setq css-indent-offset 2))
+  (setq css-indent-offset 2)
+  :defer t)
 
 (use-package cc-mode
   :init
@@ -628,6 +633,7 @@
   (setq cider-repl-history-file (expand-file-name ".cider-repl-history" user-emacs-directory)))
 
 (use-package sql
+  :defer t
   :init
   (setq sql-input-ring-file-name (expand-file-name ".sql-history" user-emacs-directory)))
 
