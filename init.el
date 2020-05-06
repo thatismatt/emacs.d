@@ -601,8 +601,10 @@
   :config
   (setq css-indent-offset 2))
 
-(require 'cc-mode)
-(add-hook 'java-mode-hook '(lambda () (c-set-offset 'arglist-intro '+)))
+(use-package cc-mode
+  :init
+  (add-hook 'java-mode-hook '(lambda () (c-set-offset 'arglist-intro '+)))
+  :defer t)
 
 (use-package web-mode
   :ensure t
