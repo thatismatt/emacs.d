@@ -47,7 +47,6 @@
   (require 'use-package))
 
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
-(add-to-list 'load-path (expand-file-name "~/code/fennel-mode"))
 
 ;; hide tool bar & menu bar & tab bar
 (tool-bar-mode -1)
@@ -617,11 +616,14 @@
   :init
   (setq sql-input-ring-file-name (expand-file-name ".sql-history" user-emacs-directory)))
 
-(require 'fennel-mode)
-(defun matt-fennel-init ()
-  (setq inferior-lisp-program
-        (expand-file-name "~/code/fennel/fennel --repl")))
-(add-hook 'fennel-mode-hook 'matt-fennel-init)
+(use-package fennel-mode
+  :mode "\\.fnl\\'"
+  :load-path (lambda () (expand-file-name "~/code/fennel-mode"))
+  :config
+  (defun matt-fennel-init ()
+    (setq inferior-lisp-program
+          (expand-file-name "~/code/fennel/fennel --repl")))
+  :hook (fennel-mode . matt-fennel-init))
 
 (use-package ruby-mode
   :ensure t
