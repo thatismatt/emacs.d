@@ -8,10 +8,14 @@
 
 ;;; Usage:
 
+;; ;; turn on - add the advice
 ;; (buffer-naming-load)
+;; ;; choose a buffer naming style:
 ;; (buffer-naming-set-fn 'git-buffer-naming-fn)
 ;; (buffer-naming-set-fn 'projectile-buffer-naming-fn)
-;; (buffer-naming-set-fn 'identity)
+;; (buffer-naming-set-fn 'generate-new-buffer-name) ;; similar to the default
+;; ;; turn off - remove the advice
+;; (buffer-naming-unload)
 
 ;;; Code:
 
@@ -21,7 +25,7 @@
 (defvar buffer-naming-separator " | ")
 
 (defun git-buffer-naming-fn (filename)
-  (when-let* ((project-path      (and filename (vc-git-root filename)))
+  (when-let* ((project-path      (vc-git-root filename))
               (parts             (split-string project-path "/" 'omit-nulls))
               (project-name      (car (last parts)))
               (project-sub-path  (file-relative-name filename project-path))
@@ -32,7 +36,7 @@
     new-buffer-name))
 
 (defun projectile-buffer-naming-fn (filename)
-  (when-let* ((directory-name    (and filename (if (file-directory-p filename) filename (file-name-directory filename))))
+  (when-let* ((directory-name    (if (file-directory-p filename) filename (file-name-directory filename)))
               ;; NOTE: `projectile-project-root' must not be called on an archive filename
               (project-path      (projectile-project-root directory-name))
               (parts             (split-string project-path "/" 'omit-nulls))
@@ -48,7 +52,7 @@
 
 (defun buffer-naming-rename-buffer (buffer filename)
   "Rename a buffer as per `buffer-naming-fn'."
-  (when-let* ((new-buffer-name (funcall buffer-naming-fn filename)))
+  (when-let* ((new-buffer-name (when filename (funcall buffer-naming-fn filename))))
     (with-current-buffer buffer (rename-buffer new-buffer-name)))
   buffer)
 
