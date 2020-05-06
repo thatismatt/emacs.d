@@ -997,15 +997,17 @@
   (let ((content (matt-wget url)))
     (insert content)))
 
-(require 'json)
-(defun matt-whats-my-ip ()
-  (let ((json (json-read-from-string (matt-wget "http://ip.jsontest.com/"))))
-    (cdr (assoc 'ip json))))
-
-(defun matt-insert-my-ip ()
-  (interactive)
-  (insert (matt-whats-my-ip)))
-(matt-define-key "i C-i" 'matt-insert-my-ip)
+(use-package json
+  :defer t
+  :config
+  (defun matt-whats-my-ip ()
+    (let ((json (json-read-from-string (matt-wget "http://ip.jsontest.com/"))))
+      (cdr (assoc 'ip json))))
+  (defun matt-insert-my-ip ()
+    (interactive)
+    (insert (matt-whats-my-ip)))
+  :bind (:map matt-keymap
+              ("i i" . matt-insert-my-ip)))
 
 (defun matt-change-at-point (f)
   (skip-chars-backward "0-9")
