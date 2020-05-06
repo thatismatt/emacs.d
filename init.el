@@ -497,68 +497,76 @@
   :bind (:map matt-keymap
               ("o c" . calendar)))
 
-(require 'org)
-(require 'org-clock)
-(defface org-doing-face '((t (:inherit org-todo))) "org mode face for DOING items")
-(defface org-postponed-face '((t (:inherit org-done))) "org mode face for POSTPONED items")
-(defface org-query-face '((t (:inherit org-todo))) "org mode face for ??? (query) items")
-(setq org-todo-keywords '((sequence "TODO" "DOING" "DONE") (sequence "BLOCKED") (sequence "POSTPONED") (sequence "???" "DONE")))
-(setq org-todo-keyword-faces
-      '(("TODO" org-todo)
-        ("DONE" org-done)
-        ("DOING" org-doing-face)
-        ("POSTPONED" org-postponed-face)
-        ("BLOCKED" org-postponed-face)
-        ("???" org-query-face)))
-(setq org-duration-format 'h:mm) ;; display days as hours
-(define-key org-mode-map (kbd "C-<up>") 'org-backward-element)
-(define-key org-mode-map (kbd "C-<down>") 'org-forward-element)
-(define-key org-mode-map (kbd "C-S-<up>") 'org-metaup)
-(define-key org-mode-map (kbd "C-S-<down>") 'org-metadown)
-(define-key org-mode-map (kbd "S-<up>") nil)
-(define-key org-mode-map (kbd "S-<down>") nil)
-(define-key org-mode-map (kbd "S-<left>") nil)
-(define-key org-mode-map (kbd "S-<right>") nil)
-(define-key org-mode-map (kbd "M-<left>") nil)
-(define-key org-mode-map (kbd "M-<right>") nil)
-(define-key org-mode-map (kbd "C-<left>") nil)
-(define-key org-mode-map (kbd "C-<right>") nil)
-(defun matt-org-insert-timestamp ()
-  (interactive)
-  (org-insert-time-stamp (org-current-time 0) 'with-hm 'inactive))
-(defun matt-org-clock-in ()
-  "A stripped down version of `org-clock-in' that just inserts
+(use-package org
+  :defer t
+  :init
+  (defface org-doing-face '((t (:inherit org-todo))) "org mode face for DOING items")
+  (defface org-postponed-face '((t (:inherit org-done))) "org mode face for POSTPONED items")
+  (defface org-query-face '((t (:inherit org-todo))) "org mode face for ??? (query) items")
+  (setq org-todo-keywords '((sequence "TODO" "DOING" "DONE")
+                            (sequence "BLOCKED")
+                            (sequence "POSTPONED")
+                            (sequence "???" "DONE")))
+  (setq org-todo-keyword-faces
+        '(("TODO" org-todo)
+          ("DONE" org-done)
+          ("DOING" org-doing-face)
+          ("POSTPONED" org-postponed-face)
+          ("BLOCKED" org-postponed-face)
+          ("???" org-query-face)))
+  :config
+  (use-package org-clock)
+  (setq org-duration-format 'h:mm) ;; display days as hours
+  (defun matt-org-insert-timestamp ()
+    (interactive)
+    (org-insert-time-stamp (org-current-time 0) 'with-hm 'inactive))
+  (defun matt-org-clock-in ()
+    "A stripped down version of `org-clock-in' that just inserts
    the current time in the correct position & format."
-  (interactive)
-  (save-excursion
-    (org-clock-find-position nil)
-    (insert-before-markers "\n")
-    (backward-char 1)
-    (org-indent-line)
-    (insert org-clock-string " ")
-    (matt-org-insert-timestamp)))
-(defun matt-org-clock-out ()
-  "A stripped down version of `org-clock-out' that just inserts
+    (interactive)
+    (save-excursion
+      (org-clock-find-position nil)
+      (insert-before-markers "\n")
+      (backward-char 1)
+      (org-indent-line)
+      (insert org-clock-string " ")
+      (matt-org-insert-timestamp)))
+  (defun matt-org-clock-out ()
+    "A stripped down version of `org-clock-out' that just inserts
    the current time in the correct position & format."
-  (interactive)
-  (save-excursion
-    (org-clock-find-position nil)
-    ;; TODO: verify that we haven't already clocked out
-    (goto-char (line-end-position))
-    (insert "--")
-    (matt-org-insert-timestamp)
-    (org-clock-update-time-maybe)))
-(defun matt-org-clock-report ()
-  (interactive)
-  (save-excursion
-    (org-clock-report t))
-  ;; scroll to the clock report at the top of the page
-  (scroll-down))
-(matt-define-key "c i" 'matt-org-clock-in)
-(matt-define-key "c o" 'matt-org-clock-out)
-(matt-define-key "c r" 'matt-org-clock-report)
-(matt-define-key "l l" 'org-store-link)
-(matt-define-key "l t" 'org-toggle-link-display)
+    (interactive)
+    (save-excursion
+      (org-clock-find-position nil)
+      ;; TODO: verify that we haven't already clocked out
+      (goto-char (line-end-position))
+      (insert "--")
+      (matt-org-insert-timestamp)
+      (org-clock-update-time-maybe)))
+  (defun matt-org-clock-report ()
+    (interactive)
+    (save-excursion
+      (org-clock-report t))
+    ;; scroll to the clock report at the top of the page
+    (scroll-down))
+  :bind ((:map org-mode-map
+               ("C-<up>"     . org-backward-element)
+               ("C-<down>"   . org-forward-element)
+               ("C-S-<up>"   . org-metaup)
+               ("C-S-<down>" . org-metadown)
+               ("S-<up>"     . nil)
+               ("S-<down>"   . nil)
+               ("S-<left>"   . nil)
+               ("S-<right>"  . nil)
+               ("M-<left>"   . nil)
+               ("M-<right>"  . nil)
+               ("C-<left>"   . nil)
+               ("C-<right>"  . nil))
+         (:map matt-keymap
+               ("c i" . matt-org-clock-in)
+               ("c o" . matt-org-clock-out)
+               ("c r" . matt-org-clock-report)
+               ("l l" . org-store-link)
+               ("l t" . org-toggle-link-display))))
 
 (use-package org-bullets
   :ensure t
