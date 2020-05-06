@@ -260,11 +260,11 @@
                     "\\`\\*nrepl-server" "\\`\\*Alarm List\\*\\'"))))
   :config
   (helm-mode 1)
-  :bind (("M-x" . helm-M-x)
+  :bind (("M-x"      . helm-M-x)
          ("S-<down>" . helm-buffers-list)
-         ("C-x b" . helm-buffers-list)
-         ("C-x C-f" . helm-find-files)
-         ("C-x f" . helm-recentf)
+         ("C-x b"    . helm-buffers-list)
+         ("C-x C-f"  . helm-find-files)
+         ("C-x f"    . helm-recentf)
          (:map helm-map
                ("C-t" . helm-toggle-full-frame))
          (:map matt-keymap
@@ -447,7 +447,7 @@
 
 (use-package move-text
   :ensure t
-  :bind (("C-S-<up>" . move-text-up)
+  :bind (("C-S-<up>"   . move-text-up)
          ("C-S-<down>" . move-text-down)))
 
 (use-package string-inflection
@@ -464,7 +464,7 @@
     (string-inflection-insert
      (string-inflection-snake-kebab-function (string-inflection-get-current-word))))
   :bind (:map matt-keymap
-              ("-" . string-inflection-snake-kebab)
+              ("-"   . string-inflection-snake-kebab)
               ("M--" . string-inflection-all-cycle)))
 
 (use-package magit
@@ -572,14 +572,14 @@
 (use-package markdown-mode
   :ensure t
   :bind (:map markdown-mode-map
-              ("M-<left>" . nil)
+              ("M-<left>"  . nil)
               ("M-<right>" . nil)))
 
 (use-package js
   :init
   (setq js-indent-level 2)
   :mode (("\\.json\\'" . js-mode)
-         ("\\.cfn\\'" . js-mode))) ;; cloud formation
+         ("\\.cfn\\'"  . js-mode))) ;; cloud formation
 
 (use-package lua-mode
   :ensure t)
@@ -625,7 +625,7 @@
 
 (use-package ruby-mode
   :ensure t
-  :mode (("\\.pp\\'" . ruby-mode)
+  :mode (("\\.pp\\'"          . ruby-mode)
          ("\\^Vagrantfile\\'" . ruby-mode)))
 
 (use-package image
