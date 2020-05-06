@@ -7,6 +7,16 @@
 
 (setq matt-init-start-time (current-time))
 
+(when (getenv "emacs_perf")
+  (defun matt-require-perf-wrapper (orig feature &rest args)
+    (let* ((require-start-time (current-time))
+           (loaded (apply orig feature args)))
+      (message "%06dμs | %s"
+               (* 1000 1000 (float-time (time-subtract (current-time) require-start-time)))
+               feature)
+      loaded))
+  (advice-add 'require :around 'matt-require-perf-wrapper))
+
 ;; gc tweaks - see http://bling.github.io/blog/2016/01/18/why-are-you-changing-gc-cons-threshold/
 (setq garbage-collection-messages t)
 
