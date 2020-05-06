@@ -309,8 +309,7 @@
                 filename-and-process)))
   (use-package ibuffer-vc
     :ensure t
-    :init
-    (add-hook 'ibuffer-hook 'ibuffer-vc-set-filter-groups-by-vc-root))
+    :hook (ibuffer . ibuffer-vc-set-filter-groups-by-vc-root))
   :bind ("C-x C-b" . ibuffer))
 
 (use-package eshell
@@ -470,8 +469,10 @@
   :ensure t
   :init
   (setq magit-status-buffer-switch-function 'switch-to-buffer)
-  (require 'magit-log)
-  (setf (nth 1 magit-log-margin) "%a %d %b %R")
+  :config
+  (use-package magit-log
+    :config
+    (setf (nth 1 magit-log-margin) "%a %d %b %R"))
   :bind ("C-x g" . magit))
 
 (use-package diff-hl
@@ -593,12 +594,12 @@
 
 (use-package web-mode
   :ensure t
+  :mode (("\\.jsx\\'"      . web-mode)
+         ("\\.mustache\\'" . web-mode))
   :init
   (setq web-mode-markup-indent-offset 2)
   (setq web-mode-code-indent-offset 2)
-  (setq web-mode-enable-comment-interpolation nil)
-  (add-to-list 'auto-mode-alist '("\\.jsx\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode)))
+  (setq web-mode-enable-comment-interpolation nil))
 
 (use-package clojure-mode
   :ensure t
