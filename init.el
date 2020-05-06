@@ -661,6 +661,10 @@
               ("a l" . alarm-list)
               ("a n" . alarm-next)))
 
+(use-package mortimer
+  :bind (:map matt-keymap
+              ("m m" . mortimer-start)))
+
 (defun matt-font-lock-comment-annotations ()
   "Highlight well known comment annotations."
   (font-lock-add-keywords
