@@ -2,6 +2,8 @@
 
 # see https://github.com/purcell/emacs.d/blob/master/test-startup.sh
 
+cd $(readlink -e $(dirname $0))
+
 echo "Attempting startup..."
 emacs -nw --batch \
       --eval '(let ((debug-on-error t)
