@@ -445,8 +445,8 @@
 (use-package multiple-cursors
   :ensure t
   :bind (:map matt-keymap
-              ("m m" . mc/mark-more-like-this-extended)
-              ("m r" . mc/edit-lines)))
+              ("<down>" . mc/mark-more-like-this-extended)
+              ("m r"    . mc/edit-lines)))
 
 (use-package move-text
   :ensure t
