@@ -663,6 +663,9 @@
               ("a n" . alarm-next)))
 
 (use-package mortimer
+  :config
+  (setq mortimer-sound "/usr/share/sounds/sound-icons/trumpet-12.wav")
+  ;; (setq mortimer-sound "/usr/share/sounds/sound-icons/prompt.wav")
   :bind (:map matt-keymap
               ("m m" . mortimer-start)))
 
@@ -1081,7 +1084,7 @@
 
 (defun matt-beep ()
   (interactive)
-  (start-process "paplay" nil "paplay" "/usr/share/sounds/freedesktop/stereo/alarm-clock-elapsed.oga"))
+  (start-process "paplay" nil "paplay" "/usr/share/sounds/sound-icons/prompt.wav"))
 
 (when (or (display-graphic-p)
           (daemonp))
