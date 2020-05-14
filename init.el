@@ -400,12 +400,11 @@
 (use-package smartparens
   :ensure t
   :init
-  (use-package smartparens-config
-    :defer t)
   (smartparens-global-mode 1)
   (show-smartparens-global-mode 1)
   (add-to-list 'sp-ignore-modes-list 'org-mode)
   :config
+  (use-package smartparens-config)
   (sp-use-smartparens-bindings)
   (setq sp-highlight-pair-overlay nil))
 
