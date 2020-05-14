@@ -628,10 +628,26 @@
 (use-package cider
   :ensure t
   :defer t
-  ;; :pin melpa-stable
   :config
   (setq cider-repl-history-size 1000)
-  (setq cider-repl-history-file (expand-file-name ".cider-repl-history" user-emacs-directory)))
+  (setq cider-repl-history-file (expand-file-name ".cider-repl-history" user-emacs-directory))
+
+  (defun matt-cider-repl-clear-buffer ()
+    "Version of `cider-repl-clear-buffer' that can be used from another buffer."
+    (interactive)
+    (with-current-buffer (cider-current-repl nil 'ensure)
+      (let ((inhibit-read-only t))
+        (cider-repl--clear-region (point-min) cider-repl-prompt-start-mark)
+        (cider-repl--clear-region cider-repl-output-start cider-repl-output-end)
+        (when (< (point) cider-repl-input-start-mark)
+          ;; goto-char doesn't work for visible windows - see https://emacs.stackexchange.com/q/21464
+          (set-window-point (get-buffer-window (current-buffer)) (point-max))))
+      (run-hooks 'cider-repl-clear-buffer-hook)))
+  ;; HACK: see https://github.com/clojure-emacs/cider/issues/2816
+  (defun cider-eldoc-setup ()
+    "Setup eldoc in the current buffer.
+eldoc mode has to be enabled for this to have any effect."
+    (add-hook 'eldoc-documentation-functions #'cider-eldoc nil t)))
 
 (use-package sql
   :defer t
