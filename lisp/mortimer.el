@@ -21,7 +21,6 @@
 ;; (mortimer-play-sound "/usr/share/sounds/freedesktop/stereo/alarm-clock-elapsed.oga")
 ;; (mortimer-play-sound "/usr/share/sounds/freedesktop/stereo/complete.oga")
 ;; (mortimer-play-sound "/usr/share/sounds/freedesktop/stereo/message.oga")
-;; (mortimer-play-sound "/usr/share/sounds/freedesktop/stereo/bell.oga")
 ;; (mortimer-play-sound "/usr/share/sounds/gnome/default/alerts/glass.ogg")
 ;; (mortimer-play-sound "/usr/share/sounds/gnome/default/alerts/drip.ogg")
 ;;
