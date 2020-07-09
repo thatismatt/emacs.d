@@ -176,6 +176,32 @@
                    (replace-regexp-in-string "%" "%%" (abbreviate-file-name (buffer-file-name)))
                  "%b"))))
 
+(setq matt-mode-line-format-default mode-line-format)
+
+(setq matt-mode-line-format-minimal
+      '("%e "
+        mode-line-modified
+        " "
+        mode-line-buffer-identification
+        mode-line-frame-identification
+        ;; centre
+        (:propertize " " display ((space :align-to (- right 10)))) ;; (length "[00:00:00]") => 10
+        ;; right
+        mode-line-misc-info))
+
+;; (setq mode-line-misc-info
+;;       '((global-mode-string ("" global-mode-string " "))
+;;         (mortimer-mode-line ("" (:propertize mortimer-mode-line face 'mortimer-face) " "))))
+
+(defun matt-toggle-minimal-mode-line ()
+  (interactive)
+  (setq-default mode-line-format
+                (if (eq mode-line-format matt-mode-line-format-minimal)
+                    matt-mode-line-format-default
+                  matt-mode-line-format-minimal)))
+(matt-toggle-minimal-mode-line)
+(matt-define-key "m l" 'matt-toggle-minimal-mode-line)
+
 (defun matt-number-modes-cycle ()
   (interactive)
   (cond ((and line-number-mode column-number-mode)
@@ -331,7 +357,8 @@
               (define-key eshell-hist-mode-map [C-down] 'eshell-next-matching-input-from-input)
               (define-key eshell-hist-mode-map [M-up] 'eshell-previous-input)
               (define-key eshell-hist-mode-map [M-down] 'eshell-next-input)
-              (define-key eshell-mode-map [home] 'eshell-bol)))
+              (define-key eshell-mode-map [home] 'eshell-bol)
+              (kill-local-variable 'mode-line-format))) ;; ensure matt-toggle-minimal-mode-line works
   (defun matt-eshell-current-directory ()
     (interactive)
     (let ((path (file-name-directory (or (buffer-file-name) default-directory))))
