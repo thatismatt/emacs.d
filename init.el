@@ -234,6 +234,7 @@
 (delete-selection-mode t) ;; delete the selection with a keypress
 (save-place-mode 1)
 (savehist-mode)
+(setq history-delete-duplicates t)
 (setq set-mark-command-repeat-pop t)
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 
