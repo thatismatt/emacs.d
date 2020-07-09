@@ -318,7 +318,7 @@
   (use-package ibuffer-vc
     :ensure t
     :hook (ibuffer . ibuffer-vc-set-filter-groups-by-vc-root))
-  :bind ("C-x C-b" . ibuffer))
+  :bind ("C-x C-b" . (lambda () (interactive) (matt-clean-buffers) (ibuffer))))
 
 (use-package eshell
   :init
