@@ -1106,11 +1106,12 @@
 
 (defun matt-region-size ()
   (interactive)
-  (if (region-active-p)
-      (message "Mark: %s  Point: %s  Size: %s"
-               (mark) (point)
-               (abs (- (mark) (point))))
-    (message "No region active")))
+  (let ((mk (or (mark) (point))) ;; initially mark is nil
+        (pt (point)))
+    (message "Size:  %s\nLines: %s\nPoint: %s\nMark:  %s"
+             (abs (- mk pt))
+             (1+ (abs (- (line-number-at-pos mk) (line-number-at-pos pt))))
+             pt (mark))))
 (matt-define-key "r s" 'matt-region-size)
 
 (defun matt-beep ()
