@@ -738,13 +738,16 @@
       (with-current-buffer buf
         major-mode)))
 
-(defun matt-clean-buffers ()
-  (interactive)
+(defun matt-clean-buffers (&optional arg)
+  "Kill all \"disposable\" buffers. With prefix arg also kill all
+  unmodified file buffers."
+  (interactive "P")
   (thread-last (buffer-list)
     (seq-filter (lambda (buf)
                   (or (matt-disposable-buffer-p buf)
                       (matt-disposable-major-mode-p buf)
-                      (and (not (matt-persistent-buffer-p buf))
+                      (and arg
+                           (not (matt-persistent-buffer-p buf))
                            (buffer-file-name buf)
                            (not (buffer-modified-p buf))))))
     (seq-do 'kill-buffer)))
