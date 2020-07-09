@@ -108,9 +108,11 @@
 (matt-define-key "t t" 'matt-toggle-theme)
 
 ;; font
-(defun matt-font-size (sz)
+(defun matt-font-size (&optional sz)
   (interactive "NFont size: ")
-  (set-face-attribute 'default nil :height (truncate (* sz 10))))
+  (if (numberp sz)
+      (set-face-attribute 'default nil :height (truncate (* sz 10)))
+    (round (/ (face-attribute 'default :height) 10.0))))
 (matt-define-key "f f" 'matt-font-size)
 
 (defun matt-font-face-wide ()
@@ -137,19 +139,26 @@
 ;; (set-face-attribute 'default nil :family "Courier 10 Pitch")
 ;; (set-face-attribute 'default nil :family "Ubuntu Mono")
 
-(defun matt-font-size-small ()
-  (interactive)
-  (matt-font-size 11))
-(matt-define-key "f s" 'matt-font-size-small)
-(global-set-key (kbd "C--") 'matt-font-size-small)
+(setq matt-font-size-default 11)
 
-(defun matt-font-size-large ()
+(defun matt-font-size-increase ()
   (interactive)
-  (matt-font-size 18))
-(matt-define-key "f l" 'matt-font-size-large)
-(global-set-key (kbd "C-=") 'matt-font-size-large)
+  (matt-font-size (1+ (matt-font-size)))
+  (message "Font size: %s" (matt-font-size)))
+(global-set-key (kbd "C-=") 'matt-font-size-increase)
 
-(matt-font-size-small)
+(defun matt-font-size-decrease ()
+  (interactive)
+  (matt-font-size (1- (matt-font-size)))
+  (message "Font size: %s" (matt-font-size)))
+(global-set-key (kbd "C--") 'matt-font-size-decrease)
+
+(defun matt-font-size-default ()
+  (interactive)
+  (matt-font-size matt-font-size-default)
+  (message "Font size: %s" (matt-font-size)))
+
+(matt-font-size-default)
 (matt-font-face-narrow)
 
 ;; cursor - bar instead of a block
