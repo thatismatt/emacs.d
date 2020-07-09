@@ -652,11 +652,12 @@
           ;; goto-char doesn't work for visible windows - see https://emacs.stackexchange.com/q/21464
           (set-window-point (get-buffer-window (current-buffer)) (point-max))))
       (run-hooks 'cider-repl-clear-buffer-hook)))
-  ;; HACK: see https://github.com/clojure-emacs/cider/issues/2816
-  (defun cider-eldoc-setup ()
-    "Setup eldoc in the current buffer.
-eldoc mode has to be enabled for this to have any effect."
-    (add-hook 'eldoc-documentation-functions #'cider-eldoc nil t)))
+  (defun matt-cider-repl-display-buffer ()
+    (interactive)
+    (display-buffer (cider-current-repl nil 'ensure)))
+  :bind (:map matt-keymap
+              ("M-c M-o" . matt-cider-repl-clear-buffer)
+              ("M-c M-z" . matt-cider-repl-display-buffer)))
 
 (use-package sql
   :defer t
