@@ -987,17 +987,17 @@
     (funcall initial-major-mode)
     (insert initial-scratch-message)))
 
-(defun matt-jump-to-scratch-buffer ()
+(defun matt-open-scratch-buffer ()
   "Switch to the scratch buffer."
   (interactive)
   (switch-to-buffer "*scratch*"))
-(matt-define-key "o s" 'matt-jump-to-scratch-buffer)
+(matt-define-key "o s" 'matt-open-scratch-buffer)
 
-(defun matt-jump-to-messages-buffer ()
+(defun matt-open-messages-buffer ()
   "Switch to the messages buffer."
   (interactive)
   (switch-to-buffer "*Messages*"))
-(matt-define-key "o m" 'matt-jump-to-messages-buffer)
+(matt-define-key "o m" 'matt-open-messages-buffer)
 
 (defun matt-delete-file-and-buffer ()
   (interactive)
