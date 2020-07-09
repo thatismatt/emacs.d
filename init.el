@@ -232,12 +232,12 @@
 (global-auto-revert-mode t)
 (fset 'yes-or-no-p 'y-or-n-p)
 (delete-selection-mode t) ;; delete the selection with a keypress
-(savehist-mode)
 (save-place-mode 1)
-(global-set-key (kbd "C-d") 'backward-delete-char)
+(savehist-mode)
 (setq set-mark-command-repeat-pop t)
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 
+(global-set-key (kbd "C-d") 'backward-delete-char)
 (global-set-key (kbd "<M-backspace>") 'backward-kill-word)
 (global-set-key (kbd "<C-backspace>") 'backward-kill-word)
 
