@@ -1,4 +1,4 @@
-;;; alarm --- Display a message in a new frame at a specified time.
+;;; alarm --- Display a message in a new frame at a specified time  -*- lexical-binding: t -*-
 
 ;;; Commentary:
 ;; Use Emacs as an alarm.
@@ -14,6 +14,12 @@
 
 (defvar alarm-popup-buffer "*Alarm*")
 
+(defun alarm-play-sound (sound)
+  (when (and sound
+             (file-exists-p (expand-file-name sound))
+             (executable-find "paplay"))
+	(start-process "alarm-paplay" nil "paplay" sound)))
+
 (defun alarm-action (message time)
   "The actual alarm action.
 Displays MESSAGE (and TIME) in `alarm-popup-buffer'."
@@ -23,7 +29,8 @@ Displays MESSAGE (and TIME) in `alarm-popup-buffer'."
     (insert (format "\n### ALARM (%s) ###\n\n" time))
     (insert message)
     (insert "\n\n")
-    (alarm-popup-mode)))
+    (alarm-popup-mode)
+    (alarm-play-sound "/usr/share/sounds/sound-icons/trumpet-12.wav")))
 
 (defun alarm-popup-kill ()
   (interactive)
