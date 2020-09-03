@@ -184,6 +184,7 @@
         " "
         mode-line-buffer-identification
         mode-line-frame-identification
+        mode-name
         ;; centre
         (:propertize " " display ((space :align-to (- right 10)))) ;; (length "[00:00:00]") => 10
         ;; right
