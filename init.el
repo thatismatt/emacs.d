@@ -314,12 +314,19 @@
   (projectile-mode)
   :config
   (setq projectile-svn-command "find . -type f -not -iwholename '*.svn/*' -print0") ;; see https://github.com/bbatsov/projectile/issues/520
+  (defun matt-projectile-guess-scratch-filename (&optional project-root)
+    ;; TODO: Allow for multiple file locations & extensions: i.e. use file-expand-wildcards with something like: "*/scratch.*"
+    (let ((scratch-file (expand-file-name "dev/scratch.clj" (projectile-project-root project-root))))
+      (when (file-exists-p scratch-file)
+        scratch-file)))
   (defun matt-projectile-find-scratch ()
     (interactive)
-    (let ((scratch-file (expand-file-name "dev/scratch.clj" (projectile-project-root))))
-      (if (file-exists-p scratch-file)
-          (find-file scratch-file)
-        (message "No scratch file found"))))
+    (if-let ((scratch-file (or (matt-projectile-guess-scratch-filename)
+                               (when-let* ((other-filename (buffer-file-name (other-buffer)))
+                                           (other-directory (file-name-directory other-filename)))
+                                 (matt-projectile-guess-scratch-filename other-directory)))))
+        (find-file scratch-file)
+      (message "No scratch file found")))
   (setq projectile-completion-system 'helm)
   :bind (("C-x p" . projectile-find-file)
          (:map matt-keymap
