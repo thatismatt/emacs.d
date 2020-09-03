@@ -189,10 +189,6 @@
         ;; right
         mode-line-misc-info))
 
-;; (setq mode-line-misc-info
-;;       '((global-mode-string ("" global-mode-string " "))
-;;         (mortimer-mode-line ("" (:propertize mortimer-mode-line face 'mortimer-face) " "))))
-
 (defun matt-toggle-minimal-mode-line ()
   (interactive)
   (setq-default mode-line-format
