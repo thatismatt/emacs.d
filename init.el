@@ -729,7 +729,8 @@
   :bind (:map matt-keymap
               ("m s" . mortimer-start)
               ("m p" . mortimer-pause-resume)
-              ("m m" . mortimer-quick-toggle)))
+              ("m m" . mortimer-quick-toggle)
+              ("m l" . mortimer-view-log)))
 
 (defun matt-font-lock-comment-annotations ()
   "Highlight well known comment annotations."

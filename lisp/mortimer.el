@@ -155,6 +155,10 @@
         (:otherwise
          (message "No timer to pause/resume."))))
 
+(defun mortimer-mark-last-as-fail ()
+  (interactive)
+  (setq mortimer-log (cons (list :time (current-time) :id :fail :args nil) mortimer-log)))
+
 (defun mortimer-log-advice (id)
   (lambda (f &rest args)
     (let ((mortimer-log-old mortimer-log)) ;; don't log inner advised fns
@@ -202,11 +206,14 @@
                           (start-time (format-time-string "%H:%M" (plist-get start :time)))
                           (duration (car (plist-get start :args)))
                           (complete (seq-find (lambda (l) (eq (plist-get l :id) :complete)) p))
+                          (fail (seq-find (lambda (l) (eq (plist-get l :id) :fail)) p))
                           ;; (end-time (time-add (plist-get start :time) (timer-duration duration)))
                           ;; (stop (seq-find (lambda (l) (eq (plist-get l :id) :stop)) p))
                           ;; (ongoing  (time-less-p (current-time) end-time))
                           )
-                     (cond (complete   (format (concat (propertize "completed" 'face 'mortimer-view-log-completed-face) "  %s - %s (%s)\n")
+                     (cond (fail       (format (concat (propertize "failed" 'face 'mortimer-view-log-unfinished-face) "     %s (%s)\n")
+                                               start-time duration))
+                           (complete   (format (concat (propertize "completed" 'face 'mortimer-view-log-completed-face) "  %s - %s (%s)\n")
                                                start-time (format-time-string "%H:%M" (plist-get complete :time)) duration))
                            ;; TODO:
                            ;; (stop       (format (concat (propertize "unfinished" 'face '(:foreground "#a00" :box t)) " %s (%s)\n")
