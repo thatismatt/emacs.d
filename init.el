@@ -301,7 +301,7 @@
     :init
     (setq helm-ag-insert-at-point 'symbol))
   :bind (("M-x"      . helm-M-x)
-         ("S-<down>" . helm-buffers-list)
+         ("S-<down>" . helm-for-files)
          ("C-x b"    . helm-buffers-list)
          ("C-x C-f"  . helm-find-files)
          ("C-x f"    . helm-recentf)
