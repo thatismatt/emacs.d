@@ -755,7 +755,7 @@
   (and (null (get-buffer-process buf)) ;; ref. cider repl buffer
        (string-match-p
         (rx (and bos
-                 (or "*Messages*" "*info*" "*Help*" "*Backtrace*" "*Warnings*" "*Compile-Log*"
+                 (or "*Messages*" "*Completions*" "*info*" "*Help*" "*Backtrace*" "*Warnings*" "*Compile-Log*"
                      "*Shell Command Output*" "*vc*" "*vc-" "*Man " "*Calendar*" "magit"
                      "*ag search" "*helm" "*Alarm*" "*Alarm List*" "*cider-" "*sesman ")))
         (buffer-name buf))))
