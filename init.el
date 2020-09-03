@@ -176,7 +176,8 @@
                    (replace-regexp-in-string "%" "%%" (abbreviate-file-name (buffer-file-name)))
                  "%b"))))
 
-(setq matt-mode-line-format-default mode-line-format)
+(when (not (boundp 'matt-mode-line-format-default)) ;; make safe for re-evaluation
+  (setq matt-mode-line-format-default mode-line-format))
 
 (setq matt-mode-line-format-minimal
       '("%e "
