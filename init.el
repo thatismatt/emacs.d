@@ -948,9 +948,9 @@
 (matt-define-key "i t" 'matt-insert-time)
 
 (defun matt-insert-timestamp (arg)
-  "Insert the current timestamp. e.g 20200120161313."
+  "Insert the current timestamp. e.g 2020012016131337."
   (interactive "p")
-  (insert (format-time-string "%Y%m%d%H%M%S" (current-time))))
+  (insert (format-time-string "%Y%m%d%H%M%S%2N" (current-time))))
 (matt-define-key "i s" 'matt-insert-timestamp)
 
 (defun matt-insert-underline (c)
