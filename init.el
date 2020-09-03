@@ -197,7 +197,6 @@
                     matt-mode-line-format-default
                   matt-mode-line-format-minimal)))
 (matt-toggle-minimal-mode-line)
-(matt-define-key "m l" 'matt-toggle-minimal-mode-line)
 
 (defun matt-number-modes-cycle ()
   (interactive)
