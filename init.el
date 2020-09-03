@@ -87,27 +87,19 @@
                       (mapcar 'symbol-name (custom-available-themes))))))
   (matt-disable-all-themes)
   (load-theme theme t))
+(matt-define-key "t l" 'matt-load-theme)
 
 (defun matt-reload-theme ()
   (interactive)
   (matt-load-theme (car custom-enabled-themes)))
 (matt-define-key "t r" 'matt-reload-theme)
 
-(defun matt-load-dark-theme ()
-  (interactive)
-  (matt-load-theme 'witness))
-(matt-define-key "t d" 'matt-load-dark-theme)
+(setq matt-default-theme 'witness)
 
-(defun matt-load-light-theme ()
+(defun matt-load-default-theme ()
   (interactive)
-  (matt-load-theme 'footlamp))
-(matt-define-key "t l" 'matt-load-light-theme)
-
-(defun matt-toggle-theme ()
-  (interactive)
-  (matt-load-theme
-   (if (custom-theme-enabled-p 'witness) 'footlamp 'witness)))
-(matt-define-key "t t" 'matt-toggle-theme)
+  (matt-load-theme matt-default-theme))
+(matt-define-key "t d" 'matt-load-default-theme)
 
 ;; font
 (defun matt-font-size (&optional sz)
@@ -1161,7 +1153,10 @@
 
 (when (or (display-graphic-p)
           (daemonp))
-  (matt-load-dark-theme))
+  (add-hook 'after-make-frame-functions
+            (lambda (frame)
+              (select-frame frame)
+              (matt-load-default-theme))))
 
 ;; require an init-local if present
 (require 'init-local nil t)
