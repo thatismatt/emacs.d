@@ -1,4 +1,4 @@
-;;; init --- Matt Lee's init file
+;;; init --- Matt Lee's init file  -*- lexical-binding: t -*-
 
 ;;; Commentary:
 ;; Lots of tweaks to my Emacs.
