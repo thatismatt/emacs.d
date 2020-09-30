@@ -306,8 +306,10 @@
          (:map helm-map
                ("C-t" . helm-toggle-full-frame))
          (:map matt-keymap
-               ("g g" . helm-ag)
-               ("h r" . helm-resume))))
+               ("g g" . helm-ag-project-root)
+               ("h r" . helm-resume)
+               ("h k" . helm-show-kill-ring)
+               ("C-SPC" . helm-all-mark-rings))))
 
 (use-package projectile
   :ensure t
