@@ -32,6 +32,7 @@
 
 (require 'package)
 (require 'seq)
+(require 'cl-lib)
 
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
 ;; (add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/"))
@@ -854,7 +855,7 @@
 
 (defun matt-time-string-to-numeric (time-string)
   "Converts human readable times to a numeric value (minutes or hours), e.g. \"30:30\" becomes 30.5."
-  (destructuring-bind
+  (cl-destructuring-bind
       (minutes seconds) (mapcar 'string-to-number (split-string time-string ":" t))
     (+ minutes (/ seconds 60.0))))
 
