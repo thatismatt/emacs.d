@@ -1097,8 +1097,9 @@
 (defun matt-change-at-point (f)
   (skip-chars-backward "0-9")
   (if (looking-at "[0-9]+")
-      (let ((raw (match-string 0)))
-        (replace-match (number-to-string (funcall f (string-to-number raw)))))
+      (let* ((raw (match-string 0))
+            (format-string (format "%%0%dd" (length raw))))
+        (replace-match (format format-string (funcall f (string-to-number raw)))))
     (error "Nothing matched at point")))
 
 (defun matt-increment-at-point ()
