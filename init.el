@@ -242,7 +242,7 @@
 (matt-define-key "w b"                'balance-windows)
 (matt-define-key "w l"                'toggle-truncate-lines) ;; mnemonic "wrap lines"
 (matt-define-key "w w"                'toggle-word-wrap)
-(matt-define-key "w v"                'display-fill-column-indicator-mode)
+(matt-define-key "w v"                'display-fill-column-indicator-mode) ;; mnemonic "wrap view"
 
 (define-key isearch-mode-map (kbd "C-.") 'isearch-forward-symbol-at-point)
 
