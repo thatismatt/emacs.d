@@ -203,7 +203,7 @@
         (mortimer-partition-by (lambda (l) (eq (plist-get l :id) :start)))
         (seq-map (lambda (p)
                    (let* ((start (car p))
-                          (start-time (format-time-string "%H:%M" (plist-get start :time)))
+                          (start-time (format-time-string "%F %R" (plist-get start :time)))
                           (duration (car (plist-get start :args)))
                           (complete (seq-find (lambda (l) (eq (plist-get l :id) :complete)) p))
                           (fail (seq-find (lambda (l) (eq (plist-get l :id) :fail)) p))
@@ -214,7 +214,7 @@
                      (cond (fail       (format (concat (propertize "failed" 'face 'mortimer-view-log-unfinished-face) "     %s (%s)\n")
                                                start-time duration))
                            (complete   (format (concat (propertize "completed" 'face 'mortimer-view-log-completed-face) "  %s - %s (%s)\n")
-                                               start-time (format-time-string "%H:%M" (plist-get complete :time)) duration))
+                                               start-time (format-time-string "%F %R" (plist-get complete :time)) duration))
                            ;; TODO:
                            ;; (stop       (format (concat (propertize "unfinished" 'face '(:foreground "#a00" :box t)) " %s (%s)\n")
                            ;;                     start-time duration))
@@ -228,5 +228,9 @@
 (defun mortimer-view-log ()
   (interactive)
   (view-buffer (mortimer-get-buffer)))
+
+(defun mortimer-clear-log ()
+  (interactive)
+  (setq mortimer-log '()))
 
 (provide 'mortimer)
