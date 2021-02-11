@@ -917,15 +917,10 @@
   (find-file "~/notes/runs.org"))
 (matt-define-key "o r" 'matt-runs)
 
-;; (format-time-string
-;;  (apply 'concat
-;;         (-interpose " %"
-;;                     '("" "A" "B" "C" "D" "E" "F" "G" "H" "I" "J" "K" "L" "M" "N" "O" "P" "Q" "R" "S" "T" "U" "V" "W" "X" "Y" "Z"
-;;                          "a" "b" "c" "d" "e" "f" "g" "h" "i" "j" "k" "l" "m" "n" "o" "p" "q" "r" "s" "t" "u" "v" "w" "x" "y" "z")
-;;                     ))
-;;   (current-time))
-;; " Wednesday February 20 02/07/18 %E 2018-02-07 2018 15 03 %J %K %L 28 312138752 %O pm %Q 15:28 35 15:28:35 05 06 06 15:28:35 2018 GMT Wed Feb Wed 07 Feb 2018 15:28:35 GMT 07  7 %f 18 Feb %i 038 15  3 02
-;;  %o pm 1  3:28:35 pm GMT 1518017315 	 3 %v 3 07/02/18 18 +0000"
+;; A         B        C                            D        E   F          G    H   I  J   K  L  M  N         O  P  Q  R              S            T        U  V  W  X        Y    Z
+;; Wednesday February 20                           02/07/18 %E  2018-02-07 2018 15  03 %J  %K %L 28 312138752 %O pm %Q 15:28          35           15:28:35 05 06 06 15:28:35 2018 GMT
+;; a         b        c                            d        e   f          g    h   i  j   k  l  m  n         o  p  q  r              s            t        u  v  w  x        y    z
+;; Wed       Feb      Wed 07 Feb 2018 15:28:35 GMT 07       7   %f         18   Feb %i 038 15  3 02 \n        %o pm 1  3:28:35 pm GMT 1518017315   \t       3  %v 3  07/02/18 18   +0000
 (defun matt-insert-date (arg)
   "Insert the current date. e.g 2018-02-08, 08-Feb-2018 or Thu, 08 Feb 2018."
   (interactive "p")
