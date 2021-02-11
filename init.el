@@ -1106,8 +1106,8 @@
 
 (defun matt-kill-emacs ()
   (interactive)
-  (if (y-or-n-p "Kill Emacs?")
-      (save-buffers-kill-emacs)))
+  (when (y-or-n-p "Kill Emacs?")
+    (save-buffers-kill-emacs)))
 (matt-define-key "q" 'matt-kill-emacs)
 
 (defun matt-chmod+x ()
