@@ -228,7 +228,7 @@
 (setq set-mark-command-repeat-pop t)
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 
-(global-set-key (kbd "C-d") 'backward-delete-char)
+(global-set-key (kbd "C-d")           'backward-delete-char)
 (global-set-key (kbd "<M-backspace>") 'backward-kill-word)
 (global-set-key (kbd "<C-backspace>") 'backward-kill-word)
 
