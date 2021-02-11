@@ -515,7 +515,10 @@
   (use-package magit-log
     :config
     (setf (nth 1 magit-log-margin) "%a %d %b %R"))
-  :bind ("C-x g" . magit))
+  :bind (("C-x g" . magit)
+         (:map matt-keymap
+               ("g l" . magit-log-buffer-file)
+               ("g b" . magit-blame-addition))))
 
 (use-package diff-hl
   :ensure t
