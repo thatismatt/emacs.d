@@ -758,7 +758,7 @@
        (string-match-p
         (rx (and bos
                  (or "*Messages*" "*Completions*" "*info*" "*Help*" "*Backtrace*" "*Warnings*" "*Compile-Log*"
-                     "*Shell Command Output*" "*vc*" "*vc-" "*Man " "*Calendar*" "magit"
+                     "*Shell Command Output*" "*vc*" "*vc-" "*Man " "*WoMan" "*Calendar*" "*Ediff Registry*" "magit"
                      "*ag search" "*helm" "*eldoc" "*Alarm*" "*Alarm List*" "*cider-" "*sesman ")))
         (buffer-name buf))))
 
