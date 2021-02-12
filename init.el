@@ -274,35 +274,21 @@
   :bind (:map matt-keymap
               ("o u" . browse-url)))
 
-(use-package helm
+(use-package selectrum
   :ensure t
   :config
-  (helm-mode 1)
-  (use-package helm-buffers
-    :defer t
-    :init
-    (setq helm-buffer-max-length nil)
-    :config
-    (setq helm-boring-buffer-regexp-list
-          (append helm-boring-buffer-regexp-list
-                  '("\\`\\*Help\\*\\'" "\\`\\*Backtrace\\*\\'" "\\`\\*info\\*\\'" "\\`\\*Ibuffer\\*\\'"
-                    "\\`\\*nrepl-server" "\\`\\*Alarm List\\*\\'"))))
-  (use-package helm-ag
+  (selectrum-mode +1)
+  (setq selectrum-max-window-height 25)
+  (use-package selectrum-prescient
     :ensure t
-    :init
-    (setq helm-ag-insert-at-point 'symbol))
-  :bind (("M-x"      . helm-M-x)
-         ("S-<down>" . helm-for-files)
-         ("C-x b"    . helm-buffers-list)
-         ("C-x C-f"  . helm-find-files)
-         ("C-x f"    . helm-recentf)
-         (:map helm-map
-               ("C-t" . helm-toggle-full-frame))
-         (:map matt-keymap
-               ("g g" . helm-ag-project-root)
-               ("h r" . helm-resume)
-               ("h k" . helm-show-kill-ring)
-               ("C-SPC" . helm-all-mark-rings))))
+    :config
+    (selectrum-prescient-mode +1)
+    (prescient-persist-mode +1))
+  (defun selectrum-recentf-open-files ()
+    (interactive)
+    (let ((files (mapcar 'abbreviate-file-name recentf-list)))
+      (find-file (completing-read "Find recent file: " files nil t))))
+  :bind ("C-x f" . selectrum-recentf-open-files))
 
 (use-package projectile
   :ensure t
@@ -323,7 +309,6 @@
                                  (matt-projectile-guess-scratch-filename other-directory)))))
         (find-file scratch-file)
       (message "No scratch file found")))
-  (setq projectile-completion-system 'helm)
   :bind (("C-x p" . projectile-find-file)
          (:map matt-keymap
                ("p b" . projectile-switch-to-buffer)
@@ -473,7 +458,10 @@
   :ensure t
   :defer t
   :config
-  (setq ag-highlight-search t))
+  (setq ag-highlight-search t)
+  :bind (:map matt-keymap
+              ("g d" . ag) ;; mnemonic "grep directory"
+              ("g g" . ag-project)))
 
 (use-package idle-highlight-mode
   :ensure t
@@ -762,7 +750,7 @@
         (rx (and bos
                  (or "*Messages*" "*Completions*" "*info*" "*Help*" "*Backtrace*" "*Warnings*" "*Compile-Log*"
                      "*Shell Command Output*" "*vc*" "*vc-" "*Man " "*WoMan" "*Calendar*" "*Ediff Registry*" "magit"
-                     "*ag search" "*helm" "*eldoc" "*Alarm*" "*Alarm List*" "*cider-" "*sesman ")))
+                     "*ag search" "*eldoc" "*Alarm*" "*Alarm List*" "*cider-" "*sesman ")))
         (buffer-name buf))))
 
 (defun matt-disposable-major-mode-p (buf)
