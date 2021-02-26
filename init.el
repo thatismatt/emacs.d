@@ -420,6 +420,12 @@
   (setq display-line-numbers-width-start t)
   (setq display-line-numbers-widen t))
 
+(use-package abbrev-mode
+  :hook (sql-mode
+         sql-interactive-mode
+         clojure-mode
+         org-mode))
+
 (use-package undo-tree
   :ensure t
   :init
