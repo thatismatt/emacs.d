@@ -793,7 +793,7 @@
 (defun matt-window-adjust ()
   "Interactively adjust window size."
   (interactive)
-  (message "Adjust window size.")
+  (message "Adjust windows.")
   (let ((map (make-sparse-keymap)))
     (define-key map "-" '(lambda () (interactive)
                            (shrink-window matt-window-delta (not (window--resizable-p nil (- matt-window-delta))))))
