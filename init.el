@@ -1079,8 +1079,9 @@
   (skip-chars-backward "0-9")
   (if (looking-at "[0-9]+")
       (let* ((raw (match-string 0))
-            (format-string (format "%%0%dd" (length raw))))
-        (replace-match (format format-string (funcall f (string-to-number raw)))))
+             (format-string (format "%%0%dd" (length raw)))
+             (new-value (max 0 (funcall f (string-to-number raw)))))
+        (replace-match (format format-string new-value)))
     (error "Nothing matched at point")))
 
 (defun matt-increment-at-point ()
@@ -1093,6 +1094,16 @@
   (interactive)
   (matt-change-at-point '1-))
 (matt-define-key "p -" 'matt-decrement-at-point)
+
+(defun matt-adjust-at-point ()
+  (interactive)
+  (message "Adjust at point, + or -.")
+  (let ((map (make-sparse-keymap)))
+    (define-key map "-" 'matt-decrement-at-point)
+    (define-key map "=" 'matt-increment-at-point)
+    (define-key map "+" 'matt-increment-at-point)
+    (set-transient-map map t)))
+(matt-define-key "p p" 'matt-adjust-at-point)
 
 (defun matt-kill-emacs ()
   (interactive)
