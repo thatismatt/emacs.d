@@ -34,6 +34,7 @@
 ;;; Code:
 
 (setq mortimer-timer nil)
+(setq mortimer-timer-duration nil)
 
 (setq mortimer-mode-line nil)
 (put 'mortimer-mode-line 'risky-local-variable t)
@@ -48,12 +49,16 @@
 
 (setq mortimer-log '())
 
-(defface mortimer-mode-line-face
-  '((t (:foreground "#040")))
-  "Face used for Mortimer timer in the mode line")
+(defface mortimer-mode-line-complete-face
+  '((t (:background "#050")))
+   "Face used for complete portion of Mortimer timer in the mode line")
+
+(defface mortimer-mode-line-remaining-face
+  '((t ()))
+   "Face used for remaining portion of Mortimer timer in the mode line")
 
 (defface mortimer-mode-line-paused-face
-  '((t (:foreground "#600")))
+  '((t (:foreground "#500")))
   "Face used for Mortimer timer in the mode line when paused")
 
 (defun mortimer-play-sound (sound)
@@ -68,6 +73,13 @@
     (floor (- (float-time (timer--time mortimer-timer))
               (float-time (current-time))))))
 
+(defun mortimer-time-complete ()
+  (when-let ((remaining (when mortimer-timer-duration (mortimer-time-remaining))))
+    (- mortimer-timer-duration remaining)))
+
+(defun mortimer-fraction-complete ()
+  (/ (float (mortimer-time-complete)) mortimer-timer-duration))
+
 (defun mortimer-running-p ()
   (and mortimer-timer
        (> (mortimer-time-remaining) 0)))
@@ -77,25 +89,49 @@
     (format-seconds "%02h:%02m:%02s"
                     (mortimer-time-remaining))))
 
+(defun mortimer-propertize-for-mode-line ()
+  `(:eval
+    (let* ((timer-string (string-join (list "[" (mortimer-to-string) "]")))
+           (timer-string-length (length timer-string))
+           (num-complete (floor (* timer-string-length (mortimer-fraction-complete)))))
+      (put-text-property 0 num-complete 'face 'mortimer-mode-line-complete-face timer-string)
+      (put-text-property num-complete timer-string-length 'face 'mortimer-mode-line-remaining-face timer-string)
+      timer-string)))
+
+(defun mortimer-refresh-mode-line ()
+  (force-mode-line-update t))
+
 (defun mortimer-update-mode-line ()
   (setq mortimer-mode-line
         (cond ((mortimer-running-p)
-               `(:propertize ("[" (:eval (mortimer-to-string)) "]")
-                             face mortimer-mode-line-face))
+               (mortimer-propertize-for-mode-line))
               (mortimer-pause-time-remaining
                `(:propertize (">" (:eval (format-seconds "%02h:%02m:%02s" mortimer-pause-time-remaining)) "<")
                              face mortimer-mode-line-paused-face))))
-  (force-mode-line-update t))
+  (mortimer-refresh-mode-line))
 
-(defun mortimer-stop ()
-  "Stop the current countdown timer."
-  (interactive)
+(defun mortimer-timer-start (seconds)
+  (setq mortimer-timer
+        (run-with-timer seconds nil
+                        'mortimer-on-complete))
+  (mortimer-update-mode-line)
+  (setq mortimer-mode-line-timer
+	    (run-with-timer 0 1
+                        'mortimer-refresh-mode-line)))
+
+(defun mortimer-timer-stop ()
   (when mortimer-mode-line-timer
     (cancel-timer mortimer-mode-line-timer))
   (setq mortimer-mode-line-timer nil)
   (when mortimer-timer
     (cancel-timer mortimer-timer))
-  (setq mortimer-timer nil)
+  (setq mortimer-timer nil))
+
+(defun mortimer-stop ()
+  "Stop the current countdown timer."
+  (interactive)
+  (mortimer-timer-stop)
+  (setq mortimer-timer-duration nil)
   (setq mortimer-pause-time-remaining nil)
   (mortimer-update-mode-line))
 
@@ -113,11 +149,8 @@
       (progn
         (add-to-list 'mode-line-misc-info '(mortimer-mode-line ("" mortimer-mode-line " ")) t)
         (mortimer-stop)
-        (setq mortimer-timer
-              (run-with-timer seconds nil
-                              'mortimer-on-complete))
-        (setq mortimer-mode-line-timer
-	          (run-with-timer 0 1 'mortimer-update-mode-line)))
+        (setq mortimer-timer-duration seconds)
+        (mortimer-timer-start seconds))
     (message "%s isn't a time, try something like \"25 mins\"." time)))
 
 (setq mortimer-quick-toggle-default-time "25 mins")
@@ -135,13 +168,13 @@
 
 (defun mortimer-pause ()
   (when-let ((remaining (mortimer-time-remaining)))
-    (mortimer-stop)
+    (mortimer-timer-stop)
     (setq mortimer-pause-time-remaining remaining)
     (mortimer-update-mode-line)))
 
 (defun mortimer-resume ()
   (when mortimer-pause-time-remaining
-    (mortimer-start mortimer-pause-time-remaining)
+    (mortimer-timer-start mortimer-pause-time-remaining)
     (setq mortimer-pause-time-remaining nil)))
 
 (defun mortimer-pause-resume ()
