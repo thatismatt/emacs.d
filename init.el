@@ -740,9 +740,8 @@
   "Switch to the most recently used buffer."
   (interactive)
   (switch-to-buffer (other-buffer (current-buffer))))
-(global-set-key (kbd "S-<right>") 'next-buffer)
-(global-set-key (kbd "S-<left>") 'previous-buffer)
 (global-set-key (kbd "S-<up>") 'matt-mru-buffer)
+(global-set-key (kbd "S-<down>") 'switch-to-buffer)
 
 (defun matt-disposable-buffer-p (buf)
   (and (null (get-buffer-process buf)) ;; ref. cider repl buffer
