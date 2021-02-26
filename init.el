@@ -23,10 +23,15 @@
 (defun matt-gc-inhibit ()
   (setq gc-cons-threshold (* 512 1024 1024)))
 (add-hook 'minibuffer-setup-hook #'matt-gc-inhibit)
+;; (remove-hook 'minibuffer-setup-hook #'matt-gc-inhibit)
 
 (defun matt-gc-uninhibit ()
-  (setq gc-cons-threshold (* 16 1024 1024)))
+  (setq gc-cons-threshold (* 8 1024 1024)))
+;; 16 = long pauses on undo
 (add-hook 'minibuffer-exit-hook #'matt-gc-uninhibit)
+;; (remove-hook 'minibuffer-exit-hook #'matt-gc-uninhibit)
+
+(add-hook 'focus-out-hook 'garbage-collect)
 
 (matt-gc-inhibit) ;; speedup startup
 
