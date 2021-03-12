@@ -2,7 +2,7 @@
 (define-abbrev-table 'clojure-mode-abbrev-table
   '(
     ("cap" "(matt.utils/capture :id)" nil :count 1)
-    ("cb" "(comment ;;\n()\n\n)" nil :count 5)
+    ("cb" "(comment ;;\n()\n\n\n\n)" nil :count 5)
     ("td" ";; TODO:" nil :count 8)
     ))
 
