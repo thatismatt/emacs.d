@@ -763,9 +763,10 @@
   (and (null (get-buffer-process buf)) ;; ref. cider repl buffer
        (string-match-p
         (rx (and bos
-                 (or "*Messages*" "*Completions*" "*info*" "*Help*" "*Backtrace*" "*Warnings*" "*Compile-Log*"
-                     "*Shell Command Output*" "*vc*" "*vc-" "*Man " "*WoMan" "*Calendar*" "*Ediff Registry*" "magit"
-                     "*ag search" "*eldoc" "*Alarm*" "*Alarm List*" "*cider-" "*sesman ")))
+                 (or "*Messages*" "*Completions*" "*info*" "*Help*" "*Backtrace*" "*Warnings*"
+                     "*Compile-Log*" "*Shell Command Output*" "*Occur*" "*vc*" "*vc-" "*Man "
+                     "*WoMan" "*Calendar*" "*Ediff Registry*" "magit" "*ag search" "*eldoc"
+                     "*Alarm*" "*Alarm List*" "*cider-" "*sesman ")))
         (buffer-name buf))))
 
 (defun matt-disposable-major-mode-p (buf)
