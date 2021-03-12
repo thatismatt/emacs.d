@@ -43,7 +43,10 @@
 
 (setq mortimer-sound nil)
 
-(setq mortimer-sound-executable "paplay")
+(setq mortimer-sound-command
+      (if (executable-find "ffplay")
+          (list "ffplay" "-nodisp" "-autoexit")
+        (list "paplay")))
 
 (setq mortimer-pause-time-remaining nil)
 
@@ -64,9 +67,10 @@
 (defun mortimer-play-sound (sound)
   (when (and sound
              (file-exists-p (expand-file-name sound))
-             (executable-find mortimer-sound-executable))
-	(start-process "mortimer-sound-executable" nil
-			       mortimer-sound-executable sound)))
+             (stringp (car mortimer-sound-command))
+             (executable-find (car mortimer-sound-command)))
+    (apply 'start-process "mortimer-sound-command" nil
+           (seq-concatenate 'list mortimer-sound-command (list (expand-file-name sound))))))
 
 (defun mortimer-time-remaining ()
   (when mortimer-timer
