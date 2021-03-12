@@ -295,6 +295,10 @@
       (find-file (completing-read "Find recent file: " files nil t))))
   :bind ("C-x f" . selectrum-recentf-open-files))
 
+(setq matt-scratch-file-locations
+      (list "dev/scratch.*" "dev/*/scratch.*"
+            "src/scratch.*" "src/*/scratch.*"))
+
 (use-package projectile
   :ensure t
   :init
@@ -302,8 +306,10 @@
   :config
   (setq projectile-svn-command "find . -type f -not -iwholename '*.svn/*' -print0") ;; see https://github.com/bbatsov/projectile/issues/520
   (defun matt-projectile-guess-scratch-filename (&optional project-root)
-    ;; TODO: Allow for multiple file locations & extensions: i.e. use file-expand-wildcards with something like: "*/scratch.*"
-    (let ((scratch-file (expand-file-name "dev/scratch.clj" (projectile-project-root project-root))))
+    (let ((scratch-file (thread-last matt-scratch-file-locations
+                          (mapcar (lambda (pattern) (file-expand-wildcards (concat (projectile-project-root nil) pattern) t)))
+                          (apply 'append)
+                          car)))
       (when (file-exists-p scratch-file)
         scratch-file)))
   (defun matt-projectile-find-scratch ()
