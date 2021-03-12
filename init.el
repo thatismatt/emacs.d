@@ -470,6 +470,9 @@
   :defer t
   :config
   (setq ag-highlight-search t)
+  (setq ag-reuse-buffers t)
+  (add-hook 'ag-mode-hook
+            '(lambda () (switch-to-buffer-other-window (current-buffer))))
   :bind (:map matt-keymap
               ("g d" . ag) ;; mnemonic "grep directory"
               ("g g" . ag-project)))
