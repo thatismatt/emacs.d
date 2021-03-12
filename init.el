@@ -773,8 +773,8 @@
         (rx (and bos
                  (or "*Messages*" "*Completions*" "*info*" "*Help*" "*Backtrace*" "*Warnings*"
                      "*Compile-Log*" "*Shell Command Output*" "*Occur*" "*vc*" "*vc-" "*Man "
-                     "*WoMan" "*Calendar*" "*Ediff Registry*" "magit" "*ag search" "*eldoc"
-                     "*Alarm*" "*Alarm List*" "*cider-" "*sesman ")))
+                     "*WoMan" "*Calendar*" "*Ediff Registry*" "*Bookmark List*" "*Packages*"
+                     "magit" "*ag search" "*eldoc" "*Alarm*" "*Alarm List*" "*cider-" "*sesman ")))
         (buffer-name buf))))
 
 (defun matt-disposable-major-mode-p (buf)
