@@ -726,13 +726,15 @@
 (use-package mortimer
   :config
   (setq mortimer-sound "/usr/share/sounds/sound-icons/trumpet-12.wav")
+  ;; (setq mortimer-sound "~/personal/dnb-loop.mp3")
   ;; (setq mortimer-sound "/usr/share/sounds/sound-icons/prompt.wav")
   ;; (mortimer-play-sound mortimer-sound)
   :bind (:map matt-keymap
               ("m s" . mortimer-start)
               ("m p" . mortimer-pause-resume)
               ("m m" . mortimer-quick-toggle)
-              ("m l" . mortimer-view-log)))
+              ("m l" . mortimer-view-log)
+              ("m k" . mortimer-clear-log)))
 
 (defun matt-font-lock-comment-annotations ()
   "Highlight well known comment annotations."
