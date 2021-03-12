@@ -281,6 +281,8 @@
 
 (use-package selectrum
   :ensure t
+  :hook
+  (after-init . selectrum-mode)
   :config
   (selectrum-mode +1)
   (setq selectrum-max-window-height 25)
