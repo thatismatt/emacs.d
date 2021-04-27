@@ -296,7 +296,9 @@
     (interactive)
     (let ((files (mapcar 'abbreviate-file-name recentf-list)))
       (find-file (completing-read "Find recent file: " files nil t))))
-  :bind ("C-x f" . selectrum-recentf-open-files))
+  :bind (("C-x f" . selectrum-recentf-open-files)
+         (:map selectrum-minibuffer-map
+               ("S-<down>" . abort-recursive-edit))))
 
 (setq matt-scratch-file-locations
       (list "dev/scratch.*" "dev/*/scratch.*"
