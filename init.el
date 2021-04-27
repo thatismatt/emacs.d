@@ -156,6 +156,7 @@
   (interactive)
   (matt-font-size matt-font-size-default)
   (message "Font size: %s" (matt-font-size)))
+(matt-define-key "f d" 'matt-font-size-default)
 
 (matt-font-size-default)
 (matt-font-face-narrow)
