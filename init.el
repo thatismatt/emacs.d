@@ -1172,7 +1172,7 @@
 
 (defun matt-beep ()
   (interactive)
-  (start-process "paplay" nil "paplay" "/usr/share/sounds/sound-icons/prompt.wav"))
+  (start-process "matt-beep" nil "paplay" "/usr/share/sounds/sound-icons/prompt.wav"))
 
 (when (or (display-graphic-p)
           (daemonp))
