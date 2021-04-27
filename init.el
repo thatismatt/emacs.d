@@ -772,8 +772,27 @@
   "Switch to the most recently used buffer."
   (interactive)
   (switch-to-buffer (other-buffer (current-buffer))))
+
+(defun matt-other-window-or-split ()
+  "Switch to another window, creating one if needed.
+New window's buffer is selected according to `matt-mru-buffer'."
+  (interactive)
+  (if (> (count-windows) 1)
+      (other-window 1)
+    (matt-mru-buffer)
+    (split-window-right)
+    (matt-mru-buffer)))
+(defun matt-delete-other-windows-or-split ()
+  (interactive)
+  (if (> (count-windows) 1)
+      (delete-other-windows)
+    (split-window-right)
+    (matt-mru-buffer)
+    (other-window 1)))
 (global-set-key (kbd "S-<up>") 'matt-mru-buffer)
 (global-set-key (kbd "S-<down>") 'switch-to-buffer)
+(global-set-key (kbd "S-<right>") 'matt-other-window-or-split)
+(global-set-key (kbd "S-<left>") 'matt-delete-other-windows-or-split)
 
 (defun matt-disposable-buffer-p (buf)
   (and (null (get-buffer-process buf)) ;; ref. cider repl buffer
