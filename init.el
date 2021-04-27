@@ -344,6 +344,12 @@
                 filename-and-process)))
   (use-package ibuffer-vc
     :ensure t
+    :config
+    (defun matt-ibuffer-vc-ignore-some-buffers (f buf)
+      (when (or (buffer-file-name buf)
+                (eq 'cider-repl-mode (with-current-buffer buf major-mode)))
+        (funcall f buf)))
+    (advice-add 'ibuffer-vc-root :around 'matt-ibuffer-vc-ignore-some-buffers)
     :hook (ibuffer . ibuffer-vc-set-filter-groups-by-vc-root))
   :bind ("C-x C-b" . (lambda () (interactive) (matt-clean-buffers) (ibuffer))))
 
