@@ -608,6 +608,7 @@
       (org-clock-report t))
     ;; scroll to the clock report at the top of the page
     (scroll-down))
+  (remove-hook 'org-cycle-hook 'org-cycle-hide-drawers)
   :bind ((:map org-mode-map
                ("C-<up>"      . org-backward-element)
                ("C-<down>"    . org-forward-element)
