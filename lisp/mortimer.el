@@ -88,14 +88,14 @@
   (and mortimer-timer
        (> (mortimer-time-remaining) 0)))
 
-(defun mortimer-to-string ()
+(defun mortimer-time-remaining-string ()
   (when mortimer-timer
     (format-seconds "%02h:%02m:%02s"
                     (mortimer-time-remaining))))
 
 (defun mortimer-propertize-for-mode-line ()
   `(:eval
-    (let* ((timer-string (string-join (list "[" (mortimer-to-string) "]")))
+    (let* ((timer-string (string-join (list "[" (mortimer-time-remaining-string) "]")))
            (timer-string-length (length timer-string))
            (num-complete (floor (* timer-string-length (mortimer-fraction-complete)))))
       (put-text-property 0 num-complete 'face 'mortimer-mode-line-complete-face timer-string)
@@ -155,7 +155,7 @@
         (mortimer-stop)
         (setq mortimer-timer-duration seconds)
         (mortimer-timer-start seconds))
-    (message "%s isn't a time, try something like \"25 mins\"." time)))
+    (message "I don't understand %s, try something like \"25 mins\"." time)))
 
 (setq mortimer-quick-toggle-default-time "25 mins")
 
@@ -268,6 +268,7 @@
 
 (defun mortimer-clear-log ()
   (interactive)
-  (setq mortimer-log '()))
+  (when (yes-or-no-p "Are you sure you want to clear the Mortimer log?")
+    (setq mortimer-log '())))
 
 (provide 'mortimer)
