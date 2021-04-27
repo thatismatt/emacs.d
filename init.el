@@ -310,10 +310,10 @@
   (setq projectile-svn-command "find . -type f -not -iwholename '*.svn/*' -print0") ;; see https://github.com/bbatsov/projectile/issues/520
   (defun matt-projectile-guess-scratch-filename (&optional project-root)
     (let ((scratch-file (thread-last matt-scratch-file-locations
-                          (mapcar (lambda (pattern) (file-expand-wildcards (concat (projectile-project-root nil) pattern) t)))
+                          (mapcar (lambda (pattern) (file-expand-wildcards (concat (projectile-project-root project-root) pattern) t)))
                           (apply 'append)
                           car)))
-      (when (file-exists-p scratch-file)
+      (when (and scratch-file (file-exists-p scratch-file))
         scratch-file)))
   (defun matt-projectile-find-scratch ()
     (interactive)
