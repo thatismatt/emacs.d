@@ -9,7 +9,7 @@
 (define-abbrev-table 'sql-mode-abbrev-table
   '(
     ("cs" "COUNT(*)" nil :count 0)
-    ("ct" "CREATE TABLE" nil :count 1)
+    ("ct" "CREATE TABLE t (id SERIAL PRIMARY KEY NOT NULL);" nil :count 1)
     ("gb" "GROUP BY" nil :count 0)
     ("ii" "INSERT INTO t () VALUES ();" nil :count 0)
     ("ij" "INNER JOIN" nil :count 0)
@@ -17,6 +17,8 @@
     ("ob" "ORDER BY" nil :count 0)
     ("pk" "SERIAL PRIMARY KEY NOT NULL" nil :count 1)
     ("ssf" "SELECT * FROM" nil :count 6)
+    ("us" "UPDATE t SET" nil :count 0)
+    ("usw" "UPDATE t SET WHERE" nil :count 0)
     ))
 
 (define-abbrev-table 'org-mode-abbrev-table
