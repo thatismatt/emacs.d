@@ -992,9 +992,15 @@ New window's buffer is selected according to `matt-mru-buffer'."
 (matt-define-key "i t" 'matt-insert-time)
 
 (defun matt-insert-timestamp (arg)
-  "Insert the current timestamp. e.g 2020012016131337."
+  "Insert the current timestamp. e.g 2020012016131337, 2020-01-20_16-13-13, 1621854380123 or 1621854380."
   (interactive "p")
-  (insert (format-time-string "%Y%m%d%H%M%S%2N" (current-time))))
+  (insert (format-time-string
+           (cond
+            ((eq arg 64) "%s")                ;; 1621854575
+            ((eq arg 16) "%s%3N")             ;; 1621854572121
+            ((eq arg 4)  "%Y-%m-%d_%H-%M-%S") ;; 2021-05-24_12-03-45
+            (t           "%Y%m%d%H%M%S%2N"))  ;; 2021052412035569
+           (current-time))))
 (matt-define-key "i s" 'matt-insert-timestamp)
 
 (defun matt-insert-underline (c)
