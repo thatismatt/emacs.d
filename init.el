@@ -866,6 +866,8 @@ New window's buffer is selected according to `matt-mru-buffer'."
     (define-key map "1" 'delete-other-windows)
     (define-key map "2" 'split-window-below)
     (define-key map "3" 'split-window-right)
+    (define-key map "n" 'next-buffer)
+    (define-key map "p" 'previous-buffer)
     (set-transient-map map t)))
 (matt-define-key "w a" 'matt-window-adjust)
 (matt-define-key "M-w" 'matt-window-adjust)
