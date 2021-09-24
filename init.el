@@ -1190,7 +1190,8 @@ New window's buffer is selected according to `matt-mru-buffer'."
   (if (use-region-p)
       (matt-recenter-region begin end)
     (call-interactively 'recenter-top-bottom)))
-(global-set-key (kbd "C-l") 'matt-recenter-region-top-bottom)
+;; matt-recenter-region-top-bottom hangs when called repeatedly in the minibuffer
+(bind-key "C-l" 'matt-recenter-region-top-bottom nil (not (minibufferp)))
 
 (defun matt-region-size ()
   (interactive)
