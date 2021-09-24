@@ -276,9 +276,10 @@
 
 (use-package browse-url
   :init
-  (setq browse-url-browser-function 'browse-url-chrome)
-  :bind (:map matt-keymap
-              ("o u" . browse-url)))
+  (setq browse-url-browser-function 'browse-url-chrome))
+
+(use-package ffap
+  :bind ("C-x C-f" . find-file-at-point))
 
 (use-package selectrum
   :ensure t
