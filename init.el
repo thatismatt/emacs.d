@@ -627,7 +627,10 @@
                ("C-<left>"    . nil)
                ("C-<right>"   . nil)
                ("C-c <left>"  . org-shiftleft)
-               ("C-c <right>" . org-shiftright))
+               ("C-c <right>" . org-shiftright)
+               ("C-c <up>"    . org-shiftup)
+               ("C-c <down>"  . org-shiftdown)
+               ("M-."         . org-open-at-point))
          (:map matt-keymap
                ("c i" . matt-org-clock-in)
                ("c o" . matt-org-clock-out)
