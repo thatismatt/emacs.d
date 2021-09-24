@@ -349,7 +349,9 @@
     :config
     (defun matt-ibuffer-vc-ignore-some-buffers (f buf)
       (when (or (buffer-file-name buf)
-                (eq 'cider-repl-mode (with-current-buffer buf major-mode)))
+                (eq 'cider-repl-mode (with-current-buffer buf major-mode))
+                (and (get-buffer-process buf)
+                     (string-match-p "^nrepl" (process-name (get-buffer-process buf)))))
         (funcall f buf)))
     (advice-add 'ibuffer-vc-root :around 'matt-ibuffer-vc-ignore-some-buffers)
     :hook (ibuffer . ibuffer-vc-set-filter-groups-by-vc-root))
