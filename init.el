@@ -539,7 +539,8 @@
   :bind (("C-x g" . magit)
          (:map matt-keymap
                ("g l" . magit-log-buffer-file)
-               ("g b" . magit-blame-addition))))
+               ("g b" . magit-blame-addition)
+               ("g f" . magit-find-file))))
 
 (use-package diff-hl
   :ensure t
