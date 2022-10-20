@@ -1109,7 +1109,7 @@ New window's buffer is selected according to `matt-mru-buffer'."
 (defun matt-org-title ()
   (interactive)
   (let* ((date (format-time-string "%a, %d %B %Y" (current-time)))
-         (title (file-name-base (buffer-file-name))))
+         (title (capitalize (file-name-base (buffer-file-name)))))
     (insert (format "#+TITLE: %s - %s\n" title date))))
 
 (defun matt-open-org-file (filename)
