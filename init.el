@@ -778,9 +778,37 @@ Focus change event is debounced so we don't gc on focus."
   (setq web-mode-code-indent-offset 2)
   (setq web-mode-enable-comment-interpolation nil))
 
+(use-package flycheck
+  :ensure t
+  :init
+  (global-flycheck-mode)
+  :config
+  (defun matt-flycheck-navigate ()
+    (interactive)
+    (message "Flycheck Navigate.")
+    (let ((map (make-sparse-keymap)))
+      (define-key map "n" 'flycheck-next-error)
+      (define-key map "p" 'flycheck-previous-error)
+      (set-transient-map map t)))
+  :bind (:map matt-keymap
+              ("e e" . matt-flycheck-navigate)
+              ("e l" . flycheck-list-errors)
+              ("e n" . flycheck-next-error)
+              ("e p" . flycheck-previous-error)
+              ("e w" . flycheck-copy-errors-as-kill)))
+
+(use-package flycheck-clj-kondo
+  :ensure t)
+
 (use-package clojure-mode
   :ensure t
-  :defer t)
+  :defer t
+  :config
+  (setq clojure-toplevel-inside-comment-form t)
+  (put-clojure-indent 'do-at 1)
+  (put-clojure-indent 'do-at* 1)
+  (put-clojure-indent 'fact 1)
+  (require 'flycheck-clj-kondo))
 
 (use-package cider
   :ensure t
@@ -788,7 +816,7 @@ Focus change event is debounced so we don't gc on focus."
   :config
   (setq cider-repl-history-size 1000)
   (setq cider-repl-history-file (expand-file-name ".cider-repl-history" user-emacs-directory))
-
+  (setq cider-repl-pop-to-buffer-on-connect 'display-only)
   (defun matt-cider-repl-clear-buffer ()
     "Version of `cider-repl-clear-buffer' that can be used from another buffer."
     (interactive)
@@ -803,9 +831,39 @@ Focus change event is debounced so we don't gc on focus."
   (defun matt-cider-repl-display-buffer ()
     (interactive)
     (display-buffer (cider-current-repl nil 'ensure)))
+  ;; stolen from https://github.com/corgi-emacs/corgi-packages/blob/main/corgi-clojure/corgi-clojure.el
+  (defun matt-cider-jack-in-babashka (&optional project-dir)
+    (interactive)
+    (let ((project-dir (or project-dir user-emacs-directory)))
+      (nrepl-start-server-process
+       project-dir
+       "bb --nrepl-server 0"
+       (lambda (server-buf)
+         (set-process-query-on-exit-flag
+          (get-buffer-process server-buf) nil)
+         (cider-nrepl-connect
+          (list :repl-buffer server-buf
+                :repl-type 'clj
+                :host (plist-get nrepl-endpoint :host)
+                :port (plist-get nrepl-endpoint :port)
+                :project-dir project-dir
+                :session-name "babashka"
+                :repl-init-function (lambda ()
+                                      (setq-local cljr-suppress-no-project-warning t
+                                                  cljr-suppress-middleware-warnings t
+                                                  process-query-on-exit-flag nil)
+                                      (set-process-query-on-exit-flag
+                                       (get-buffer-process (current-buffer)) nil)
+                                      (rename-buffer "*babashka-repl*"))))))))
   :bind (:map matt-keymap
               ("M-c M-o" . matt-cider-repl-clear-buffer)
               ("M-c M-z" . matt-cider-repl-display-buffer)))
+
+(defun matt-send-to-portal ()
+  (interactive)
+  (when (region-active-p)
+    (cider-interactive-eval (concat "(portal.api/submit " (buffer-substring-no-properties (region-beginning) (region-end)) ")"))))
+(matt-define-key "c c" 'matt-send-to-portal)
 
 (use-package sql
   :defer t
