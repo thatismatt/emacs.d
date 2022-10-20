@@ -1054,7 +1054,7 @@ New window's buffer is selected according to `matt-mru-buffer'."
       (re-search-backward "[^ \t\r\n]" nil t)
       (re-search-forward "[ \t\r\n]+" nil t)
       (replace-match "" nil nil))))
-(matt-define-key "j k" 'matt-kill-whitespace)
+(matt-define-key "k w" 'matt-kill-whitespace)
 
 (defun matt-time-string-to-numeric (time-string)
   "Converts human readable times to a numeric value (minutes or hours), e.g. \"30:30\" becomes 30.5."
