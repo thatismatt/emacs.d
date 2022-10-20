@@ -271,3 +271,5 @@ This will delete the current timer if there is one running or paused."
     (setq mortimer-log '())))
 
 (provide 'mortimer)
+
+;;; mortimer.el ends here
