@@ -292,6 +292,13 @@
 (put 'narrow-to-page   'disabled nil)
 (put 'narrow-to-region 'disabled nil)
 
+(require 'recentf)
+(setq recentf-save-file (expand-file-name "recentf" user-emacs-directory))
+(setq recentf-max-saved-items 500)
+(setq recentf-max-menu-items 15)
+(setq recentf-auto-cleanup 'never) ;; disable - can cause problems with remote files
+(recentf-mode 1)
+
 (use-package buffer-naming
   :config
   (buffer-naming-load)
@@ -441,13 +448,6 @@
                 (file-writable-p buffer-file-name)
                 (matt-file-owned-by-user-p buffer-file-name))
       (matt-find-alternate-file-as-root buffer-file-name))))
-
-(require 'recentf)
-(setq recentf-save-file (expand-file-name "recentf" user-emacs-directory))
-(setq recentf-max-saved-items 500)
-(setq recentf-max-menu-items 15)
-(setq recentf-auto-cleanup 'never) ;; disable - can cause problems with remote files
-(recentf-mode 1)
 
 (use-package bookmark
   :bind (:map matt-keymap
