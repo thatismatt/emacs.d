@@ -1133,7 +1133,10 @@ New window's buffer is selected according to `matt-mru-buffer'."
 (defun matt-journal+log-back ()
   (interactive)
   (when matt-journal+log-window-configuration-stash
-    (set-window-configuration matt-journal+log-window-configuration-stash)))
+    (set-window-configuration matt-journal+log-window-configuration-stash))
+  ;; ensure the journal and log don't just "reappear" on next matt-mru-buffer call
+  (bury-buffer (find-file-noselect matt-journal-file))
+  (bury-buffer (find-file-noselect matt-log-file)))
 
 (defun matt-journal+log-toggle ()
   (interactive)
