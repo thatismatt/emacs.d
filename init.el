@@ -569,10 +569,12 @@ Focus change event is debounced so we don't gc on focus."
   :config
   (setq ag-highlight-search t)
   (setq ag-reuse-buffers t)
-  (add-hook 'ag-mode-hook
-            '(lambda () (switch-to-buffer-other-window (current-buffer))))
+  (setq ag-reuse-window t)
+  (add-to-list 'ag-arguments "--hidden")
   :bind (:map matt-keymap
-              ("g d" . ag) ;; mnemonic "grep directory"
+              ("g d" . ag-regexp) ;; mnemonic "grep directory"
+              ("g a" . ag)
+              ("g r" . ag-project-regexp)
               ("g g" . ag-project)))
 
 (use-package idle-highlight-mode
