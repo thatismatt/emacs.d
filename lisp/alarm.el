@@ -30,6 +30,7 @@ Displays MESSAGE (and TIME) in `alarm-popup-buffer'."
     (insert message)
     (insert "\n\n")
     (alarm-popup-mode)
+    (setq-local alarm-message message)
     (alarm-play-sound "/usr/share/sounds/sound-icons/trumpet-12.wav")))
 
 (defun alarm-popup-kill ()
@@ -37,13 +38,18 @@ Displays MESSAGE (and TIME) in `alarm-popup-buffer'."
   (kill-buffer (current-buffer))
   (delete-frame))
 
+(defun alarm-popup-snooze (mins)
+  (interactive "sSnooze (mins): ")
+  (alarm (format "%s mins" mins) alarm-message)
+  (alarm-popup-kill))
+
 (define-derived-mode alarm-popup-mode fundamental-mode "Alarm Popup"
   "A mode for the Alarm Popup
-
 \\{alarm-popup-mode-map}"
   (read-only-mode))
 
 (define-key alarm-popup-mode-map (kbd "q") 'alarm-popup-kill)
+(define-key alarm-popup-mode-map (kbd "s") 'alarm-popup-snooze)
 
 (defun alarm-cancel (a)
   "Cancel the alarm A."
@@ -116,7 +122,7 @@ Displays MESSAGE (and TIME) in `alarm-popup-buffer'."
 (defun alarm-list ()
   "View the list of alarms."
   (interactive)
-  (view-buffer (alarm-get-buffer)))
+  (switch-to-buffer (alarm-get-buffer)))
 
 (defun alarm-next ()
   (interactive)
