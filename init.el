@@ -1107,13 +1107,12 @@ New window's buffer is selected according to `matt-mru-buffer'."
 
 (defun matt-journal+log-window-configuration-p ()
   (interactive)
-  (let* ((window-child-count (frame-root-window))
-         (left-window (window-child (frame-root-window)))
+  (let* ((left-window (window-child (frame-root-window)))
          (right-window (window-right left-window)))
-    (and (equal (expand-file-name matt-journal-file)
-                (buffer-file-name (window-buffer left-window)))
-         (equal (expand-file-name matt-log-file)
-                (buffer-file-name (window-buffer right-window))))))
+    (or (equal (expand-file-name matt-journal-file)
+               (buffer-file-name (window-buffer left-window)))
+        (equal (expand-file-name matt-log-file)
+               (buffer-file-name (window-buffer right-window))))))
 
 (defvar matt-journal+log-window-configuration-stash nil)
 
@@ -1133,14 +1132,14 @@ New window's buffer is selected according to `matt-mru-buffer'."
 (defun matt-journal+log-back ()
   (interactive)
   (when matt-journal+log-window-configuration-stash
-    (set-window-configuration matt-journal+log-window-configuration-stash))
-  ;; ensure the journal and log don't just "reappear" on next matt-mru-buffer call
-  (bury-buffer (find-file-noselect matt-journal-file))
-  (bury-buffer (find-file-noselect matt-log-file)))
+    (set-window-configuration matt-journal+log-window-configuration-stash)
+    ;; ensure the journal and log don't just "reappear" on next matt-mru-buffer call
+    (bury-buffer (find-file-noselect matt-journal-file))
+    (bury-buffer (find-file-noselect matt-log-file))))
 
 (defun matt-journal+log-toggle ()
   (interactive)
-  (if (matt-journal+log-window-configuration-p) ;; TODO: try testing non-nil stash as trigger for jumping back
+  (if (matt-journal+log-window-configuration-p)
       (matt-journal+log-back)
     (matt-journal+log)))
 (matt-define-key "j j" 'matt-journal+log-toggle)
