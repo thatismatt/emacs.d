@@ -990,7 +990,7 @@ New window's buffer is selected according to `matt-mru-buffer'."
                            (buffer-file-name buf)
                            (not (buffer-modified-p buf))))))
     (seq-do 'kill-buffer)))
-(matt-define-key "k" 'matt-clean-buffers)
+(matt-define-key "k k" 'matt-clean-buffers)
 
 (defun matt-swap-windows ()
   "Swap the buffers in `selected-window' and `next-window'."
