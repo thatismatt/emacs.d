@@ -1271,6 +1271,20 @@ New window's buffer is selected according to `matt-mru-buffer'."
              pt (mark))))
 (matt-define-key "r s" 'matt-region-size)
 
+(defun matt-get-defun-name-at-point ()
+  (save-excursion
+    (beginning-of-defun)
+    (let ((defun-first-line (thing-at-point 'line)))
+      (string-match "^(def[-a-z]* \\([-A-Za-z?!]*\\)" defun-first-line)
+      (set-text-properties 0 (length defun-first-line) nil defun-first-line)
+      (match-string 1 defun-first-line))))
+
+(defun matt-defun-name-at-point () ;; TODO: (&optional arg) prefix arg yank or insert
+  (interactive)
+  (when-let ((defun-name (matt-get-defun-name-at-point)))
+    (insert defun-name)))
+(matt-define-key "i k" 'matt-defun-name-at-point)
+
 (defun matt-beep ()
   "Beep!"
   (interactive)
