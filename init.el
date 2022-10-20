@@ -198,17 +198,17 @@
 (when (not (boundp 'matt-mode-line-format-default)) ;; make safe for re-evaluation
   (setq matt-mode-line-format-default mode-line-format))
 
-(setq matt-mode-line-format-minimal
-      '("%e "
-        mode-line-modified
-        " "
-        mode-line-buffer-identification
-        mode-line-frame-identification
-        mode-name
-        ;; centre
-        (:propertize " " display ((space :align-to (- right 10)))) ;; (length "[00:00:00]") => 10
-        ;; right
-        mode-line-misc-info))
+(defvar matt-mode-line-format-minimal
+  '("%e "
+    mode-line-modified
+    " "
+    mode-line-buffer-identification
+    mode-line-frame-identification
+    mode-name
+    ;; centre
+    (:propertize " " display ((space :align-to (- right 10)))) ;; (length "[00:00:00]") => 10
+    ;; right
+    mode-line-misc-info))
 
 (defun matt-toggle-minimal-mode-line ()
   (interactive)
