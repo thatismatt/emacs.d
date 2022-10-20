@@ -70,6 +70,10 @@ Focus change event is debounced so we don't gc on focus."
 
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 
+(defun matt-recompile-packages ()
+  (interactive)
+  (byte-recompile-directory package-user-dir nil 'force))
+
 ;; hide tool bar & menu bar & tab bar
 (tool-bar-mode -1)
 (menu-bar-mode -1)
