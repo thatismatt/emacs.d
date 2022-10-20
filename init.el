@@ -33,7 +33,20 @@
 ;; (add-hook 'minibuffer-exit-hook #'matt-gc-uninhibit)
 ;; (remove-hook 'minibuffer-exit-hook #'matt-gc-uninhibit)
 
-(add-hook 'focus-out-hook 'garbage-collect)
+(defvar matt-gc-on-blur-timer nil)
+
+(defun matt-gc-on-blur ()
+  "Run gc when Emacs window loses focus AKA blurs.
+Focus change event is debounced so we don't gc on focus."
+  (if (frame-focus-state)
+      (when matt-gc-on-blur-timer
+        (cancel-timer matt-gc-on-blur-timer))
+    (setq matt-gc-on-blur-timer (run-with-timer 1 nil #'garbage-collect))))
+
+(add-function :after after-focus-change-function
+              #'matt-gc-on-blur)
+
+;; (remove-function after-focus-change-function #'matt-gc-on-blur)
 
 (matt-gc-inhibit) ;; speedup startup
 
