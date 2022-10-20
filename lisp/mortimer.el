@@ -33,36 +33,36 @@
 
 ;;; Code:
 
-(setq mortimer-timer nil)
-(setq mortimer-timer-duration nil)
+(defvar mortimer-timer nil)
+(defvar mortimer-timer-duration nil)
 
-(setq mortimer-mode-line nil)
+(defvar mortimer-mode-line nil)
 (put 'mortimer-mode-line 'risky-local-variable t)
 
-(setq mortimer-mode-line-timer nil)
+(defvar mortimer-mode-line-timer nil)
 
-(setq mortimer-sound nil)
+(defvar mortimer-sound nil)
 
-(setq mortimer-sound-command
-      (if (executable-find "ffplay")
-          (list "ffplay" "-nodisp" "-autoexit")
-        (list "paplay")))
+(defvar mortimer-sound-command
+  (if (executable-find "ffplay")
+      (list "ffplay" "-nodisp" "-autoexit")
+    (list "paplay")))
 
-(setq mortimer-pause-time-remaining nil)
+(defvar mortimer-pause-time-remaining nil)
 
-(setq mortimer-log '())
+(defvar mortimer-log '())
 
 (defface mortimer-mode-line-complete-face
   '((t (:background "#050")))
-   "Face used for complete portion of Mortimer timer in the mode line")
+  "Face used for complete portion of Mortimer timer in the mode line.")
 
 (defface mortimer-mode-line-remaining-face
   '((t ()))
-   "Face used for remaining portion of Mortimer timer in the mode line")
+  "Face used for remaining portion of Mortimer timer in the mode line.")
 
 (defface mortimer-mode-line-paused-face
   '((t (:foreground "#500")))
-  "Face used for Mortimer timer in the mode line when paused")
+  "Face used for Mortimer timer in the mode line when paused.")
 
 (defun mortimer-play-sound (sound)
   (when (and sound
@@ -145,9 +145,8 @@
 
 ;;;###autoload
 (defun mortimer-start (time)
-  "Start a countdown timer starting at `time', e.g. \"25
-  mins\". This will delete the current timer if there is one
-  running or paused."
+  "Start a countdown timer starting at TIME, e.g. \"25 mins\".
+This will delete the current timer if there is one running or paused."
   (interactive "sTime: ")
   (if-let ((seconds (if (numberp time) time (timer-duration time))))
       (progn
@@ -157,7 +156,7 @@
         (mortimer-timer-start seconds))
     (message "I don't understand %s, try something like \"25 mins\"." time)))
 
-(setq mortimer-quick-toggle-default-time "25 mins")
+(defvar mortimer-quick-toggle-default-time "25 mins")
 
 ;;;###autoload
 (defun mortimer-quick-toggle ()
@@ -222,11 +221,11 @@
 
 (defface mortimer-view-log-completed-face
   '((t (:foreground "#090" :box t)))
-  "Face used for Mortimer completed timers in the log")
+  "Face used for Mortimer completed timers in the log.")
 
 (defface mortimer-view-log-unfinished-face
   '((t (:foreground "#b00" :box t)))
-  "Face used for Mortimer unfinished timers in the log")
+  "Face used for Mortimer unfinished timers in the log.")
 
 (defun mortimer-get-buffer ()
   (let ((buffer (get-buffer-create "*Mortimer*")))

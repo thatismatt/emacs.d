@@ -5,7 +5,7 @@
 
 ;;; Code:
 
-(setq matt-init-start-time (current-time))
+(defvar matt-init-start-time (current-time))
 
 (when (getenv "emacs_perf")
   (defun matt-require-perf-wrapper (orig feature &rest args)
@@ -21,11 +21,13 @@
 (setq garbage-collection-messages t)
 
 (defun matt-gc-inhibit ()
+  "Increase the gc threshold to prevent garbage collection."
   (setq gc-cons-threshold (* 512 1024 1024)))
 ;; (add-hook 'minibuffer-setup-hook #'matt-gc-inhibit)
 ;; (remove-hook 'minibuffer-setup-hook #'matt-gc-inhibit)
 
 (defun matt-gc-uninhibit ()
+  "Return the gc threshold to a normal level."
   (setq gc-cons-threshold (* 8 1024 1024)))
 ;; 16 = long pauses on undo
 ;; (add-hook 'minibuffer-exit-hook #'matt-gc-uninhibit)
@@ -64,9 +66,10 @@
 (setq scroll-conservatively 1)
 
 ;; keys
-(setq matt-keymap (make-sparse-keymap))
+(defvar matt-keymap (make-sparse-keymap))
 (global-set-key (kbd "M-m") matt-keymap)
 (defun matt-define-key (key def)
+  "Define key sequence KEY as DEF in personal keymap."
   (define-key matt-keymap (kbd key) def))
 
 ;; themes
@@ -78,6 +81,7 @@
   (disable-theme (car custom-enabled-themes)))
 
 (defun matt-disable-all-themes ()
+  "Disable all loaded themes."
   (interactive)
   (when (not (eql nil custom-enabled-themes))
     (matt-disable-current-theme)
@@ -85,6 +89,7 @@
 (matt-define-key "t ESC" 'matt-disable-all-themes)
 
 (defun matt-load-theme (theme)
+  "Load THEME after disabling all loaded themes."
   (interactive
    (list
     (intern
@@ -95,19 +100,22 @@
 (matt-define-key "t l" 'matt-load-theme)
 
 (defun matt-reload-theme ()
+  "Reload the current theme."
   (interactive)
   (matt-load-theme (car custom-enabled-themes)))
 (matt-define-key "t r" 'matt-reload-theme)
 
-(setq matt-default-theme 'witness)
+(defvar matt-default-theme 'witness)
 
 (defun matt-load-default-theme ()
+  "Load the default theme, specified by `matt-default-theme'."
   (interactive)
   (matt-load-theme matt-default-theme))
 (matt-define-key "t d" 'matt-load-default-theme)
 
 ;; font
 (defun matt-font-size (&optional sz)
+  "Set the default font size to SZ."
   (interactive "NFont size: ")
   (if (numberp sz)
       (set-face-attribute 'default nil :height (truncate (* sz 10)))
@@ -115,11 +123,13 @@
 (matt-define-key "f f" 'matt-font-size)
 
 (defun matt-font-face-wide ()
+  "Change the default font family to a wide font."
   (interactive)
   (set-face-attribute 'default nil :family "Inconsolata"))
 (matt-define-key "f w" 'matt-font-face-wide)
 
 (defun matt-font-face-narrow ()
+  "Change the default font family to a narrow font."
   (interactive)
   (set-face-attribute 'default nil :family "Iosevka"))
 (matt-define-key "f n" 'matt-font-face-narrow)
@@ -138,21 +148,24 @@
 ;; (set-face-attribute 'default nil :family "Courier 10 Pitch")
 ;; (set-face-attribute 'default nil :family "Ubuntu Mono")
 
-(setq matt-font-size-default 11)
+(defvar matt-font-size-default 11)
 
 (defun matt-font-size-increase ()
+  "Increase the font size by 1 point."
   (interactive)
   (matt-font-size (1+ (matt-font-size)))
   (message "Font size: %s" (matt-font-size)))
 (global-set-key (kbd "C-=") 'matt-font-size-increase)
 
 (defun matt-font-size-decrease ()
+  "Decrease the font size by 1 point."
   (interactive)
   (matt-font-size (1- (matt-font-size)))
   (message "Font size: %s" (matt-font-size)))
 (global-set-key (kbd "C--") 'matt-font-size-decrease)
 
 (defun matt-font-size-default ()
+  "Set the font to the default size, specified by `matt-font-size-default'."
   (interactive)
   (matt-font-size matt-font-size-default)
   (message "Font size: %s" (matt-font-size)))
@@ -944,7 +957,7 @@ New window's buffer is selected according to `matt-mru-buffer'."
          (equal (expand-file-name matt-log-file)
                 (buffer-file-name (window-buffer right-window))))))
 
-(setq matt-journal+log-window-configuration-stash nil)
+(defvar matt-journal+log-window-configuration-stash nil)
 
 (defun matt-journal+log ()
   (interactive)
@@ -992,7 +1005,7 @@ New window's buffer is selected according to `matt-mru-buffer'."
 (matt-define-key "i d" 'matt-insert-date)
 
 (defun matt-insert-time (arg)
-  "Insert the current time. e.g 16:34:42, 16:34, 2018-02-08T16:34:42+0000 or 2018-02-08_16-34-42."
+  "Insert the current time. e.g. 16:34:42, 16:34, 2018-02-08T16:34:42+0000 or 2018-02-08_16-34-42."
   (interactive "p")
   (insert (format-time-string
            (cond
@@ -1004,7 +1017,7 @@ New window's buffer is selected according to `matt-mru-buffer'."
 (matt-define-key "i t" 'matt-insert-time)
 
 (defun matt-insert-timestamp (arg)
-  "Insert the current timestamp. e.g 2020012016131337, 2020-01-20_16-13-13, 1621854380123 or 1621854380."
+  "Insert the current timestamp, e.g. 2020012016131337, 2020-01-20_16-13-13, 1621854380123 or 1621854380."
   (interactive "p")
   (insert (format-time-string
            (cond
@@ -1181,12 +1194,14 @@ New window's buffer is selected according to `matt-mru-buffer'."
 (matt-define-key "p p" 'matt-adjust-at-point)
 
 (defun matt-kill-emacs ()
+  "Like `save-buffers-kill-emacs' but with confirmation."
   (interactive)
   (when (y-or-n-p "Kill Emacs?")
     (save-buffers-kill-emacs)))
 (matt-define-key "q" 'matt-kill-emacs)
 
 (defun matt-chmod+x ()
+  "Make the current file executable."
   (interactive)
   (let ((filename (buffer-file-name (current-buffer))))
     (chmod filename
@@ -1212,6 +1227,7 @@ New window's buffer is selected according to `matt-mru-buffer'."
 (bind-key "C-l" 'matt-recenter-region-top-bottom nil (not (minibufferp)))
 
 (defun matt-region-size ()
+  "Report details about the region."
   (interactive)
   (let ((mk (or (mark) (point))) ;; initially mark is nil
         (pt (point)))
@@ -1222,6 +1238,7 @@ New window's buffer is selected according to `matt-mru-buffer'."
 (matt-define-key "r s" 'matt-region-size)
 
 (defun matt-beep ()
+  "Beep!"
   (interactive)
   (start-process "matt-beep" nil "paplay" "/usr/share/sounds/sound-icons/prompt.wav"))
 
@@ -1241,3 +1258,6 @@ New window's buffer is selected according to `matt-mru-buffer'."
 
 (message "init time: %.2fms"
          (* 1000.0 (float-time (time-subtract matt-init-stop-time matt-init-start-time))))
+
+(provide 'init)
+;;; init.el ends here
