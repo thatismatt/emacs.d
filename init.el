@@ -232,6 +232,7 @@
         (:else
          (line-number-mode 1)
          (column-number-mode -1))))
+
 (column-number-mode -1)
 (line-number-mode -1)
 (size-indication-mode -1)
@@ -242,8 +243,8 @@
 (setq mouse-yank-at-point t) ;; middle click paste at point (not mouse pointer)
 (setq require-final-newline nil)
 (setq-default indent-tabs-mode nil)
-(setq-default tab-width 4)
-(setq-default fill-column 100)
+(setq-default tab-width 8)
+(setq-default fill-column 120)
 (setq-default display-fill-column-indicator-character ?\u2506)
 (global-auto-revert-mode t)
 (fset 'yes-or-no-p 'y-or-n-p)
@@ -266,9 +267,11 @@
 (matt-define-key "s r"                'replace-string)
 (matt-define-key "s l"                'sort-lines)
 (matt-define-key "w b"                'balance-windows)
-(matt-define-key "w l"                'toggle-truncate-lines) ;; mnemonic "wrap lines"
+(matt-define-key "w l"                'toggle-truncate-lines)              ;; mnemonic "wrap lines"
 (matt-define-key "w w"                'toggle-word-wrap)
 (matt-define-key "w v"                'display-fill-column-indicator-mode) ;; mnemonic "wrap view"
+(matt-define-key "w f"                'auto-fill-mode)                     ;; mnemonic "wrap fill"
+(matt-define-key "l n"                'display-line-numbers-mode)
 
 (define-key isearch-mode-map (kbd "C-.") 'isearch-forward-symbol-at-point)
 
@@ -303,8 +306,7 @@
 
 (use-package selectrum
   :ensure t
-  :hook
-  (after-init . selectrum-mode)
+  :hook (after-init . selectrum-mode)
   :config
   (selectrum-mode +1)
   (setq selectrum-max-window-height 25)
@@ -321,9 +323,9 @@
          (:map selectrum-minibuffer-map
                ("S-<down>" . abort-recursive-edit))))
 
-(setq matt-scratch-file-locations
-      (list "dev/scratch.*" "dev/*/scratch.*"
-            "src/scratch.*" "src/*/scratch.*"))
+(defvar matt-scratch-file-locations
+  (list "dev/scratch.*" "dev/*/scratch.*"
+        "src/scratch.*" "src/*/scratch.*"))
 
 (use-package projectile
   :ensure t
@@ -408,8 +410,8 @@
         (matt-eshell-other-buffers-directory)
       (matt-eshell-current-directory)))
   :config
-  (setq eshell-hist-ignoredups t)
-  (setq eshell-history-size 1024)
+  (setq eshell-hist-ignoredups 'erase)
+  (setq eshell-history-size (* 1024 1024))
   :bind (:map matt-keymap
               ("o e" . eshell)
               ("o d" . matt-eshell-dwim-directory)))
@@ -421,7 +423,7 @@
   :config
   ;; open as root - from emacs prelude
   (defun matt-file-owner-uid (filename)
-    "Return the UID of the FILENAME as an integer. See `file-attributes' for more info."
+    "Return the UID of the FILENAME as an integer. See `file-attributes'."
     (nth 2 (file-attributes filename 'integer)))
   (defun matt-file-owned-by-user-p (filename)
     "Return t if file FILENAME is owned by the currently logged in user."
@@ -454,8 +456,8 @@
               ("b l" . bookmark-bmenu-list)))
 
 (use-package display-line-numbers
-  :init
-  (global-display-line-numbers-mode)
+  ;; :init (global-display-line-numbers-mode)
+  :hook (prog-mode . display-line-numbers-mode)
   :config
   (setq display-line-numbers-width-start t)
   (setq display-line-numbers-widen t))
@@ -490,7 +492,7 @@
   (setq company-minimum-prefix-length 2)
   (setq company-tooltip-flip-when-above t)
   (setq company-dabbrev-downcase nil)
-  (setq company-dabbrev-ignore-case 't)
+  (setq company-dabbrev-ignore-case t)
   (global-company-mode 1))
 
 (use-package rainbow-mode
@@ -498,11 +500,13 @@
   :init
   (setq rainbow-html-colors nil)
   (setq rainbow-x-colors nil)
-  :hook (emacs-lisp-mode css-mode))
+  :hook (emacs-lisp-mode
+         css-mode))
 
 (use-package grep
   :config
-  (setq grep-find-ignored-directories (append grep-find-ignored-directories '("target" "out" "node_modules" "build" "dist" "bower")))
+  (setq grep-find-ignored-directories
+        (append grep-find-ignored-directories '("target" "out" "node_modules" "build" "dist" "bower")))
   (add-hook 'grep-mode-hook (lambda () (toggle-truncate-lines 1))))
 
 (use-package ag
@@ -667,11 +671,17 @@
 
 (use-package rainbow-delimiters
   :ensure t
-  :hook ((emacs-lisp-mode lisp-mode clojure-mode cider-repl-mode) . rainbow-delimiters-mode-enable))
+  :hook ((emacs-lisp-mode
+          lisp-mode
+          clojure-mode
+          cider-repl-mode
+          scheme-mode
+          geiser-repl-mode)
+         . rainbow-delimiters-mode-enable))
 
 (use-package elisp-slime-nav
   :ensure t
-  :hook ((emacs-lisp-mode) . turn-on-elisp-slime-nav-mode))
+  :hook (emacs-lisp-mode . elisp-slime-nav-mode))
 
 (use-package markdown-mode
   :ensure t
@@ -698,7 +708,7 @@
 
 (use-package cc-mode
   :init
-  (add-hook 'java-mode-hook '(lambda () (c-set-offset 'arglist-intro '+)))
+  (add-hook 'java-mode-hook (lambda () (c-set-offset 'arglist-intro '+)))
   :defer t)
 
 (use-package web-mode
@@ -772,6 +782,7 @@
   :config
   (setq mortimer-sound "/usr/share/sounds/sound-icons/trumpet-12.wav")
   ;; (setq mortimer-sound "~/personal/dnb-loop.mp3")
+  ;; (setq mortimer-sound "~/personal/dnb-loop-short.mp3")
   ;; (setq mortimer-sound "/usr/share/sounds/sound-icons/prompt.wav")
   ;; (mortimer-play-sound mortimer-sound)
   :bind (:map matt-keymap
@@ -1198,7 +1209,7 @@ New window's buffer is selected according to `matt-mru-buffer'."
 (defun matt-kill-emacs ()
   "Like `save-buffers-kill-emacs' but with confirmation."
   (interactive)
-  (when (y-or-n-p "Kill Emacs?")
+  (when (yes-or-no-p "Kill Emacs?")
     (save-buffers-kill-emacs)))
 (matt-define-key "q" 'matt-kill-emacs)
 
