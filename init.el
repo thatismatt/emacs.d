@@ -963,9 +963,32 @@ New window's buffer is selected according to `matt-mru-buffer'."
 
 (defun matt-time-numeric-to-string (time)
   "Converts a numeric value (minutes or hours) to human readable times, e.g. 30.5 becomes \"30:30\"."
-  (let* ((ms (floor time))
-         (ss (round (* 60 (- time ms)))))
-    (format "%02d:%02d" ms ss)))
+  (let* ((tm (abs time))
+         (ms (floor tm))
+         (ss (round (* 60 (- tm ms)))))
+    (format "%s%02d:%02d" (if (< 0 time) "" "-") ms ss)))
+
+(defun matt-time-numeric-to-symbol (time)
+  (intern (matt-time-numeric-to-string time)))
+
+(defun matt-symbol-or-string-to-string (s)
+  (cond ((stringp s) s)
+        ((null s) nil) ;; (symbolp nil) => true!
+        ((symbolp s) (symbol-name s))))
+
+(defun matt-timep (x)
+  (when-let ((s (matt-symbol-or-string-to-string x)))
+    (when (string-match-p "^[0-9]+:[0-9][0-9]$" s)
+      t)))
+
+(defun matt-time-prepare (x)
+  (cond
+   ((matt-timep x) `(matt-time-string-to-numeric (matt-symbol-or-string-to-string ',x)))
+   ((consp x) (mapcar 'matt-time-prepare x))
+   (t x)))
+
+(defmacro matt-time-eval (form)
+  `(matt-time-numeric-to-symbol ,(matt-time-prepare form)))
 
 (defvar matt-journal-file "~/Documents/journal.org")
 
