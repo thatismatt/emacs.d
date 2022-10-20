@@ -316,6 +316,10 @@ Focus change event is debounced so we don't gc on focus."
 (setq recentf-auto-cleanup 'never) ;; disable - can cause problems with remote files
 (recentf-mode 1)
 
+(use-package comint
+  :init
+  (setq comint-input-ignoredups t))
+
 (use-package buffer-naming
   :config
   (buffer-naming-load)
