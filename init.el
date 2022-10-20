@@ -323,7 +323,7 @@ Focus change event is debounced so we don't gc on focus."
 (use-package buffer-naming
   :config
   (buffer-naming-load)
-  (buffer-naming-set-fn 'projectile-buffer-naming-fn))
+  (buffer-naming-set-fn 'project-el-buffer-naming-fn))
 
 (use-package browse-url
   :init
@@ -355,32 +355,63 @@ Focus change event is debounced so we don't gc on focus."
   (list "dev/scratch.*" "dev/*/scratch.*"
         "src/scratch.*" "src/*/scratch.*"))
 
-(use-package projectile
-  :ensure t
-  :init
-  (projectile-mode)
+(use-package project
   :config
-  (setq projectile-svn-command "find . -type f -not -iwholename '*.svn/*' -print0") ;; see https://github.com/bbatsov/projectile/issues/520
-  (defun matt-projectile-guess-scratch-filename (&optional project-root)
-    (let ((scratch-file (thread-last matt-scratch-file-locations
-                          (mapcar (lambda (pattern) (file-expand-wildcards (concat (projectile-project-root project-root) pattern) t)))
-                          (apply 'append)
-                          car)))
-      (when (and scratch-file (file-exists-p scratch-file))
-        scratch-file)))
-  (defun matt-projectile-find-scratch ()
+  (defun matt-project-find-scratch ()
     (interactive)
-    (if-let ((scratch-file (or (matt-projectile-guess-scratch-filename)
-                               (when-let* ((other-filename (buffer-file-name (other-buffer)))
-                                           (other-directory (file-name-directory other-filename)))
-                                 (matt-projectile-guess-scratch-filename other-directory)))))
-        (find-file scratch-file)
-      (message "No scratch file found")))
-  :bind (("C-x p" . projectile-find-file)
-         (:map matt-keymap
-               ("p b" . projectile-switch-to-buffer)
-               ("p t" . projectile-toggle-between-implementation-and-test)
-               ("p s" . matt-projectile-find-scratch))))
+    (let* ((pr (project-current t))
+           (dir (project-root pr))
+           (scratch-files (mapcan (lambda (pattern)
+                                    (file-expand-wildcards (concat dir pattern) t))
+                                  matt-scratch-file-locations))
+           (current-file-name (buffer-file-name))
+           (current-extension (when current-file-name (file-name-extension current-file-name)))
+           (scratch-file (or (car (seq-filter (lambda (file) (equal (file-name-extension file) current-extension))
+                                              scratch-files))
+                             (car scratch-files))))
+      (message "scratch-file: %s" scratch-file)
+      (if (and scratch-file (file-exists-p scratch-file))
+          (find-file scratch-file)
+        (message "No scratch file found"))))
+  (defun matt-test-file-p (file) ;; (rx bol (* any) "/test/" (* any) "_test.clj" (optional (any "sc")) eol)
+    (string-match-p "^.*/test/.*_test\\.clj[sc]?$" file))
+  (defun matt-guess-test-file (src-file)
+    (thread-last src-file
+                 (replace-regexp-in-string "/src/" "/test/")
+                 (replace-regexp-in-string "\\(\\.clj[sc]?\\)" "_test\\1")))
+  (defun matt-try-guess-test-file (file-name)
+    (when (and file-name (not (matt-test-file-p file-name)))
+      (matt-guess-test-file file-name)))
+  (defun matt-guess-src-file (test-file)
+    (thread-last test-file
+                 (replace-regexp-in-string "/test/" "/src/")
+                 (replace-regexp-in-string "_test\\(\\.clj[sc]?\\)" "\\1")))
+  (defun matt-guess-other-file (file)
+    (when file
+      (let ((other-file (if (matt-test-file-p file)
+                            (matt-guess-src-file file)
+                          (matt-guess-test-file file))))
+        (when (and other-file
+                   (not (equal file other-file))
+                   (file-exists-p other-file))
+          other-file))))
+  (defun matt-toggle-between-src-and-test ()
+    (interactive)
+    (let* ((file-name (buffer-file-name))
+           (other-file (matt-guess-other-file file-name))
+           (test-file-name (matt-try-guess-test-file file-name)))
+      (cond (other-file
+             (find-file other-file))
+            ((and test-file-name
+                  (yes-or-no-p (format "Test file %s doesn't exist, create it?" test-file-name)))
+             (find-file test-file-name))
+            (t
+             (message "No matching src or test file found")))))
+  :bind (:map matt-keymap
+              ("p b" . project-switch-to-buffer)
+              ("p f" . project-find-file)
+              ("p t" . matt-toggle-between-src-and-test)
+              ("p s" . matt-project-find-scratch)))
 
 (use-package ibuffer
   :init
