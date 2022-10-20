@@ -660,6 +660,8 @@ Focus change event is debounced so we don't gc on focus."
           ("POSTPONED" org-postponed-face)
           ("BLOCKED" org-postponed-face)
           ("???" org-query-face)))
+  (setq org-adapt-indentation t) ;; fixes indentation of drawers (e.g. logbook/clock)
+  (setq org-startup-folded t)
   :config
   (use-package org-clock)
   (setq org-duration-format 'h:mm) ;; display days as hours
