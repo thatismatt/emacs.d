@@ -175,6 +175,11 @@
                    (replace-regexp-in-string "%" "%%" (abbreviate-file-name (buffer-file-name)))
                  "%b"))))
 
+(defun matt-find-files (filenames)
+  "Useful as eshell alias, FILENAMES can be multiple args or globs."
+  (mapc 'find-file
+        (if (consp (car filenames)) (car filenames) filenames)))
+
 (when (not (boundp 'matt-mode-line-format-default)) ;; make safe for re-evaluation
   (setq matt-mode-line-format-default mode-line-format))
 
