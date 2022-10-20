@@ -884,6 +884,12 @@ Focus change event is debounced so we don't gc on focus."
   :mode (("\\.pp\\'"          . ruby-mode)
          ("\\^Vagrantfile\\'" . ruby-mode)))
 
+(use-package geiser
+  :ensure t)
+
+(use-package geiser-guile
+  :ensure t)
+
 (use-package image
   :bind (:map image-map
               ("=" . image-increase-size)))
