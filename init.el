@@ -125,12 +125,14 @@
 (defun matt-font-face-wide ()
   "Change the default font family to a wide font."
   (interactive)
+  (set-face-attribute 'default nil :weight 'medium) ;; combining this with the line below doesn't work
   (set-face-attribute 'default nil :family "Inconsolata"))
 (matt-define-key "f w" 'matt-font-face-wide)
 
 (defun matt-font-face-narrow ()
   "Change the default font family to a narrow font."
   (interactive)
+  (set-face-attribute 'default nil :width 'normal :weight 'normal)
   (set-face-attribute 'default nil :family "Iosevka"))
 (matt-define-key "f n" 'matt-font-face-narrow)
 
