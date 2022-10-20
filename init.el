@@ -1255,12 +1255,12 @@ New window's buffer is selected according to `matt-mru-buffer'."
   (interactive)
   (start-process "matt-beep" nil "paplay" "/usr/share/sounds/sound-icons/prompt.wav"))
 
-(when (or (display-graphic-p)
-          (daemonp))
-  (add-hook 'after-make-frame-functions
-            (lambda (frame)
-              (select-frame frame)
-              (matt-load-default-theme))))
+(cond
+ ((daemonp) (add-hook 'after-make-frame-functions
+                      (lambda (frame)
+                        (select-frame frame)
+                        (matt-load-default-theme))))
+ ((display-graphic-p) (matt-load-default-theme)))
 
 ;; require an init-local if present
 (require 'init-local nil t)
