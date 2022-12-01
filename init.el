@@ -957,6 +957,7 @@ New window's buffer is selected according to `matt-mru-buffer'."
 (global-set-key (kbd "S-<left>") 'matt-delete-other-windows-or-split)
 
 (defun matt-disposable-buffer-p (buf)
+  "The buffer BUF is disposable, i.e. can be killed safely."
   (and (null (get-buffer-process buf)) ;; ref. cider repl buffer
        (string-match-p
         (rx (and bos
@@ -978,8 +979,8 @@ New window's buffer is selected according to `matt-mru-buffer'."
         major-mode)))
 
 (defun matt-clean-buffers (&optional arg)
-  "Kill all \"disposable\" buffers. With prefix arg also kill all
-  unmodified file buffers."
+  "Kill all \"disposable\" buffers.
+With prefix ARG also kill all unmodified file buffers."
   (interactive "P")
   (thread-last (buffer-list)
     (seq-filter (lambda (buf)
@@ -1042,43 +1043,53 @@ New window's buffer is selected according to `matt-mru-buffer'."
      window)))
 
 (defun matt-time-string-to-numeric (time-string)
-  "Converts human readable times to a numeric value (minutes or hours), e.g. \"30:30\" becomes 30.5."
+  "Convert human readable TIME-STRING to a numeric value (minutes or hours).
+e.g. \"30:30\" becomes 30.5."
   (cl-destructuring-bind
       (minutes seconds) (mapcar 'string-to-number (split-string time-string ":" t))
     (+ minutes (/ seconds 60.0))))
 
 (defun matt-time-numeric-to-string (time)
-  "Converts a numeric value (minutes or hours) to human readable times, e.g. 30.5 becomes \"30:30\"."
+  "Convert a numeric TIME value (minutes or hours) to human readable times.
+e.g. 30.5 becomes \"30:30\"."
   (let* ((tm (abs time))
          (ms (floor tm))
          (ss (round (* 60 (- tm ms)))))
     (format "%s%02d:%02d" (if (< 0 time) "" "-") ms ss)))
 
 (defun matt-time-numeric-to-symbol (time)
+  "Convert a numeric TIME form to a symbol.
+e.g. 30.5 becomes '30:30."
   (intern (matt-time-numeric-to-string time)))
 
 (defun matt-symbol-or-string-to-string (s)
+  "Convert S to a string."
   (cond ((stringp s) s)
         ((null s) nil) ;; (symbolp nil) => true!
         ((symbolp s) (symbol-name s))))
 
 (defun matt-timep (x)
+  "Return t if X is a time symbol or string.
+e.g. '11:00 or \"10:30\"."
   (when-let ((s (matt-symbol-or-string-to-string x)))
     (when (string-match-p "^[0-9]+:[0-9][0-9]$" s)
       t)))
 
 (defun matt-time-prepare (x)
+  "Prepare the form X, a time maths expression, to Lisp."
   (cond
    ((matt-timep x) `(matt-time-string-to-numeric (matt-symbol-or-string-to-string ',x)))
    ((consp x) (mapcar 'matt-time-prepare x))
    (t x)))
 
 (defmacro matt-time-eval (form)
+  "Evalute FORM using time maths."
   `(matt-time-numeric-to-symbol ,(matt-time-prepare form)))
 
 (defvar matt-journal-file "~/Documents/journal.org")
 
 (defun matt-journal ()
+  "Open my journal."
   (interactive)
   (find-file matt-journal-file))
 (matt-define-key "o j" 'matt-journal)
@@ -1086,11 +1097,13 @@ New window's buffer is selected according to `matt-mru-buffer'."
 (defvar matt-log-file "~/Documents/log.org")
 
 (defun matt-log ()
+  "Open my log."
   (interactive)
   (find-file matt-log-file))
 (matt-define-key "o l" 'matt-log)
 
 (defun matt-journal+log-window-configuration-p ()
+  "Return t if my journal & log are open."
   (interactive)
   (let* ((left-window (window-child (frame-root-window)))
          (right-window (window-right left-window)))
@@ -1102,6 +1115,7 @@ New window's buffer is selected according to `matt-mru-buffer'."
 (defvar matt-journal+log-window-configuration-stash nil)
 
 (defun matt-journal+log ()
+  "Open my journal & log."
   (interactive)
   (setq matt-journal+log-window-configuration-stash (current-window-configuration))
   (delete-other-windows)
@@ -1110,11 +1124,13 @@ New window's buffer is selected according to `matt-mru-buffer'."
   (matt-journal))
 
 (defun matt-log+journal ()
+  "Open my log & journal."
   (interactive)
   (matt-journal+log)
   (other-window 1))
 
 (defun matt-journal+log-back ()
+  "Close my journal & log."
   (interactive)
   (when matt-journal+log-window-configuration-stash
     (set-window-configuration matt-journal+log-window-configuration-stash)
@@ -1123,6 +1139,7 @@ New window's buffer is selected according to `matt-mru-buffer'."
     (bury-buffer (find-file-noselect matt-log-file))))
 
 (defun matt-journal+log-toggle ()
+  "Open/close my journal & log."
   (interactive)
   (if (matt-journal+log-window-configuration-p)
       (matt-journal+log-back)
@@ -1130,6 +1147,7 @@ New window's buffer is selected according to `matt-mru-buffer'."
 (matt-define-key "j j" 'matt-journal+log-toggle)
 
 (defun matt-runs ()
+  "Open the file used to track my running."
   (interactive)
   (find-file "~/notes/runs.org"))
 (matt-define-key "o r" 'matt-runs)
@@ -1139,7 +1157,8 @@ New window's buffer is selected according to `matt-mru-buffer'."
 ;; a         b        c                            d        e   f          g    h   i  j   k  l  m  n         o  p  q  r              s            t        u  v  w  x        y    z
 ;; Wed       Feb      Wed 07 Feb 2018 15:28:35 GMT 07       7   %f         18   Feb %i 038 15  3 02 \n        %o pm 1  3:28:35 pm GMT 1518017315   \t       3  %v 3  07/02/18 18   +0000
 (defun matt-insert-date (arg)
-  "Insert the current date. e.g 2018-02-08, 08-Feb-2018 or Thu, 08 Feb 2018."
+  "Insert the current date, use prefix ARG to select format.
+e.g 2018-02-08, 08-Feb-2018 or Thu, 08 Feb 2018."
   (interactive "p")
   (insert (format-time-string
            (cond
@@ -1150,7 +1169,8 @@ New window's buffer is selected according to `matt-mru-buffer'."
 (matt-define-key "i d" 'matt-insert-date)
 
 (defun matt-insert-time (arg)
-  "Insert the current time. e.g. 16:34:42, 16:34, 2018-02-08T16:34:42+0000 or 2018-02-08_16-34-42."
+  "Insert the current time, use prefix ARG to select format.
+e.g. 16:34:42, 16:34, 2018-02-08T16:34:42+0000 or 2018-02-08_16-34-42."
   (interactive "p")
   (insert (format-time-string
            (cond
@@ -1162,7 +1182,8 @@ New window's buffer is selected according to `matt-mru-buffer'."
 (matt-define-key "i t" 'matt-insert-time)
 
 (defun matt-insert-timestamp (arg)
-  "Insert the current timestamp, e.g. 2020012016131337, 2020-01-20_16-13-13, 1621854380123 or 1621854380."
+  "Insert a current timestamp, use prefix ARG to select format.
+e.g. 2020012016131337, 2020-01-20_16-13-13, 1621854380123 or 1621854380."
   (interactive "p")
   (insert (format-time-string
            (cond
@@ -1184,11 +1205,13 @@ New window's buffer is selected according to `matt-mru-buffer'."
 (matt-define-key "i u" 'matt-insert-underline)
 
 (defun matt-open-init ()
+  "Open my Emacs init file."
   (interactive)
   (find-file (expand-file-name "init.el" user-emacs-directory)))
 (matt-define-key "o i" 'matt-open-init)
 
 (defun matt-open-theme ()
+  "Open my Emacs theme file."
   (interactive)
   (if-let ((theme (car custom-enabled-themes)))
       (find-file (expand-file-name (format "themes/%s-theme.el" theme) user-emacs-directory))
@@ -1196,21 +1219,25 @@ New window's buffer is selected according to `matt-mru-buffer'."
 (matt-define-key "o t" 'matt-open-theme)
 
 (defun matt-open-todo ()
+  "Open my todo file."
   (interactive)
   (find-file "~/notes/todo.org"))
 
 (defun matt-open-awesome-rc ()
+  "Open my awesome rc.lua file."
   (interactive)
   (find-file "~/.config/awesome/rc.lua"))
 (matt-define-key "o a" 'matt-open-awesome-rc)
 
 (defun matt-open-temp-file ()
+  "Open a temporary file named with a timestamp."
   (interactive)
   (let* ((timestamp (format-time-string "%Y-%m-%d_%H-%M-%S" (current-time)))
          (filename  (format "~/tmp/emacs-temp-%s" timestamp)))
     (find-file filename)))
 
 (defun matt-open-temp-buffer ()
+  "Open a temporary buffer named with a timestamp."
   (interactive)
   (let* ((timestamp (format-time-string "%Y-%m-%d_%H-%M-%S" (current-time)))
          (buffer    (format "*temp-%s*" timestamp)))
@@ -1218,12 +1245,14 @@ New window's buffer is selected according to `matt-mru-buffer'."
 (matt-define-key "o p" 'matt-open-temp-buffer)
 
 (defun matt-org-title ()
+  "Insert an org formatted title, based on the filename."
   (interactive)
   (let* ((date (format-time-string "%a, %d %B %Y" (current-time)))
          (title (capitalize (file-name-base (buffer-file-name)))))
     (insert (format "#+TITLE: %s - %s\n" title date))))
 
 (defun matt-open-org-file (filename)
+  "Open an org file named FILENAME with timestamp appended."
   (interactive "F")
   (let* ((timestamp (format-time-string "%Y-%m-%d" (current-time)))
          (filename-full (format "%s-%s.%s" filename timestamp "org")))
@@ -1252,6 +1281,7 @@ New window's buffer is selected according to `matt-mru-buffer'."
 (matt-define-key "o m" 'matt-open-messages-buffer)
 
 (defun matt-delete-file-and-buffer ()
+  "Kill the buffer and delete the associated file."
   (interactive)
   (let ((filename (buffer-file-name)))
     (cond ((not filename)
@@ -1265,6 +1295,7 @@ New window's buffer is selected according to `matt-mru-buffer'."
 (matt-define-key "C-k" 'matt-delete-file-and-buffer)
 
 (defun matt-indent-buffer ()
+  "Indent the whole buffer."
   (interactive)
   (indent-region (point-min) (point-max)))
 (matt-define-key "<tab>" 'matt-indent-buffer)
@@ -1285,6 +1316,7 @@ New window's buffer is selected according to `matt-mru-buffer'."
 (matt-define-key "i C-f" 'matt-insert-full-filename)
 
 (defun matt-wget (url)
+  "Retrieve and return the content of URL."
   (with-current-buffer (url-retrieve-synchronously url)
     (let ((content (buffer-substring (marker-position url-http-end-of-headers)
                                      (buffer-size))))
@@ -1292,6 +1324,7 @@ New window's buffer is selected according to `matt-mru-buffer'."
       content)))
 
 (defun matt-insert-wget (url)
+  "Retrieve and Insert the content of URL."
   (interactive "sURL: ")
   (let ((content (matt-wget url)))
     (insert content)))
@@ -1309,6 +1342,7 @@ New window's buffer is selected according to `matt-mru-buffer'."
               ("i i" . matt-insert-my-ip)))
 
 (defun matt-change-at-point (f)
+  "Adjust the thing at point by applying F."
   (skip-chars-backward "0-9")
   (if (looking-at "[0-9]+")
       (let* ((raw (match-string 0))
@@ -1318,17 +1352,20 @@ New window's buffer is selected according to `matt-mru-buffer'."
     (error "Nothing matched at point")))
 
 (defun matt-increment-at-point ()
+  "Increment the thing at point."
   (interactive)
   (matt-change-at-point '1+))
 (matt-define-key "p +" 'matt-increment-at-point)
 (matt-define-key "p =" 'matt-increment-at-point)
 
 (defun matt-decrement-at-point ()
+  "Decrement the thing at point."
   (interactive)
   (matt-change-at-point '1-))
 (matt-define-key "p -" 'matt-decrement-at-point)
 
 (defun matt-adjust-at-point ()
+  "Start interactive adjustment of the thing at point."
   (interactive)
   (message "Adjust at point, + or -.")
   (let ((map (make-sparse-keymap)))
@@ -1353,17 +1390,19 @@ New window's buffer is selected according to `matt-mru-buffer'."
            (file-modes-symbolic-to-number "+x" (file-modes filename)))))
 
 (defun matt-clear-text-properties (begin end)
+  "Remove text properties between BEGIN and END, defaults to the region."
   (interactive "r")
   (set-text-properties begin end nil))
 
 (defun matt-recenter-region (begin end)
-  "Center region in the display."
+  "Center the display on the region, i.e. between BEGIN and END."
   (interactive "r")
   (save-excursion
     (goto-char (/ (+ begin end) 2))
     (recenter nil t)))
 (defun matt-recenter-region-top-bottom (&optional begin end)
-  "If the region's active center on that, otherwise behave like `recenter-top-bottom'."
+  "Center on the region, or behave as `recenter-top-bottom'.
+If the region is active BEGIN and END default to the region."
   (interactive (if (use-region-p) (list (region-beginning) (region-end))))
   (if (use-region-p)
       (matt-recenter-region begin end)
@@ -1383,6 +1422,7 @@ New window's buffer is selected according to `matt-mru-buffer'."
 (matt-define-key "r s" 'matt-region-size)
 
 (defun matt-get-defun-name-at-point ()
+  "Return the name of the defun at point."
   (save-excursion
     (beginning-of-defun)
     (let ((defun-first-line (thing-at-point 'line)))
@@ -1391,6 +1431,7 @@ New window's buffer is selected according to `matt-mru-buffer'."
       (match-string 1 defun-first-line))))
 
 (defun matt-defun-name-at-point () ;; TODO: (&optional arg) prefix arg yank or insert
+  "Insert the name of the defun at point."
   (interactive)
   (when-let ((defun-name (matt-get-defun-name-at-point)))
     (insert defun-name)))
