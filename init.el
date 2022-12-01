@@ -1437,10 +1437,13 @@ If the region is active BEGIN and END default to the region."
     (insert defun-name)))
 (matt-define-key "i k" 'matt-defun-name-at-point)
 
-(defun matt-beep ()
-  "Beep!"
+(defun matt-beep (&optional filename)
+  "Play the audio FILENAME.  Beep!"
+  ;; (matt-beep "~/personal/dnb-loop-short.mp3")
   (interactive)
-  (start-process "matt-beep" nil "paplay" "/usr/share/sounds/sound-icons/prompt.wav"))
+  (start-process "matt-beep" nil "ffplay" "-nodisp" "-autoexit"
+                 (expand-file-name (or filename
+                                       "/usr/share/sounds/sound-icons/prompt.wav"))))
 
 (defun matt-random-name (&optional name syllables)
   "Generate a random name, with prefix NAME and SYLLABLES long."
