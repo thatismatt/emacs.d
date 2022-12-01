@@ -520,13 +520,6 @@ Focus change event is debounced so we don't gc on focus."
          clojure-mode
          org-mode))
 
-(use-package undo-tree
-  :ensure t
-  :config
-  (setq undo-tree-history-directory-alist `(("." . ,(expand-file-name ".undo-tree" user-emacs-directory))))
-  :init
-  (global-undo-tree-mode))
-
 (use-package smartparens
   :ensure t
   :init
