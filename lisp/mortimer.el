@@ -17,7 +17,6 @@
 ;; (mortimer-play-sound "/usr/share/sounds/sound-icons/gummy-cat-2.wav")
 ;; (mortimer-play-sound "/usr/share/sounds/sound-icons/piano-3.wav")
 ;; (mortimer-play-sound "/usr/share/sounds/sound-icons/prompt.wav")
-;; (mortimer-play-sound "/usr/share/sounds/sound-icons/trumpet-12.wav")
 ;; (mortimer-play-sound "/usr/share/sounds/sound-icons/xylofon.wav")
 ;; (mortimer-play-sound "/usr/share/sounds/freedesktop/stereo/alarm-clock-elapsed.oga")
 ;; (mortimer-play-sound "/usr/share/sounds/freedesktop/stereo/complete.oga")
@@ -65,6 +64,7 @@
   "Face used for Mortimer timer in the mode line when paused.")
 
 (defun mortimer-play-sound (sound)
+  "Play SOUND, an audio file, by shelling out to `mortimer-sound-command'."
   (when (and sound
              (file-exists-p (expand-file-name sound))
              (stringp (car mortimer-sound-command))
@@ -73,22 +73,27 @@
            (seq-concatenate 'list mortimer-sound-command (list (expand-file-name sound))))))
 
 (defun mortimer-time-remaining ()
+  "Return the amount of time remaining for the current timer, in seconds."
   (when mortimer-timer
     (floor (- (float-time (timer--time mortimer-timer))
               (float-time (current-time))))))
 
 (defun mortimer-time-complete ()
+  "Return the amount of time completed for the current timer, in seconds."
   (when-let ((remaining (when mortimer-timer-duration (mortimer-time-remaining))))
     (- mortimer-timer-duration remaining)))
 
 (defun mortimer-fraction-complete ()
+  "Return the fraction of time completed for the current timer."
   (/ (float (mortimer-time-complete)) mortimer-timer-duration))
 
 (defun mortimer-running-p ()
+  "Check whether there is a timer currently running and not paused."
   (and mortimer-timer
        (> (mortimer-time-remaining) 0)))
 
 (defun mortimer-time-remaining-string ()
+  "Return the time remaining for the current timer as a formatted string."
   (when mortimer-timer
     (format-seconds "%02h:%02m:%02s"
                     (mortimer-time-remaining))))
@@ -103,6 +108,7 @@
       timer-string)))
 
 (defun mortimer-refresh-mode-line ()
+  "Used to force a modeline refresh, redisplaying the time remaining."
   (force-mode-line-update t))
 
 (defun mortimer-update-mode-line ()
@@ -115,6 +121,8 @@
   (mortimer-refresh-mode-line))
 
 (defun mortimer-timer-start (seconds)
+  "Start a timer for SECONDS, a numeric duration in seconds.
+Does not reset state, used to start or resume timer."
   (setq mortimer-timer
         (run-with-timer seconds nil
                         'mortimer-on-complete))
@@ -124,6 +132,7 @@
                         'mortimer-refresh-mode-line)))
 
 (defun mortimer-timer-stop ()
+  "Stop current timer without resetting state, used to stop or pause timer."
   (when mortimer-mode-line-timer
     (cancel-timer mortimer-mode-line-timer))
   (setq mortimer-mode-line-timer nil)
@@ -140,6 +149,7 @@
   (mortimer-update-mode-line))
 
 (defun mortimer-on-complete ()
+  "Callback for timer completion."
   (mortimer-play-sound mortimer-sound)
   (mortimer-stop))
 
@@ -160,6 +170,8 @@ This will delete the current timer if there is one running or paused."
 
 ;;;###autoload
 (defun mortimer-quick-toggle ()
+  "Convenience function to start or stop a timer with the default duration.
+Ideal for binding to a convenient key."
   (interactive)
   (if (or (mortimer-running-p)
           mortimer-pause-time-remaining)
@@ -170,17 +182,21 @@ This will delete the current timer if there is one running or paused."
     (message "Timer started for %s." mortimer-quick-toggle-default-time)))
 
 (defun mortimer-pause ()
+  "Pause the current timer."
   (when-let ((remaining (mortimer-time-remaining)))
     (mortimer-timer-stop)
     (setq mortimer-pause-time-remaining remaining)
     (mortimer-update-mode-line)))
 
 (defun mortimer-resume ()
+  "Resume a paused timer."
   (when mortimer-pause-time-remaining
     (mortimer-timer-start mortimer-pause-time-remaining)
     (setq mortimer-pause-time-remaining nil)))
 
 (defun mortimer-pause-resume ()
+  "Convenience function to pause or resume the current timer.
+Ideal for binding to a convenient key."
   (interactive)
   (cond ((mortimer-running-p)
          (mortimer-pause)
