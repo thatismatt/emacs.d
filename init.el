@@ -290,6 +290,7 @@ Focus change event is debounced so we don't gc on focus."
 (matt-define-key "w w"                'toggle-word-wrap)
 (matt-define-key "w v"                'display-fill-column-indicator-mode) ;; mnemonic "wrap view"
 (matt-define-key "w f"                'auto-fill-mode)                     ;; mnemonic "wrap fill"
+(matt-define-key "w c"                'set-fill-column)                    ;; mnemonic "wrap column"
 (matt-define-key "l n"                'display-line-numbers-mode)
 
 (define-key isearch-mode-map (kbd "C-.") 'isearch-forward-symbol-at-point)
