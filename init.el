@@ -1300,12 +1300,13 @@ e.g. 2020012016131337, 2020-01-20_16-13-13, 1621854380123 or 1621854380."
   (indent-region (point-min) (point-max)))
 (matt-define-key "<tab>" 'matt-indent-buffer)
 
-(defun matt-insert-filename ()
-  (interactive)
+(defun matt-insert-filename (&optional arg)
+  "Insert filename of current buffer, with prefix ARG insert just filename base."
+  (interactive "P")
   (let ((filename (buffer-file-name)))
     (if (not filename)
         (message "This buffer is not associated with a file.")
-      (insert (file-name-base filename)))))
+      (insert (if arg (file-name-base filename) filename)))))
 (matt-define-key "i f" 'matt-insert-filename)
 
 (defun matt-insert-full-filename ()
