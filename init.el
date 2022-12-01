@@ -1092,7 +1092,6 @@ e.g. '11:00 or \"10:30\"."
   "Open my journal."
   (interactive)
   (find-file matt-journal-file))
-(matt-define-key "o j" 'matt-journal)
 
 (defvar matt-log-file "~/Documents/log.org")
 
@@ -1100,7 +1099,6 @@ e.g. '11:00 or \"10:30\"."
   "Open my log."
   (interactive)
   (find-file matt-log-file))
-(matt-define-key "o l" 'matt-log)
 
 (defun matt-journal+log-window-configuration-p ()
   "Return t if my journal & log are open."
@@ -1144,7 +1142,7 @@ e.g. '11:00 or \"10:30\"."
   (if (matt-journal+log-window-configuration-p)
       (matt-journal+log-back)
     (matt-journal+log)))
-(matt-define-key "j j" 'matt-journal+log-toggle)
+(matt-define-key "M-m" 'matt-journal+log-toggle)
 
 (defun matt-runs ()
   "Open the file used to track my running."
