@@ -782,6 +782,7 @@ Focus change event is debounced so we don't gc on focus."
   :init
   (global-flycheck-mode)
   :config
+  (setq flycheck-emacs-lisp-load-path 'inherit)
   (defun matt-flycheck-navigate ()
     (interactive)
     (message "Flycheck Navigate.")
