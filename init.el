@@ -271,6 +271,7 @@ Focus change event is debounced so we don't gc on focus."
 (setq history-delete-duplicates t)
 (setq set-mark-command-repeat-pop t)
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+(setq cycle-spacing-actions '((just-one-space -) (delete-all-space -) restore))
 
 (global-set-key (kbd "C-d")           'backward-delete-char)
 (global-set-key (kbd "<M-backspace>") 'backward-kill-word)
@@ -278,6 +279,7 @@ Focus change event is debounced so we don't gc on focus."
 
 (global-set-key (kbd "M-DEL")         'kill-word)
 (global-set-key (kbd "<M-delete>")    'kill-word)
+(global-set-key (kbd "M-SPC")         'cycle-spacing)
 
 (matt-define-key "b b"                'bury-buffer)
 (matt-define-key "a r"                'align-regexp)
@@ -1033,21 +1035,6 @@ New window's buffer is selected according to `matt-mru-buffer'."
          "Window '%s' is dedicated"
        "Window '%s' is normal")
      window)))
-
-(defun matt-just-one-space-multiline ()
-  (interactive)
-  (just-one-space -1))
-(global-set-key (kbd "M-SPC") 'matt-just-one-space-multiline)
-
-(defun matt-kill-whitespace ()
-  "Kill the whitespace between two non-whitespace characters"
-  (interactive)
-  (save-excursion
-    (progn
-      (re-search-backward "[^ \t\r\n]" nil t)
-      (re-search-forward "[ \t\r\n]+" nil t)
-      (replace-match "" nil nil))))
-(matt-define-key "k w" 'matt-kill-whitespace)
 
 (defun matt-time-string-to-numeric (time-string)
   "Converts human readable times to a numeric value (minutes or hours), e.g. \"30:30\" becomes 30.5."
