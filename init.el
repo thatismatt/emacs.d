@@ -372,10 +372,13 @@ Focus change event is debounced so we don't gc on focus."
            (scratch-file (or (car (seq-filter (lambda (file) (equal (file-name-extension file) current-extension))
                                               scratch-files))
                              (car scratch-files))))
-      (message "scratch-file: %s" scratch-file)
-      (if (and scratch-file (file-exists-p scratch-file))
-          (find-file scratch-file)
-        (message "No scratch file found"))))
+      (cond
+       ((equal current-file-name scratch-file)
+        (find-file (completing-read "Open other scratch file: " scratch-files)))
+       ((and scratch-file (file-exists-p scratch-file))
+        (find-file scratch-file))
+       (t
+        (message "No scratch file found")))))
   (defun matt-test-file-p (file) ;; (rx bol (* any) "/test/" (* any) "_test.clj" (optional (any "sc")) eol)
     (string-match-p "^.*/test/.*_test\\.clj[sc]?$" file))
   (defun matt-guess-test-file (src-file)
