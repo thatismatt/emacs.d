@@ -1386,7 +1386,7 @@ e.g. 2020012016131337, 2020-01-20_16-13-13, 1621854380123 or 1621854380."
 (defun matt-chmod+x ()
   "Make the current file executable."
   (interactive)
-  (let ((filename (buffer-file-name (current-buffer))))
+  (let ((filename (buffer-file-name)))
     (chmod filename
            (file-modes-symbolic-to-number "+x" (file-modes filename)))))
 
