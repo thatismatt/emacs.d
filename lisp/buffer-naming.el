@@ -1,10 +1,10 @@
-;;; buffer-naming.el
+;;; buffer-naming.el --- customizable buffer naming
 
 ;; This file is not part of GNU Emacs.
 
 ;;; Commentary:
 
-;; Rename the buffers based on the projectile project root or the vc-git-root
+;; Rename the buffers based on the project.el project root or the vc-git-root
 
 ;;; Usage:
 
@@ -13,7 +13,6 @@
 ;; ;; choose a buffer naming style:
 ;; (buffer-naming-set-fn 'git-buffer-naming-fn)
 ;; (buffer-naming-set-fn 'project-el-buffer-naming-fn)
-;; (buffer-naming-set-fn 'projectile-buffer-naming-fn)
 ;; (buffer-naming-set-fn 'generate-new-buffer-name) ;; similar to the default
 ;; ;; turn off - remove the advice
 ;; (buffer-naming-unload)
@@ -22,25 +21,11 @@
 
 (require 'vc-git)
 (require 'project)
-(require 'projectile)
 
 (defvar buffer-naming-separator " | ")
 
 (defun git-buffer-naming-fn (filename)
   (when-let* ((project-path      (vc-git-root filename))
-              (parts             (split-string project-path "/" 'omit-nulls))
-              (project-name      (car (last parts)))
-              (project-sub-path  (file-relative-name filename project-path))
-              (buffer-name-parts (seq-remove #'null (list (file-name-nondirectory filename)
-                                                          project-name
-                                                          (file-name-directory project-sub-path))))
-              (new-buffer-name   (string-join buffer-name-parts buffer-naming-separator)))
-    new-buffer-name))
-
-(defun projectile-buffer-naming-fn (filename)
-  (when-let* ((directory-name    (if (file-directory-p filename) filename (file-name-directory filename)))
-              ;; NOTE: `projectile-project-root' must not be called on an archive filename
-              (project-path      (projectile-project-root directory-name))
               (parts             (split-string project-path "/" 'omit-nulls))
               (project-name      (car (last parts)))
               (project-sub-path  (file-relative-name filename project-path))
