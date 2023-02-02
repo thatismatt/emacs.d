@@ -6,6 +6,7 @@
 ;;; Code:
 
 (defvar matt-init-start-time (current-time))
+(defvar matt-init-stop-time)
 
 (when (getenv "emacs_perf")
   (defun matt-require-perf-wrapper (orig feature &rest args)
@@ -71,6 +72,7 @@ Focus change event is debounced so we don't gc on focus."
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 
 (defun matt-recompile-packages ()
+  "Recompile all packages in `package-user-dir'."
   (interactive)
   (byte-recompile-directory package-user-dir nil 'force))
 
@@ -94,6 +96,7 @@ Focus change event is debounced so we don't gc on focus."
       (cons (expand-file-name "themes/" user-emacs-directory) custom-theme-load-path))
 
 (defun matt-disable-current-theme ()
+  "Disable the current theme, assumes only one theme is enabled."
   (interactive)
   (disable-theme (car custom-enabled-themes)))
 
@@ -212,6 +215,8 @@ Focus change event is debounced so we don't gc on focus."
   (mapc 'find-file
         (if (consp (car filenames)) (car filenames) filenames)))
 
+(defvar matt-mode-line-format-default)
+
 (when (not (boundp 'matt-mode-line-format-default)) ;; make safe for re-evaluation
   (setq matt-mode-line-format-default mode-line-format))
 
@@ -228,6 +233,7 @@ Focus change event is debounced so we don't gc on focus."
     mode-line-misc-info))
 
 (defun matt-toggle-minimal-mode-line ()
+  "Toggle between the normal mode line and a minimal version."
   (interactive)
   (setq-default mode-line-format
                 (if (eq mode-line-format matt-mode-line-format-minimal)
@@ -236,6 +242,7 @@ Focus change event is debounced so we don't gc on focus."
 (matt-toggle-minimal-mode-line)
 
 (defun matt-number-modes-cycle ()
+  "Cycle through the column and line number modes."
   (interactive)
   (cond ((and line-number-mode column-number-mode)
          (line-number-mode -1)
