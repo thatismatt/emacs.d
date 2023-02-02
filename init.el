@@ -145,17 +145,16 @@ Focus change event is debounced so we don't gc on focus."
 (defun matt-font-face-wide ()
   "Change the default font family to a wide font."
   (interactive)
-  (set-face-attribute 'default nil :weight 'medium) ;; combining this with the line below doesn't work
-  (set-face-attribute 'default nil :family "Inconsolata"))
+  (set-face-attribute 'default nil :width 'normal :weight 'medium :slant 'normal :family "Inconsolata"))
 (matt-define-key "f w" 'matt-font-face-wide)
 
 (defun matt-font-face-narrow ()
   "Change the default font family to a narrow font."
   (interactive)
-  (set-face-attribute 'default nil :width 'normal :weight 'normal)
-  (set-face-attribute 'default nil :family "Iosevka"))
+  (set-face-attribute 'default nil :width 'normal :weight 'medium :slant 'normal :family "Victor Mono"))
 (matt-define-key "f n" 'matt-font-face-narrow)
 
+;; (set-face-attribute 'default nil :family "Victor Mono")     ;; https://rubjo.github.io/victor-mono/
 ;; (set-face-attribute 'default nil :family "Iosevka")         ;; https://be5invis.github.io/Iosevka/
 ;; (set-face-attribute 'default nil :family "Inconsolata")     ;; apt: fonts-inconsolata
 ;; (set-face-attribute 'default nil :family "M+ 1mn")          ;; apt: fonts-mplus
