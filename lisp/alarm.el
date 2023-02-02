@@ -7,14 +7,14 @@
 
 (eval-when-compile (require 'cl-lib))
 
-(require 'dash)
+(require 'seq)
+(require 'notifications)
 
 (defvar alarm-alist nil
   "An alist of alarms.")
 
-(defvar alarm-popup-buffer "*Alarm*")
-
 (defun alarm-play-sound (sound)
+  "Play SOUND, an audio file."
   (when (and sound
              (file-exists-p (expand-file-name sound))
              (executable-find "paplay"))
@@ -22,34 +22,18 @@
 
 (defun alarm-action (message time)
   "The actual alarm action.
-Displays MESSAGE (and TIME) in `alarm-popup-buffer'."
-  (progn
-    (switch-to-buffer-other-frame alarm-popup-buffer)
-    (goto-char (point-max))
-    (insert (format "\n### ALARM (%s) ###\n\n" time))
-    (insert message)
-    (insert "\n\n")
-    (alarm-popup-mode)
-    (setq-local alarm-message message)
-    (alarm-play-sound "/usr/share/sounds/sound-icons/trumpet-12.wav")))
-
-(defun alarm-popup-kill ()
-  (interactive)
-  (kill-buffer (current-buffer))
-  (delete-frame))
-
-(defun alarm-popup-snooze (mins)
-  (interactive "sSnooze (mins): ")
-  (alarm (format "%s mins" mins) alarm-message)
-  (alarm-popup-kill))
-
-(define-derived-mode alarm-popup-mode fundamental-mode "Alarm Popup"
-  "A mode for the Alarm Popup
-\\{alarm-popup-mode-map}"
-  (read-only-mode))
-
-(define-key alarm-popup-mode-map (kbd "q") 'alarm-popup-kill)
-(define-key alarm-popup-mode-map (kbd "s") 'alarm-popup-snooze)
+Displays MESSAGE (and TIME) via `notifications-notify' and
+plays an audible sound."
+  (alarm-play-sound "/usr/share/sounds/sound-icons/trumpet-12.wav")
+  (notifications-notify
+   :title     (format "Alarm (%s)" time)
+   :body      message
+   :actions   '("snooze" "Snooze (5 mins)"
+                "snooze-for" "Snooze for ...")
+   :on-action (lambda (_ action-key)
+                (pcase action-key
+                  ("snooze" (alarm "5 mins" message))
+                  ("snooze-for" (alarm (completing-read "Snooze alarm for: " '("1 mins" "5 mins" "10 mins")) message))))))
 
 (defun alarm-cancel (a)
   "Cancel the alarm A."
@@ -126,10 +110,10 @@ Displays MESSAGE (and TIME) in `alarm-popup-buffer'."
 
 (defun alarm-next ()
   (interactive)
-  (let ((untriggered (--filter (not (alarm-triggered it)) alarm-alist)))
+  (let ((untriggered (seq-remove #'alarm-triggered alarm-alist)))
     (if (eq untriggered '()) (message "No alarms set.")
-      (let ((a (car (--sort (< (alarm-seconds-till it) (alarm-seconds-till other)) untriggered))))
-          (message "Next alarm: %s in %s" (cadr a) (alarm-format-seconds (alarm-seconds-till a)))))))
+      (let ((a (car (seq-sort-by #'alarm-seconds-till #'< untriggered))))
+        (message "Next alarm: %s in %s" (cadr a) (alarm-format-seconds (alarm-seconds-till a)))))))
 
 ;;;###autoload
 (defun alarm (time message)
