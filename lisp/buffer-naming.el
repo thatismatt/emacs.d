@@ -50,16 +50,18 @@
 (defvar buffer-naming-fn 'identity)
 
 (defun buffer-naming-rename-buffer (buffer filename)
-  "Rename a buffer as per `buffer-naming-fn'."
+  "Rename a BUFFER visiting FILENAME as per `buffer-naming-fn'."
   (when-let* ((new-buffer-name (when filename (funcall buffer-naming-fn filename))))
     (with-current-buffer buffer (rename-buffer new-buffer-name)))
   buffer)
 
 (defun buffer-naming-rename-current-buffer ()
+  "Convenience version of `buffer-naming-rename-buffer' for the current buffer."
   (interactive)
   (buffer-naming-rename-buffer (current-buffer) (buffer-file-name)))
 
 (defun buffer-naming-rename-all-buffers ()
+  "Rename all buffers, as per current buffer naming configuration."
   (interactive)
   (dolist (buffer (buffer-list))
     (buffer-naming-rename-buffer buffer (buffer-file-name buffer))))
