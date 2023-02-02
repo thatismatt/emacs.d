@@ -35,8 +35,15 @@
               (new-buffer-name   (string-join buffer-name-parts buffer-naming-separator)))
     new-buffer-name))
 
+(defun buffer-naming-existing-parent-directory (filename)
+  (if (or (null filename) ;; recursion safety net
+          (file-directory-p filename))
+      filename
+    (buffer-naming-existing-parent-directory (file-name-directory (directory-file-name filename)))))
+
 (defun project-el-buffer-naming-fn (filename)
-  (when-let* ((project           (project-current nil filename))
+  (when-let* ((directory         (buffer-naming-existing-parent-directory filename))
+              (project           (project-current nil directory))
               (project-path      (project-root project))
               (parts             (split-string project-path "/" 'omit-nulls))
               (project-name      (car (last parts)))
