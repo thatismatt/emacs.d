@@ -318,12 +318,19 @@ Focus change event is debounced so we don't gc on focus."
 (put 'narrow-to-page   'disabled nil)
 (put 'narrow-to-region 'disabled nil)
 
-(require 'recentf)
-(setq recentf-save-file (expand-file-name "recentf" user-emacs-directory))
-(setq recentf-max-saved-items 500)
-(setq recentf-max-menu-items 15)
-(setq recentf-auto-cleanup 'never) ;; disable - can cause problems with remote files
-(recentf-mode 1)
+(use-package recentf
+  :config
+  (setq recentf-save-file (expand-file-name "recentf" user-emacs-directory))
+  (setq recentf-max-saved-items 500)
+  (setq recentf-max-menu-items 15)
+  (setq recentf-auto-cleanup 'never) ;; disable - can cause problems with remote files
+  (recentf-mode 1)
+  (defun matt-find-recent-file ()
+    "Open file form `recentf-list', via `completing-read' interface."
+    (interactive)
+    (let ((files (mapcar 'abbreviate-file-name recentf-list)))
+      (find-file (completing-read "Find recent file: " files nil t))))
+  :bind ("C-x f" . matt-find-recent-file))
 
 (use-package comint
   :init
