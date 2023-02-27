@@ -21,6 +21,9 @@
 ;; gc tweaks - see http://bling.github.io/blog/2016/01/18/why-are-you-changing-gc-cons-threshold/
 (setq garbage-collection-messages t)
 
+;; time a gc collection
+;; (let ((before gc-elapsed)) (garbage-collect) (- gc-elapsed before))
+
 (defun matt-gc-inhibit ()
   "Increase the gc threshold to prevent garbage collection."
   (setq gc-cons-threshold (* 512 1024 1024)))
