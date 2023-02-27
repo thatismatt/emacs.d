@@ -1399,7 +1399,7 @@ e.g. 2020012016131337, 2020-01-20_16-13-13, 1621854380123 or 1621854380."
   (interactive)
   (let ((filename (expand-file-name (buffer-file-name))))
     (if (file-executable-p filename)
-        (async-shell-command filename (concat "*Shell Buffer* " (abbreviate-file-name filename)))
+        (async-shell-command filename (concat "*Execute " (abbreviate-file-name filename) "*"))
       (message "This buffer isn't associated with an executable file"))))
 
 (defun matt-clear-text-properties (begin end)
