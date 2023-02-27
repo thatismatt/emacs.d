@@ -280,7 +280,23 @@ Focus change event is debounced so we don't gc on focus."
 (setq history-delete-duplicates t)
 (setq set-mark-command-repeat-pop t)
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
-(setq cycle-spacing-actions '((just-one-space -) (delete-all-space -) restore))
+;; (setq cycle-spacing-actions '((just-one-space -) (delete-all-space -) restore))
+
+(defun matt-cycle-spacing ()
+  "An alternate version of `cycle-spacing'.
+That behaves like the above `cycle-spacing-actions' in later Emacs."
+  (interactive)
+  (let ((space-at-point (equal (thing-at-point 'whitespace) " "))
+        (orig-pos (point)))
+    (delete-region
+     (progn
+       (skip-chars-forward " \t\n")
+       (constrain-to-field nil orig-pos t))
+     (progn
+       (skip-chars-backward " \t\n")
+       (constrain-to-field nil orig-pos)))
+    (when (not space-at-point)
+      (insert " "))))
 
 (global-set-key (kbd "C-d")           'backward-delete-char)
 (global-set-key (kbd "<M-backspace>") 'backward-kill-word)
@@ -288,7 +304,7 @@ Focus change event is debounced so we don't gc on focus."
 
 (global-set-key (kbd "M-DEL")         'kill-word)
 (global-set-key (kbd "<M-delete>")    'kill-word)
-(global-set-key (kbd "M-SPC")         'cycle-spacing)
+(global-set-key (kbd "M-SPC")         'matt-cycle-spacing)
 
 (matt-define-key "b b"                'bury-buffer)
 (matt-define-key "a r"                'align-regexp)
