@@ -13,18 +13,8 @@
 (defvar alarm-alist nil
   "An alist of alarms.")
 
-(defun alarm-play-sound (sound)
-  "Play SOUND, an audio file."
-  (when (and sound
-             (file-exists-p (expand-file-name sound))
-             (executable-find "paplay"))
-	(start-process "alarm-paplay" nil "paplay" sound)))
-
-(defun alarm-action (message time)
-  "The actual alarm action.
-Displays MESSAGE (and TIME) via `notifications-notify' and
-plays an audible sound."
-  (alarm-play-sound "/usr/share/sounds/sound-icons/trumpet-12.wav")
+(defun alarm-notification (message time)
+  "Displays MESSAGE (and TIME) via `notifications-notify'."
   (notifications-notify
    :title     (format "Alarm (%s)" time)
    :body      message
@@ -34,6 +24,15 @@ plays an audible sound."
                 (pcase action-key
                   ("snooze" (alarm "5 mins" message))
                   ("snooze-for" (alarm (completing-read "Snooze alarm for: " '("1 mins" "5 mins" "10 mins")) message))))))
+
+(defvar alarm-hook '(alarm-notification)
+  "Function(s) called when an alarm goes off.
+These functions are passed MESSAGE and TIME as arguments.")
+
+(defun alarm-action (message time)
+  "Invokes function(s) in `alarm-hook' when alarm \"sounds\".
+Each function is passed the MESSAGE and TIME as arguments."
+  (run-hook-with-args 'alarm-hook message time))
 
 (defun alarm-cancel (a)
   "Cancel the alarm A."

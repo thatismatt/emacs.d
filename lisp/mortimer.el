@@ -5,25 +5,6 @@
 ;; A countdown timer that displays in the mode line
 
 ;;; Usage:
-;; (setq mortimer-sound "/usr/share/sounds/sound-icons/trumpet-12.wav")
-;; (setq mortimer-sound "/usr/share/sounds/sound-icons/canary-long.wav")
-;; (setq mortimer-sound "/usr/share/sounds/sound-icons/prompt.wav")
-;;
-;; (mortimer-play-sound "/usr/share/sounds/sound-icons/trumpet-12.wav")
-;; (mortimer-play-sound "/usr/share/sounds/sound-icons/canary-long.wav")
-;; (mortimer-play-sound "/usr/share/sounds/sound-icons/cembalo-2.wav")
-;; (mortimer-play-sound "/usr/share/sounds/sound-icons/cembalo-6.wav")
-;; (mortimer-play-sound "/usr/share/sounds/sound-icons/cembalo-12.wav")
-;; (mortimer-play-sound "/usr/share/sounds/sound-icons/gummy-cat-2.wav")
-;; (mortimer-play-sound "/usr/share/sounds/sound-icons/piano-3.wav")
-;; (mortimer-play-sound "/usr/share/sounds/sound-icons/prompt.wav")
-;; (mortimer-play-sound "/usr/share/sounds/sound-icons/xylofon.wav")
-;; (mortimer-play-sound "/usr/share/sounds/freedesktop/stereo/alarm-clock-elapsed.oga")
-;; (mortimer-play-sound "/usr/share/sounds/freedesktop/stereo/complete.oga")
-;; (mortimer-play-sound "/usr/share/sounds/freedesktop/stereo/message.oga")
-;; (mortimer-play-sound "/usr/share/sounds/gnome/default/alerts/glass.ogg")
-;; (mortimer-play-sound "/usr/share/sounds/gnome/default/alerts/drip.ogg")
-;;
 ;; (mortimer-start "1 sec")
 ;; (mortimer-start "5 secs")
 ;; (mortimer-start "10 mins")
@@ -40,16 +21,12 @@
 
 (defvar mortimer-mode-line-timer nil)
 
-(defvar mortimer-sound nil)
-
-(defvar mortimer-sound-command
-  (if (executable-find "ffplay")
-      (list "ffplay" "-nodisp" "-autoexit")
-    (list "paplay")))
-
 (defvar mortimer-pause-time-remaining nil)
 
 (defvar mortimer-log '())
+
+(defvar mortimer-complete-hook nil
+  "Function(s) called when a Mortimer timer completes.")
 
 (defface mortimer-mode-line-complete-face
   '((t (:background "#050")))
@@ -62,15 +39,6 @@
 (defface mortimer-mode-line-paused-face
   '((t (:foreground "#500")))
   "Face used for Mortimer timer in the mode line when paused.")
-
-(defun mortimer-play-sound (sound)
-  "Play SOUND, an audio file, by shelling out to `mortimer-sound-command'."
-  (when (and sound
-             (file-exists-p (expand-file-name sound))
-             (stringp (car mortimer-sound-command))
-             (executable-find (car mortimer-sound-command)))
-    (apply 'start-process "mortimer-sound-command" nil
-           (seq-concatenate 'list mortimer-sound-command (list (expand-file-name sound))))))
 
 (defun mortimer-time-remaining ()
   "Return the amount of time remaining for the current timer, in seconds."
@@ -150,7 +118,7 @@ Does not reset state, used to start or resume timer."
 
 (defun mortimer-on-complete ()
   "Callback for timer completion."
-  (mortimer-play-sound mortimer-sound)
+  (run-hooks 'mortimer-complete-hook)
   (mortimer-stop))
 
 ;;;###autoload

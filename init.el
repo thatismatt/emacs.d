@@ -337,6 +337,42 @@ That behaves like the above `cycle-spacing-actions' in later Emacs."
 (put 'narrow-to-page   'disabled nil)
 (put 'narrow-to-region 'disabled nil)
 
+(defvar matt-sound-command
+  (if (executable-find "ffplay")
+      (list "ffplay" "-nodisp" "-autoexit")
+    (list "paplay")))
+
+(defun matt-sound-play (sound)
+  "Play SOUND, an audio file, by shelling out to `matt-sound-command'."
+  (when (and sound
+             (file-exists-p (expand-file-name sound))
+             (stringp (car matt-sound-command))
+             (executable-find (car matt-sound-command)))
+    (apply 'start-process "matt-sound-command" nil
+           (seq-concatenate 'list matt-sound-command (list (expand-file-name sound))))))
+
+;; (matt-sound-play "/usr/share/sounds/sound-icons/trumpet-12.wav")
+;; (matt-sound-play "/usr/share/sounds/sound-icons/canary-long.wav")
+;; (matt-sound-play "/usr/share/sounds/sound-icons/cembalo-2.wav")
+;; (matt-sound-play "/usr/share/sounds/sound-icons/cembalo-6.wav")
+;; (matt-sound-play "/usr/share/sounds/sound-icons/cembalo-12.wav")
+;; (matt-sound-play "/usr/share/sounds/sound-icons/gummy-cat-2.wav")
+;; (matt-sound-play "/usr/share/sounds/sound-icons/piano-3.wav")
+;; (matt-sound-play "/usr/share/sounds/sound-icons/prompt.wav")
+;; (matt-sound-play "/usr/share/sounds/sound-icons/xylofon.wav")
+;; (matt-sound-play "/usr/share/sounds/freedesktop/stereo/alarm-clock-elapsed.oga")
+;; (matt-sound-play "/usr/share/sounds/freedesktop/stereo/complete.oga")
+;; (matt-sound-play "/usr/share/sounds/freedesktop/stereo/message.oga")
+;; (matt-sound-play "/usr/share/sounds/gnome/default/alerts/glass.ogg")
+;; (matt-sound-play "/usr/share/sounds/gnome/default/alerts/drip.ogg")
+
+(defun matt-beep (&optional filename)
+  "Play the audio FILENAME.  Beep!"
+  ;; (matt-beep "~/personal/dnb-loop-short.mp3")
+  (interactive)
+  (matt-sound-play (or filename
+                       "/usr/share/sounds/sound-icons/prompt.wav")))
+
 (use-package recentf
   :config
   (setq recentf-save-file (expand-file-name "recentf" user-emacs-directory))
@@ -927,18 +963,14 @@ That behaves like the above `cycle-spacing-actions' in later Emacs."
               ("=" . image-increase-size)))
 
 (use-package alarm
+  :hook (alarm . (lambda (&rest _) (matt-sound-play "/usr/share/sounds/sound-icons/trumpet-12.wav")))
   :bind (:map matt-keymap
               ("a a" . alarm)
               ("a l" . alarm-list)
               ("a n" . alarm-next)))
 
 (use-package mortimer
-  :config
-  (setq mortimer-sound "/usr/share/sounds/sound-icons/trumpet-12.wav")
-  ;; (setq mortimer-sound "~/personal/dnb-loop.mp3")
-  ;; (setq mortimer-sound "~/personal/dnb-loop-short.mp3")
-  ;; (setq mortimer-sound "/usr/share/sounds/sound-icons/prompt.wav")
-  ;; (mortimer-play-sound mortimer-sound)
+  :hook (mortimer-complete . (lambda () (matt-sound-play "/usr/share/sounds/sound-icons/trumpet-12.wav")))
   :bind (:map matt-keymap
               ("m s" . mortimer-start)
               ("m p" . mortimer-pause-resume)
@@ -1475,14 +1507,6 @@ If the region is active BEGIN and END default to the region."
   (when-let ((defun-name (matt-get-defun-name-at-point)))
     (insert defun-name)))
 (matt-define-key "i k" 'matt-defun-name-at-point)
-
-(defun matt-beep (&optional filename)
-  "Play the audio FILENAME.  Beep!"
-  ;; (matt-beep "~/personal/dnb-loop-short.mp3")
-  (interactive)
-  (start-process "matt-beep" nil "ffplay" "-nodisp" "-autoexit"
-                 (expand-file-name (or filename
-                                       "/usr/share/sounds/sound-icons/prompt.wav"))))
 
 (defun matt-random-name (&optional name syllables)
   "Generate a random name, with prefix NAME and SYLLABLES long."
