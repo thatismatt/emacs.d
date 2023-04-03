@@ -13,6 +13,10 @@
 
 ;;; Code:
 
+(require 'view)
+(require 'seq)
+(require 'map)
+
 (defvar mortimer-timer nil)
 (defvar mortimer-timer-duration nil)
 
@@ -59,6 +63,21 @@
   "Check whether there is a timer currently running and not paused."
   (and mortimer-timer
        (> (mortimer-time-remaining) 0)))
+
+(defun mortimer-duration-friendly-string (seconds)
+  "Format SECONDS as a human readable string.
+e.g. 60 => \"1 min\", 125 => 2 mins 5 secs"
+  (let* ((s (mod seconds 60))
+         (m (mod (floor (/ seconds 60)) 60))
+         (h (floor (/ seconds (* 60 60)))))
+    (string-join (seq-remove 'null
+                             (list (when (< 0 h)
+                                     (format "%s %s" h (if (eq 1 h) "hr" "hrs")))
+                                   (when (or (< 0 m) (and (< 0 h) (< 0 s)))
+                                     (format "%s %s" m (if (eq 1 m) "min" "mins")))
+                                   (when (< 0 s)
+                                     (format "%s %s" s (if (eq 1 s) "sec" "secs")))))
+                 " ")))
 
 (defun mortimer-time-remaining-string ()
   "Return the time remaining for the current timer as a formatted string."
@@ -238,6 +257,50 @@ Optionally invoke F, excluding any internal logs."
   '((t (:foreground "#b00" :box t)))
   "Face used for Mortimer failed timers in the log.")
 
+(defun mortimer-group-log (log)
+  (thread-last
+    log
+    (seq-reverse)
+    (mortimer-partition-by (lambda (l) (eq (plist-get l :id) :start)))))
+
+(defun mortimer-reduce-log (log)
+  "Summarise LOG, a list of Mortimer events, by collating details for each timer."
+  (let* ((sorted-log (sort log (lambda (x y) (time-less-p (plist-get x :time)
+                                                          (plist-get y :time)))))
+         ;; `aggregated' is a hashmap keyed by the start times, enabling the lookup for events with :time-ref
+         ;; and the timer being aggregated is stored in :active
+         (aggregated (seq-reduce
+                      (lambda (agg e)
+                        (let* ((e-id   (plist-get e :id))
+                               (start? (eq e-id :start))
+                               (ref    (plist-get e :time-ref))
+                               (active (gethash :active agg))
+                               (status (when active (gethash :status active)))
+                               (curr   (cond
+                                        (ref    (gethash ref agg)) ;; updating a previous timer by ref
+                                        (start? nil)               ;; starting a new timer
+                                        (t      active)))          ;; updating the active timer
+                               (result (map-merge 'hash-table curr (list e-id e :status e-id)))
+                               (start  (map-nested-elt result '(:start :time))))
+                          (map-merge 'hash-table
+                                      agg
+                                      (list start result)
+                                      (when (not ref)
+                                        (list :active result))
+                                      ;; starting new timer with stopped (but not complete) previous timer
+                                      ;; so mark previous timer as incomplete
+                                      (when (and start?
+                                                 active
+                                                 (eq status :stop))
+                                        (list (map-nested-elt active '(:start :time))
+                                              (map-merge 'hash-table active (list :status :incomplete)))))))
+                      sorted-log
+                      (make-hash-table)))
+         (reduced (map-values (map-delete aggregated :active))))
+    (sort reduced
+          (lambda (x y) (time-less-p (map-nested-elt x '(:start :time))
+                                     (map-nested-elt y '(:start :time)))))))
+
 (defun mortimer-get-buffer ()
   (let ((buffer (get-buffer-create "*Mortimer*")))
     (with-current-buffer buffer
@@ -245,30 +308,38 @@ Optionally invoke F, excluding any internal logs."
       (erase-buffer)
       (insert (propertize "Mortimer Log" 'face 'header-line))
       (insert "\n\n")
-      (thread-last mortimer-log
-        (seq-reverse)
-        (mortimer-partition-by (lambda (l) (eq (plist-get l :id) :start)))
+      (thread-last
+        mortimer-log
+        mortimer-group-log
+        ;; TODO: Split the "collapsing" of multiple events from the string formatting
         (seq-map (lambda (p)
-                   (let* ((start (car p))
-                          (start-time (format-time-string "%F %R" (plist-get start :time)))
-                          (duration (car (plist-get start :args)))
-                          (complete (seq-find (lambda (l) (eq (plist-get l :id) :complete)) p))
-                          (fail (seq-find (lambda (l) (eq (plist-get l :id) :fail)) p))
-                          ;; (end-time (time-add (plist-get start :time) (timer-duration duration)))
-                          ;; (stop (seq-find (lambda (l) (eq (plist-get l :id) :stop)) p))
-                          ;; (ongoing  (time-less-p (current-time) end-time))
-                          )
-                     (cond (fail       (format (concat (propertize "failed" 'face 'mortimer-view-log-unfinished-face) "     %s (%s)\n")
-                                               start-time duration))
-                           (complete   (format (concat (propertize "completed" 'face 'mortimer-view-log-completed-face) "  %s - %s (%s)\n")
-                                               start-time (format-time-string "%F %R" (plist-get complete :time)) duration))
-                           ;; TODO:
-                           ;; (stop       (format (concat (propertize "unfinished" 'face '(:foreground "#a00" :box t)) " %s (%s)\n")
-                           ;;                     start-time duration))
-                           ;; (ongoing    (format (concat (propertize "ongoing" 'face '(:foreground "#d80" :box t)) "    %s (%s)\n")
-                           ;;                     start-time duration))
-                           (:otherwise (format (concat (propertize "unfinished" 'face 'mortimer-view-log-unfinished-face) " %s (%s)\n")
-                                               start-time duration))))))
+                   (let* ((start         (car p))
+                          (start-time    (format-time-string "%F %R" (plist-get start :time)))
+                          (duration      (car (plist-get start :args)))
+                          (duration-time (mortimer-duration-friendly-string duration))
+                          (complete      (seq-find (lambda (l) (eq (plist-get l :id) :complete)) p))
+                          (complete-time (format-time-string "%F %R" (plist-get complete :time)))
+                          (paused        (seq-find (lambda (l) (eq (plist-get l :id) :pause)) p))
+                          (success       (seq-find (lambda (l) (eq (plist-get l :id) :success)) p))
+                          (fail          (seq-find (lambda (l) (eq (plist-get l :id) :fail)) p))
+                          (end-time      (time-add (plist-get start :time) duration))
+                          (stop          (seq-find (lambda (l) (eq (plist-get l :id) :stop)) p))
+                          (ongoing       (time-less-p (current-time) end-time)))
+                     (cond (fail         (format (concat (propertize "failed" 'face 'mortimer-view-log-fail-face) "     %s (%s)\n")
+                                              start-time duration-time))
+                           (success   (format (concat (propertize "success" 'face 'mortimer-view-log-success-face) "    %s - %s (%s)\n")
+                                              start-time complete-time duration-time))
+                           (complete  (format (concat (propertize "completed" 'face 'mortimer-view-log-complete-face) "  %s - %s (%s)\n")
+                                              start-time complete-time duration-time))
+                           (paused    (format (concat (propertize "paused" 'face 'mortimer-view-log-incomplete-face) "     %s - %s (%s)\n")
+                                              start-time complete-time duration-time))
+                           (stop       (format (concat (propertize "incomplete" 'face 'mortimer-view-log-incomplete-face) " %s (%s)\n")
+                                               start-time duration-time))
+                           (ongoing    (format (concat (propertize "ongoing" 'face 'mortimer-view-log-incomplete-face) "    %s (%s)\n")
+                                               start-time duration-time))
+                           ;; TODO: rename, this is really an unknown state
+                           (:otherwise (format (concat (propertize "incomplete" 'face 'mortimer-view-log-incomplete-face) " %s (%s)\n")
+                                               start-time duration-time))))))
         (seq-do #'insert)))
     buffer))
 
@@ -280,6 +351,105 @@ Optionally invoke F, excluding any internal logs."
   (interactive)
   (when (yes-or-no-p "Are you sure you want to clear the Mortimer log?")
     (setq mortimer-log '())))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; experiment to use tabulated list mode for the mortimer log
+
+(when
+nil
+
+(defun mortimer-log-refresh ()
+  "Refresh the table of Mortimer log entries."
+  (setq tabulated-list-format
+        '[("A" 10 t)
+          ("B" 10 t)
+          ("C" 10 t)])
+  (setq tabulated-list-use-header-line t)
+  (let ((table-contents (mapcar
+                         (lambda (x) `("" [,(symbol-name (plist-get x :id))
+                                           ""
+                                           ""]))
+                         mortimer-log)))
+    (setq tabulated-list-entries table-contents))
+  (tabulated-list-init-header))
+
+(define-derived-mode mortimer-log-mode tabulated-list-mode "Mortimer Log"
+  "A major mode for viewing the Mortimer log.
+
+\\{mortimer-log-mode-map}"
+  (add-hook 'tabulated-list-revert-hook 'mortimer-log-refresh nil t))
+
+(let ((buffer (get-buffer-create "*Mortimer Log*")))
+  (with-current-buffer buffer
+    (mortimer-log-mode)
+    (tabulated-list-revert)
+    ;; (tabulated-list-print)
+    )
+  buffer)
+
+)
+;; end experiment
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(when
+nil
+
+(defun mortimer-time-at-midnight (time)
+  (let ((dt (decode-time time)))
+    (encode-time
+     (make-decoded-time
+      :second 0
+      :minute 0
+      :hour   0
+      :day    (decoded-time-day   dt)
+      :month  (decoded-time-month dt)
+      :year   (decoded-time-year  dt)
+      :dst    (decoded-time-dst   dt)
+      :zone   (decoded-time-zone  dt)))))
+
+(list (format-time-string "%F %R" (current-time))
+      (format-time-string "%F %r" (current-time))
+      (format-time-string "%F %R" (time-subtract nil (* 60 60)))
+      (format-time-string "%F %r" (time-subtract nil (* 60 60))))
+
+(thread-last mortimer-log
+             (seq-filter (lambda (x)
+                           (time-less-p
+                            (mortimer-time-at-midnight (current-time))
+                            (plist-get x :time))))
+             (seq-map (lambda (x)
+                        (message "%s %s %s"
+                                 (format-time-string "%F %r" (plist-get x :time))
+                                 (plist-get x :id)
+                                 (plist-get x :args))))
+             (mapc #'message))
+
+(timer-duration mortimer-quick-toggle-default-time)
+
+(let* ((start (car mortimer-log))
+       (duration (car (plist-get start :args))))
+  (time-add (plist-get start :time) duration))
+
+
+(let ((success1 (car mortimer-log))
+      (start2 (cadr mortimer-log))
+      (rest (cddr mortimer-log)))
+  (setq mortimer-log
+        (cons start2 (cons success1 rest))))
+
+(equal
+ (thread-first mortimer-log car (plist-get :time))
+ '(25487 6029 664998 970000))
+
+(setq mortimer-log-old mortimer-log)
+
+(setq mortimer-log
+      '((:time (25487 6029 664998 970000) :id :start :args (1500))
+        (:time (25487 6043 190203 201000) :id :success :args nil)
+        (:time (25487 6027 256551 522000) :id :complete :args nil)
+        (:time (25487 4527 246490 116000) :id :start :args (1500))))
+
+)
 
 (provide 'mortimer)
 
