@@ -930,11 +930,21 @@ That behaves like the above `cycle-spacing-actions' in later Emacs."
               ("M-c M-o" . matt-cider-repl-clear-buffer)
               ("M-c M-z" . matt-cider-repl-display-buffer)))
 
-(defun matt-send-to-portal ()
+(defun matt-cider-send-to-portal ()
   (interactive)
   (when (region-active-p)
     (cider-interactive-eval (concat "(portal.api/submit " (buffer-substring-no-properties (region-beginning) (region-end)) ")"))))
 (matt-define-key "c c" 'matt-send-to-portal)
+
+(defun matt-cider-kill-ring-save-qualified-defun-name ()
+  (interactive)
+  (cider-interactive-eval (concat "`" (matt-get-defun-name-at-point))
+                          (nrepl-make-response-handler (current-buffer)
+                                                       (lambda (_buffer value)
+                                                         (kill-new value))
+                                                       nil
+                                                       nil
+                                                       nil)))
 
 (use-package sql
   :defer t
