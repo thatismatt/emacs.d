@@ -33,7 +33,6 @@
 (defun matt-gc-uninhibit ()
   "Return the gc threshold to a normal level."
   (setq gc-cons-threshold (* 8 1024 1024)))
-;; 16 = long pauses on undo
 ;; (add-hook 'minibuffer-exit-hook #'matt-gc-uninhibit)
 ;; (remove-hook 'minibuffer-exit-hook #'matt-gc-uninhibit)
 
