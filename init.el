@@ -972,14 +972,20 @@ That behaves like the above `cycle-spacing-actions' in later Emacs."
               ("=" . image-increase-size)))
 
 (use-package alarm
-  :hook (alarm . (lambda (&rest _) (matt-sound-play "/usr/share/sounds/sound-icons/trumpet-12.wav")))
+  :config
+  (defun alarm-sound (&rest _)
+    (matt-sound-play "/usr/share/sounds/sound-icons/trumpet-12.wav"))
+  (add-hook 'alarm-hook 'alarm-sound)
   :bind (:map matt-keymap
               ("a a" . alarm)
               ("a l" . alarm-list)
               ("a n" . alarm-next)))
 
 (use-package mortimer
-  :hook (mortimer-complete . (lambda () (matt-sound-play "/usr/share/sounds/sound-icons/trumpet-12.wav")))
+  :config
+  (defun mortimer-sound (&rest _)
+    (matt-sound-play "/usr/share/sounds/sound-icons/trumpet-12.wav"))
+  (add-hook 'mortimer-complete-hook 'mortimer-sound)
   :bind (:map matt-keymap
               ("m s" . mortimer-start)
               ("m p" . mortimer-pause-resume)
