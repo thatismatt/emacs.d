@@ -280,6 +280,7 @@ Focus change event is debounced so we don't gc on focus."
 (setq set-mark-command-repeat-pop t)
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 ;; (setq cycle-spacing-actions '((just-one-space -) (delete-all-space -) restore))
+(setq read-process-output-max (* 1024 1024))
 
 (defun matt-cycle-spacing ()
   "An alternate version of `cycle-spacing'.
