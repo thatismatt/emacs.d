@@ -399,25 +399,6 @@ That behaves like the above `cycle-spacing-actions' in later Emacs."
 (use-package ffap
   :bind ("C-x C-f" . find-file-at-point))
 
-(use-package selectrum
-  :ensure t
-  :hook (after-init . selectrum-mode)
-  :config
-  (selectrum-mode +1)
-  (setq selectrum-max-window-height 25)
-  (use-package selectrum-prescient
-    :ensure t
-    :config
-    (selectrum-prescient-mode +1)
-    (prescient-persist-mode +1))
-  (defun selectrum-recentf-open-files ()
-    (interactive)
-    (let ((files (mapcar 'abbreviate-file-name recentf-list)))
-      (find-file (completing-read "Find recent file: " files nil t))))
-  :bind (("C-x f" . selectrum-recentf-open-files)
-         (:map selectrum-minibuffer-map
-               ("S-<down>" . abort-recursive-edit))))
-
 (defvar matt-scratch-file-locations
   (list "dev/scratch.*" "dev/*/scratch.*" "dev/*/*/scratch.*"
         "src/scratch.*" "src/*/scratch.*" "src/*/*/scratch.*"))
@@ -604,16 +585,33 @@ That behaves like the above `cycle-spacing-actions' in later Emacs."
   (sp-use-smartparens-bindings)
   (setq sp-highlight-pair-overlay nil))
 
-(use-package company
+(use-package vertico
   :ensure t
   :init
-  (setq company-idle-delay 0.1)
-  (setq company-tooltip-limit 10)
-  (setq company-minimum-prefix-length 2)
-  (setq company-tooltip-flip-when-above t)
-  (setq company-dabbrev-downcase nil)
-  (setq company-dabbrev-ignore-case t)
-  (global-company-mode 1))
+  (vertico-mode))
+
+(use-package orderless
+  :ensure t
+  :init
+  (setq completion-styles '(orderless basic)) ;; reversing this order breaks cider's completion
+  (setq completion-category-defaults nil)
+  (setq completion-category-overrides '((file (styles partial-completion))))
+  (setq orderless-matching-styles '(orderless-literal orderless-initialism)))
+
+(use-package corfu
+  :ensure t
+  :config
+  (defun matt-corfu-on ()
+    "Enable Corfu in the minibuffer if `completion-at-point' is bound."
+    (when (where-is-internal #'completion-at-point (list (current-local-map)))
+      (corfu-mode 1)))
+  :custom
+  (corfu-cycle t)
+  (corfu-auto t)
+  (corfu-auto-prefix 2)
+  :hook (minibuffer-setup . matt-corfu-on)
+  :init
+  (global-corfu-mode))
 
 (use-package rainbow-mode
   :ensure t
