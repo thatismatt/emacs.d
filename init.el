@@ -484,6 +484,7 @@ That behaves like the above `cycle-spacing-actions' in later Emacs."
             (t
              (message "No matching src or test file found")))))
   :bind (:map matt-keymap
+              ("M-p" . project-switch-project)
               ("p b" . project-switch-to-buffer)
               ("p f" . project-find-file)
               ("p t" . matt-toggle-between-src-and-test)
