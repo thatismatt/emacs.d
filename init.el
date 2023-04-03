@@ -423,8 +423,8 @@ That behaves like the above `cycle-spacing-actions' in later Emacs."
                ("S-<down>" . abort-recursive-edit))))
 
 (defvar matt-scratch-file-locations
-  (list "dev/scratch.*" "dev/*/scratch.*"
-        "src/scratch.*" "src/*/scratch.*"))
+  (list "dev/scratch.*" "dev/*/scratch.*" "dev/*/*/scratch.*"
+        "src/scratch.*" "src/*/scratch.*" "src/*/*/scratch.*"))
 
 (use-package project
   :config
