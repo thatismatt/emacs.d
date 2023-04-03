@@ -1179,13 +1179,10 @@ e.g. '11:00 or \"10:30\"."
 
 (defun matt-journal+log-window-configuration-p ()
   "Return t if my journal & log are open."
-  (interactive)
-  (let* ((left-window (window-child (frame-root-window)))
-         (right-window (window-right left-window)))
-    (or (equal (expand-file-name matt-journal-file)
-               (buffer-file-name (window-buffer left-window)))
-        (equal (expand-file-name matt-log-file)
-               (buffer-file-name (window-buffer right-window))))))
+  (or (equal (expand-file-name matt-log-file)
+             (buffer-file-name))
+      (equal (expand-file-name matt-journal-file)
+             (buffer-file-name))))
 
 (defvar matt-journal+log-window-configuration-stash nil)
 
