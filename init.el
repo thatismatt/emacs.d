@@ -493,6 +493,10 @@ That behaves like the above `cycle-spacing-actions' in later Emacs."
     :hook (ibuffer . ibuffer-vc-set-filter-groups-by-vc-root))
   :bind ("C-x C-b" . (lambda () (interactive) (matt-clean-buffers) (ibuffer))))
 
+(use-package vundo
+  :ensure t
+  :bind ("M-_" . vundo))
+
 (use-package eshell
   :init
   (add-hook 'eshell-first-time-mode-hook ;; can't use `:bind' because `eshell-mode-map' is buffer local
