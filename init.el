@@ -396,10 +396,6 @@ That behaves like the above `cycle-spacing-actions' in later Emacs."
   (buffer-naming-load)
   (buffer-naming-set-fn 'project-el-buffer-naming-fn))
 
-(use-package browse-url
-  :init
-  (setq browse-url-browser-function 'browse-url-chrome))
-
 (use-package ffap
   :bind ("C-x C-f" . find-file-at-point))
 
