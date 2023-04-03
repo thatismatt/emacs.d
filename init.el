@@ -45,7 +45,7 @@ Focus change event is debounced so we don't gc on focus."
   (if (frame-focus-state)
       (when matt-gc-on-blur-timer
         (cancel-timer matt-gc-on-blur-timer))
-    (setq matt-gc-on-blur-timer (run-with-timer 1 nil #'garbage-collect))))
+    (setq matt-gc-on-blur-timer (run-with-timer 5 nil #'garbage-collect))))
 
 (add-function :after after-focus-change-function
               #'matt-gc-on-blur)
