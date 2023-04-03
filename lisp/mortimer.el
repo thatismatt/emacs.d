@@ -99,6 +99,12 @@ Does not reset state, used to start or resume timer."
 	    (run-with-timer 0 1
                         'mortimer-refresh-mode-line)))
 
+(defun mortimer-timer-init-and-start (seconds)
+  (add-to-list 'mode-line-misc-info '(mortimer-mode-line ("" mortimer-mode-line " ")) t)
+  (mortimer-stop)
+  (setq mortimer-timer-duration seconds)
+  (mortimer-timer-start seconds))
+
 (defun mortimer-timer-stop ()
   "Stop current timer without resetting state, used to stop or pause timer."
   (when mortimer-mode-line-timer
@@ -127,11 +133,7 @@ Does not reset state, used to start or resume timer."
 This will delete the current timer if there is one running or paused."
   (interactive "sTime: ")
   (if-let ((seconds (if (numberp time) time (timer-duration time))))
-      (progn
-        (add-to-list 'mode-line-misc-info '(mortimer-mode-line ("" mortimer-mode-line " ")) t)
-        (mortimer-stop)
-        (setq mortimer-timer-duration seconds)
-        (mortimer-timer-start seconds))
+      (mortimer-timer-init-and-start seconds)
     (message "I don't understand %s, try something like \"25 mins\"." time)))
 
 (defvar mortimer-quick-toggle-default-time "25 mins")
@@ -175,15 +177,27 @@ Ideal for binding to a convenient key."
         (:otherwise
          (message "No timer to pause/resume."))))
 
+(defun mortimer-log-append (id &optional f args)
+  "Append an event, with ID and ARGS, to the log.
+Optionally invoke F, excluding any internal logs."
+  (let ((mortimer-log-old mortimer-log)) ;; don't log inner calls, e.g. advised fns
+    (prog1 (when f (apply f args))
+      (setq mortimer-log (cons (list :time (current-time) :id id :args args) mortimer-log-old)))))
+
 (defun mortimer-mark-last-as-fail ()
+  "Append a fail event to the log."
   (interactive)
-  (setq mortimer-log (cons (list :time (current-time) :id :fail :args nil) mortimer-log)))
+  (mortimer-log-append :fail))
+
+(defun mortimer-mark-last-as-success ()
+  "Append a success event to the log."
+  (interactive)
+  (mortimer-log-append :success))
 
 (defun mortimer-log-advice (id)
+  "Create an advice function for log events with ID."
   (lambda (f &rest args)
-    (let ((mortimer-log-old mortimer-log)) ;; don't log inner advised fns
-      (prog1 (apply f args)
-        (setq mortimer-log (cons (list :time (current-time) :id id :args args) mortimer-log-old))))))
+    (mortimer-log-append id f args)))
 
 (fset 'mortimer-start-advice    (mortimer-log-advice :start))
 (fset 'mortimer-stop-advice     (mortimer-log-advice :stop))
@@ -191,11 +205,16 @@ Ideal for binding to a convenient key."
 (fset 'mortimer-resume-advice   (mortimer-log-advice :resume))
 (fset 'mortimer-complete-advice (mortimer-log-advice :complete))
 
-(advice-add 'mortimer-start       :around #'mortimer-start-advice)
-(advice-add 'mortimer-stop        :around #'mortimer-stop-advice)
-(advice-add 'mortimer-pause       :around #'mortimer-pause-advice)
-(advice-add 'mortimer-resume      :around #'mortimer-resume-advice)
-(advice-add 'mortimer-on-complete :around #'mortimer-complete-advice)
+(advice-add 'mortimer-timer-init-and-start ;; can't add advice to mortimer-start, as that function fails on invalid user input
+            :around #'mortimer-start-advice)
+(advice-add 'mortimer-stop
+            :around #'mortimer-stop-advice)
+(advice-add 'mortimer-pause
+            :around #'mortimer-pause-advice)
+(advice-add 'mortimer-resume
+            :around #'mortimer-resume-advice)
+(advice-add 'mortimer-on-complete
+            :around #'mortimer-complete-advice)
 
 (defun mortimer-partition-by (pred sequence)
   (when (not (seq-empty-p sequence))
@@ -203,13 +222,21 @@ Ideal for binding to a convenient key."
                 (seq-take-while (lambda (x) (not (funcall pred x))) (seq-rest sequence)))
           (mortimer-partition-by pred (seq-drop-while (lambda (x) (not (funcall pred x))) (seq-rest sequence))))))
 
-(defface mortimer-view-log-completed-face
-  '((t (:foreground "#090" :box t)))
+(defface mortimer-view-log-complete-face
+  '((t (:foreground "#bb0" :box t)))
   "Face used for Mortimer completed timers in the log.")
 
-(defface mortimer-view-log-unfinished-face
+(defface mortimer-view-log-success-face
+  '((t (:foreground "#090" :box t)))
+  "Face used for Mortimer success timers in the log.")
+
+(defface mortimer-view-log-incomplete-face
+  '((t (:foreground "#999" :box t)))
+  "Face used for Mortimer incomplete timers in the log.")
+
+(defface mortimer-view-log-fail-face
   '((t (:foreground "#b00" :box t)))
-  "Face used for Mortimer unfinished timers in the log.")
+  "Face used for Mortimer failed timers in the log.")
 
 (defun mortimer-get-buffer ()
   (let ((buffer (get-buffer-create "*Mortimer*")))
