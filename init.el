@@ -588,6 +588,7 @@ Focus change event is debounced so we don't gc on focus."
 (use-package orderless
   :ensure t
   :init
+  (setq orderless-match-faces [match])
   (setq completion-styles '(orderless basic)) ;; reversing this order breaks cider's completion
   (setq completion-category-defaults nil)
   (setq completion-category-overrides '((file (styles partial-completion))))
