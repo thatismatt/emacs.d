@@ -428,7 +428,8 @@ That behaves like the above `cycle-spacing-actions' in later Emacs."
         (find-file scratch-file))
        (t
         (message "No scratch file found")))))
-  (defun matt-test-file-p (file) ;; (rx bol (* any) "/test/" (* any) "_test.clj" (optional (any "sc")) eol)
+  (defun matt-test-file-p (file)
+    ;; (rx bol (* any) "/test/" (* any) "_test.clj" (optional (any "sc")) eol)
     (string-match-p "^.*/test/.*_test\\.clj[sc]?$" file))
   (defun matt-guess-test-file (src-file)
     (thread-last src-file
@@ -740,7 +741,7 @@ That behaves like the above `cycle-spacing-actions' in later Emacs."
     (org-insert-time-stamp (org-current-time 0) 'with-hm 'inactive))
   (defun matt-org-clock-in ()
     "A stripped down version of `org-clock-in' that just inserts
-   the current time in the correct position & format."
+    the current time in the correct position & format."
     (interactive)
     (save-excursion
       (org-clock-find-position nil)
@@ -751,7 +752,7 @@ That behaves like the above `cycle-spacing-actions' in later Emacs."
       (matt-org-insert-timestamp)))
   (defun matt-org-clock-out ()
     "A stripped down version of `org-clock-out' that just inserts
-   the current time in the correct position & format."
+    the current time in the correct position & format."
     (interactive)
     (save-excursion
       (org-clock-find-position nil)
