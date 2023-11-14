@@ -369,12 +369,7 @@ Focus change event is debounced so we don't gc on focus."
   (setq recentf-max-menu-items 15)
   (setq recentf-auto-cleanup 'never) ;; disable - can cause problems with remote files
   (recentf-mode 1)
-  (defun matt-find-recent-file ()
-    "Open file form `recentf-list', via `completing-read' interface."
-    (interactive)
-    (let ((files (mapcar 'abbreviate-file-name recentf-list)))
-      (find-file (completing-read "Find recent file: " files nil t))))
-  :bind ("C-x f" . matt-find-recent-file))
+  :bind ("C-x f" . recentf-open))
 
 (use-package dired
   :config
