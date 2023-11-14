@@ -849,8 +849,7 @@ Focus change event is debounced so we don't gc on focus."
           lisp-mode
           clojure-mode
           cider-repl-mode
-          scheme-mode
-          geiser-repl-mode)
+          scheme-mode)
          . rainbow-delimiters-mode-enable))
 
 (use-package elisp-slime-nav
@@ -1011,12 +1010,6 @@ Focus change event is debounced so we don't gc on focus."
   :ensure t
   :mode (("\\.pp\\'"          . ruby-mode)
          ("\\^Vagrantfile\\'" . ruby-mode)))
-
-(use-package geiser
-  :ensure t)
-
-(use-package geiser-guile
-  :ensure t)
 
 (use-package image
   :bind (:map image-map
