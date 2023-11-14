@@ -409,9 +409,10 @@ That behaves like the above `cycle-spacing-actions' in later Emacs."
     (interactive)
     (let* ((pr                (project-current t))
            (dir               (project-root pr))
-           (scratch-files     (mapcan (lambda (pattern)
-                                    (file-expand-wildcards (concat dir pattern) t))
-                                  matt-scratch-file-locations))
+           (scratch-files     (seq-remove #'file-directory-p
+                                          (mapcan (lambda (pattern)
+                                                    (file-expand-wildcards (concat dir pattern) t))
+                                                  matt-scratch-file-locations)))
            (current-file-name (buffer-file-name))
            (current-extension (when current-file-name (file-name-extension current-file-name)))
            (scratch-file      (if (= (length scratch-files) 1)
@@ -419,8 +420,9 @@ That behaves like the above `cycle-spacing-actions' in later Emacs."
                                 (car (seq-filter (lambda (file) (equal (file-name-extension file) current-extension))
                                                  scratch-files)))))
       (cond
-       ((or (null scratch-file)
-            (equal current-file-name scratch-file))
+       ((and scratch-files
+             (or (null scratch-file)
+                 (equal current-file-name scratch-file)))
         (find-file (completing-read "Open scratch file: " scratch-files)))
        ((and scratch-file (file-exists-p scratch-file))
         (find-file scratch-file))
