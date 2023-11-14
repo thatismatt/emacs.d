@@ -558,7 +558,6 @@ Focus change event is debounced so we don't gc on focus."
               ("b l" . bookmark-bmenu-list)))
 
 (use-package display-line-numbers
-  ;; :init (global-display-line-numbers-mode)
   :hook (prog-mode . display-line-numbers-mode)
   :config
   (setq display-line-numbers-width-start t)
