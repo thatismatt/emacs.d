@@ -376,6 +376,10 @@ Focus change event is debounced so we don't gc on focus."
       (find-file (completing-read "Find recent file: " files nil t))))
   :bind ("C-x f" . matt-find-recent-file))
 
+(use-package dired
+  :config
+  (setq dired-listing-switches "-al --group-directories-first"))
+
 (use-package comint
   :init
   (setq comint-input-ignoredups t))
