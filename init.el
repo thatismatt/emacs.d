@@ -722,6 +722,7 @@ Focus change event is debounced so we don't gc on focus."
           ("???" org-query-face)))
   (setq org-adapt-indentation t) ;; fixes indentation of drawers (e.g. logbook/clock)
   (setq org-startup-folded t)
+  (setq org-cycle-hide-drawer-startup nil)
   :config
   (use-package org-clock)
   (setq org-duration-format 'h:mm) ;; display days as hours
@@ -756,7 +757,6 @@ Focus change event is debounced so we don't gc on focus."
       (org-clock-report t))
     ;; scroll to the clock report at the top of the page
     (scroll-down))
-  (remove-hook 'org-cycle-hook 'org-cycle-hide-drawers)
   :bind ((:map org-mode-map
                ("C-<up>"      . org-backward-element)
                ("C-<down>"    . org-forward-element)
