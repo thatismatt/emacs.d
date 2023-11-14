@@ -1503,15 +1503,18 @@ If the region is active BEGIN and END default to the region."
   (save-excursion
     (beginning-of-defun)
     (let ((defun-first-line (thing-at-point 'line)))
-      (string-match "^(def[-a-z]* \\([-A-Za-z?!]*\\)" defun-first-line)
+      ;; TODO: handle metadata keys, e.g. ^:dev/before-load
+      (string-match "^(def[-a-z]* \\([-*'_<>+=A-Za-z0-9?!]*\\)" defun-first-line)
       (set-text-properties 0 (length defun-first-line) nil defun-first-line)
       (match-string 1 defun-first-line))))
 
-(defun matt-defun-name-at-point () ;; TODO: (&optional arg) prefix arg yank or insert
-  "Insert the name of the defun at point."
-  (interactive)
+(defun matt-defun-name-at-point (&optional arg)
+  "Grab the name of the defun at point, if ARG is given then insert."
+  (interactive "P")
   (when-let ((defun-name (matt-get-defun-name-at-point)))
-    (insert defun-name)))
+    (if arg
+        (insert defun-name)
+      (kill-new defun-name))))
 (matt-define-key "i k" 'matt-defun-name-at-point)
 
 (defun matt-random-name (&optional name syllables)
