@@ -400,8 +400,8 @@ That behaves like the above `cycle-spacing-actions' in later Emacs."
   :bind ("C-x C-f" . find-file-at-point))
 
 (defvar matt-scratch-file-locations
-  (list "dev/scratch.*" "dev/*/scratch.*" "dev/*/*/scratch.*"
-        "src/scratch.*" "src/*/scratch.*" "src/*/*/scratch.*"))
+  (list "dev/scratch*" "dev/*/scratch*" "dev/*/*/scratch*"
+        "src/scratch*" "src/*/scratch*" "src/*/*/scratch*"))
 
 (use-package project
   :config
