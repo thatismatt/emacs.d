@@ -281,7 +281,28 @@ Focus change event is debounced so we don't gc on focus."
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 ;; remove newlines with cycling whitespace
 (setq cycle-spacing-actions '((just-one-space -) (delete-all-space -) restore))
+;; (setq enable-recursive-minibuffers nil)
 (setq read-process-output-max (* 1024 1024))
+
+;; window splitting - always horizontal
+(setq split-height-threshold 0)
+(setq split-width-threshold nil)
+
+;; default to no wrap
+(setq-default truncate-lines t)
+
+;; store all backup and autosave files in the tmp dir
+(setq backup-directory-alist
+      `((".*" . ,temporary-file-directory)))
+(setq auto-save-file-name-transforms
+      `((".*" ,temporary-file-directory t)))
+
+;; enable stuff
+(put 'upcase-region    'disabled nil)
+(put 'downcase-region  'disabled nil)
+(put 'scroll-left      'disabled nil)
+(put 'narrow-to-page   'disabled nil)
+(put 'narrow-to-region 'disabled nil)
 
 (global-set-key (kbd "C-d")           'backward-delete-char)
 (global-set-key (kbd "<M-backspace>") 'backward-kill-word)
@@ -304,23 +325,6 @@ Focus change event is debounced so we don't gc on focus."
 (matt-define-key "l n"                'display-line-numbers-mode)
 
 (define-key isearch-mode-map (kbd "C-.") 'isearch-forward-symbol-at-point)
-
-;; window splitting - always horizontal
-(setq split-height-threshold 0)
-(setq split-width-threshold nil)
-
-;; store all backup and autosave files in the tmp dir
-(setq backup-directory-alist
-      `((".*" . ,temporary-file-directory)))
-(setq auto-save-file-name-transforms
-      `((".*" ,temporary-file-directory t)))
-
-;; enable stuff
-(put 'upcase-region    'disabled nil)
-(put 'downcase-region  'disabled nil)
-(put 'scroll-left      'disabled nil)
-(put 'narrow-to-page   'disabled nil)
-(put 'narrow-to-region 'disabled nil)
 
 (defvar matt-sound-command
   (if (executable-find "ffplay")
