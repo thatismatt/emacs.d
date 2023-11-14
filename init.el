@@ -533,7 +533,8 @@ Focus change event is debounced so we don't gc on focus."
         (matt-eshell-other-buffers-directory)
       (matt-eshell-current-directory)))
   :config
-  (setq eshell-hist-ignoredups 'erase)
+  ;; FIX: currently breaks the input ring
+  ;; (setq eshell-hist-ignoredups 'erase)
   (setq eshell-history-size (* 1024 1024))
   :bind (:map matt-keymap
               ("o e" . eshell)
