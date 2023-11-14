@@ -761,6 +761,42 @@ Focus change event is debounced so we don't gc on focus."
       (org-clock-report t))
     ;; scroll to the clock report at the top of the page
     (scroll-down))
+  (defun matt-org-clock-fortnight ()
+    (interactive)
+    (goto-char (line-beginning-position))
+    (org-insert-heading nil nil :top)
+    (insert "F?")
+    (org-insert-subheading nil)
+    (insert "Forecast")
+    (let* (;; TODO: find the previous Monday, if not today
+           (t1  (decode-time (current-time)))
+           (d1  (encode-time (make-decoded-time :second 0
+                                                :minute 0
+                                                :hour   0
+                                                :day    (decoded-time-day   t1)
+                                                :month  (decoded-time-month t1)
+                                                :year   (decoded-time-year  t1)
+                                                :dst    (decoded-time-dst   t1)
+                                                :zone   (decoded-time-zone  t1)))))
+      (mapc (lambda (i)
+              (org-clock-find-position nil)
+              (insert-before-markers "\n")
+              (backward-char 1)
+              (org-indent-line)
+              (insert org-clock-string " ")
+              (org-insert-time-stamp (time-add d1 (+ (* i 24 60 60)
+                                                     (* 8 60 60)))
+                                     'with-hm 'inactive)
+              (insert "--")
+              (org-insert-time-stamp (time-add d1 (+ (* i 24 60 60)
+                                                     (* 16 60 60)))
+                                     'with-hm 'inactive)
+              (org-clock-update-time-maybe))
+            ;; MTWTF    MTWT
+            '(0 1 2 3 4 7 8 9 10)))
+    (org-insert-heading nil)
+    (insert "W?")
+    (matt-org-clock-in))
   :bind ((:map org-mode-map
                ("C-<up>"      . org-backward-element)
                ("C-<down>"    . org-forward-element)
@@ -783,6 +819,7 @@ Focus change event is debounced so we don't gc on focus."
                ("c i" . matt-org-clock-in)
                ("c o" . matt-org-clock-out)
                ("c r" . matt-org-clock-report)
+               ("c f" . matt-org-clock-fortnight)
                ("l l" . org-store-link)
                ("l t" . org-toggle-link-display))))
 
