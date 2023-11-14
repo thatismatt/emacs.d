@@ -669,6 +669,10 @@ Focus change event is debounced so we don't gc on focus."
               ("-"   . string-inflection-snake-kebab)
               ("M--" . string-inflection-all-cycle)))
 
+(use-package csv-mode
+  :ensure t
+  :defer t)
+
 (use-package magit
   :ensure t
   :init
