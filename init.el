@@ -878,6 +878,7 @@ Focus change event is debounced so we don't gc on focus."
   (setq cider-repl-history-size 1000)
   (setq cider-repl-history-file (expand-file-name ".cider-repl-history" user-emacs-directory))
   (setq cider-repl-pop-to-buffer-on-connect 'display-only)
+  (setq cider-use-tooltips nil)
   (defun matt-cider-repl-clear-buffer ()
     "Version of `cider-repl-clear-buffer' that can be used from another buffer."
     (interactive)
