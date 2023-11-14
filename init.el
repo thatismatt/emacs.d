@@ -452,11 +452,26 @@ Focus change event is debounced so we don't gc on focus."
              (find-file test-file-name))
             (t
              (message "No matching src or test file found")))))
+  (defun matt-guess-related-file (file)
+    (let* ((sibling-files (seq-remove (lambda (f) (or (file-directory-p f)
+                                                      (string-prefix-p ".#" f))) ;; lock files
+                                      (directory-files (file-name-parent-directory file))))
+           (related-file (car (seq-remove (lambda (f) (file-equal-p f file)) sibling-files))))
+      (when (eq 2 (length sibling-files))
+        related-file)))
+  (defun matt-toggle-related-file ()
+    (interactive)
+    (let* ((file-name (buffer-file-name))
+           (related-file (matt-guess-related-file file-name)))
+      (if related-file
+          (find-file related-file)
+        (message "No related file found"))))
   :bind (:map matt-keymap
               ("M-p" . project-switch-project)
               ("p b" . project-switch-to-buffer)
               ("p f" . project-find-file)
               ("p t" . matt-toggle-between-src-and-test)
+              ("p r" . matt-toggle-related-file)
               ("p s" . matt-project-find-scratch)))
 
 (use-package ibuffer
