@@ -1039,7 +1039,8 @@ Focus change event is debounced so we don't gc on focus."
   :load-path (lambda () (expand-file-name "~/code/fennel-mode"))
   :config
   (defun matt-fennel-init ()
-    (setq inferior-lisp-program
+    (fennel-proto-repl-minor-mode)
+    (setq fennel-program
           (expand-file-name "~/code/fennel/fennel --repl")))
   :hook (fennel-mode . matt-fennel-init))
 
