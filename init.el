@@ -376,8 +376,7 @@ Focus change event is debounced so we don't gc on focus."
   (setq recentf-max-saved-items 500)
   (setq recentf-max-menu-items 15)
   (setq recentf-auto-cleanup 'never) ;; disable - can cause problems with remote files
-  (recentf-mode 1)
-  :bind ("C-x f" . recentf-open))
+  (recentf-mode 1))
 
 (use-package dired
   :config
@@ -632,6 +631,27 @@ Focus change event is debounced so we don't gc on focus."
   :init
   (global-corfu-mode))
 
+(use-package cape
+  :ensure t
+  :init
+  (add-to-list 'completion-at-point-functions #'cape-dabbrev)
+  (add-to-list 'completion-at-point-functions #'cape-file))
+
+(use-package consult
+  :ensure t
+  :bind (("M-y" . consult-yank-pop)
+         ("C-x b" . consult-buffer)
+         ("C-x f" . consult-recent-file)
+         ("S-<down>" . consult-buffer)
+         (:map matt-keymap
+               ("g g" . consult-ripgrep)
+               ("M-b" . consult-bookmark)
+               ("c l" . consult-line)
+               ("c m" . consult-mark)
+               ("c g" . consult-global-mark)
+               ("c p" . consult-project-buffer)
+               ("c k" . consult-locate))))
+
 (use-package rainbow-mode
   :ensure t
   :init
@@ -645,20 +665,6 @@ Focus change event is debounced so we don't gc on focus."
   (setq grep-find-ignored-directories
         (append grep-find-ignored-directories '("target" "out" "node_modules" "build" "dist" "bower")))
   (add-hook 'grep-mode-hook (lambda () (toggle-truncate-lines 1))))
-
-(use-package ag
-  :ensure t
-  :defer t
-  :config
-  (setq ag-highlight-search t)
-  (setq ag-reuse-buffers t)
-  (setq ag-reuse-window t)
-  (add-to-list 'ag-arguments "--hidden")
-  :bind (:map matt-keymap
-              ("g d" . ag-regexp) ;; mnemonic "grep directory"
-              ("g a" . ag)
-              ("g r" . ag-project-regexp)
-              ("g g" . ag-project)))
 
 (use-package idle-highlight-mode
   :ensure t
@@ -1083,7 +1089,6 @@ New window's buffer is selected according to `matt-mru-buffer'."
     (matt-mru-buffer)
     (other-window 1)))
 (global-set-key (kbd "S-<up>") 'matt-mru-buffer)
-(global-set-key (kbd "S-<down>") 'switch-to-buffer)
 (global-set-key (kbd "S-<right>") 'matt-other-window-or-split)
 (global-set-key (kbd "S-<left>") 'matt-delete-other-windows-or-split)
 
