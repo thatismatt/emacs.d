@@ -78,6 +78,14 @@ Focus change event is debounced so we don't gc on focus."
   (interactive)
   (byte-recompile-directory package-user-dir nil 'force))
 
+;; prevent ctrl mouse scroll changing the font size
+(defun dissoc (key alist)
+  "Delete elements of ALIST where KEY is equal to the element's car."
+  (delq (assoc key alist) alist))
+(setq mouse-wheel-scroll-amount (dissoc '(control) mouse-wheel-scroll-amount))
+(setq mouse-wheel-scroll-amount (dissoc '(control meta) mouse-wheel-scroll-amount))
+(mouse-wheel-mode 1)
+
 ;; hide tool bar & menu bar & tab bar
 (tool-bar-mode -1)
 (menu-bar-mode -1)
