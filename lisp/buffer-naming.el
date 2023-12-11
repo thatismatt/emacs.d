@@ -17,6 +17,10 @@
 ;; ;; turn off - remove the advice
 ;; (buffer-naming-unload)
 
+;;; Todo:
+;; Handle files from jars
+;;  - e.g. `buffer-file-name' = /home/matt/.m2/repository/listora/again/1.0.0/again-1.0.0.jar:again/core.clj
+
 ;;; Code:
 
 (require 'vc-git)

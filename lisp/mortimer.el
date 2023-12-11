@@ -11,6 +11,9 @@
 ;; (mortimer-start "25 mins")
 ;; (mortimer-stop)
 
+;;; TODO:
+;; - change faces to inherit from standard ones, e.g. success, error etc
+
 ;;; Code:
 
 (require 'view)
