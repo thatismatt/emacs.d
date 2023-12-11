@@ -1017,6 +1017,18 @@ Focus change event is debounced so we don't gc on focus."
                                                        nil
                                                        nil)))
 
+(defun matt-cider-kill-ring-save-qualified-symbol-name ()
+  "Save the qualified name of the function at point to the kill ring."
+  (interactive)
+  (when-let ((s (thing-at-point 'symbol)))
+    (cider-interactive-eval (concat "`" s)
+                            (nrepl-make-response-handler (current-buffer)
+                                                         (lambda (_buffer value)
+                                                           (kill-new value))
+                                                         nil
+                                                         nil
+                                                         nil))))
+
 (use-package sql
   :defer t
   :init
