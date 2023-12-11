@@ -714,7 +714,9 @@ Focus change event is debounced so we don't gc on focus."
          (:map matt-keymap
                ("g l" . magit-log-buffer-file)
                ("g b" . magit-blame-addition)
-               ("g f" . magit-find-file))))
+               ("g c" . (lambda () (interactive) (find-file (concat (magit-gitdir) "config"))))
+               ("g f" . magit-find-file)
+               ("g d f" . magit-diff-buffer-file)))) ;; mnemonic "git diff file"
 
 (use-package diff-hl
   :ensure t
