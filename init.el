@@ -276,7 +276,7 @@ Focus change event is debounced so we don't gc on focus."
 (setq mouse-yank-at-point t) ;; middle click paste at point (not mouse pointer)
 (setq require-final-newline nil)
 (setq-default indent-tabs-mode nil)
-(setq-default tab-width 8)
+(setq-default tab-width 2)
 (setq-default fill-column 120)
 (setq-default display-fill-column-indicator-character ?\u2506)
 (global-auto-revert-mode t)
@@ -873,7 +873,7 @@ Focus change event is debounced so we don't gc on focus."
 
 (use-package js
   :init
-  (setq js-indent-level 2)
+  (setq js-indent-level tab-width)
   :mode (("\\.json\\'" . js-mode)
          ("\\.cfn\\'"  . js-mode))) ;; cloud formation
 
@@ -884,7 +884,7 @@ Focus change event is debounced so we don't gc on focus."
 (use-package css-mode
   :ensure t
   :config
-  (setq css-indent-offset 2)
+  (setq css-indent-offset tab-width)
   :defer t)
 
 (use-package cc-mode
@@ -897,8 +897,8 @@ Focus change event is debounced so we don't gc on focus."
   :mode (("\\.jsx\\'"      . web-mode)
          ("\\.mustache\\'" . web-mode))
   :init
-  (setq web-mode-markup-indent-offset 2)
-  (setq web-mode-code-indent-offset 2)
+  (setq web-mode-markup-indent-offset tab-width)
+  (setq web-mode-code-indent-offset tab-width)
   (setq web-mode-enable-comment-interpolation nil))
 
 (use-package flycheck
