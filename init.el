@@ -1604,6 +1604,20 @@ If the region is active BEGIN and END default to the region."
       (kill-new defun-name))))
 (matt-define-key "i k" 'matt-defun-name-at-point)
 
+(defun matt-insert-capture ()
+  "Insert an environment capture form, named according to the containing function."
+  (interactive)
+  (insert "(matt.capture/capture :" (matt-get-defun-name-at-point) ")"))
+(matt-define-key "i c" 'matt-insert-capture)
+
+(defun matt-inspect-capture ()
+  "Inspect the captured environment for capture-id at point."
+  (interactive)
+  (let ((capture-id (thing-at-point 'symbol)))
+    ;; TODO: test that capture-id is a keyword: (string-prefix-p ":" capture-id)
+    (cider-inspect-expr (concat "(matt.capture/captured-bindings " capture-id ")") nil)))
+(matt-define-key "M-i" 'matt-inspect-capture) ;; like cider-inspect "C-c M-i"
+
 (defun matt-random-name (&optional name syllables)
   "Generate a random name, with prefix NAME and SYLLABLES long."
   (let* ((common-closed '("b" "c" "d" "f" "g" "h" "k" "l" "m" "n" "p"
