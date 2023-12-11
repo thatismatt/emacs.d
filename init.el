@@ -944,16 +944,18 @@ Focus change event is debounced so we don't gc on focus."
   (put-clojure-indent 'do-at 1)
   (put-clojure-indent 'do-at* 1)
   (put-clojure-indent 'fact 1)
-  (require 'flycheck-clj-kondo))
+  (put-clojure-indent 'time! 2))
 
 (use-package cider
   :ensure t
   :defer t
   :config
+  (setq nrepl-hide-special-buffers t)
   (setq cider-repl-history-size 1000)
   (setq cider-repl-history-file (expand-file-name ".cider-repl-history" user-emacs-directory))
   (setq cider-repl-pop-to-buffer-on-connect 'display-only)
   (setq cider-use-tooltips nil)
+  (setq cider-inspector-max-coll-size 2) ;; reduce likelihood of wrapping in inspector
   (defun matt-cider-repl-clear-buffer ()
     "Version of `cider-repl-clear-buffer' that can be used from another buffer."
     (interactive)
@@ -997,16 +999,19 @@ Focus change event is debounced so we don't gc on focus."
               ("M-c M-z" . matt-cider-repl-display-buffer)))
 
 (defun matt-cider-send-to-portal ()
+  "Evaluate region and send to portal."
   (interactive)
   (when (region-active-p)
     (cider-interactive-eval (concat "(portal.api/submit " (buffer-substring-no-properties (region-beginning) (region-end)) ")"))))
 (matt-define-key "c c" 'matt-send-to-portal)
 
 (defun matt-cider-kill-ring-save-qualified-defun-name ()
+  "Save the qualified name of the function at point to the kill ring."
   (interactive)
   (cider-interactive-eval (concat "`" (matt-get-defun-name-at-point))
                           (nrepl-make-response-handler (current-buffer)
                                                        (lambda (_buffer value)
+                                                         (message "Saved: %s" value)
                                                          (kill-new value))
                                                        nil
                                                        nil
