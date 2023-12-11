@@ -1048,6 +1048,15 @@ Focus change event is debounced so we don't gc on focus."
   :mode (("\\.pp\\'"          . ruby-mode)
          ("\\^Vagrantfile\\'" . ruby-mode)))
 
+(use-package go-mode
+  :ensure t
+  :config
+  (defun matt-go-init ()
+    (add-hook 'before-save-hook 'gofmt nil t))
+  :init
+  (setq gofmt-command "goimports") ;; go install golang.org/x/tools/cmd/goimports@latest
+  :hook (go-mode . matt-go-init))
+
 (use-package image
   :bind (:map image-map
               ("=" . image-increase-size)))
