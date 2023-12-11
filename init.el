@@ -866,6 +866,10 @@ Focus change event is debounced so we don't gc on focus."
           scheme-mode)
          . rainbow-delimiters-mode-enable))
 
+(use-package elisp-mode
+  :bind (:map emacs-lisp-mode-map
+              ("C-c C-k" . eval-buffer)))
+
 (use-package elisp-slime-nav
   :ensure t
   :hook (emacs-lisp-mode . elisp-slime-nav-mode))
