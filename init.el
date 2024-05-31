@@ -79,6 +79,11 @@ Focus change event is debounced so we don't gc on focus."
   (interactive)
   (byte-recompile-directory package-user-dir nil 'force))
 
+(use-package exec-path-from-shell
+  :ensure t
+  :config
+  (exec-path-from-shell-initialize))
+
 ;; prevent ctrl mouse scroll changing the font size
 (defun dissoc (key alist)
   "Delete elements of ALIST where KEY is equal to the element's car."
