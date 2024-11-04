@@ -109,6 +109,8 @@ Focus change event is debounced so we don't gc on focus."
 ;; display keystrokes almost immediately
 (setq echo-keystrokes 0.3)
 
+(setq ring-bell-function 'ignore)
+
 ;; keys
 (defvar matt-keymap (make-sparse-keymap))
 (global-set-key (kbd "M-m") matt-keymap)
