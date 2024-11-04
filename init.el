@@ -738,7 +738,8 @@ Focus change event is debounced so we don't gc on focus."
   :ensure t
   :bind (:map matt-keymap
               ("<down>" . mc/mark-more-like-this-extended)
-              ("m r"    . mc/edit-lines)))
+              ("m r"    . mc/edit-lines)                            ;; mnemonic "multiple-cursors rectangle"
+              ("r r"    . mc/mark-all-symbols-like-this-in-defun))) ;; mnemonic "refactor rename"
 
 (use-package move-text
   :ensure t
