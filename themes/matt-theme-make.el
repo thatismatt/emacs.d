@@ -147,7 +147,8 @@
          (*e1*           (plist-get theme-colors :e1))
          (*e2*           (color-darken-name *e1* 10))
          (*rainbow-colors*
-          (seq-map (lambda (h) (color-hsl-to-hex h 0.8 0.5)) (color-hue-spread (car default-hsl) 9 -0.3))))
+          (seq-map (lambda (h) (color-hsl-to-hex h 0.8 0.6))
+                   (color-hue-spread (car default-hsl) 9 -0.3))))
 
     ;; (setq matt-theme-debug (list :background *background*
     ;;                              :background-0 *background-0*
@@ -317,7 +318,7 @@
      `(org-postponed-face ((t (:foreground ,*comment* :box (:line-width (1 . -1))))))
      `(org-query-face ((t (:foreground ,*a1* :box (:line-width (1 . -1))))))
      `(org-headline-done ((t (:foreground ,*comment*))))
-     `(org-tag ((t (:foreground ,*background-2* :background ,*background-0*))))
+     `(org-tag ((t (:foreground ,*background-3* :background ,*background-1*))))
      `(org-date ((t (:foreground ,*b2*))))
      `(org-checkbox ((t (:foreground ,*success-1*))))
      `(org-block ((t (:foreground unspecified))))
@@ -391,6 +392,8 @@
      `(erc-direct-msg-face ((t (:foreground ,*default*))))
      `(erc-error-face ((t (:foreground ,*error*))))
 
+     ;; hi-line
+     `(hl-line ((t (:background ,*background-0*  :extend t))))
      )
 
     (custom-theme-set-variables
