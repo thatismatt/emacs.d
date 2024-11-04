@@ -8,24 +8,27 @@
 (eval-when-compile (require 'cl-lib))
 
 (require 'seq)
-(require 'notifications)
 
 (defvar alarm-alist nil
   "An alist of alarms.")
 
-(defun alarm-notification (message time)
-  "Displays MESSAGE (and TIME) via `notifications-notify'."
-  (notifications-notify
-   :title     (format "Alarm (%s)" time)
-   :body      message
-   :actions   '("snooze" "Snooze (5 mins)"
-                "snooze-for" "Snooze for ...")
-   :on-action (lambda (_ action-key)
-                (pcase action-key
-                  ("snooze" (alarm "5 mins" message))
-                  ("snooze-for" (alarm (completing-read "Snooze alarm for: " '("1 mins" "5 mins" "10 mins")) message))))))
+;; TODO: conditionally add dbus based alarm popup
+;; (require 'notifications)
+;; (defun alarm-notification (message time)
+;;   "Displays MESSAGE (and TIME) via `notifications-notify'."
+;;   (notifications-notify
+;;    :title     (format "Alarm (%s)" time)
+;;    :body      message
+;;    :actions   '("snooze" "Snooze (5 mins)"
+;;                 "snooze-for" "Snooze for ...")
+;;    :on-action (lambda (_ action-key)
+;;                 (pcase action-key
+;;                   ("snooze" (alarm "5 mins" message))
+;;                   ("snooze-for" (alarm (completing-read "Snooze alarm for: " '("1 mins" "5 mins" "10 mins")) message))))))
+;; (add-hook 'alarm-hook 'alarm-notification)
+;; (remove-hook 'alarm-hook 'alarm-notification)
 
-(defvar alarm-hook '(alarm-notification)
+(defvar alarm-hook '()
   "Function(s) called when an alarm goes off.
 These functions are passed MESSAGE and TIME as arguments.")
 
