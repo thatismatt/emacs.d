@@ -106,6 +106,9 @@ Focus change event is debounced so we don't gc on focus."
 ;; scroll at same rate as the cursor - this stops the scroll "jumping" when you move off the top/bottom
 (setq scroll-conservatively 10)
 
+;; display keystrokes almost immediately
+(setq echo-keystrokes 0.3)
+
 ;; keys
 (defvar matt-keymap (make-sparse-keymap))
 (global-set-key (kbd "M-m") matt-keymap)
