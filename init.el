@@ -1253,10 +1253,10 @@ New window's buffer is selected according to `matt-mru-buffer'."
        (string-match-p
         (rx (and bos
                  (or "*Messages*" "*Completions*" "*info*" "*Help*" "*Backtrace*" "*Warnings*"
-                     "*Compile-Log*" "*Shell Command Output*" "*Occur*" "*vc*" "*vc-" "*Man "
-                     "*WoMan" "*Calendar*" "*Ediff" "*Bookmark List*" "*Packages*"
-                     "magit" "*ag search" "*eldoc" "*Alarm*" "*Alarm List*" "*cider-" "*sesman "
-                     "*Mortimer*")))
+                     "*Compile-Log*" "*Async-native-compile-log*" "*Shell Command Output*"
+                     "*Occur*" "*vc*" "*vc-" "*Man " "*WoMan" "*Calendar*" "*Ediff" "*Bookmark List*"
+                     "*Packages*" "magit" "*ag search" "*eldoc" "*Alarm*" "*Alarm List*" "*cider-"
+                     "*sesman " "*Mortimer*")))
         (buffer-name buf))))
 
 (defun matt-disposable-major-mode-p (buf)
