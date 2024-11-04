@@ -205,7 +205,7 @@ Focus change event is debounced so we don't gc on focus."
 ;; (set-face-attribute 'default nil :family "Courier 10 Pitch")
 ;; (set-face-attribute 'default nil :family "Ubuntu Mono")
 
-(defvar matt-font-size-default 11)
+(defvar matt-font-size-default 14)
 
 (defun matt-font-size-increase ()
   "Increase the font size by 1 point."
