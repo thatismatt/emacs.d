@@ -1020,7 +1020,12 @@ Focus change event is debounced so we don't gc on focus."
   (setq cider-repl-history-file (expand-file-name ".cider-repl-history" user-emacs-directory))
   (setq cider-repl-pop-to-buffer-on-connect 'display-only)
   (setq cider-use-tooltips nil)
-  (setq cider-inspector-max-coll-size 2) ;; reduce likelihood of wrapping in inspector
+  (setq cider-test-fail-fast nil)
+  (setq cider-inspector-max-coll-size 3) ;; reduce likelihood of wrapping in inspector
+  (setq cider-enrich-classpath t)
+  (setq cider-comment-prefix           ";; ")
+  (setq cider-comment-continued-prefix ";; ")
+  (setq cider-comment-postfix          "") ;; for completeness, but this is the default
   (defun matt-cider-repl-clear-buffer ()
     "Version of `cider-repl-clear-buffer' that can be used from another buffer."
     (interactive)
@@ -1059,16 +1064,54 @@ Focus change event is debounced so we don't gc on focus."
                                       (set-process-query-on-exit-flag
                                        (get-buffer-process (current-buffer)) nil)
                                       (rename-buffer "*babashka-repl*"))))))))
-  :bind (:map matt-keymap
-              ("M-c M-o" . matt-cider-repl-clear-buffer)
-              ("M-c M-z" . matt-cider-repl-display-buffer)))
+  :bind ((:map cider-repl-mode-map
+               ("C-<up>" . cider-repl-previous-input)
+               ("C-<down>" . cider-repl-next-input))
+         (:map matt-keymap
+               ("M-c M-o" . matt-cider-repl-clear-buffer)
+               ("M-c M-z" . matt-cider-repl-display-buffer))))
 
-(defun matt-cider-send-to-portal ()
-  "Evaluate region and send to portal."
+(defun matt-get-defun-name-at-point ()
+  "Return the name of the defun at point."
+  (save-excursion
+    (beginning-of-defun)
+    (let ((defun-first-line (thing-at-point 'line)))
+      ;; TODO: handle metadata keys, e.g. ^:dev/before-load
+      (string-match "^(def[-a-z]* \\([-*'_<>+=A-Za-z0-9?!]*\\)" defun-first-line)
+      (set-text-properties 0 (length defun-first-line) nil defun-first-line)
+      (match-string 1 defun-first-line))))
+
+(defun matt-defun-name-at-point (&optional arg)
+  "Grab the name of the defun at point, if ARG is given then insert."
+  (interactive "P")
+  (when-let ((defun-name (matt-get-defun-name-at-point)))
+    (if arg
+        (insert defun-name)
+      (kill-new defun-name))))
+(matt-define-key "i k" 'matt-defun-name-at-point)
+
+(defun matt-insert-capture ()
+  "Insert an environment capture form, named according to the containing function."
   (interactive)
-  (when (region-active-p)
-    (cider-interactive-eval (concat "(portal.api/submit " (buffer-substring-no-properties (region-beginning) (region-end)) ")"))))
-(matt-define-key "c c" 'matt-send-to-portal)
+  (insert "(matt.capture/capture :" (matt-get-defun-name-at-point) ")"))
+(matt-define-key "i c" 'matt-insert-capture)
+
+(defun matt-inspect-capture ()
+  "Inspect the captured environment for capture-id at point."
+  (interactive)
+  (let ((capture-id (thing-at-point 'symbol)))
+    ;; TODO: test that capture-id is a keyword: (string-prefix-p ":" capture-id)
+    (cider-inspect-expr (concat "(matt.capture/captured-bindings " capture-id ")") nil)))
+(matt-define-key "M-i" 'matt-inspect-capture) ;; like cider-inspect "C-c M-i"
+
+(defun matt-cider-beep (&optional arg)
+  "Beep! Continuous when prefix ARG is set."
+  (interactive "P")
+  (let ((form (cons 'matt.beep/beep
+                    (when arg '(:continuous? true)))))
+    (cider-interactive-eval (format "%S" form)))
+  (message "Beep!"))
+(matt-define-key "c b" 'matt-cider-beep)
 
 (defun matt-cider-kill-ring-save-qualified-defun-name ()
   "Save the qualified name of the function at point to the kill ring."
@@ -1083,16 +1126,23 @@ Focus change event is debounced so we don't gc on focus."
                                                        nil)))
 
 (defun matt-cider-kill-ring-save-qualified-symbol-name ()
-  "Save the qualified name of the function at point to the kill ring."
+  "Save the qualified name of the symbol at point to the kill ring."
   (interactive)
   (when-let ((s (thing-at-point 'symbol)))
     (cider-interactive-eval (concat "`" s)
                             (nrepl-make-response-handler (current-buffer)
                                                          (lambda (_buffer value)
+                                                           (message "Saved: %s" value)
                                                            (kill-new value))
                                                          nil
                                                          nil
                                                          nil))))
+
+(defun matt-cider-unmap-ns-vars ()
+  "Unmap all of the current namespaces public symbols."
+  (interactive)
+  (cider-interactive-eval
+   (format "%S" '(->> *ns* ns-interns keys sort (mapv (fn [s] (ns-unmap *ns* s)))))))
 
 (use-package sql
   :defer t
@@ -1681,39 +1731,6 @@ If the region is active BEGIN and END default to the region."
              (1+ (abs (- (line-number-at-pos mk) (line-number-at-pos pt))))
              pt (mark))))
 (matt-define-key "r s" 'matt-region-size)
-
-(defun matt-get-defun-name-at-point ()
-  "Return the name of the defun at point."
-  (save-excursion
-    (beginning-of-defun)
-    (let ((defun-first-line (thing-at-point 'line)))
-      ;; TODO: handle metadata keys, e.g. ^:dev/before-load
-      (string-match "^(def[-a-z]* \\([-*'_<>+=A-Za-z0-9?!]*\\)" defun-first-line)
-      (set-text-properties 0 (length defun-first-line) nil defun-first-line)
-      (match-string 1 defun-first-line))))
-
-(defun matt-defun-name-at-point (&optional arg)
-  "Grab the name of the defun at point, if ARG is given then insert."
-  (interactive "P")
-  (when-let ((defun-name (matt-get-defun-name-at-point)))
-    (if arg
-        (insert defun-name)
-      (kill-new defun-name))))
-(matt-define-key "i k" 'matt-defun-name-at-point)
-
-(defun matt-insert-capture ()
-  "Insert an environment capture form, named according to the containing function."
-  (interactive)
-  (insert "(matt.capture/capture :" (matt-get-defun-name-at-point) ")"))
-(matt-define-key "i c" 'matt-insert-capture)
-
-(defun matt-inspect-capture ()
-  "Inspect the captured environment for capture-id at point."
-  (interactive)
-  (let ((capture-id (thing-at-point 'symbol)))
-    ;; TODO: test that capture-id is a keyword: (string-prefix-p ":" capture-id)
-    (cider-inspect-expr (concat "(matt.capture/captured-bindings " capture-id ")") nil)))
-(matt-define-key "M-i" 'matt-inspect-capture) ;; like cider-inspect "C-c M-i"
 
 (defun matt-random-name (&optional name syllables)
   "Generate a random name, with prefix NAME and SYLLABLES long."
