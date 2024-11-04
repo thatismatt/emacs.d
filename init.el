@@ -1330,6 +1330,24 @@ With prefix ARG also kill all unmodified file buffers."
        "Window '%s' is normal")
      window)))
 
+(defun matt-scroll-mode ()
+  "Enter a mode where arrow keys scroll and the cursor stays centered."
+  (interactive)
+  (let ((map (make-sparse-keymap))
+        (go-up   (lambda () (interactive) (forward-line -1) (recenter nil t)))
+        (go-down (lambda () (interactive) (forward-line 1) (recenter nil t)))
+        (quit-scroll-mode))
+    ;; (define-key map "i" go-up)
+    ;; (define-key map "k" go-down)
+    (define-key map [up] go-up)
+    (define-key map [down] go-down)
+    (define-key map "q" (lambda () (interactive) (funcall quit-scroll-mode)))
+    (move-to-window-line nil)
+    (hl-line-mode 1)
+    (setq quit-scroll-mode
+          (set-transient-map map t (lambda () (hl-line-mode -1)) "Scroll! %k"))))
+(matt-define-key "<up>" 'matt-scroll-mode)
+
 (defun matt-time-string-to-numeric (time-string)
   "Convert human readable TIME-STRING to a numeric value (minutes or hours).
 e.g. \"30:30\" becomes 30.5."
