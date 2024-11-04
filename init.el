@@ -656,13 +656,13 @@ Focus change event is debounced so we don't gc on focus."
          org-mode))
 
 (use-package smartparens
-  :ensure t
+  :vc (:url "https://github.com/Fuco1/smartparens")
   :init
   (smartparens-global-mode 1)
   (show-smartparens-global-mode 1)
-  (add-to-list 'sp-ignore-modes-list 'org-mode)
+  ;; (add-to-list 'sp-ignore-modes-list 'org-mode)
   :config
-  (use-package smartparens-config)
+  (use-package smartparens-config) ;; fixes various issues, including single quote issue in lisps
   (sp-use-smartparens-bindings)
   (setq sp-highlight-pair-overlay nil))
 
