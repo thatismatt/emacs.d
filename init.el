@@ -1648,6 +1648,24 @@ If the region is active BEGIN and END default to the region."
 ;; matt-recenter-region-top-bottom hangs when called repeatedly in the minibuffer
 (bind-key "C-l" 'matt-recenter-region-top-bottom nil (not (minibufferp)))
 
+(defun matt-dwim-upcase (&optional begin end)
+  "Upcase region or word, depending on whether the region is active.
+If the region is active BEGIN and END default to the region."
+  (interactive (if (use-region-p) (list (region-beginning) (region-end))))
+  (if (use-region-p)
+      (upcase-region begin end)
+    (upcase-word 1)))
+(global-set-key (kbd "M-u") 'matt-dwim-upcase)
+
+(defun matt-dwim-downcase (&optional begin end)
+  "Downcase region or word, depending on whether the region is active.
+If the region is active BEGIN and END default to the region."
+  (interactive (if (use-region-p) (list (region-beginning) (region-end))))
+  (if (use-region-p)
+      (downcase-region begin end)
+    (downcase-word 1)))
+(global-set-key (kbd "M-l") 'matt-dwim-downcase)
+
 (defun matt-region-size ()
   "Report details about the region."
   (interactive)
