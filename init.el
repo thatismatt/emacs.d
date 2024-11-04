@@ -1146,8 +1146,14 @@ Focus change event is debounced so we don't gc on focus."
 
 (use-package sql
   :defer t
+  :config
+  (defun matt-sql-init ()
+    (message "matt-sql-init")
+    ;; remove buffer local completion, so global cape completion is used
+    (remove-hook 'completion-at-point-functions 'comint-completion-at-point t))
   :init
-  (setq sql-input-ring-file-name (expand-file-name ".sql-history" user-emacs-directory)))
+  (setq sql-input-ring-file-name (expand-file-name ".sql-history" user-emacs-directory))
+  (add-hook 'sql-login-hook 'matt-sql-init))
 
 (use-package fennel-mode
   :mode "\\.fnl\\'"
