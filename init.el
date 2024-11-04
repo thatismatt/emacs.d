@@ -117,6 +117,11 @@ Focus change event is debounced so we don't gc on focus."
 (defun matt-define-key (key def)
   "Define key sequence KEY as DEF in personal keymap."
   (define-key matt-keymap (kbd key) def))
+(defun matt-describe-keymap ()
+  "Describe `matt-keymap'."
+  (interactive)
+  (describe-keymap matt-keymap))
+(matt-define-key "?" 'matt-describe-keymap)
 
 ;; themes
 (setq custom-theme-load-path
