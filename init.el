@@ -698,8 +698,8 @@ Focus change event is debounced so we don't gc on focus."
 (use-package cape
   :ensure t
   :init
-  (add-to-list 'completion-at-point-functions #'cape-dabbrev)
-  (add-to-list 'completion-at-point-functions #'cape-file))
+  (add-hook 'completion-at-point-functions #'cape-dabbrev)
+  (add-hook 'completion-at-point-functions #'cape-file))
 
 (use-package consult
   :ensure t
