@@ -1709,7 +1709,10 @@ e.g. 2020012016131337, 2020-01-20_16-13-13, 1621854380123 or 1621854380."
   "Center the display on the region, i.e. between BEGIN and END."
   (interactive "r")
   (save-excursion
-    (goto-char (/ (+ begin end) 2))
+    (goto-char (point-min))
+    (forward-line (/ (+ (line-number-at-pos begin)
+                        (line-number-at-pos end))
+                     2))
     (recenter nil t)))
 (defun matt-recenter-region-top-bottom (&optional begin end)
   "Center on the region, or behave as `recenter-top-bottom'.
