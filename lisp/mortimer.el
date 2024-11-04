@@ -429,10 +429,19 @@ nil
 
 (timer-duration mortimer-quick-toggle-default-time)
 
+;; investigating a "set timer until" mode of operation
+(require 'diary-lib)
+(diary-entry-time "14:07") ;; 1407
+(diary-entry-time "2:07pm") ;; 1407
+(let* ((time "14:07")
+      (hhmm (diary-entry-time time)))
+	(when (>= hhmm 0)
+	  (list (/ hhmm 100) (% hhmm 100))))
+;; => (14 7)
+
 (let* ((start (car mortimer-log))
        (duration (car (plist-get start :args))))
   (time-add (plist-get start :time) duration))
-
 
 (let ((success1 (car mortimer-log))
       (start2 (cadr mortimer-log))
