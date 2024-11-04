@@ -1538,6 +1538,12 @@ e.g. 2020012016131337, 2020-01-20_16-13-13, 1621854380123 or 1621854380."
   (find-file "~/.config/awesome/rc.lua"))
 (matt-define-key "o a" 'matt-open-awesome-rc)
 
+(defun matt-open-keymap ()
+  "Open my keyboard layout file."
+  (interactive)
+  (find-file "~/code/qmk_firmware/keyboards/crkbd/keymaps/thatismatt/keymap.c"))
+(matt-define-key "o k" 'matt-open-keymap)
+
 (defun matt-open-temp-file ()
   "Open a temporary file named with a timestamp."
   (interactive)
