@@ -84,13 +84,19 @@ Focus change event is debounced so we don't gc on focus."
   :config
   (exec-path-from-shell-initialize))
 
-;; prevent ctrl mouse scroll changing the font size
 (defun dissoc (key alist)
   "Delete elements of ALIST where KEY is equal to the element's car."
   (delq (assoc key alist) alist))
+
+;; prevent ctrl mouse scroll changing the font size
 (setq mouse-wheel-scroll-amount (dissoc '(control) mouse-wheel-scroll-amount))
 (setq mouse-wheel-scroll-amount (dissoc '(control meta) mouse-wheel-scroll-amount))
+
 (mouse-wheel-mode 1)
+
+;; horizontal mouse scroll
+(setq mouse-wheel-tilt-scroll t)
+(setq mouse-wheel-flip-direction t) ;; osx style
 
 ;; hide tool bar & menu bar & tab bar
 (tool-bar-mode -1)
@@ -98,7 +104,7 @@ Focus change event is debounced so we don't gc on focus."
 (tab-bar-mode -1)
 
 ;; scroll at same rate as the cursor - this stops the scroll "jumping" when you move off the top/bottom
-(setq scroll-conservatively 1)
+(setq scroll-conservatively 10)
 
 ;; keys
 (defvar matt-keymap (make-sparse-keymap))
