@@ -1301,7 +1301,7 @@ e.g. 30.5 becomes '30:30."
         ((null s) nil) ;; (symbolp nil) => true!
         ((symbolp s) (symbol-name s))))
 
-(defun matt-timep (x)
+(defun matt-time-p (x)
   "Return t if X is a time symbol or string.
 e.g. '11:00 or \"10:30\"."
   (when-let ((s (matt-symbol-or-string-to-string x)))
@@ -1311,7 +1311,7 @@ e.g. '11:00 or \"10:30\"."
 (defun matt-time-prepare (x)
   "Prepare the form X, a time maths expression, to Lisp."
   (cond
-   ((matt-timep x) `(matt-time-string-to-numeric (matt-symbol-or-string-to-string ',x)))
+   ((matt-time-p x) `(matt-time-string-to-numeric (matt-symbol-or-string-to-string ',x)))
    ((consp x) (mapcar 'matt-time-prepare x))
    (t x)))
 
