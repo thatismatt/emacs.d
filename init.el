@@ -368,18 +368,41 @@ Focus change event is debounced so we don't gc on focus."
 (define-key isearch-mode-map (kbd "C-.") 'isearch-forward-symbol-at-point)
 
 (defvar matt-sound-command
-  (if (executable-find "ffplay")
-      (list "ffplay" "-nodisp" "-autoexit")
-    (list "paplay")))
+  (cond ((executable-find "ffplay") (list "ffplay" "-nodisp" "-autoexit"))
+        ((executable-find "paplay") (list "paplay"))
+        ((executable-find "afplay") (list "afplay"))
+        (t                          nil)))
 
-(defun matt-sound-play (sound)
+(defvar matt-sound-default-file
+  (cond ((file-exists-p "/usr/share/sounds/sound-icons/trumpet-12.wav") "/usr/share/sounds/sound-icons/trumpet-12.wav") ;; linux
+        ((file-exists-p "/System/Library/Sounds/Funk.aiff") "/System/Library/Sounds/Funk.aiff") ;; osx
+        (t nil))
+  "The default sound file to be played by `matt-sound-play'.")
+
+(defun matt-sound-play (&optional sound)
   "Play SOUND, an audio file, by shelling out to `matt-sound-command'."
-  (when (and sound
-             (file-exists-p (expand-file-name sound))
-             (stringp (car matt-sound-command))
-             (executable-find (car matt-sound-command)))
-    (apply 'start-process "matt-sound-command" nil
-           (seq-concatenate 'list matt-sound-command (list (expand-file-name sound))))))
+  (let ((sound (or sound matt-sound-default-file)))
+    (when (and sound
+               (file-exists-p (expand-file-name sound))
+               (stringp (car matt-sound-command))
+               (executable-find (car matt-sound-command)))
+      (apply 'start-process "matt-sound-command" nil
+             (seq-concatenate 'list matt-sound-command (list (expand-file-name sound)))))))
+
+;; (matt-sound-play "/System/Library/Sounds/Basso.aiff")
+;; (matt-sound-play "/System/Library/Sounds/Blow.aiff")
+;; (matt-sound-play "/System/Library/Sounds/Bottle.aiff")
+;; (matt-sound-play "/System/Library/Sounds/Frog.aiff")
+;; (matt-sound-play "/System/Library/Sounds/Funk.aiff")
+;; (matt-sound-play "/System/Library/Sounds/Glass.aiff")
+;; (matt-sound-play "/System/Library/Sounds/Hero.aiff")
+;; (matt-sound-play "/System/Library/Sounds/Morse.aiff")
+;; (matt-sound-play "/System/Library/Sounds/Ping.aiff")
+;; (matt-sound-play "/System/Library/Sounds/Pop.aiff")
+;; (matt-sound-play "/System/Library/Sounds/Purr.aiff")
+;; (matt-sound-play "/System/Library/Sounds/Sosumi.aiff")
+;; (matt-sound-play "/System/Library/Sounds/Submarine.aiff")
+;; (matt-sound-play "/System/Library/Sounds/Tink.aiff")
 
 ;; (matt-sound-play "/usr/share/sounds/sound-icons/trumpet-12.wav")
 ;; (matt-sound-play "/usr/share/sounds/sound-icons/canary-long.wav")
@@ -396,12 +419,10 @@ Focus change event is debounced so we don't gc on focus."
 ;; (matt-sound-play "/usr/share/sounds/gnome/default/alerts/glass.ogg")
 ;; (matt-sound-play "/usr/share/sounds/gnome/default/alerts/drip.ogg")
 
-(defun matt-beep (&optional filename)
-  "Play the audio FILENAME.  Beep!"
-  ;; (matt-beep "~/personal/dnb-loop-short.mp3")
+(defun matt-beep ()
+  "Play the default audio file.  Beep!"
   (interactive)
-  (matt-sound-play (or filename
-                       "/usr/share/sounds/sound-icons/prompt.wav")))
+  (matt-sound-play))
 
 (use-package recentf
   :config
@@ -1098,7 +1119,7 @@ Focus change event is debounced so we don't gc on focus."
 (use-package alarm
   :config
   (defun alarm-sound (&rest _)
-    (matt-sound-play "/usr/share/sounds/sound-icons/trumpet-12.wav"))
+    (matt-sound-play))
   (add-hook 'alarm-hook 'alarm-sound)
   :bind (:map matt-keymap
               ("a a" . alarm)
@@ -1108,7 +1129,7 @@ Focus change event is debounced so we don't gc on focus."
 (use-package mortimer
   :config
   (defun mortimer-sound (&rest _)
-    (matt-sound-play "/usr/share/sounds/sound-icons/trumpet-12.wav"))
+    (matt-sound-play))
   (add-hook 'mortimer-complete-hook 'mortimer-sound)
   :bind (:map matt-keymap
               ("m s" . mortimer-start)
