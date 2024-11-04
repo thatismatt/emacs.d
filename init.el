@@ -920,7 +920,7 @@ Focus change event is debounced so we don't gc on focus."
 
 (use-package org-bullets
   :ensure t
-  :init (setq org-bullets-bullet-list '("●" "○" "✸" "✿"))
+  :init (setq org-bullets-bullet-list '("●" "○"))
   :hook (org-mode . org-bullets-mode))
 
 (use-package rainbow-delimiters
