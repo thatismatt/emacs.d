@@ -1208,6 +1208,7 @@ Focus change event is debounced so we don't gc on focus."
 (add-hook 'web-mode-hook 'matt-font-lock-comment-annotations)
 (add-hook 'css-mode-hook 'matt-font-lock-comment-annotations)
 (add-hook 'conf-mode-hook 'matt-font-lock-comment-annotations)
+(add-hook 'sql-mode-hook 'matt-font-lock-comment-annotations)
 
 (defun matt-kill-this-buffer ()
   "Kill buffer without confirmation."
