@@ -1320,7 +1320,7 @@ With prefix ARG also kill all unmodified file buffers."
 (matt-define-key "M-w" 'matt-window-adjust)
 
 (defun matt-toggle-window-dedicated ()
-  "Toggle whether the current active window is dedicated or not"
+  "Toggle whether the current active window is dedicated or not."
   (interactive)
   (let ((window (get-buffer-window (current-buffer))))
     (message
