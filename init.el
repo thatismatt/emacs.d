@@ -757,8 +757,7 @@ Focus change event is debounced so we don't gc on focus."
   (defun string-inflection-snake-kebab ()
     "foo_bar => foo-bar"
     (interactive)
-    (string-inflection-insert
-     (string-inflection-snake-kebab-function (string-inflection-get-current-word))))
+    (string-inflection--single-or-region #'string-inflection-snake-kebab-function))
   :bind (:map matt-keymap
               ("-"   . string-inflection-snake-kebab)
               ("M--" . string-inflection-all-cycle)))
