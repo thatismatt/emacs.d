@@ -8,7 +8,7 @@
 
 (define-abbrev-table 'org-mode-abbrev-table
   '(
-    ("dt" "** [0/3] Deploy\n - [ ] QA\n - [ ] Staging\n - [ ] Prod" nil :count 0)
+    ("dt" "** [0/3] Deploy\n   - [ ] QA\n   - [ ] Staging\n   - [ ] Prod" nil :count 0)
    ))
 
 (define-abbrev-table 'sql-mode-abbrev-table
