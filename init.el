@@ -734,6 +734,18 @@ Focus change event is debounced so we don't gc on focus."
                ("c p" . consult-project-buffer)
                ("c k" . consult-locate))))
 
+(use-package embark
+  :ensure t
+  :bind (("C-." . embark-act)
+         ;; "M-." . embark-dwim
+         ("C-h B" . embark-bindings)
+         )
+  :init
+  (setq prefix-help-command #'embark-prefix-help-command))
+
+(use-package embark-consult
+  :ensure t)
+
 (use-package rainbow-mode
   :ensure t
   :init
