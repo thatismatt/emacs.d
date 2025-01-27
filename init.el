@@ -1747,6 +1747,12 @@ e.g. 2020012016131337, 2020-01-20_16-13-13, 1621854380123 or 1621854380."
   (interactive "r")
   (set-text-properties begin end nil))
 
+(defun matt-remove-read-only-region (begin end)
+  "Remove read-only text property between BEGIN and END, defaults to the region."
+  (interactive "r")
+  (let ((inhibit-read-only t))
+    (remove-text-properties begin end '(read-only t))))
+
 (defun matt-recenter-region (begin end)
   "Center the display on the region, i.e. between BEGIN and END."
   (interactive "r")
