@@ -1214,6 +1214,7 @@ Focus change event is debounced so we don't gc on focus."
   (defun alarm-sound (&rest _)
     (matt-sound-play))
   (add-hook 'alarm-hook 'alarm-sound)
+  (add-hook 'alarm-hook 'alarm-message)
   :bind (:map matt-keymap
               ("a a" . alarm)
               ("a l" . alarm-list)
