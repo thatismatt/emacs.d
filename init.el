@@ -365,8 +365,6 @@ Focus change event is debounced so we don't gc on focus."
 (matt-define-key "w c"                'set-fill-column)                    ;; mnemonic "wrap column"
 (matt-define-key "l n"                'display-line-numbers-mode)
 
-(define-key isearch-mode-map (kbd "C-.") 'isearch-forward-symbol-at-point)
-
 (defvar matt-sound-command
   (cond ((executable-find "ffplay") (list "ffplay" "-nodisp" "-autoexit"))
         ((executable-find "paplay") (list "paplay"))
@@ -439,6 +437,10 @@ Focus change event is debounced so we don't gc on focus."
 (use-package comint
   :init
   (setq comint-input-ignoredups t))
+
+(use-package isearch
+  :bind (:map isearch-mode-map
+              ("C-." . 'isearch-forward-symbol-at-point)))
 
 (use-package buffer-naming
   :config
