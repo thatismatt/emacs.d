@@ -1461,12 +1461,6 @@ e.g. '11:00 or \"10:30\"."
   (split-window nil nil t)
   (matt-journal))
 
-(defun matt-log+journal ()
-  "Open my log & journal."
-  (interactive)
-  (matt-journal+log)
-  (other-window 1))
-
 (defun matt-journal+log-back ()
   "Close my journal & log."
   (interactive)
