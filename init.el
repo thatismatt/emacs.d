@@ -1107,7 +1107,7 @@ Focus change event is debounced so we don't gc on focus."
 (defun matt-insert-capture ()
   "Insert an environment capture form, named according to the containing function."
   (interactive)
-  (insert "(matt.capture/capture :" (matt-get-defun-name-at-point) ")"))
+  (insert "(matt.capture/capture :" (or (matt-get-defun-name-at-point) "capture") ")"))
 (matt-define-key "i c" 'matt-insert-capture)
 
 (defun matt-inspect-capture ()
