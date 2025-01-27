@@ -310,7 +310,7 @@ Focus change event is debounced so we don't gc on focus."
 (setq require-final-newline nil)
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 2)
-(setq-default fill-column 120)
+(setq-default fill-column 115)
 (setq-default display-fill-column-indicator-character ?\u2506)
 (global-auto-revert-mode t)
 (fset 'yes-or-no-p 'y-or-n-p)
