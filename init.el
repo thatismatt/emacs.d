@@ -434,6 +434,10 @@ Focus change event is debounced so we don't gc on focus."
   (interactive)
   (matt-sound-play))
 
+(use-package dabbrev
+  :config
+  (setq dabbrev-ignored-buffer-regexps (list (rx bos " "))))
+
 (use-package recentf
   :config
   (setq recentf-save-file (expand-file-name "recentf" user-emacs-directory))
