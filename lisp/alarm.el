@@ -28,6 +28,10 @@
 ;; (add-hook 'alarm-hook 'alarm-notification)
 ;; (remove-hook 'alarm-hook 'alarm-notification)
 
+(defun alarm-message (message time)
+  "Displays MESSAGE (and TIME) via Emacs `message'."
+  (message "Alarm %s (%s)" message time))
+
 (defvar alarm-hook '()
   "Function(s) called when an alarm goes off.
 These functions are passed MESSAGE and TIME as arguments.")
