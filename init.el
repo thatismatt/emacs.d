@@ -800,10 +800,6 @@ Focus change event is debounced so we don't gc on focus."
   :ensure t
   :init
   (setq magit-status-buffer-switch-function 'switch-to-buffer)
-  :config
-  (use-package magit-log
-    :config
-    (setf (nth 1 magit-log-margin) "%a %d %b %R"))
   :bind (("C-x g" . magit)
          (:map matt-keymap
                ("g l" . magit-log-buffer-file)
