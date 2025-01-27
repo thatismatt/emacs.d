@@ -299,6 +299,17 @@ Focus change event is debounced so we don't gc on focus."
          (line-number-mode 1)
          (column-number-mode -1))))
 
+(defun matt-wrap-mode ()
+  "Interactively adjust the fill column for wrapping."
+  (interactive)
+  (let ((map (make-sparse-keymap)))
+    (define-key map [left]  (lambda () (interactive) (setq fill-column (1- fill-column))))
+    (define-key map [right] (lambda () (interactive) (setq fill-column (1+ fill-column))))
+    (define-key map "?" (lambda () (interactive) (message "Current fill column: %s" fill-column)))
+    (define-key map "v" 'display-fill-column-indicator-mode)
+    (define-key map (kbd "M-q") 'prog-fill-reindent-defun)
+    (set-transient-map map t nil "Adjust wrapping %k")))
+
 (column-number-mode -1)
 (line-number-mode -1)
 (size-indication-mode -1)
@@ -363,6 +374,7 @@ Focus change event is debounced so we don't gc on focus."
 (matt-define-key "w v"                'display-fill-column-indicator-mode) ;; mnemonic "wrap view"
 (matt-define-key "w f"                'auto-fill-mode)                     ;; mnemonic "wrap fill"
 (matt-define-key "w c"                'set-fill-column)                    ;; mnemonic "wrap column"
+(matt-define-key "w m"                'matt-wrap-mode)
 (matt-define-key "l n"                'display-line-numbers-mode)
 
 (defvar matt-sound-command
