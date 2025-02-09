@@ -1481,6 +1481,11 @@ e.g. '11:00 or \"10:30\"."
   (find-file "~/notes/runs.org"))
 (matt-define-key "o r" 'matt-runs)
 
+(matt-define-key "M-a" (lambda () (interactive) (jump-to-register ?a)))
+(matt-define-key "M-s" (lambda () (interactive) (jump-to-register ?s)))
+(matt-define-key "M-d" (lambda () (interactive) (jump-to-register ?d)))
+(matt-define-key "M-f" (lambda () (interactive) (jump-to-register ?f)))
+
 ;; A         B        C                            D        E   F          G    H   I  J   K  L  M  N         O  P  Q  R              S            T        U  V  W  X        Y    Z
 ;; Wednesday February 20                           02/07/18 %E  2018-02-07 2018 15  03 %J  %K %L 28 312138752 %O pm %Q 15:28          35           15:28:35 05 06 06 15:28:35 2018 GMT
 ;; a         b        c                            d        e   f          g    h   i  j   k  l  m  n         o  p  q  r              s            t        u  v  w  x        y    z
