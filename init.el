@@ -1277,7 +1277,7 @@ New window's buffer is selected according to `matt-mru-buffer'."
                  (or "*Messages*" "*Completions*" "*info*" "*Help*" "*Backtrace*" "*Warnings*"
                      "*Compile-Log*" "*Async-native-compile-log*" "*Shell Command Output*"
                      "*Occur*" "*vc*" "*vc-" "*Man " "*WoMan" "*Calendar*" "*Ediff" "*Bookmark List*"
-                     "*Packages*" "magit" "*ag search" "*eldoc" "*Alarm*" "*Alarm List*" "*cider-"
+                     "*Packages*" "magit-" "*ag search" "*eldoc" "*Alarm*" "*Alarm List*" "*cider-"
                      "*sesman " "*Mortimer*")))
         (buffer-name buf))))
 
