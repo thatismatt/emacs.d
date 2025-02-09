@@ -1088,6 +1088,8 @@ Focus change event is debounced so we don't gc on focus."
   :bind ((:map cider-repl-mode-map
                ("C-<up>" . cider-repl-previous-input)
                ("C-<down>" . cider-repl-next-input))
+         (:map cider-inspector-mode-map
+               ("w" . toggle-truncate-lines))
          (:map matt-keymap
                ("M-c M-o" . matt-cider-repl-clear-buffer)
                ("M-c M-z" . matt-cider-repl-display-buffer))))
