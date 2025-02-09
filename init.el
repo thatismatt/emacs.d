@@ -360,7 +360,7 @@ Focus change event is debounced so we don't gc on focus."
 (global-set-key (kbd "M-SPC")         'cycle-spacing)
 
 (matt-define-key "b b"                'bury-buffer)
-(matt-define-key "a r"                'align-regexp)
+(matt-define-key "r a"                'align-regexp)
 (matt-define-key "s r"                'replace-string)
 (matt-define-key "s l"                'sort-lines)
 (matt-define-key "w b"                'balance-windows)
