@@ -1103,14 +1103,29 @@ Focus change event is debounced so we don't gc on focus."
                ("M-c M-o" . matt-cider-repl-clear-buffer)
                ("M-c M-z" . matt-cider-repl-display-buffer))))
 
+(defun matt-remove-text-properties (s)
+  "Remove all text properties from S."
+  (set-text-properties 0 (length s) nil s)
+  s)
+
+(defun matt-clear-text-properties (begin end)
+  "Remove text properties between BEGIN and END, defaults to the region."
+  (interactive "r")
+  (set-text-properties begin end nil))
+
+(defun matt-remove-read-only-region (begin end)
+  "Remove read-only text property between BEGIN and END, defaults to the region."
+  (interactive "r")
+  (let ((inhibit-read-only t))
+    (remove-text-properties begin end '(read-only t))))
+
 (defun matt-get-defun-name-at-point ()
   "Return the name of the defun at point."
   (save-excursion
     (beginning-of-defun)
-    (let ((defun-first-line (thing-at-point 'line)))
+    (let ((defun-first-line (matt-remove-text-properties (thing-at-point 'line))))
       ;; TODO: handle metadata keys, e.g. ^:dev/before-load
       (string-match "^(def[-a-z]* \\([-*'_<>+=A-Za-z0-9?!]*\\)" defun-first-line)
-      (set-text-properties 0 (length defun-first-line) nil defun-first-line)
       (match-string 1 defun-first-line))))
 
 (defun matt-defun-name-at-point (&optional arg)
@@ -1746,17 +1761,6 @@ e.g. 2020012016131337, 2020-01-20_16-13-13, 1621854380123 or 1621854380."
     (if (file-executable-p filename)
         (async-shell-command filename (concat "*Execute " (abbreviate-file-name filename) "*"))
       (message "This buffer isn't associated with an executable file"))))
-
-(defun matt-clear-text-properties (begin end)
-  "Remove text properties between BEGIN and END, defaults to the region."
-  (interactive "r")
-  (set-text-properties begin end nil))
-
-(defun matt-remove-read-only-region (begin end)
-  "Remove read-only text property between BEGIN and END, defaults to the region."
-  (interactive "r")
-  (let ((inhibit-read-only t))
-    (remove-text-properties begin end '(read-only t))))
 
 (defun matt-recenter-region (begin end)
   "Center the display on the region, i.e. between BEGIN and END."
