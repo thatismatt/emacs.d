@@ -1235,6 +1235,39 @@ With prefix ARG also kill all unmodified file buffers."
                                                          nil
                                                          nil))))
 
+(defun matt-cider-eval-as-table-to-comment (form insertion-point)
+  "Evaluate FORM and insert result as a table in a comment at INSERTION-POINT."
+  (cider-interactive-eval (concat "(matt.pp/print-table " form ")")
+                          (let ((res ""))
+                            (nrepl-make-response-handler
+                             (current-buffer)
+                             nil
+                             (lambda (_buffer value)
+                               (setq res (concat res value)))
+                             nil
+                             ;; (lambda (_buffer err)
+                             ;;   (setq res (concat res err)))
+                             (lambda (buffer)
+                               (with-current-buffer buffer
+                                 (save-excursion
+                                   (goto-char insertion-point)
+                                   (cider-maybe-insert-multiline-comment res
+                                                                         cider-comment-prefix
+                                                                         cider-comment-continued-prefix
+                                                                         "\n"))))))))
+
+(defun matt-cider-eval-last-sexp-as-table-to-comment ()
+  (interactive)
+  (matt-cider-eval-as-table-to-comment (cider-last-sexp)
+                                       ;; `1+' because bounds from cider-last-sexp don't include trailing newline
+                                       (1+ (cadr (cider-last-sexp 'bounds)))))
+
+(defun matt-cider-eval-defun-as-table-to-comment ()
+  (interactive)
+  (matt-cider-eval-as-table-to-comment (matt-get-defun-name-at-point)
+                                       ;; bounds from cider-defun-at-point include trailing newline
+                                       (cadr (cider-defun-at-point 'bounds))))
+
 (defun matt-cider-clean-ns ()
   "Unmap all of the current namespace's interned vars and ns aliases."
   (interactive)
