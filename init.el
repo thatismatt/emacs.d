@@ -1315,6 +1315,11 @@ With prefix ARG also kill all unmodified file buffers."
   :bind (:map image-map
               ("=" . image-increase-size)))
 
+(use-package inspector
+  :ensure t
+  :bind (:map emacs-lisp-mode-map
+              ("C-c M-i" . inspector-inspect-last-sexp)))
+
 (use-package alarm
   :config
   (defun alarm-sound (&rest _)
