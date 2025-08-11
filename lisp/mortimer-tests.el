@@ -1,4 +1,4 @@
-;;; mortimer-tests --- mortimer tests
+;;; mortimer-tests --- mortimer tests  -*- lexical-binding: t -*-
 
 ;;; Code:
 
