@@ -1217,11 +1217,13 @@ With prefix ARG also kill all unmodified file buffers."
                                                          nil
                                                          nil))))
 
-(defun matt-cider-unmap-ns-vars ()
-  "Unmap all of the current namespaces public symbols."
+(defun matt-cider-clean-ns ()
+  "Unmap all of the current namespace's interned vars and ns aliases."
   (interactive)
   (cider-interactive-eval
-   (format "%S" '(->> *ns* ns-interns keys sort (mapv (fn [s] (ns-unmap *ns* s)))))))
+   (format "%S" '(list :interns (count (mapv (fn [s] (ns-unmap *ns* s)) (keys (ns-interns *ns*))))
+                       :aliases (count (mapv (fn [s] (ns-unalias *ns* s)) (keys (ns-aliases *ns*))))
+                       :refers  (count (mapv (fn [s] (ns-unmap *ns* s)) (keys (ns-refers *ns*))))))))
 
 (use-package sql
   :defer t
