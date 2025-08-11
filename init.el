@@ -1180,6 +1180,24 @@ With prefix ARG also kill all unmodified file buffers."
     (cider-inspect-expr (concat "(matt.capture/captured-bindings " capture-id ")") nil)))
 (matt-define-key "M-i" 'matt-inspect-capture) ;; like cider-inspect "C-c M-i"
 
+(defun matt-jump-to-capture ()
+  "Jump to the location of the capture identified by the keyword at point."
+  (interactive)
+  (let ((capture-id (thing-at-point 'symbol)))
+    ;; TODO: test that capture-id is a keyword: (string-prefix-p ":" capture-id)
+    ;; TODO: allow selection from (matt.capture/captured-ids)
+    (xref--push-markers (current-buffer) (point)) ;; HACK: integrate with xref (so M-, works) - do this properly via an xref backend
+    (cider-interactive-eval (concat "(matt.capture/captured-meta " capture-id ")")
+                            (nrepl-make-response-handler (current-buffer)
+                                                         (lambda (_buffer value)
+                                                           (let ((result (parseedn-read-str value '((namespace . identity)))))
+                                                             (find-file (gethash :file result))
+                                                             (goto-line (gethash :line result))))
+                                                         nil
+                                                         nil
+                                                         nil))))
+(matt-define-key "M-." 'matt-jump-to-capture)
+
 (defun matt-cider-beep (&optional arg)
   "Beep! Continuous when prefix ARG is set."
   (interactive "P")
