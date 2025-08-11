@@ -762,7 +762,8 @@ With prefix ARG also kill all unmodified file buffers."
                ("c m" . consult-mark)
                ("c g" . consult-global-mark)
                ("c p" . consult-project-buffer)
-               ("c k" . consult-locate))))
+               ("c k" . consult-locate)
+               ("M-r" . consult-register))))
 
 (use-package embark
   :ensure t
