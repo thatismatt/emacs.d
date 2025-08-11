@@ -1183,10 +1183,13 @@ With prefix ARG also kill all unmodified file buffers."
 (defun matt-cider-beep (&optional arg)
   "Beep! Continuous when prefix ARG is set."
   (interactive "P")
-  (let ((form (cons 'matt.beep/beep
-                    (when arg '(:continuous? true)))))
-    (cider-interactive-eval (format "%S" form)))
-  (message "Beep!"))
+  (message "Beep!")
+  (let* ((arg nil)
+         (form `(do ,(cons 'matt.beep/beep
+                           (when arg '(:continuous? true)))
+                    :beep))
+         (code-string (format "%S" form)))
+    (cider-interactive-eval code-string)))
 (matt-define-key "c b" 'matt-cider-beep)
 
 (defun matt-cider-kill-ring-save-qualified-defun-name ()
