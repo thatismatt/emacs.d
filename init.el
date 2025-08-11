@@ -566,6 +566,32 @@ Focus change event is debounced so we don't gc on focus."
               ("p r" . matt-toggle-related-file)
               ("p s" . matt-project-find-scratch)))
 
+(defun matt-disposable-buffer-p (buf)
+  "The buffer BUF is disposable, i.e. can be killed safely."
+  (or (eq 'dired-mode (with-current-buffer buf major-mode))
+      (and (null (get-buffer-process buf)) ;; ref. cider repl buffer
+           (string-match-p
+            (rx (and bos
+                     (or "*Messages*" "*Completions*" "*info*" "*Help*" "*Backtrace*" "*Warnings*"
+                         "*Compile-Log*" "*Async-native-compile-log*" "*Shell Command Output*"
+                         "*Occur*" "*vc*" "*vc-" "*Man " "*WoMan" "*Calendar*" "*Ediff" "*Bookmark List*"
+                         "*Packages*" "magit-" "*ag search" "*eldoc" "*Alarm*" "*Alarm List*" "*cider-"
+                         "*sesman " "*Flycheck" "*Mortimer*")))
+            (buffer-name buf)))))
+
+(defun matt-clean-buffers (&optional arg)
+  "Kill all \"disposable\" buffers.
+With prefix ARG also kill all unmodified file buffers."
+  (interactive "P")
+  (thread-last (buffer-list)
+    (seq-filter (lambda (buf)
+                  (or (matt-disposable-buffer-p buf)
+                      (and arg
+                           (not (eq 'org-mode (with-current-buffer buf major-mode)))
+                           (buffer-file-name buf)
+                           (not (buffer-modified-p buf))))))
+    (seq-do 'kill-buffer)))
+
 (use-package ibuffer
   :init
   (setq ibuffer-default-sorting-mode 'filename/process) ;; groups file buffers together
@@ -1294,43 +1320,6 @@ New window's buffer is selected according to `matt-mru-buffer'."
 (global-set-key (kbd "S-<up>") 'matt-mru-buffer)
 (global-set-key (kbd "S-<right>") 'matt-other-window-or-split)
 (global-set-key (kbd "S-<left>") 'matt-delete-other-windows-or-split)
-
-(defun matt-disposable-buffer-p (buf)
-  "The buffer BUF is disposable, i.e. can be killed safely."
-  (and (null (get-buffer-process buf)) ;; ref. cider repl buffer
-       (string-match-p
-        (rx (and bos
-                 (or "*Messages*" "*Completions*" "*info*" "*Help*" "*Backtrace*" "*Warnings*"
-                     "*Compile-Log*" "*Async-native-compile-log*" "*Shell Command Output*"
-                     "*Occur*" "*vc*" "*vc-" "*Man " "*WoMan" "*Calendar*" "*Ediff" "*Bookmark List*"
-                     "*Packages*" "magit-" "*ag search" "*eldoc" "*Alarm*" "*Alarm List*" "*cider-"
-                     "*sesman " "*Mortimer*")))
-        (buffer-name buf))))
-
-(defun matt-disposable-major-mode-p (buf)
-  (eq 'dired-mode
-      (with-current-buffer buf
-        major-mode)))
-
-(defun matt-persistent-buffer-p (buf)
-  (eq 'org-mode
-      (with-current-buffer buf
-        major-mode)))
-
-(defun matt-clean-buffers (&optional arg)
-  "Kill all \"disposable\" buffers.
-With prefix ARG also kill all unmodified file buffers."
-  (interactive "P")
-  (thread-last (buffer-list)
-    (seq-filter (lambda (buf)
-                  (or (matt-disposable-buffer-p buf)
-                      (matt-disposable-major-mode-p buf)
-                      (and arg
-                           (not (matt-persistent-buffer-p buf))
-                           (buffer-file-name buf)
-                           (not (buffer-modified-p buf))))))
-    (seq-do 'kill-buffer)))
-(matt-define-key "k k" 'matt-clean-buffers)
 
 (defun matt-swap-windows ()
   "Swap the buffers in `selected-window' and `next-window'."
