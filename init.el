@@ -432,6 +432,14 @@ Focus change event is debounced so we don't gc on focus."
   (interactive)
   (matt-sound-play))
 
+(defun matt-notification (title message)
+  "Display a native notification with TITLE and MESSAGE."
+  (cond ((executable-find "osascript")
+         (call-process "osascript" nil nil nil "-e"
+                       (format "display notification %S with title %S" message title)))
+        (t
+         (message "No notification system setup"))))
+
 (use-package dabbrev
   :config
   (setq dabbrev-ignored-buffer-regexps (list (rx bos " "))))
@@ -1325,10 +1333,10 @@ With prefix ARG also kill all unmodified file buffers."
 
 (use-package alarm
   :config
-  (defun alarm-sound (&rest _)
-    (matt-sound-play))
-  (add-hook 'alarm-hook 'alarm-sound)
-  (add-hook 'alarm-hook 'alarm-message)
+  (defun matt-on-alarm (message time)
+    (matt-sound-play)
+    (matt-notification "Alarm" (format "%s (%s)" message time)))
+  (add-hook 'alarm-hook 'matt-on-alarm)
   :bind (:map matt-keymap
               ("a a" . alarm)
               ("a l" . alarm-list)
@@ -1336,9 +1344,10 @@ With prefix ARG also kill all unmodified file buffers."
 
 (use-package mortimer
   :config
-  (defun mortimer-sound (&rest _)
-    (matt-sound-play))
-  (add-hook 'mortimer-complete-hook 'mortimer-sound)
+  (defun matt-mortimer-on-complete (&rest _)
+    (matt-sound-play)
+    (matt-notification "Mortimer" "Mortimer timer complete"))
+  (add-hook 'mortimer-complete-hook 'matt-mortimer-on-complete)
   :bind (:map matt-keymap
               ("m s" . mortimer-start)
               ("m p" . mortimer-pause-resume)

@@ -34,7 +34,11 @@
   "The log of timer events, used to display a summary of the recent timers.
 Stored in reverse chronological order.")
 
-(defvar mortimer-complete-hook nil
+(defun mortimer-on-complete-message ()
+  "Displays completion message via Emacs `message'."
+  (message "Mortimer timer complete"))
+
+(defvar mortimer-complete-hook '(mortimer-on-complete-message)
   "Function(s) called when a Mortimer timer completes.")
 
 (defface mortimer-mode-line-complete-face

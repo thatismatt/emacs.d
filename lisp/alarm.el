@@ -32,7 +32,7 @@
   "Displays MESSAGE (and TIME) via Emacs `message'."
   (message "Alarm %s (%s)" message time))
 
-(defvar alarm-hook '()
+(defvar alarm-hook '(alarm-message)
   "Function(s) called when an alarm goes off.
 These functions are passed MESSAGE and TIME as arguments.")
 
