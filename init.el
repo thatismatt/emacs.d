@@ -868,11 +868,13 @@ With prefix ARG also kill all unmodified file buffers."
   (setq org-todo-keywords '((sequence "TODO" "DOING" "DONE")
                             (sequence "BLOCKED")
                             (sequence "POSTPONED")
+                            (sequence "DEPLOY" "DONE")
                             (sequence "???" "DONE")))
   (setq org-todo-keyword-faces
         '(("TODO" org-todo)
           ("DONE" org-done)
           ("DOING" org-doing-face)
+          ("DEPLOY" org-postponed-face)
           ("POSTPONED" org-postponed-face)
           ("BLOCKED" org-postponed-face)
           ("???" org-query-face)))
