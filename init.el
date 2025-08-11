@@ -530,18 +530,27 @@ Focus change event is debounced so we don't gc on focus."
                                                       (file-equal-p f file)
                                                       (string-prefix-p ".#" f))) ;; lock files
                                       (directory-files (file-name-parent-directory file))))
+           ;; this.txt & that.txt
+           (file-ext      (url-file-extension file))
            (ext-files     (seq-filter (lambda (f) (equal (url-file-extension f)
-                                                         (url-file-extension file)))
+                                                         file-ext))
                                       sibling-files))
            ;; NOTE: could improve this prefix calculation, for now this works with numeric prefixes
+           ;; e.g. 20250713-up.txt 20250713-down.txt
            (prefix-fn     (lambda (f) (when (string-match (rx (group (1+ num))) f) (match-string 0 f))))
            (file-prefix   (funcall prefix-fn (file-name-nondirectory file)))
            (prefix-files  (when file-prefix
                             (seq-filter (lambda (f) (equal file-prefix (funcall prefix-fn f)))
-                                        ext-files))))
+                                        ext-files)))
+           ;; e.g. foo.in & foo.out
+           (file-no-ext   (file-name-sans-extension (file-name-nondirectory file)))
+           (no-ext-files  (seq-filter (lambda (f) (equal (file-name-sans-extension f)
+                                                         file-no-ext))
+                                      sibling-files)))
       (cond ((eq 1 (length sibling-files)) (car sibling-files))
             ((eq 1 (length ext-files)) (car ext-files))
-            ((eq 1 (length prefix-files)) (car prefix-files)))))
+            ((eq 1 (length prefix-files)) (car prefix-files))
+            ((eq 1 (length no-ext-files)) (car no-ext-files)))))
   (defun matt-toggle-related-file ()
     (interactive)
     (let* ((file-name (buffer-file-name))
