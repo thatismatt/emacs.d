@@ -296,7 +296,7 @@ which PRED is true and then 0 or more items for which PRED is false."
                                (start  (map-nested-elt result '(:start :time))))
                           (map-merge 'hash-table
                                       agg
-                                      (list start result)
+                                      (list start result) ;; FIX: this breaks when time is "real" elisp time
                                       (when (not ref)
                                         (list :active result))
                                       ;; starting new timer with stopped (but not complete) previous timer
