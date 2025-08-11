@@ -189,9 +189,11 @@ Focus change event is debounced so we don't gc on focus."
 (defun matt-font-face-narrow ()
   "Change the default font family to a narrow font."
   (interactive)
-  (set-face-attribute 'default nil :width 'normal :weight 'medium :slant 'normal :family "Victor Mono"))
+  (set-face-attribute 'default nil :width 'regular :weight 'medium :slant 'normal :family "Victor Mono"))
 (matt-define-key "f n" 'matt-font-face-narrow)
 
+;; (list-fontsets t)
+;;
 ;; (set-face-attribute 'default nil :family "Victor Mono")     ;; https://rubjo.github.io/victor-mono/
 ;; (set-face-attribute 'default nil :family "Iosevka")         ;; https://be5invis.github.io/Iosevka/
 ;; (set-face-attribute 'default nil :family "Inconsolata")     ;; apt: fonts-inconsolata
@@ -206,6 +208,7 @@ Focus change event is debounced so we don't gc on focus."
 ;; (set-face-attribute 'default nil :family "Space Mono")
 ;; (set-face-attribute 'default nil :family "Courier 10 Pitch")
 ;; (set-face-attribute 'default nil :family "Ubuntu Mono")
+;; (set-face-attribute 'default nil :family "Menlo")
 
 (defvar matt-font-size-default 14)
 
