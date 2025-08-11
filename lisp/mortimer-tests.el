@@ -75,10 +75,10 @@
               (:id :stop  :time 2)
               (:id :start :time 3))))))
 
-(ert t)
-
 (when
 nil
+
+(ert t)
 
 (ert-run-tests t (lambda (event-type &rest event-args)
                    (message "%s %s" event-type event-args)))
