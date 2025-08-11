@@ -178,6 +178,7 @@
      `(fixed-pitch ((t (:foreground ,*a2* :family nil))))
      `(fixed-pitch-serif ((t (:family nil))))
      `(minibuffer-prompt ((t (:foreground ,*a1*))))
+     `(tooltip ((t (:background ,*background* :foreground ,*default*))))
 
      ;; font-lock
      `(font-lock-comment-delimiter-face ((t (:foreground ,*comment*))))
@@ -270,6 +271,16 @@
      `(transient-key-return ((t (:foreground ,*b1*))))
      `(transient-key-exit ((t (:foreground ,*a1*))))
 
+     ;; ansi-color
+     ;;  `(ansi-color-black ((t :foreground "black" :background "black")))
+     `(ansi-color-red ((t :foreground ,*error* :background ,*error*)))
+     `(ansi-color-green ((t :foreground ,*success* :background ,*success*)))
+     `(ansi-color-yellow ((t :foreground ,*warn* :background ,*warn*)))
+     `(ansi-color-blue ((t :foreground ,*b1* :background ,*b1*)))
+     ;;  `(ansi-color-magenta ((t :foreground "magenta3" :background "magenta3")))
+     ;;  `(ansi-color-cyan ((t :foreground "cyan3" :background "cyan3")))
+     ;;  `(ansi-color-white ((t :foreground "grey90" :background "gray90")))
+
      ;; magit
      `(magit-diff-context ((t (:foreground ,*comment* :background unspecified))))
      `(magit-diff-removed ((t (:foreground ,*error-1* :background unspecified))))
@@ -328,6 +339,7 @@
      `(org-meta-line ((t (:foreground ,*background-1*))))
      ;; `(org-special-keyword ((t (:foreground ,*c3*))))
      `(org-drawer ((t (:foreground ,*background-1*))))
+     `(org-code ((t (:foreground ,*default-4*))))
 
      ;; calendar
      `(calendar-today ((t (:foreground ,*a1* :background unspecified :box t))))
