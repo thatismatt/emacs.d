@@ -485,7 +485,7 @@ Focus change event is debounced so we don't gc on focus."
        ((and scratch-files
              (or (null scratch-file)
                  (equal current-file-name scratch-file)))
-        (find-file (completing-read "Open scratch file: " scratch-files)))
+        (find-file (completing-read "Open scratch file: " (mapcar #'abbreviate-file-name scratch-files))))
        ((and scratch-file (file-exists-p scratch-file))
         (find-file scratch-file))
        (t
