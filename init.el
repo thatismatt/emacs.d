@@ -1561,10 +1561,24 @@ e.g. '11:00 or \"10:30\"."
   (find-file "~/notes/runs.org"))
 (matt-define-key "o r" 'matt-runs)
 
-(matt-define-key "M-a" (lambda () (interactive) (jump-to-register ?a)))
-(matt-define-key "M-s" (lambda () (interactive) (jump-to-register ?s)))
-(matt-define-key "M-d" (lambda () (interactive) (jump-to-register ?d)))
-(matt-define-key "M-f" (lambda () (interactive) (jump-to-register ?f)))
+(defun matt-clear-register (r)
+  "Clear register R."
+  (interactive (list (register-read-with-preview "Clear register: ")))
+  (set-register r nil))
+
+(defun matt-register-store-or-jump (register)
+  "Jump to REGISTER or with prefix ARG store point to REGISTER."
+  (lambda (arg)
+    (interactive "P")
+    (if arg
+        (point-to-register register)
+      ;; TODO: somehow incorporate (window-configuration-to-register register)
+      (jump-to-register register))))
+
+(matt-define-key "M-a" (matt-register-store-or-jump ?a))
+(matt-define-key "M-s" (matt-register-store-or-jump ?s))
+(matt-define-key "M-d" (matt-register-store-or-jump ?d))
+(matt-define-key "M-f" (matt-register-store-or-jump ?f))
 
 ;; A         B        C                            D        E   F          G    H   I  J   K  L  M  N         O  P  Q  R              S            T        U  V  W  X        Y    Z
 ;; Wednesday February 20                           02/07/18 %E  2018-02-07 2018 15  03 %J  %K %L 28 312138752 %O pm %Q 15:28          35           15:28:35 05 06 06 15:28:35 2018 GMT
