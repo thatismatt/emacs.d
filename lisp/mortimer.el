@@ -30,7 +30,9 @@
 
 (defvar mortimer-pause-time-remaining nil)
 
-(defvar mortimer-log '())
+(defvar mortimer-log '()
+  "The log of timer events, used to display a summary of the recent timers.
+Stored in reverse chronological order.")
 
 (defvar mortimer-complete-hook nil
   "Function(s) called when a Mortimer timer completes.")
@@ -98,10 +100,11 @@ e.g. 60 => \"1 min\", 125 => 2 mins 5 secs"
       timer-string)))
 
 (defun mortimer-refresh-mode-line ()
-  "Used to force a modeline refresh, redisplaying the time remaining."
+  "Used to force a mode line refresh, redisplaying the time remaining."
   (force-mode-line-update t))
 
 (defun mortimer-update-mode-line ()
+  "Update the mode line based on the timer state."
   (setq mortimer-mode-line
         (cond ((mortimer-running-p)
                (mortimer-propertize-for-mode-line))
@@ -122,6 +125,8 @@ Does not reset state, used to start or resume timer."
                         'mortimer-refresh-mode-line)))
 
 (defun mortimer-timer-init-and-start (seconds)
+  "Start a countdown timer starting at SECONDS.
+This will delete the current timer if there is one running or paused."
   (add-to-list 'mode-line-misc-info '(mortimer-mode-line ("" mortimer-mode-line " ")) t)
   (mortimer-stop)
   (setq mortimer-timer-duration seconds)
@@ -238,12 +243,6 @@ Optionally invoke F, excluding any internal logs."
 (advice-add 'mortimer-on-complete
             :around #'mortimer-complete-advice)
 
-(defun mortimer-partition-by (pred sequence)
-  (when (not (seq-empty-p sequence))
-    (cons (cons (seq-first sequence)
-                (seq-take-while (lambda (x) (not (funcall pred x))) (seq-rest sequence)))
-          (mortimer-partition-by pred (seq-drop-while (lambda (x) (not (funcall pred x))) (seq-rest sequence))))))
-
 (defface mortimer-view-log-complete-face
   '((t (:foreground "#bb0" :box t)))
   "Face used for Mortimer completed timers in the log.")
@@ -260,11 +259,21 @@ Optionally invoke F, excluding any internal logs."
   '((t (:foreground "#b00" :box t)))
   "Face used for Mortimer failed timers in the log.")
 
+(defun mortimer-partition-at (pred sequence)
+  "Partition SEQUENCE at points when PRED is true.
+Will return partitions, each partition is a list of one item for
+which PRED is true and then 0 or more items for which PRED is false."
+  (when (not (seq-empty-p sequence))
+    (cons (cons (seq-first sequence)
+                (seq-take-while (lambda (x) (not (funcall pred x))) (seq-rest sequence)))
+          (mortimer-partition-at pred (seq-drop-while (lambda (x) (not (funcall pred x))) (seq-rest sequence))))))
+
 (defun mortimer-group-log (log)
+  "Group the events in LOG in to timers."
   (thread-last
     log
     (seq-reverse)
-    (mortimer-partition-by (lambda (l) (eq (plist-get l :id) :start)))))
+    (mortimer-partition-at (lambda (l) (eq (plist-get l :id) :start)))))
 
 (defun mortimer-reduce-log (log)
   "Summarise LOG, a list of Mortimer events, by collating details for each timer."
@@ -305,6 +314,7 @@ Optionally invoke F, excluding any internal logs."
                                      (map-nested-elt y '(:start :time)))))))
 
 (defun mortimer-get-buffer ()
+  "Prepare and open the Mortimer buffer, displaying the timers."
   (let ((buffer (get-buffer-create "*Mortimer*")))
     (with-current-buffer buffer
       (view-mode-disable)
