@@ -1080,8 +1080,8 @@ With prefix ARG also kill all unmodified file buffers."
   (setq cider-repl-pop-to-buffer-on-connect 'display-only)
   (setq cider-use-tooltips nil)
   (setq cider-test-fail-fast nil)
-  (setq cider-inspector-max-coll-size 3) ;; reduce likelihood of wrapping in inspector
-  (setq cider-enrich-classpath t)
+  (setq cider-inspector-max-coll-size 8)
+  (setq cider-download-java-sources t)
   (setq cider-comment-prefix           ";; ")
   (setq cider-comment-continued-prefix ";; ")
   (setq cider-comment-postfix          "") ;; for completeness, but this is the default
@@ -1110,7 +1110,7 @@ With prefix ARG also kill all unmodified file buffers."
          (set-process-query-on-exit-flag
           (get-buffer-process server-buf) nil)
          (cider-nrepl-connect
-          (list :repl-buffer server-buf
+          (list :repl-buffer nil
                 :repl-type 'clj
                 :host (plist-get nrepl-endpoint :host)
                 :port (plist-get nrepl-endpoint :port)
@@ -1122,7 +1122,7 @@ With prefix ARG also kill all unmodified file buffers."
                                                   process-query-on-exit-flag nil)
                                       (set-process-query-on-exit-flag
                                        (get-buffer-process (current-buffer)) nil)
-                                      (rename-buffer "*babashka-repl*"))))))))
+                                      (rename-buffer "*babashka*"))))))))
   :bind ((:map cider-repl-mode-map
                ("C-<up>" . cider-repl-previous-input)
                ("C-<down>" . cider-repl-next-input))
