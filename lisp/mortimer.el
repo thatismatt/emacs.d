@@ -313,11 +313,22 @@ which PRED is true and then 0 or more items for which PRED is false."
           (lambda (x y) (time-less-p (map-nested-elt x '(:start :time))
                                      (map-nested-elt y '(:start :time)))))))
 
+(defun mortimer-log-tag (id)
+  (string-pad
+   (cl-case id
+     (:fail       (propertize "failed" 'face 'mortimer-view-log-fail-face))
+     (:success    (propertize "success" 'face 'mortimer-view-log-success-face))
+     (:complete   (propertize "completed" 'face 'mortimer-view-log-complete-face))
+     (:paused     (propertize "paused" 'face 'mortimer-view-log-incomplete-face))
+     (:incomplete (propertize "incomplete" 'face 'mortimer-view-log-incomplete-face))
+     (:ongoing    (propertize "ongoing" 'face 'mortimer-view-log-incomplete-face)))
+   10)) ;; (length "incomplete")
+
 (defun mortimer-get-buffer ()
   "Prepare and open the Mortimer buffer, displaying the timers."
   (let ((buffer (get-buffer-create "*Mortimer*")))
     (with-current-buffer buffer
-      (view-mode-disable)
+      (view-mode -1)
       (erase-buffer)
       (insert (propertize "Mortimer Log" 'face 'header-line))
       (insert "\n\n")
@@ -325,34 +336,29 @@ which PRED is true and then 0 or more items for which PRED is false."
         mortimer-log
         mortimer-group-log
         ;; TODO: Split the "collapsing" of multiple events from the string formatting
+        ;;  - fix: `mortimer-mark-last-as-success' doesn't work after `mortimer-mark-last-as-fail'
         (seq-map (lambda (p)
-                   (let* ((start         (car p))
+                   (let* ((start         (car p)) ;; first entry is always the :start event - see `mortimer-group-log'
                           (start-time    (format-time-string "%F %R" (plist-get start :time)))
                           (duration      (car (plist-get start :args)))
                           (duration-time (mortimer-duration-friendly-string duration))
                           (complete      (seq-find (lambda (l) (eq (plist-get l :id) :complete)) p))
                           (complete-time (format-time-string "%F %R" (plist-get complete :time)))
                           (paused        (seq-find (lambda (l) (eq (plist-get l :id) :pause)) p))
+                          ;; (resumed       (seq-find (lambda (l) (eq (plist-get l :id) :resume)) p)) ;; TODO: handled resumed timers
                           (success       (seq-find (lambda (l) (eq (plist-get l :id) :success)) p))
                           (fail          (seq-find (lambda (l) (eq (plist-get l :id) :fail)) p))
                           (end-time      (time-add (plist-get start :time) duration))
                           (stop          (seq-find (lambda (l) (eq (plist-get l :id) :stop)) p))
                           (ongoing       (time-less-p (current-time) end-time)))
-                     (cond (fail         (format (concat (propertize "failed" 'face 'mortimer-view-log-fail-face) "     %s (%s)\n")
-                                              start-time duration-time))
-                           (success   (format (concat (propertize "success" 'face 'mortimer-view-log-success-face) "    %s - %s (%s)\n")
-                                              start-time complete-time duration-time))
-                           (complete  (format (concat (propertize "completed" 'face 'mortimer-view-log-complete-face) "  %s - %s (%s)\n")
-                                              start-time complete-time duration-time))
-                           (paused    (format (concat (propertize "paused" 'face 'mortimer-view-log-incomplete-face) "     %s - %s (%s)\n")
-                                              start-time complete-time duration-time))
-                           (stop       (format (concat (propertize "incomplete" 'face 'mortimer-view-log-incomplete-face) " %s (%s)\n")
-                                               start-time duration-time))
-                           (ongoing    (format (concat (propertize "ongoing" 'face 'mortimer-view-log-incomplete-face) "    %s (%s)\n")
-                                               start-time duration-time))
+                     (cond (fail       (format (concat (mortimer-log-tag :fail)       " %s (%s)\n")      start-time duration-time))
+                           (success    (format (concat (mortimer-log-tag :success)    " %s - %s (%s)\n") start-time complete-time duration-time))
+                           (complete   (format (concat (mortimer-log-tag :complete)   " %s - %s (%s)\n") start-time complete-time duration-time))
+                           (paused     (format (concat (mortimer-log-tag :paused)     " %s - %s (%s)\n") start-time complete-time duration-time))
+                           (stop       (format (concat (mortimer-log-tag :incomplete) " %s (%s)\n")      start-time duration-time))
+                           (ongoing    (format (concat (mortimer-log-tag :ongoing)    " %s (%s)\n")      start-time duration-time))
                            ;; TODO: rename, this is really an unknown state
-                           (:otherwise (format (concat (propertize "incomplete" 'face 'mortimer-view-log-incomplete-face) " %s (%s)\n")
-                                               start-time duration-time))))))
+                           (:otherwise (format (concat (mortimer-log-tag :incomplete) " %s (%s)\n")      start-time duration-time))))))
         (seq-do #'insert)))
     buffer))
 
