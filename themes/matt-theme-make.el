@@ -178,6 +178,7 @@
      `(fixed-pitch ((t (:foreground ,*a2* :family nil))))
      `(fixed-pitch-serif ((t (:family nil))))
      `(minibuffer-prompt ((t (:foreground ,*a1*))))
+     `(minibuffer-nonselected ((t (:foreground ,*default-5*))))
      `(tooltip ((t (:background ,*background* :foreground ,*default*))))
 
      ;; font-lock
