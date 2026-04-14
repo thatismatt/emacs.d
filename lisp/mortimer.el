@@ -73,6 +73,10 @@ Stored in reverse chronological order.")
   (and mortimer-timer
        (> (mortimer-time-remaining) 0)))
 
+(defun mortimer-paused-p ()
+  "Check whether there is a timer currently paused."
+  (not (null mortimer-pause-time-remaining)))
+
 (defun mortimer-duration-friendly-string (seconds)
   "Format SECONDS as a human readable string.
 e.g. 60 => \"1 min\", 125 => 2 mins 5 secs"
@@ -95,6 +99,7 @@ e.g. 60 => \"1 min\", 125 => 2 mins 5 secs"
                     (mortimer-time-remaining))))
 
 (defun mortimer-propertize-for-mode-line ()
+  "Create the propertized text for the mode line."
   `(:eval
     (let* ((timer-string (string-join (list "[" (mortimer-time-remaining-string) "]")))
            (timer-string-length (length timer-string))
@@ -112,7 +117,7 @@ e.g. 60 => \"1 min\", 125 => 2 mins 5 secs"
   (setq mortimer-mode-line
         (cond ((mortimer-running-p)
                (mortimer-propertize-for-mode-line))
-              (mortimer-pause-time-remaining
+              ((mortimer-paused-p)
                `(:propertize (">" (:eval (format-seconds "%02h:%02m:%02s" mortimer-pause-time-remaining)) "<")
                              face mortimer-mode-line-paused-face))))
   (mortimer-refresh-mode-line))
@@ -125,7 +130,7 @@ Does not reset state, used to start or resume timer."
                         'mortimer-on-complete))
   (mortimer-update-mode-line)
   (setq mortimer-mode-line-timer
-	    (run-with-timer 0 1
+	      (run-with-timer 0 1
                         'mortimer-refresh-mode-line)))
 
 (defun mortimer-timer-init-and-start (seconds)
@@ -175,7 +180,7 @@ This will delete the current timer if there is one running or paused."
 Ideal for binding to a convenient key."
   (interactive)
   (if (or (mortimer-running-p)
-          mortimer-pause-time-remaining)
+          (mortimer-paused-p))
       (when (yes-or-no-p "Stop the timer?")
         (mortimer-stop)
         (message "Timer stopped."))
@@ -191,7 +196,7 @@ Ideal for binding to a convenient key."
 
 (defun mortimer-resume ()
   "Resume a paused timer."
-  (when mortimer-pause-time-remaining
+  (when (mortimer-paused-p)
     (mortimer-timer-start mortimer-pause-time-remaining)
     (setq mortimer-pause-time-remaining nil)))
 
@@ -202,7 +207,7 @@ Ideal for binding to a convenient key."
   (cond ((mortimer-running-p)
          (mortimer-pause)
          (message "Timer paused."))
-        (mortimer-pause-time-remaining
+        ((mortimer-paused-p)
          (mortimer-resume)
          (message "Timer resumed."))
         (:otherwise
@@ -218,11 +223,13 @@ Optionally invoke F, excluding any internal logs."
 (defun mortimer-mark-last-as-fail ()
   "Append a fail event to the log."
   (interactive)
+  ;; TODO: check if there is an active timer
   (mortimer-log-append :fail))
 
 (defun mortimer-mark-last-as-success ()
   "Append a success event to the log."
   (interactive)
+  ;; TODO: check if there is an active timer
   (mortimer-log-append :success))
 
 (defun mortimer-log-advice (id)
@@ -230,11 +237,11 @@ Optionally invoke F, excluding any internal logs."
   (lambda (f &rest args)
     (mortimer-log-append id f args)))
 
-(fset 'mortimer-start-advice    (mortimer-log-advice :start))
-(fset 'mortimer-stop-advice     (mortimer-log-advice :stop))
-(fset 'mortimer-pause-advice    (mortimer-log-advice :pause))
-(fset 'mortimer-resume-advice   (mortimer-log-advice :resume))
-(fset 'mortimer-complete-advice (mortimer-log-advice :complete))
+(defun mortimer-start-advice    (f &rest args) (mortimer-log-append :start f args))
+(defun mortimer-stop-advice     (f &rest args) (mortimer-log-append :stop f args))
+(defun mortimer-pause-advice    (f &rest args) (mortimer-log-append :pause f args))
+(defun mortimer-resume-advice   (f &rest args) (mortimer-log-append :resume f args))
+(defun mortimer-complete-advice (f &rest args) (mortimer-log-append :complete f args))
 
 (advice-add 'mortimer-timer-init-and-start ;; can't add advice to mortimer-start, as that function fails on invalid user input
             :around #'mortimer-start-advice)
@@ -263,22 +270,6 @@ Optionally invoke F, excluding any internal logs."
   '((t (:foreground "#b00" :box t)))
   "Face used for Mortimer failed timers in the log.")
 
-(defun mortimer-partition-at (pred sequence)
-  "Partition SEQUENCE at points when PRED is true.
-Will return partitions, each partition is a list of one item for
-which PRED is true and then 0 or more items for which PRED is false."
-  (when (not (seq-empty-p sequence))
-    (cons (cons (seq-first sequence)
-                (seq-take-while (lambda (x) (not (funcall pred x))) (seq-rest sequence)))
-          (mortimer-partition-at pred (seq-drop-while (lambda (x) (not (funcall pred x))) (seq-rest sequence))))))
-
-(defun mortimer-group-log (log)
-  "Group the events in LOG in to timers."
-  (thread-last
-    log
-    (seq-reverse)
-    (mortimer-partition-at (lambda (l) (eq (plist-get l :id) :start)))))
-
 (defun mortimer-reduce-log (log)
   "Summarise LOG, a list of Mortimer events, by collating details for each timer."
   (let* ((sorted-log (sort log (lambda (x y) (time-less-p (plist-get x :time)
@@ -300,16 +291,18 @@ which PRED is true and then 0 or more items for which PRED is false."
                                (start  (map-nested-elt result '(:start :time))))
                           (map-merge 'hash-table
                                       agg
-                                      (list start result) ;; FIX: this breaks when time is "real" elisp time
+                                      (list (cons start
+                                                  result))
                                       (when (not ref)
-                                        (list :active result))
+                                        (list (cons :active
+                                                    result)))
                                       ;; starting new timer with stopped (but not complete) previous timer
                                       ;; so mark previous timer as incomplete
                                       (when (and start?
                                                  active
                                                  (eq status :stop))
-                                        (list (map-nested-elt active '(:start :time))
-                                              (map-merge 'hash-table active (list :status :incomplete)))))))
+                                        (list (cons (map-nested-elt active '(:start :time))
+                                                    (map-merge 'hash-table active (list :status :incomplete))))))))
                       sorted-log
                       (make-hash-table)))
          (reduced (map-values (map-delete aggregated :active))))
@@ -317,9 +310,10 @@ which PRED is true and then 0 or more items for which PRED is false."
           (lambda (x y) (time-less-p (map-nested-elt x '(:start :time))
                                      (map-nested-elt y '(:start :time)))))))
 
-(defun mortimer-log-tag (id)
+(defun mortimer-log-tag (log-type-id)
+  "Create the formatted tag for the given LOG-TYPE-ID for display in the log."
   (string-pad
-   (cl-case id
+   (cl-case log-type-id
      (:fail       (propertize "failed" 'face 'mortimer-view-log-fail-face))
      (:success    (propertize "success" 'face 'mortimer-view-log-success-face))
      (:complete   (propertize "completed" 'face 'mortimer-view-log-complete-face))
@@ -330,49 +324,54 @@ which PRED is true and then 0 or more items for which PRED is false."
 
 (defun mortimer-get-buffer ()
   "Prepare and open the Mortimer buffer, displaying the timers."
-  (let ((buffer (get-buffer-create "*Mortimer*")))
+  (let ((buffer (get-buffer-create "*Mortimer*"))
+        (log-lines (seq-map (lambda (p)
+                              (let* ((start         (gethash :start p))
+                                     (start-time    (format-time-string "%F %R" (plist-get start :time)))
+                                     (duration      (car (plist-get start :args)))
+                                     (duration-time (mortimer-duration-friendly-string duration))
+                                     (complete      (gethash :complete p))
+                                     (complete-time (format-time-string "%F %R" (plist-get complete :time)))
+                                     (paused        (gethash :pause p))
+                                     (resumed       (gethash :resume p))
+                                     (paused-now    (and paused
+                                                         (or (not resumed)
+                                                             (time-less-p (plist-get resumed :time)
+                                                                          (plist-get paused :time)))))
+                                     (success       (gethash :success p))
+                                     (fail          (gethash :fail p))
+                                     (end-time      (time-add (plist-get start :time) duration))
+                                     (stop          (gethash :stop p))
+                                     (ongoing       (time-less-p (current-time) end-time)))
+                                (cond (fail       (format (concat (mortimer-log-tag :fail)       " %s (%s)\n")      start-time duration-time))
+                                      (success    (format (concat (mortimer-log-tag :success)    " %s - %s (%s)\n") start-time complete-time duration-time))
+                                      (complete   (format (concat (mortimer-log-tag :complete)   " %s - %s (%s)\n") start-time complete-time duration-time))
+                                      (paused-now (format (concat (mortimer-log-tag :paused)     " %s - %s (%s)\n") start-time complete-time duration-time))
+                                      (stop       (format (concat (mortimer-log-tag :incomplete) " %s (%s)\n")      start-time duration-time))
+                                      (ongoing    (format (concat (mortimer-log-tag :ongoing)    " %s (%s)\n")      start-time duration-time))
+                                      ;; TODO: rename, this is really an unknown state
+                                      (:otherwise (format (concat (mortimer-log-tag :incomplete) " %s (%s)\n")      start-time duration-time)))))
+                            (mortimer-reduce-log mortimer-log))))
     (with-current-buffer buffer
       (view-mode -1)
       (erase-buffer)
       (insert (propertize "Mortimer Log" 'face 'header-line))
       (insert "\n\n")
-      (thread-last
-        mortimer-log
-        mortimer-group-log
-        ;; TODO: Split the "collapsing" of multiple events from the string formatting
-        ;;  - fix: `mortimer-mark-last-as-success' doesn't work after `mortimer-mark-last-as-fail'
-        (seq-map (lambda (p)
-                   (let* ((start         (car p)) ;; first entry is always the :start event - see `mortimer-group-log'
-                          (start-time    (format-time-string "%F %R" (plist-get start :time)))
-                          (duration      (car (plist-get start :args)))
-                          (duration-time (mortimer-duration-friendly-string duration))
-                          (complete      (seq-find (lambda (l) (eq (plist-get l :id) :complete)) p))
-                          (complete-time (format-time-string "%F %R" (plist-get complete :time)))
-                          (paused        (seq-find (lambda (l) (eq (plist-get l :id) :pause)) p))
-                          ;; (resumed       (seq-find (lambda (l) (eq (plist-get l :id) :resume)) p)) ;; TODO: handled resumed timers
-                          (success       (seq-find (lambda (l) (eq (plist-get l :id) :success)) p))
-                          (fail          (seq-find (lambda (l) (eq (plist-get l :id) :fail)) p))
-                          (end-time      (time-add (plist-get start :time) duration))
-                          (stop          (seq-find (lambda (l) (eq (plist-get l :id) :stop)) p))
-                          (ongoing       (time-less-p (current-time) end-time)))
-                     (cond (fail       (format (concat (mortimer-log-tag :fail)       " %s (%s)\n")      start-time duration-time))
-                           (success    (format (concat (mortimer-log-tag :success)    " %s - %s (%s)\n") start-time complete-time duration-time))
-                           (complete   (format (concat (mortimer-log-tag :complete)   " %s - %s (%s)\n") start-time complete-time duration-time))
-                           (paused     (format (concat (mortimer-log-tag :paused)     " %s - %s (%s)\n") start-time complete-time duration-time))
-                           (stop       (format (concat (mortimer-log-tag :incomplete) " %s (%s)\n")      start-time duration-time))
-                           (ongoing    (format (concat (mortimer-log-tag :ongoing)    " %s (%s)\n")      start-time duration-time))
-                           ;; TODO: rename, this is really an unknown state
-                           (:otherwise (format (concat (mortimer-log-tag :incomplete) " %s (%s)\n")      start-time duration-time))))))
-        (seq-do #'insert)))
+      (seq-do #'insert log-lines))
     buffer))
 
 (defun mortimer-view-log ()
+  "View the mortimer log."
   (interactive)
   (view-buffer (mortimer-get-buffer)))
 
 (defun mortimer-clear-log ()
+  "Clear the mortimer log."
   (interactive)
   (when (yes-or-no-p "Are you sure you want to clear the Mortimer log?")
+    (when (or (mortimer-running-p)
+              (mortimer-paused-p))
+      (mortimer-stop))
     (setq mortimer-log '())))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -388,11 +387,38 @@ nil
           ("B" 10 t)
           ("C" 10 t)])
   (setq tabulated-list-use-header-line t)
-  (let ((table-contents (mapcar
+  (let* ((log-lines (seq-map (lambda (timer)
+                               (let* ((start         (gethash :start timer))
+                                      (start-time    (format-time-string "%F %R" (plist-get start :time)))
+                                      (duration      (car (plist-get start :args)))
+                                      (duration-time (mortimer-duration-friendly-string duration))
+                                      (complete      (gethash :complete timer))
+                                      (complete-time (format-time-string "%F %R" (plist-get complete :time)))
+                                      (paused        (gethash :pause timer))
+                                      (resumed       (gethash :resume timer))
+                                      (paused-now    (and paused
+                                                          (or (not resumed)
+                                                              (time-less-p (plist-get resumed :time)
+                                                                           (plist-get paused :time)))))
+                                      (success       (gethash :success timer))
+                                      (fail          (gethash :fail timer))
+                                      (end-time      (time-add (plist-get start :time) duration))
+                                      (stop          (gethash :stop timer))
+                                      (ongoing       (time-less-p (current-time) end-time)))
+                                 (cond (fail       (format (concat (mortimer-log-tag :fail)       " %s (%s)\n")      start-time duration-time))
+                                       (success    (format (concat (mortimer-log-tag :success)    " %s - %s (%s)\n") start-time complete-time duration-time))
+                                       (complete   (format (concat (mortimer-log-tag :complete)   " %s - %s (%s)\n") start-time complete-time duration-time))
+                                       (paused-now (format (concat (mortimer-log-tag :paused)     " %s - %s (%s)\n") start-time complete-time duration-time))
+                                       (stop       (format (concat (mortimer-log-tag :incomplete) " %s (%s)\n")      start-time duration-time))
+                                       (ongoing    (format (concat (mortimer-log-tag :ongoing)    " %s (%s)\n")      start-time duration-time))
+                                       ;; TODO: rename, this is really an unknown state
+                                       (:otherwise (format (concat (mortimer-log-tag :incomplete) " %s (%s)\n")      start-time duration-time)))))
+                             (mortimer-reduce-log mortimer-log)))
+         (table-contents (mapcar
                          (lambda (x) `("" [,(symbol-name (plist-get x :id))
                                            ""
                                            ""]))
-                         mortimer-log)))
+                         (mortimer-reduce-log)mortimer-log)))
     (setq tabulated-list-entries table-contents))
   (tabulated-list-init-header))
 
@@ -473,13 +499,24 @@ nil
  (thread-first mortimer-log car (plist-get :time))
  '(25487 6029 664998 970000))
 
-(setq mortimer-log-old mortimer-log)
+(setq mortimer-log-debug mortimer-log)
 
 (setq mortimer-log
-      '((:time (25487 6029 664998 970000) :id :start :args (1500))
-        (:time (25487 6043 190203 201000) :id :success :args nil)
-        (:time (25487 6027 256551 522000) :id :complete :args nil)
-        (:time (25487 4527 246490 116000) :id :start :args (1500))))
+      '((:time (26834 43056 749861 0) :id :start :args (1500))
+        ;; (:time (26834 43063 34042 0) :id :pause :args nil)
+        ;; (:time (26834 43066 369825 0) :id :resume :args nil)
+        (:time (26834 43071 424585 0) :id :stop :args nil)
+        (:time (26834 43078 578755 0) :id :start :args (1500))
+        ;; (:time (26834 43082 997486 0) :id :stop :args nil)
+        ;; (:time (26834 43084 684483 0) :id :start :args (1500))
+        ))
+
+(mortimer-reduce-log ;; '((:time (26834 43056 749861 0) :id :start :args (1500))
+                     ;;   (:time (26834 43071 424585 0) :id :stop :args nil)
+                     ;;   (:time (26834 43078 578755 0) :id :start :args (1500))
+                     ;;   ;; (:time (26834 43079 0 0) :id :stop :args nil)
+                     ;;   )
+ mortimer-log)
 
 )
 
