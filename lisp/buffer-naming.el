@@ -1,4 +1,4 @@
-;;; buffer-naming.el --- customizable buffer naming
+;;; buffer-naming.el --- customizable buffer naming  -*- lexical-binding: t; -*-
 
 ;; This file is not part of GNU Emacs.
 

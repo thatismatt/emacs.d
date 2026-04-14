@@ -1,4 +1,4 @@
-;; xorbit-theme.el -- Matt Lee's dark theme
+;; xorbit-theme.el -- Matt Lee's dark theme  -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 

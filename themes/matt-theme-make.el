@@ -1,4 +1,4 @@
-;; matt-theme-make.el -- Matt Lee's theme helpers
+;; matt-theme-make.el -- Matt Lee's theme helpers  -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 
