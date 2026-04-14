@@ -8,7 +8,7 @@
 
 (deftheme xorbit)
 
-(setq xorbit-theme-hue 0.57)
+(defvar xorbit-theme-hue 0.57)
 
 (matt-theme-make
  'xorbit
