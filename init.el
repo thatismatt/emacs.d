@@ -1363,8 +1363,18 @@ With prefix ARG also kill all unmodified file buffers."
 
 (use-package inspector
   :ensure t
-  :bind (:map emacs-lisp-mode-map
-              ("C-c M-i" . inspector-inspect-last-sexp)))
+  :config
+  (defun matt-inspector-dwim ()
+    (interactive)
+    (let ((sexp (elisp--preceding-sexp)))
+      (if (and (symbolp sexp)
+               (fboundp sexp))
+          (inspector-inspect sexp)
+        (inspector-inspect-last-sexp))))
+  :bind ((:map emacs-lisp-mode-map
+               ("C-c M-i" . matt-inspector-dwim))
+         (:map lisp-interaction-mode-map
+               ("C-c M-i" . matt-inspector-dwim))))
 
 (use-package alarm
   :config
