@@ -116,6 +116,26 @@ Focus change event is debounced so we don't gc on focus."
 
 (setq ring-bell-function 'ignore)
 
+;; cursor - bar instead of a block
+(set-default 'cursor-type '(bar . 2))
+;; (set-default 'cursor-type 'hollow)
+;; (set-default 'cursor-type 'hbar)
+;; (setq cursor-type '(box . 10))
+;; (setq cursor-type 'hollow)
+;; (setq cursor-type 'box)
+;; (setq cursor-type 'hbar)
+
+;; window title - include file's full path
+(setq frame-title-format
+      '("" invocation-name
+        (:eval (when (and (boundp 'server-name)
+                          (not (equal server-name "server")))
+                 (concat " - " server-name)))
+        " - "
+        (:eval (if (buffer-file-name)
+                   (replace-regexp-in-string "%" "%%" (abbreviate-file-name (buffer-file-name)))
+                 "%b"))))
+
 ;; keys
 (defvar matt-keymap (make-sparse-keymap))
 (global-set-key (kbd "M-m") matt-keymap)
@@ -240,20 +260,6 @@ Focus change event is debounced so we don't gc on focus."
 
 (matt-font-size-default)
 (matt-font-face-narrow)
-
-;; cursor - bar instead of a block
-(set-default 'cursor-type '(bar . 2))
-
-;; window title - include file's full path
-(setq frame-title-format
-      '("" invocation-name
-        (:eval (when (and (boundp 'server-name)
-                          (not (equal server-name "server")))
-                 (concat " - " server-name)))
-        " - "
-        (:eval (if (buffer-file-name)
-                   (replace-regexp-in-string "%" "%%" (abbreviate-file-name (buffer-file-name)))
-                 "%b"))))
 
 (defun matt-find-files (filenames)
   "Useful as eshell alias, FILENAMES can be multiple args or globs."
