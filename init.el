@@ -1795,27 +1795,22 @@ e.g. 2020012016131337, 2020-01-20_16-13-13, 1621854380123 or 1621854380."
       (insert filename))))
 (matt-define-key "i C-f" 'matt-insert-full-filename)
 
-(defun matt-wget (url)
+(defun matt-http-get (url)
   "Retrieve and return the content of URL."
   (with-current-buffer (url-retrieve-synchronously url)
-    (let ((content (buffer-substring (marker-position url-http-end-of-headers)
-                                     (buffer-size))))
+    (let ((content (buffer-substring (1+ (marker-position url-http-end-of-headers))
+                                     (point-max))))
       (kill-buffer)
       content)))
 
-(defun matt-insert-wget (url)
+(defun matt-http-get-insert (url)
   "Retrieve and Insert the content of URL."
   (interactive "sURL: ")
-  (let ((content (matt-wget url)))
-    (insert content)))
-
-(defun matt-whats-my-ip ()
-  (string-trim (matt-wget "https://api.ipify.org")))
+  (insert (matt-http-get url)))
 
 (defun matt-insert-my-ip ()
   (interactive)
-  (insert (matt-whats-my-ip)))
-
+  (matt-http-get-insert "https://api.ipify.org"))
 (matt-define-key "i i" 'matt-insert-my-ip)
 
 (defun matt-change-at-point (f)
