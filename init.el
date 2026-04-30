@@ -389,7 +389,7 @@ Focus change event is debounced so we don't gc on focus."
 (defvar matt-sound-command
   (cond ((executable-find "ffplay") (list "ffplay" "-nodisp" "-autoexit"))
         ((executable-find "paplay") (list "paplay"))
-        ((executable-find "afplay") (list "afplay"))
+        ((executable-find "afplay") (list "afplay" "-v" "1.5"))
         (t                          nil)))
 
 (defvar matt-sound-default-file
