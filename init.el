@@ -1739,6 +1739,15 @@ e.g. 2020012016131337, 2020-01-20_16-13-13, 1621854380123 or 1621854380."
     (matt-org-title)))
 (matt-define-key "o o" 'matt-open-org-file)
 
+(defun matt-open-note-file (filename)
+  (interactive
+   (list
+    (completing-read "Open note: "
+                     (append (file-expand-wildcards "~/notes/*.org")
+                             (file-expand-wildcards "~/Documents/*.org")))))
+  (find-file filename))
+(matt-define-key "o n" 'matt-open-note-file)
+
 (defun matt-create-scratch-buffer ()
   "Create a new scratch buffer."
   (interactive)
