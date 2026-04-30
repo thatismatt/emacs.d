@@ -451,6 +451,22 @@ Focus change event is debounced so we don't gc on focus."
         (t
          (message "No notification system setup"))))
 
+(defun matt-collapse-whitespace (begin end)
+  "Replace all whitespace between BEGIN and END with a single spaces."
+  (interactive "r")
+  (save-excursion
+    (save-restriction
+      (narrow-to-region begin end)
+      (goto-char (point-min))
+      (while (re-search-forward (if (or (equal major-mode 'clojure-mode)
+                                        (equal major-mode 'clojurescript-mode)
+                                        (equal major-mode 'clojurec-mode))
+                                    ;; for clojure treat leading commas as whitespace - e.g. in maps {:k :v, :l :w}
+                                    (rx (seq (? ",") (+ (or (syntax -) "\n"))))
+                                  (rx (+ (or (syntax -) "\n")))))
+        (replace-match " "))))
+  (deactivate-mark))
+
 (use-package dabbrev
   :config
   (setq dabbrev-ignored-buffer-regexps (list (rx bos " "))))
