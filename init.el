@@ -1884,15 +1884,13 @@ If the region is active BEGIN and END default to the region."
     (downcase-word 1)))
 (global-set-key (kbd "M-l") 'matt-dwim-downcase)
 
-(defun matt-region-size ()
-  "Report details about the region."
-  (interactive)
-  (let ((mk (or (mark) (point))) ;; initially mark is nil
-        (pt (point)))
-    (message "Size:  %s\nLines: %s\nPoint: %s\nMark:  %s"
-             (abs (- mk pt))
-             (1+ (abs (- (line-number-at-pos mk) (line-number-at-pos pt))))
-             pt (mark))))
+(defun matt-region-size (begin end)
+  "Report details about the region, i.e. between BEGIN and END."
+  (interactive "r")
+  (message "Size:  %s\nLines: %s\nBegin: %s\nEnd:   %s"
+           (abs (- begin end))
+           (1+ (abs (- (line-number-at-pos begin) (line-number-at-pos end))))
+           begin end))
 (matt-define-key "r s" 'matt-region-size)
 
 (defun matt-random-name (&optional name syllables)
