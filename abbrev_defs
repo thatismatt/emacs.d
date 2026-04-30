@@ -1,9 +1,14 @@
-;;-*-coding: utf-8;-*-
+;; -*- coding: utf-8; lexical-binding: t -*-
 (define-abbrev-table 'clojure-mode-abbrev-table
   '(
     ("cap" "(matt.capture/capture :id)" nil :count 0)
     ("cb" "(comment ;;\n()\n\n\n\n)" nil :count 0)
     ("td" ";; TODO:" nil :count 0)
+   ))
+
+(define-abbrev-table 'emacs-lisp-mode-abbrev-table
+  '(
+    ("td" ";; TODO:" nil :count 2)
    ))
 
 (define-abbrev-table 'org-mode-abbrev-table

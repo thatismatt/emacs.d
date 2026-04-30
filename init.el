@@ -723,7 +723,8 @@ With prefix ARG also kill all unmodified file buffers."
   :hook (sql-mode
          sql-interactive-mode
          clojure-mode
-         org-mode))
+         org-mode
+         emacs-lisp-mode))
 
 (use-package smartparens
   :vc (:url "https://github.com/Fuco1/smartparens")
