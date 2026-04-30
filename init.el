@@ -664,6 +664,10 @@ With prefix ARG also kill all unmodified file buffers."
 
 (use-package vundo
   :ensure t
+  :config
+  (setq vundo-glyph-alist vundo-unicode-symbols)
+  (setq vundo-window-max-height 10)
+  (setq vundo-compact-display t)
   :bind ("M-_" . vundo))
 
 (use-package eshell
