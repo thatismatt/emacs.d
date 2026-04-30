@@ -469,6 +469,7 @@ Focus change event is debounced so we don't gc on focus."
 
 (use-package dabbrev
   :config
+  ;; remove suggestions in hidden buffers
   (setq dabbrev-ignored-buffer-regexps (list (rx bos " "))))
 
 (use-package recentf
