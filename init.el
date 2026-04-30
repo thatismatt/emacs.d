@@ -482,6 +482,10 @@ Focus change event is debounced so we don't gc on focus."
 
 (use-package dired
   :config
+  (when (executable-find "gls")
+    ;; when available use ls from coreutils not osx's default
+    (setq insert-directory-program "gls"))
+  (setq dired-use-ls-dired t) ;; force the --dired option
   (setq dired-listing-switches "-al --group-directories-first"))
 
 (use-package comint
