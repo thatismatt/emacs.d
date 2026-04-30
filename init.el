@@ -333,10 +333,11 @@ Focus change event is debounced so we don't gc on focus."
 (setq-default fill-column 115)
 (setq-default display-fill-column-indicator-character ?\u2506)
 (global-auto-revert-mode t)
-(fset 'yes-or-no-p 'y-or-n-p)
+(setq use-short-answers t)
 (delete-selection-mode t) ;; delete the selection with a keypress
 (save-place-mode 1)
-(savehist-mode)
+(savehist-mode) ;; save minibuffer history
+;; (repeat-mode -1) ;; see (describe-repeat-maps)
 (setq history-delete-duplicates t)
 (setq set-mark-command-repeat-pop t)
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
@@ -591,9 +592,9 @@ Focus change event is debounced so we don't gc on focus."
                                                          file-no-ext))
                                       sibling-files)))
       (cond ((eq 1 (length sibling-files)) (car sibling-files))
-            ((eq 1 (length ext-files)) (car ext-files))
-            ((eq 1 (length prefix-files)) (car prefix-files))
-            ((eq 1 (length no-ext-files)) (car no-ext-files)))))
+            ((eq 1 (length ext-files))     (car ext-files))
+            ((eq 1 (length prefix-files))  (car prefix-files))
+            ((eq 1 (length no-ext-files))  (car no-ext-files)))))
   (defun matt-toggle-related-file ()
     (interactive)
     (let* ((file-name (buffer-file-name))
@@ -966,7 +967,7 @@ With prefix ARG also kill all unmodified file buffers."
     (insert "F?")
     (org-insert-subheading nil)
     (insert "Forecast")
-    (let* (;; TODO: find the previous Monday, if not today
+    (let* (;; TODO: find the previous Monday, if not today - e.g. bank holidays
            (t1  (decode-time (current-time)))
            (d1  (encode-time (make-decoded-time :second 0
                                                 :minute 0
@@ -1198,13 +1199,14 @@ With prefix ARG also kill all unmodified file buffers."
     (beginning-of-defun)
     (let ((defun-first-line (matt-remove-text-properties (thing-at-point 'line))))
       ;; TODO: handle metadata keys, e.g. ^:dev/before-load
-      (string-match "^(def[-a-z]* \\([-*'_<>+=A-Za-z0-9?!]*\\)" defun-first-line)
+      ;; TODO: handle schema defns, i.e. s/defn
+      (string-match "^(def[-a-z]* +\\([-*'_<>+=A-Za-z0-9?!]*\\)" defun-first-line)
       (match-string 1 defun-first-line))))
 
 (defun matt-defun-name-at-point (&optional arg)
   "Grab the name of the defun at point, if ARG is given then insert."
   (interactive "P")
-  (when-let ((defun-name (matt-get-defun-name-at-point)))
+  (when-let* ((defun-name (matt-get-defun-name-at-point)))
     (if arg
         (insert defun-name)
       (kill-new defun-name))))
@@ -1269,7 +1271,7 @@ With prefix ARG also kill all unmodified file buffers."
 (defun matt-cider-kill-ring-save-qualified-symbol-name ()
   "Save the qualified name of the symbol at point to the kill ring."
   (interactive)
-  (when-let ((s (thing-at-point 'symbol)))
+  (when-let* ((s (thing-at-point 'symbol)))
     (cider-interactive-eval (concat "`" s)
                             (nrepl-make-response-handler (current-buffer)
                                                          (lambda (_buffer value)
@@ -1528,7 +1530,7 @@ e.g. 30.5 becomes '30:30."
 (defun matt-time-p (x)
   "Return t if X is a time symbol or string.
 e.g. '11:00 or \"10:30\"."
-  (when-let ((s (matt-symbol-or-string-to-string x)))
+  (when-let* ((s (matt-symbol-or-string-to-string x)))
     (when (string-match-p "^[0-9]+:[0-9][0-9]$" s)
       t)))
 
