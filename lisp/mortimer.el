@@ -20,6 +20,11 @@
 (require 'seq)
 (require 'map)
 
+(defgroup mortimer nil
+  "Countdown timer that displays in the mode line."
+  :prefix "mortimer-"
+  :group 'applications)
+
 (defvar mortimer-timer nil)
 (defvar mortimer-timer-duration nil)
 
@@ -61,7 +66,7 @@ Stored in reverse chronological order.")
 
 (defun mortimer-time-complete ()
   "Return the amount of time completed for the current timer, in seconds."
-  (when-let ((remaining (when mortimer-timer-duration (mortimer-time-remaining))))
+  (when-let* ((remaining (when mortimer-timer-duration (mortimer-time-remaining))))
     (- mortimer-timer-duration remaining)))
 
 (defun mortimer-fraction-complete ()
@@ -168,7 +173,7 @@ This will delete the current timer if there is one running or paused."
   "Start a countdown timer starting at TIME, e.g. \"25 mins\".
 This will delete the current timer if there is one running or paused."
   (interactive "sTime: ")
-  (if-let ((seconds (if (numberp time) time (timer-duration time))))
+  (if-let* ((seconds (if (numberp time) time (timer-duration time))))
       (mortimer-timer-init-and-start seconds)
     (message "I don't understand %s, try something like \"25 mins\"." time)))
 
@@ -189,7 +194,7 @@ Ideal for binding to a convenient key."
 
 (defun mortimer-pause ()
   "Pause the current timer."
-  (when-let ((remaining (mortimer-time-remaining)))
+  (when-let* ((remaining (mortimer-time-remaining)))
     (mortimer-timer-stop)
     (setq mortimer-pause-time-remaining remaining)
     (mortimer-update-mode-line)))
@@ -418,7 +423,7 @@ nil
                          (lambda (x) `("" [,(symbol-name (plist-get x :id))
                                            ""
                                            ""]))
-                         (mortimer-reduce-log)mortimer-log)))
+                         (mortimer-reduce-log mortimer-log))))
     (setq tabulated-list-entries table-contents))
   (tabulated-list-init-header))
 
