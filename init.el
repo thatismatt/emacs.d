@@ -1883,12 +1883,11 @@ e.g. 2020012016131337, 2020-01-20_16-13-13, 1621854380123 or 1621854380."
                         (line-number-at-pos end))
                      2))
     (recenter nil t)))
-(defun matt-recenter-region-top-bottom (&optional begin end)
-  "Center on the region, or behave as `recenter-top-bottom'.
-If the region is active BEGIN and END default to the region."
-  (interactive (if (use-region-p) (list (region-beginning) (region-end))))
+(defun matt-recenter-region-top-bottom ()
+  "Center on the region, or behave as `recenter-top-bottom'."
+  (interactive)
   (if (use-region-p)
-      (matt-recenter-region begin end)
+      (matt-recenter-region (region-beginning) (region-end))
     (call-interactively 'recenter-top-bottom)))
 ;; matt-recenter-region-top-bottom hangs when called repeatedly in the minibuffer
 (bind-key "C-l" 'matt-recenter-region-top-bottom nil (not (minibufferp)))
