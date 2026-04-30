@@ -88,6 +88,11 @@ Focus change event is debounced so we don't gc on focus."
   "Delete elements of ALIST where KEY is equal to the element's car."
   (delq (assoc key alist) alist))
 
+;; startup
+(setq inhibit-startup-screen t)
+(setq initial-buffer-choice t) ;; scratch buffer
+(setq initial-scratch-message ";; -*- lexical-binding: t -*-\n")
+
 ;; prevent ctrl mouse scroll changing the font size
 (setq mouse-wheel-scroll-amount (dissoc '(control) mouse-wheel-scroll-amount))
 (setq mouse-wheel-scroll-amount (dissoc '(control meta) mouse-wheel-scroll-amount))
