@@ -1130,6 +1130,7 @@ With prefix ARG also kill all unmodified file buffers."
   :defer t
   :config
   (setq nrepl-hide-special-buffers t)
+  (setq cider-repl-display-help-banner nil)
   (setq cider-repl-history-size 1000)
   (setq cider-repl-history-file (expand-file-name ".cider-repl-history" user-emacs-directory))
   (setq cider-repl-pop-to-buffer-on-connect 'display-only)
@@ -1154,30 +1155,23 @@ With prefix ARG also kill all unmodified file buffers."
   (defun matt-cider-repl-display-buffer ()
     (interactive)
     (display-buffer (cider-current-repl nil 'ensure)))
-  ;; stolen from https://github.com/corgi-emacs/corgi-packages/blob/main/corgi-clojure/corgi-clojure.el
   (defun matt-cider-jack-in-babashka (&optional project-dir)
     (interactive)
-    (let ((project-dir (or project-dir user-emacs-directory)))
-      (nrepl-start-server-process
-       project-dir
-       "bb --nrepl-server 0"
-       (lambda (server-buf)
-         (set-process-query-on-exit-flag
-          (get-buffer-process server-buf) nil)
+    ;; derived from (cider-jack-in)
+    (let ((params (cider--update-params
+                   (list :project-type 'babashka
+                         :project-dir (or project-dir user-emacs-directory)
+                         ;; TODO: always creates the same session called "babashka"
+                         ;; TODO: use existing host & port config so that we double up with the existing session: :host "localhost" :port 000000
+                         :session-name "babashka"
+                         :repl-type 'clj))))
+      (cider--start-nrepl-server
+       params
+       (lambda (server-buffer)
+         ;; this is the main difference from cider-jack-in, which calls (cider-connect-sibling-clj)
          (cider-nrepl-connect
-          (list :repl-buffer nil
-                :repl-type 'clj
-                :host (plist-get nrepl-endpoint :host)
-                :port (plist-get nrepl-endpoint :port)
-                :project-dir project-dir
-                :session-name "babashka"
-                :repl-init-function (lambda ()
-                                      (setq-local cljr-suppress-no-project-warning t
-                                                  cljr-suppress-middleware-warnings t
-                                                  process-query-on-exit-flag nil)
-                                      (set-process-query-on-exit-flag
-                                       (get-buffer-process (current-buffer)) nil)
-                                      (rename-buffer "*babashka*"))))))))
+          (let* ((other-params (cider--gather-connect-params nil server-buffer)))
+            (append params other-params)))))))
   :bind ((:map cider-repl-mode-map
                ("C-<up>" . cider-repl-previous-input)
                ("C-<down>" . cider-repl-next-input))
