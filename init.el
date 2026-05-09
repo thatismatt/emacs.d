@@ -763,6 +763,12 @@ With prefix ARG also kill all unmodified file buffers."
   (sp-use-smartparens-bindings)
   (setq sp-highlight-pair-overlay nil))
 
+;; HACK: vertico requires the new set-local in Emacs 31
+(if (fboundp 'set-local)
+    (message "[matt-init] set-local is defined, this can be remove")
+  (defun set-local (sym val)
+    (set (make-local-variable sym) val)))
+
 (use-package vertico
   :ensure t
   :init
