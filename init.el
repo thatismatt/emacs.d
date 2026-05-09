@@ -1702,7 +1702,7 @@ e.g. 2020012016131337, 2020-01-20_16-13-13, 1621854380123 or 1621854380."
 (defun matt-open-theme ()
   "Open my Emacs theme file."
   (interactive)
-  (if-let ((theme (car custom-enabled-themes)))
+  (if-let* ((theme (car custom-enabled-themes)))
       (find-file (expand-file-name (format "themes/%s-theme.el" theme) user-emacs-directory))
     (message "No theme currently active")))
 (matt-define-key "o t" 'matt-open-theme)
