@@ -1,4 +1,4 @@
-;;; init --- Matt Lee's init file  -*- lexical-binding: t -*-
+;;; init --- Matt Lee's init file  -*- lexical-binding: t, no-byte-compile: t -*-
 
 ;;; Commentary:
 ;; Lots of tweaks to my Emacs.
