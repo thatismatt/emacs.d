@@ -753,13 +753,13 @@ With prefix ARG also kill all unmodified file buffers."
          emacs-lisp-mode))
 
 (use-package smartparens
-  :vc (:url "https://github.com/Fuco1/smartparens")
+  :ensure t
   :init
   (smartparens-global-mode 1)
   (show-smartparens-global-mode 1)
   ;; (add-to-list 'sp-ignore-modes-list 'org-mode)
   :config
-  (use-package smartparens-config) ;; fixes various issues, including single quote issue in lisps
+  (require 'smartparens-config) ;; fixes various issues, including single quote issue in lisps
   (sp-use-smartparens-bindings)
   (setq sp-highlight-pair-overlay nil))
 
