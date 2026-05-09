@@ -6,11 +6,12 @@ cd $(readlink -e $(dirname $0))
 
 echo "Attempting startup..."
 emacs -nw --batch \
-      --eval '(let ((debug-on-error t)
+      --eval "(require 'url-vars)
+              (let ((debug-on-error t)
                     (url-show-status nil)
                     (user-emacs-directory default-directory)
-                    (user-init-file (expand-file-name "init.el"))
+                    (user-init-file (expand-file-name \"init.el\"))
                     (load-path (delq default-directory load-path)))
                  (load-file user-init-file)
-                 (run-hooks (quote after-init-hook)))'
+                 (run-hooks (quote after-init-hook)))"
 echo "Startup successful"
