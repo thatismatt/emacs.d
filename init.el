@@ -1236,7 +1236,7 @@ With prefix ARG also kill all unmodified file buffers."
   (let ((capture-id (thing-at-point 'symbol)))
     ;; TODO: test that capture-id is a keyword: (string-prefix-p ":" capture-id)
     ;; TODO: allow selection from (matt.capture/captured-ids)
-    (xref--push-markers (current-buffer) (point)) ;; HACK: integrate with xref (so M-, works) - do this properly via an xref backend
+    (xref--push-markers (current-buffer) (point) (selected-window)) ;; HACK: integrate with xref (so M-, works) - do this properly via an xref backend
     (cider-interactive-eval (concat "(matt.capture/captured-meta " capture-id ")")
                             (nrepl-make-response-handler (current-buffer)
                                                          (lambda (_buffer value)
