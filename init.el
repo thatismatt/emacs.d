@@ -1290,25 +1290,34 @@ With prefix ARG also kill all unmodified file buffers."
   (interactive)
   (let ((form (or (matt-get-defun-name-at-point)
                   (cider-last-sexp)))
-         (insertion-point (cadr (cider-defun-at-point 'bounds))))
-    (cider-interactive-eval (concat "(matt.pp/print-table " form ")")
+        (insertion-point (cadr (cider-last-sexp 'bounds)))
+        (marker (md5 (format "%s" (random)))))
+    (message "%s" form)
+    (cider-interactive-eval (concat "(require 'matt.pp)"
+                                    "(let [result " form "]"
+                                    "  (println)" ;; ensure marker is alone on a line
+                                    "  (println \"" marker "\")"
+                                    "  (matt.pp/print-table result))")
                             (let ((res ""))
                               (nrepl-make-response-handler
                                (current-buffer)
-                               nil
-                               (lambda (_buffer value)
-                                 (setq res (concat res value)))
-                               nil
-                               ;; (lambda (_buffer err)
-                               ;;   (setq res (concat res err)))
-                               (lambda (buffer)
+                               nil                     ;; value-handler
+                               (lambda (_buffer value) ;; stdout-handler
+                                 ;; ignore everything prior to marker
+                                 (if (equal value (concat marker "\n"))
+                                     (setq res "")
+                                   (setq res (concat res value))))
+                               nil                     ;; stderr-handler
+                               (lambda (buffer)        ;; done-handler
                                  (with-current-buffer buffer
                                    (save-excursion
                                      (goto-char insertion-point)
-                                     (cider-maybe-insert-multiline-comment res
-                                                                           cider-comment-prefix
-                                                                           cider-comment-continued-prefix
-                                                                           "\n")))))))))
+                                     (if (string-empty-p res)
+                                         (message "=> No result")
+                                       (cider-maybe-insert-multiline-comment res
+                                                                             cider-comment-prefix
+                                                                             cider-comment-continued-prefix
+                                                                             "\n"))))))))))
   (interactive)
   (matt-cider-eval-as-table-to-comment (matt-get-defun-name-at-point)
                                        ;; bounds from cider-defun-at-point include trailing newline
