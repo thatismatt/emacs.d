@@ -873,7 +873,7 @@ With prefix ARG also kill all unmodified file buffers."
   (defun string-inflection-snake-kebab ()
     "foo_bar => foo-bar"
     (interactive)
-    (string-inflection--single-or-region #'string-inflection-snake-kebab-function))
+    (string-inflection--symbol-or-region #'string-inflection-snake-kebab-function))
   :bind (:map matt-keymap
               ("-"   . string-inflection-snake-kebab)
               ("M--" . string-inflection-all-cycle)))
