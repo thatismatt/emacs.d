@@ -91,7 +91,7 @@ Focus change event is debounced so we don't gc on focus."
 ;; startup
 (setq inhibit-startup-screen t)
 (setq initial-buffer-choice t) ;; scratch buffer
-(setq initial-scratch-message ";; -*- lexical-binding: t -*-\n")
+(setq initial-scratch-message ";; -*- lexical-binding: t -*-\n\n")
 
 ;; prevent ctrl mouse scroll changing the font size
 (setq mouse-wheel-scroll-amount (dissoc '(control) mouse-wheel-scroll-amount))
