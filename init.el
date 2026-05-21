@@ -1292,7 +1292,6 @@ With prefix ARG also kill all unmodified file buffers."
                   (cider-last-sexp)))
         (insertion-point (cadr (cider-last-sexp 'bounds)))
         (marker (md5 (format "%s" (random)))))
-    (message "%s" form)
     (cider-interactive-eval (concat "(require 'matt.pp)"
                                     "(let [result " form "]"
                                     "  (println)" ;; ensure marker is alone on a line
