@@ -369,11 +369,12 @@ Focus change event is debounced so we don't gc on focus."
 (global-set-key (kbd "C-d")           'backward-delete-char)
 (global-set-key (kbd "<M-backspace>") 'backward-kill-word)
 (global-set-key (kbd "<C-backspace>") 'backward-kill-word)
-
 (global-set-key (kbd "M-DEL")         'kill-word)
 (global-set-key (kbd "<M-delete>")    'kill-word)
 (global-set-key (kbd "M-SPC")         'cycle-spacing)
-
+(global-set-key (kbd "M-u")           'upcase-dwim)
+(global-set-key (kbd "M-l")           'downcase-dwim)
+(global-set-key (kbd "M-c")           'capitalize-dwim)
 (matt-define-key "b b"                'bury-buffer)
 (matt-define-key "r a"                'align-regexp)
 (matt-define-key "s r"                'replace-string)
@@ -1913,24 +1914,6 @@ e.g. 2020012016131337, 2020-01-20_16-13-13, 1621854380123 or 1621854380."
     (call-interactively 'recenter-top-bottom)))
 ;; matt-recenter-region-top-bottom hangs when called repeatedly in the minibuffer
 (bind-key "C-l" 'matt-recenter-region-top-bottom nil (not (minibufferp)))
-
-(defun matt-dwim-upcase (&optional begin end)
-  "Upcase region or word, depending on whether the region is active.
-If the region is active BEGIN and END default to the region."
-  (interactive (if (use-region-p) (list (region-beginning) (region-end))))
-  (if (use-region-p)
-      (upcase-region begin end)
-    (upcase-word 1)))
-(global-set-key (kbd "M-u") 'matt-dwim-upcase)
-
-(defun matt-dwim-downcase (&optional begin end)
-  "Downcase region or word, depending on whether the region is active.
-If the region is active BEGIN and END default to the region."
-  (interactive (if (use-region-p) (list (region-beginning) (region-end))))
-  (if (use-region-p)
-      (downcase-region begin end)
-    (downcase-word 1)))
-(global-set-key (kbd "M-l") 'matt-dwim-downcase)
 
 (defun matt-region-size (begin end)
   "Report details about the region, i.e. between BEGIN and END."
