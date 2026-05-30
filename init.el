@@ -1289,10 +1289,10 @@ With prefix ARG also kill all unmodified file buffers."
 (defun matt-cider-eval-as-table-to-comment ()
   "Evaluate FORM and insert result as a table in a comment at INSERTION-POINT."
   (interactive)
-  (let ((form (or (matt-get-defun-name-at-point)
-                  (cider-last-sexp)))
-        (insertion-point (cadr (cider-last-sexp 'bounds)))
-        (marker (md5 (format "%s" (random)))))
+  (let* ((form (or (matt-get-defun-name-at-point)
+                   (cider-last-sexp)))
+         (insertion-point (cadr (cider-last-sexp 'bounds)))
+         (marker (md5 (format "%s" (random)))))
     (cider-interactive-eval (concat "(require 'matt.pp)"
                                     "(let [result " form "]"
                                     "  (println)" ;; ensure marker is alone on a line
