@@ -1312,6 +1312,8 @@ With prefix ARG also kill all unmodified file buffers."
                                  (with-current-buffer buffer
                                    (save-excursion
                                      (goto-char insertion-point)
+                                     ;; edge case: at eob - taken from cider-eval-pprint-with-multiline-comment-handler
+                                     (unless (bolp) (insert "\n"))
                                      (if (string-empty-p res)
                                          (message "=> No result")
                                        (cider-maybe-insert-multiline-comment res
