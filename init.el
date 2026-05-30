@@ -1320,10 +1320,6 @@ With prefix ARG also kill all unmodified file buffers."
                                                                              cider-comment-prefix
                                                                              cider-comment-continued-prefix
                                                                              "\n"))))))))))
-  (interactive)
-  (matt-cider-eval-as-table-to-comment (matt-get-defun-name-at-point)
-                                       ;; bounds from cider-defun-at-point include trailing newline
-                                       (cadr (cider-defun-at-point 'bounds))))
 
 (defun matt-cider-clean-ns ()
   "Unmap all of the current namespace's interned vars and ns aliases."
